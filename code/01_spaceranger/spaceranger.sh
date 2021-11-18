@@ -38,7 +38,7 @@ spaceranger count \
     --id=${SAMPLE} \
     --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A \
     --fastqs=${FASTQPATH} \
-    --image=../../processed-data/Images/CS2/${SAMPLE}.tif \
+    --image=../../processed-data/Images/VistoSeg/Capture_areas/${SAMPLE}.tif \
     --slide=${SLIDE} \
     --area=${CAPTUREAREA} \
     --loupe-alignment=../../processed-data/Images/loupe_alignment/${SAMPLE}.json \
