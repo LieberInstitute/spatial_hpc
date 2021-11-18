@@ -30,6 +30,11 @@ SAMPLE=$(awk "NR==${SGE_TASK_ID}" samples_miseq.txt)
 echo "Processing sample ${SAMPLE}"
 date
 
+## Get slide and area
+SLIDE=$(echo ${SAMPLE} | cut -d "_" -f 1)
+CAPTUREAREA=$(echo ${SAMPLE} | cut -d "_" -f 2)
+echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}"
+
 ## Find FASTQ file path
 FASTQPATH=$(ls -d ../../raw-data/FASTQ/MiSeq/${SAMPLE}/)
 
