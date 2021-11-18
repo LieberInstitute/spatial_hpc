@@ -46,7 +46,7 @@ spaceranger count \
     --image=../../processed-data/Images/VistoSeg/Capture_areas/${SAMPLE}.tif \
     --slide=${SLIDE} \
     --area=${CAPTUREAREA} \
-    --loupe-alignment=../../processed-data/Images/loupe_alignment/${SAMPLE}.json \
+    --loupe-alignment=../../processed-data/Images/loupe-alignment/${SAMPLE}.json \
     --jobmode=local \
     --localcores=4 \
     --localmem=40
