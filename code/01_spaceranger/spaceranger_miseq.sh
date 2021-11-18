@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
-#$ -pe local 8
+#$ -pe local 4
 #$ -N spaceranger_miseq
 #$ -o logs/spaceranger_miseq.$TASK_ID.txt
 #$ -e logs/spaceranger_miseq.$TASK_ID.txt
@@ -48,8 +48,8 @@ spaceranger count \
     --area=${CAPTUREAREA} \
     --loupe-alignment=../../processed-data/Images/loupe_alignment/${SAMPLE}.json \
     --jobmode=local \
-    --localcores=8 \
-    --localmem=80
+    --localcores=4 \
+    --localmem=40
 
 ## Move output
 echo "Moving results to new location"
