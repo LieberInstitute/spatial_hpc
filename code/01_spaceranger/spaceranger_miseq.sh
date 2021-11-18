@@ -2,9 +2,9 @@
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
 #$ -pe local 8
-#$ -N spaceranger
-#$ -o logs/spaceranger.$TASK_ID.txt
-#$ -e logs/spaceranger.$TASK_ID.txt
+#$ -N spaceranger_miseq
+#$ -o logs/spaceranger_miseq.$TASK_ID.txt
+#$ -e logs/spaceranger_miseq.$TASK_ID.txt
 #$ -m e
 #$ -t 1-8
 #$ -tc 5
