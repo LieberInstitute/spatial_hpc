@@ -6,7 +6,7 @@
 #$ -o logs/spaceranger.$TASK_ID.txt
 #$ -e logs/spaceranger.$TASK_ID.txt
 #$ -m e
-#$ -t 1-10
+#$ -t 1-8
 #$ -tc 5
 
 echo "**** Job starts ****"
@@ -26,44 +26,22 @@ module load spaceranger/1.3.0
 module list
 
 ## Locate file
-SAMPLE=$(awk "NR==${SGE_TASK_ID}" ../01_bamtofastq/samples.txt)
+SAMPLE=$(awk "NR==${SGE_TASK_ID}" samples_miseq.txt)
 echo "Processing sample ${SAMPLE}"
 date
 
-## Get slide and area
-SLIDEPART1=$(echo ${SAMPLE} | cut -c1-6)
-SLIDEPART2=$(echo ${SAMPLE} | cut -c7-9)
-SLIDE="${SLIDEPART1}-${SLIDEPART2}"
-CAPTUREAREA=$(echo ${SAMPLE} | cut -c11-12)
-
-## Get VIF part
-if [ ${SLIDE} == "V10A27-004" ]
-then
-    SLIDEVIF="VIFAD1"
-elif [ ${SLIDE} == "V10A27-106" ]
-then
-    SLIDEVIF="VIFAD2"
-elif [ ${SLIDE} == "V10T31-036" ]
-then
-    SLIDEVIF="VIFAD3"
-else
-    echo "Unsupported slide ${SLIDE}."
-    exit 1
-fi
-echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}, VIF: ${SLIDEVIF}"
-
 ## Find FASTQ file path
-FASTQPATH=$(ls -d ../../raw-data/FASTQ/spaceranger_our_alignments_nocr11/${SAMPLE}/*/)
+FASTQPATH=$(ls -d ../../raw-data/FASTQ/MiSeq/${SAMPLE}/)
 
 ## Run SpaceRanger
 spaceranger count \
     --id=${SAMPLE} \
     --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A \
     --fastqs=${FASTQPATH} \
-    --darkimage=../../processed-data/Images/loupe_alignment/${SLIDEVIF}_${SLIDE}_${CAPTUREAREA}.tif \
+    --image=../../processed-data/Images/loupe_alignment/${SAMPLE}.tif \
     --slide=${SLIDE} \
     --area=${CAPTUREAREA} \
-    --loupe-alignment=../../processed-data/Images/loupe_alignment/${SLIDEVIF}_${SLIDE}-${CAPTUREAREA}.json \
+    --loupe-alignment=../../processed-data/Images/loupe_alignment/${SAMPLE}.json \
     --jobmode=local \
     --localcores=8 \
     --localmem=80
