@@ -1,0 +1,91 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Dec  9 15:01:55 EST 2021
+**** JHPCE info ****
+User: lcollado
+Job id: 7967080
+Job name: spatialHPC_spaceranger_NovaSeq
+Hostname: compute-096.cm.cluster
+Task id: 3
+Loading LIBD module for spaceranger/1.3.0
+Reference files, for use with the '--transcriptome' argument, can be accessed
+or downloaded into /dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x. 
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV  11) ruby/2.6.4p104
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV      12) rmate/1.5.9
+  3) JHPCE_tools/1.0   8) git-status-size/github         13) conda/3-4.6.14
+  4) sge/8.1.9         9) git/2.28.0                     14) conda_R/4.1.x
+  5) gcc/4.4.7        10) git-lfs/2.8.0                  15) spaceranger/1.3.0
+
+ 
+
+Processing sample V10B01-085_C1
+Thu Dec  9 15:01:55 EST 2021
+Slide: V10B01-085, capture area: C1
+Martian Runtime - v4.0.5
+2021-12-09 15:01:56 [jobmngr] WARNING: The current virtual address space size
+                              limit is too low.
+	Limiting virtual address space size interferes with the operation of many
+	common libraries and programs, and is not recommended.
+	Contact your system administrator to remove this limit.
+Serving UI at http://compute-096.cm.cluster:39054?auth=qjKqwc_2E5hUCnCK5GPtLvEAZZseFolAMe78GJ1oQRI
+
+Running preflight checks (please wait)...
+Checking sample info...
+Checking FASTQ folder...
+Checking reference...
+Checking reference_path (/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A) on compute-096.cm.cluster...
+Checking optional arguments...
+mrc: v4.0.5
+
+mrp: v4.0.5
+
+Anaconda: Python 3.7.7
+
+numpy: 1.19.2
+
+scipy: 1.2.1
+
+pysam: 0.16.0.1
+
+h5py: 2.10.0
+
+pandas: 1.2.4
+
+STAR: 2.7.2a
+
+samtools: samtools 1.10
+Using htslib 1.10.2
+Copyright (C) 2019 Genome Research Ltd.
+
+2021-12-09 15:02:02 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER.WRITE_GENE_INDEX
+2021-12-09 15:02:02 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER.WRITE_GENE_INDEX.fork0.chnk0.main
+2021-12-09 15:02:02 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.CLOUPE_TILE_IMAGES
+2021-12-09 15:02:02 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.CLOUPE_TILE_IMAGES.fork0.split
+2021-12-09 15:02:02 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER._BASIC_SPATIAL_RNA_COUNTER.DISABLE_BAMS
+2021-12-09 15:02:02 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER._BASIC_SPATIAL_RNA_COUNTER.DISABLE_BAMS.fork0.chnk0.main
+2021-12-09 15:02:02 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_IMAGING_CS.STANDARDIZE_IMAGES
+2021-12-09 15:02:02 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_IMAGING_CS.STANDARDIZE_IMAGES.fork0.split
+2021-12-09 15:02:02 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER_PREP.CHEMISTRY_DETECTOR
+2021-12-09 15:02:02 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER_PREP.CHEMISTRY_DETECTOR.fork0.chnk0.main
+2021-12-09 15:02:02 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER.SPATIAL_RNA_ANALYZER.CHOOSE_DIMENSION_REDUCTION
+2021-12-09 15:02:03 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER.SPATIAL_RNA_ANALYZER.CHOOSE_DIMENSION_REDUCTION.fork0.chnk0.main
+2021-12-09 15:02:03 [runtime] (chunks_complete) ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER._BASIC_SPATIAL_RNA_COUNTER.DISABLE_BAMS
+2021-12-09 15:02:04 [runtime] (split_complete)  ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.CLOUPE_TILE_IMAGES
+2021-12-09 15:02:04 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.CLOUPE_TILE_IMAGES.fork0.join
+2021-12-09 15:02:04 [runtime] (chunks_complete) ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER.SPATIAL_RNA_ANALYZER.CHOOSE_DIMENSION_REDUCTION
+2021-12-09 15:02:04 [runtime] (split_complete)  ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_IMAGING_CS.STANDARDIZE_IMAGES
+2021-12-09 15:02:04 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_IMAGING_CS.STANDARDIZE_IMAGES.fork0.join
+2021-12-09 15:02:22 [runtime] (chunks_complete) ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER_PREP.CHEMISTRY_DETECTOR
+2021-12-09 15:02:27 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER_PREP.MULTI_SETUP_CHUNKS
+2021-12-09 15:02:27 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER_PREP.MULTI_SETUP_CHUNKS.fork0.chnk0.main
+2021-12-09 15:02:28 [runtime] (chunks_complete) ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_RNA_COUNTER_PREP.MULTI_SETUP_CHUNKS
+2021-12-09 15:02:28 [runtime] (ready)           ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_IMAGING_CS.GPR_READER
+2021-12-09 15:02:28 [runtime] (run:local)       ID.V10B01-085_C1.SPATIAL_RNA_COUNTER_CS.SPATIAL_IMAGING_CS.GPR_READER.fork0.chnk0.main

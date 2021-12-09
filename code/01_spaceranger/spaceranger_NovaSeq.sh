@@ -7,7 +7,7 @@
 #$ -e logs/spaceranger_NovaSeq.$TASK_ID.txt
 #$ -m e
 #$ -t 1-8
-#$ -tc 5
+#$ -tc 8
 
 echo "**** Job starts ****"
 date
