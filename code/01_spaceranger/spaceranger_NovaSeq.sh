@@ -2,7 +2,7 @@
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
 #$ -pe local 4
-#$ -N spaceranger_miseq
+#$ -N spatialHPC_spaceranger_NovaSeq
 #$ -o logs/spaceranger_NovaSeq.$TASK_ID.txt
 #$ -e logs/spaceranger_NovaSeq.$TASK_ID.txt
 #$ -m e
@@ -36,13 +36,14 @@ CAPTUREAREA=$(echo ${SAMPLE} | cut -d "_" -f 2)
 echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}"
 
 ## Find FASTQ file path
-FASTQPATH=$(ls -d ../../raw-data/FASTQ/NovaSeq/${SAMPLE}/)
+FASTQPATHMISEQ=$(ls -d ../../raw-data/FASTQ/MiSeq/${SAMPLE}/)
+FASTQPATHNOVASEQ=$(ls -d ../../raw-data/FASTQ/NovaSeq/${SAMPLE}/)
 
 ## Run SpaceRanger
 spaceranger count \
     --id=${SAMPLE} \
     --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A \
-    --fastqs=${FASTQPATH} \
+    --fastqs=${FASTQPATHMISEQ},${FASTQPATHNOVASEQ} \
     --image=../../processed-data/Images/VistoSeg/Capture_areas/${SAMPLE}.tif \
     --slide=${SLIDE} \
     --area=${CAPTUREAREA} \
@@ -54,8 +55,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/spaceranger_NovaSeq/
-mv ${SAMPLE} ../../processed-data/spaceranger_NovaSeq/
+mkdir -p ../../processed-data/spaceranger_novaseq/
+mv ${SAMPLE} ../../processed-data/spaceranger_novaseq/
 
 echo "**** Job ends ****"
 date
