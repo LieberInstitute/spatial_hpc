@@ -1,5 +1,5 @@
 %filename = '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/V10B01-086_B1_nuclei_Run1.mat';
-filename = '/Users/heenadivecha/Desktop/V10B01-086_B1_nuclei_Run1.mat';
+filename = '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/V10B01-086_B1_nuclei.mat';
 load(filename)
 
 BW = mask_dark_blue;
@@ -11,5 +11,5 @@ stats = regionprops(BW);
 
 mask_dark_blue = bwareafilt(BW, [50 max([stats.Area])]);
 
-save('/Users/heenadivecha/Desktop/V10B01-086_B1_nuclei_Run1.mat','mask_dark_blue')
+save('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/V10B01-086_B1_nuclei.mat','mask_dark_blue')
 

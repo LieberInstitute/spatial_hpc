@@ -25,7 +25,7 @@ echo "****"
 module load matlab/R2019a
 
 toolbox='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code'
-mask='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/V10B01-085_B1_nuclei.mat'
+mask='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/V10B01-086_B1_nuclei.mat'
 jsonname='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spaceranger_miseq/V10B01-086_B1/outs/spatial/scalefactors_json.json'
 posname='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spaceranger_miseq/V10B01-086_B1/outs/spatial/tissue_positions_list.csv'
 

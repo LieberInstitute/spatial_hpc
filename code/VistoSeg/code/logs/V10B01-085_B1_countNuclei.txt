@@ -170,3 +170,128 @@ writing table
 Elapsed time is 8813.891954 seconds.
 >> **** Job ends ****
 Sat Dec  4 19:59:29 EST 2021
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1
+**** Job starts ****
+Fri Dec 10 15:55:45 EST 2021
+**** JHPCE info ****
+User: hdivecha
+Job id: 7984488
+Job name: countNuclei.sh
+Hostname: compute-124.cm.cluster
+Task id: undefined
+****
+Sample id: V10B01-085_B1
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+{Error using load
+Unable to read file
+'/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/V10B01-085_51_nuclei.mat'.
+No such file or directory.
+
+Error in countNuclei (line 9)
+temp = load(mask);
+} 
+>> **** Job ends ****
+Fri Dec 10 15:55:53 EST 2021
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1
+**** Job starts ****
+Fri Dec 10 16:15:04 EST 2021
+**** JHPCE info ****
+User: hdivecha
+Job id: 7984621
+Job name: countNuclei.sh
+Hostname: compute-120.cm.cluster
+Task id: undefined
+****
+Sample id: V10B01-085_B1
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+Elapsed time is 4.830442 seconds.
+48267 cells detected
+4992 spots detected
+counting nuclei per spot
+100 spots finished in time 76.6438s
+200 spots finished in time 138.3495s
+300 spots finished in time 199.2664s
+400 spots finished in time 260.8318s
+500 spots finished in time 325.4098s
+600 spots finished in time 388.0084s
+700 spots finished in time 450.4235s
+800 spots finished in time 513.2542s
+900 spots finished in time 577.278s
+1000 spots finished in time 641.2091s
+1100 spots finished in time 704.9701s
+1200 spots finished in time 768.7607s
+1300 spots finished in time 832.1983s
+1400 spots finished in time 898.9862s
+1500 spots finished in time 963.7285s
+1600 spots finished in time 1026.3325s
+1700 spots finished in time 1091.2605s
+1800 spots finished in time 1157.9498s
+1900 spots finished in time 1225.6861s
+2000 spots finished in time 1291.2602s
+2100 spots finished in time 1356.6703s
+2200 spots finished in time 1423.3593s
+2300 spots finished in time 1494.9867s
+2400 spots finished in time 1562.833s
+2500 spots finished in time 1629.9235s
+2600 spots finished in time 1696.7565s
+2700 spots finished in time 1767.8454s
+2800 spots finished in time 1838.4077s
+2900 spots finished in time 1904.3853s
+3000 spots finished in time 1971.6112s
+3100 spots finished in time 2040.2726s
+3200 spots finished in time 2115.9927s
+3300 spots finished in time 2187.7226s
+3400 spots finished in time 2255.8797s
+3500 spots finished in time 2323.3911s
+3600 spots finished in time 2397.3494s
+3700 spots finished in time 2472.7955s
+3800 spots finished in time 2540.1743s
+3900 spots finished in time 2608.1364s
+4000 spots finished in time 2677.243s
+4100 spots finished in time 2754.9747s
+4200 spots finished in time 2829.3484s
+4300 spots finished in time 2898.5669s
+4400 spots finished in time 2967.911s
+4500 spots finished in time 3043.6398s
+4600 spots finished in time 3119.6776s
+4700 spots finished in time 3191.0798s
+4800 spots finished in time 3259.5896s
+4900 spots finished in time 3331.4161s
+writing table
+Elapsed time is 3407.701561 seconds.
+>> **** Job ends ****
+Fri Dec 10 17:12:00 EST 2021
