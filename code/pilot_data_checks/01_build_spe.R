@@ -10,6 +10,7 @@ library("sessioninfo")
 ## Define some info for the samples
 sample_info <- data.frame(
   subject = c("Br6423-O","Br6423-O","Br6423-O","Br6423-O","Br6432-R","Br6432-R","Br2743-Y","Br2743-Y"),
+  slice = c("Br6423-O_1","Br6423-O_1","Br6423-O_2","Br6423-O_2","Br6432-R_1","Br6432-R_1","Br2743-Y_1","Br2743-Y_1"),
   sample_id = c(
     "V10B01-085_A1",
     "V10B01-085_B1",
@@ -123,7 +124,7 @@ save(spe_raw,file = here::here("processed-data", "pilot_data_checks", "spe_raw.R
 
 ## Size in Gb
 lobstr::obj_size(spe_raw) / 1024 ^ 3
-# 1.342369 
+# 1.342667 
 dim(spe_raw)
 # [1] 27633 39936
 
@@ -132,7 +133,7 @@ spe <- spe_raw[, spatialData(spe_raw)$in_tissue]
 
 ## Size in Gb
 lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305641 
+# 1.305857
 dim(spe)
 # [1] 27633 28871
 
@@ -144,7 +145,9 @@ if (any(colSums(counts(spe)) == 0)) {
 }
 
 lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305641 
+# 1.305857
+dim(spe)
+# [1] 27633 28871
 
 save(spe, file = here::here("processed-data", "pilot_data_checks", "spe.Rdata"))
 
