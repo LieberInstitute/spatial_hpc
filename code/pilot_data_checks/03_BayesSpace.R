@@ -34,10 +34,10 @@ speB = spatialCluster(speH, use.dimred = "HARMONY", q = 7, nrep = 10000) #use HA
 Sys.time()
 
 
-pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_clusterPlot.pdf"))
+pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_clusterPlot_10k.pdf"))
 clusterPlot(speB, color = NA) + #plot clusters
   labs(title = "BayesSpace joint clustering")
 dev.off()
 
-save(speB, file=here::here("processed-data","pilot_data_checks", "spe_bayesSpace.Rdata"))
+save(speB, file=here::here("processed-data","pilot_data_checks", "spe_bayesSpace_10k.Rdata"))
 

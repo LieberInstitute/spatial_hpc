@@ -2,9 +2,9 @@
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
 #$ -pe local 4
-#$ -N BayesSpace
-#$ -o /code/pilot_data_checks/BayesSpace.txt
-#$ -e /code/pilot_data_checks/BayesSpace.txt
+#$ -N hpc_BayesSpace
+#$ -o BayesSpace_10k.txt
+#$ -e BayesSpace_10k.txt
 #$ -m e
 
 echo "**** Job starts ****"
@@ -21,4 +21,4 @@ echo "Task id: ${SGE_TASK_ID}"
 module list
 
 module load conda_R/4.1.x
-Rscript /code/pilot_data_checks/03_BayesSpace.R
+Rscript 03_BayesSpace.R
