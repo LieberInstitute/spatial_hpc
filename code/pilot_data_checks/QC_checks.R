@@ -118,32 +118,31 @@ summary(spe_raw$expr_chrM_ratio)
 # 0.00000 0.09051 0.13168 0.13877 0.17647 0.53391
 
 ## Quality control (scran)
-qcstats <- perCellQCMetrics(spe, subsets = list(
-  Mito = which(seqnames(spe) == "chrM")
+qcstats <- perCellQCMetrics(spe_raw, subsets = list(
+  Mito = which(seqnames(spe_raw) == "chrM")
 ))
 qcfilter <- quickPerCellQC(qcstats, sub.fields="subsets_Mito_percent")
 colSums(as.matrix(qcfilter))
-# low_lib_size            low_n_features high_subsets_Mito_percent
-# 5126                    6105                      3490
-# discard
-# 9035
+# low_lib_size            low_n_features high_subsets_Mito_percent 
+# 598                       782                       489 
+# discard 
+# 1233 
 
-## Prior to dropping spots with 0 counts and checking for high chrM,
-## this was the output:
+## Prior to dropping spots with 0 counts and checking for high chrM, this was the output:
 
-spe$scran_discard <-
+spe_raw$scran_discard <-
   factor(qcfilter$discard, levels = c("TRUE", "FALSE"))
-spe$scran_low_lib_size <-
+spe_raw$scran_low_lib_size <-
   factor(qcfilter$low_lib_size, levels = c("TRUE", "FALSE"))
-spe$scran_low_n_features <-
+spe_raw$scran_low_n_features <-
   factor(qcfilter$low_n_features, levels = c("TRUE", "FALSE"))
-spe$scran_high_subsets_Mito_percent <-
+spe_raw$scran_high_subsets_Mito_percent <-
   factor(qcfilter$high_subsets_Mito_percent, levels = c("TRUE", "FALSE"))
-save(spe, file = here::here("processed-data", "pilot_data_checks", "spe_final.Rdata"))
+save(spe_raw, file = here::here("processed-data", "pilot_data_checks", "spe_final.Rdata"))
 
 for(i in colnames(qcfilter)) {
   vis_grid_clus(
-    spe = spe,
+    spe = spe_raw,
     clustervar = paste0("scran_", i),
     pdf = here::here("processed-data", "pilot_data_checks", "plots", paste0("scran_", i, ".pdf")),
     sort_clust = FALSE,
