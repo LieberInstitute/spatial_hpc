@@ -64,7 +64,7 @@ p_list = vis_grid_clus(
     "Br6423-O"
   )
 
-pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_10k_visgrid_Br6423-O.pdf"), h = 8, w= 12)
+pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_50k_visgrid_Br6423-O.pdf"), h = 8, w= 12)
 cowplot::plot_grid(plotlist = p_list, ncol = 2)
 dev.off()
 
@@ -88,7 +88,46 @@ p_list2 = vis_grid_clus(
   "Br6432-R"
 )
 
-pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_10k_visgrid.pdf"), h = 8, w= 12)
+pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_50k_visgrid.pdf"), h = 8, w= 12)
+cowplot::plot_grid(plotlist = c(p_list1,p_list2), ncol = 2)
+dev.off()
+
+## vis_grid for cluster.init
+p_list = vis_grid_clus(
+  speB[, speB$subject %in% c("Br6423-O")],
+  "cluster.init",
+  spatial = FALSE,
+  return_plots = TRUE,
+  sort_clust = FALSE,
+  point_size = 2,
+  "Br6423-O"
+)
+
+pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_50k_init_Br6423-O.pdf"), h = 8, w= 12)
+cowplot::plot_grid(plotlist = p_list, ncol = 2)
+dev.off()
+
+p_list1 = vis_grid_clus(
+  speB[, speB$subject %in% c("Br2743-Y")],
+  "cluster.init",
+  spatial = FALSE,
+  return_plots = TRUE,
+  sort_clust = FALSE,
+  point_size = 2,
+  "Br2743-Y"
+)
+
+p_list2 = vis_grid_clus(
+  speB[, speB$subject %in% c("Br6432-R")],
+  "cluster.init",
+  spatial = FALSE,
+  return_plots = TRUE,
+  sort_clust = FALSE,
+  point_size = 2,
+  "Br6432-R"
+)
+
+pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_BayesSpace_50k_init.pdf"), h = 8, w= 12)
 cowplot::plot_grid(plotlist = c(p_list1,p_list2), ncol = 2)
 dev.off()
 

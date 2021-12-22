@@ -1,10 +1,10 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
+#$ -l bluejay,mem_free=5G,h_vmem=5G,h_fsize=100G
 #$ -pe local 4
 #$ -N hpc_BayesSpace
-#$ -o BayesSpace_10k.txt
-#$ -e BayesSpace_10k.txt
+#$ -o BayesSpace_50k.txt
+#$ -e BayesSpace_50k.txt
 #$ -m e
 
 echo "**** Job starts ****"
