@@ -14,7 +14,7 @@ load(file=here::here("processed-data","pilot_data_checks","spe_raw.Rdata"))
 vis_grid_clus(
   spe = spe_raw,
   clustervar = "in_tissue",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "in_tissue_grid.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "in_tissue_grid.pdf"),
   sort_clust = FALSE,
   colors = c("TRUE" = "grey90", "FALSE" = "orange")
 )
@@ -29,7 +29,7 @@ head(table(spe_raw$sum_umi[which(spatialData(spe_raw)$in_tissue=="FALSE")]))
 vis_grid_gene(
   spe = spe_raw[, which(spatialData(spe_raw)$in_tissue=="FALSE")],
   geneid = "sum_umi",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "out_tissue_sum_umi.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "out_tissue_sum_umi.pdf"),
   assayname = "counts"
 )
 
@@ -40,7 +40,7 @@ summary(spe_raw$sum_umi[which(spatialData(spe_raw)$in_tissue=="FALSE")])
 vis_grid_gene(
   spe = spe_raw[, which(spatialData(spe_raw)$in_tissue=="FALSE")],
   geneid = "sum_gene",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "out_tissue_sum_gene.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "out_tissue_sum_gene.pdf"),
   assayname = "counts"
 )
 
@@ -51,7 +51,7 @@ summary(spe_raw$sum_gene[which(spatialData(spe_raw)$in_tissue=="FALSE")])
 vis_grid_gene(
   spe = spe_raw[, which(spatialData(spe_raw)$in_tissue=="FALSE")],
   geneid = "expr_chrM_ratio",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "out_tissue_expr_chrM_ratio.pdf"),
+  pdf = here::here("plots", "pilot_data_checks","out_tissue_expr_chrM_ratio.pdf"),
   assayname = "counts"
 )
 
@@ -63,7 +63,7 @@ summary(spe_raw$expr_chrM_ratio[which(spatialData(spe_raw)$in_tissue=="FALSE")])
 vis_grid_gene(
   spe = spe_raw[, which(spatialData(spe_raw)$in_tissue=="TRUE")],
   geneid = "sum_umi",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "in_tissue_sum_umi.pdf"),
+  pdf = here::here("plots", "pilot_data_checks","in_tissue_sum_umi.pdf"),
   assayname = "counts"
 )
 
@@ -71,7 +71,7 @@ vis_grid_gene(
 vis_grid_gene(
   spe = spe_raw[, which(spatialData(spe_raw)$in_tissue=="TRUE")],
   geneid = "sum_gene",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "in_tissue_sum_gene.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "in_tissue_sum_gene.pdf"),
   assayname = "counts"
 )
 
@@ -79,7 +79,7 @@ vis_grid_gene(
 vis_grid_gene(
   spe = spe_raw[, which(spatialData(spe_raw)$in_tissue=="TRUE")],
   geneid = "expr_chrM_ratio",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "in_tissue_expr_chrM_ratio.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "in_tissue_expr_chrM_ratio.pdf"),
   assayname = "counts"
 )
 
@@ -88,7 +88,7 @@ vis_grid_gene(
 vis_grid_gene(
   spe = spe_raw,
   geneid = "sum_umi",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "all_sum_umi.pdf"),
+  pdf = here::here("plots", "pilot_data_checks","all_sum_umi.pdf"),
   assayname = "counts"
 )
 summary(spe_raw$sum_umi)
@@ -99,7 +99,7 @@ summary(spe_raw$sum_umi)
 vis_grid_gene(
   spe = spe_raw,
   geneid = "sum_gene",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "all_sum_gene.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "all_sum_gene.pdf"),
   assayname = "counts"
 )
 summary(spe_raw$sum_gene)
@@ -109,7 +109,7 @@ summary(spe_raw$sum_gene)
 vis_grid_gene(
   spe = spe_raw,
   geneid = "expr_chrM_ratio",
-  pdf = here::here("processed-data", "pilot_data_checks", "plots", "all_expr_chrM_ratio.pdf"),
+  pdf = here::here("plots", "pilot_data_checks", "all_expr_chrM_ratio.pdf"),
   assayname = "counts"
 )
 
@@ -144,7 +144,7 @@ for(i in colnames(qcfilter)) {
   vis_grid_clus(
     spe = spe_raw,
     clustervar = paste0("scran_", i),
-    pdf = here::here("processed-data", "pilot_data_checks", "plots", paste0("scran_", i, ".pdf")),
+    pdf = here::here("plots", "pilot_data_checks", paste0("scran_", i, ".pdf")),
     sort_clust = FALSE,
     colors = c("FALSE" = "grey90", "TRUE" = "orange")
   )

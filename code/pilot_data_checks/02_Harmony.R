@@ -34,8 +34,8 @@ spePP = runUMAP(spePP, dimred = "PCA")
 colnames(reducedDim(spePP, "UMAP")) = c("UMAP1", "UMAP2")
 
 # UMAP plots
-dir.create(here::here("processed-data", "pilot_data_checks", "plots"), showWarnings = FALSE)
-pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_UMAP_spe.pdf"))
+dir.create(here::here("plots", "pilot_data_checks"), showWarnings = FALSE)
+pdf(file=here::here("plots", "pilot_data_checks", "hpc_UMAP_spe.pdf"))
 ggplot(data.frame(reducedDim(spePP, "UMAP")), 
        aes(x = UMAP1, y = UMAP2, color = factor(spePP$sample_id))) +
   geom_point() +
@@ -64,7 +64,7 @@ speH = RunHarmony(spePP, "sample_id", verbose = F)
 speH = runUMAP(speH, dimred = "HARMONY", name = "UMAP.HARMONY")
 colnames(reducedDim(speH, "UMAP.HARMONY")) = c("UMAP1", "UMAP2")
 
-pdf(file=here::here("processed-data", "pilot_data_checks", "plots", "hpc_UMAP_harmony.pdf"))
+pdf(file=here::here("plots", "pilot_data_checks", "hpc_UMAP_harmony.pdf"))
 ggplot(data.frame(reducedDim(speH, "UMAP.HARMONY")), 
        aes(x = UMAP1, y = UMAP2, color = factor(speH$sample_id))) +
   geom_point() +
