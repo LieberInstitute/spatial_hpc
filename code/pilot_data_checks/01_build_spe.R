@@ -109,47 +109,18 @@ segmentation_info <-
   )]
 colData(spe) <- cbind(colData(spe), segmentation_info)
 
-## Remove genes with no data
-no_expr <- which(rowSums(counts(spe)) == 0)
-length(no_expr)
-# [1] 8968
-length(no_expr) / nrow(spe) * 100
-# [1] 24.50206
-spe <- spe[-no_expr, ]
 
 ## raw SPE
 spe_raw = spe
 dir.create(here::here("processed-data", "pilot_data_checks"), showWarnings = FALSE)
 save(spe_raw,file = here::here("processed-data", "pilot_data_checks", "spe_raw.Rdata"))
 
+
 ## Size in Gb
 lobstr::obj_size(spe_raw) / 1024 ^ 3
 # 1.342667 
 dim(spe_raw)
 # [1] 27633 39936
-
-## Now drop the spots outside the tissue
-spe <- spe_raw[, spatialData(spe_raw)$in_tissue]
-
-## Size in Gb
-lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305857
-dim(spe)
-# [1] 27633 28871
-
-## Remove spots without counts
-if (any(colSums(counts(spe)) == 0)) {
-  message("removing spots without counts for spe")
-  spe <- spe[, -which(colSums(counts(spe)) == 0)]
-  dim(spe)
-}
-
-lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305857
-dim(spe)
-# [1] 27633 28871
-
-save(spe, file = here::here("processed-data", "pilot_data_checks", "spe.Rdata"))
 
 ## Reproducibility information
 print('Reproducibility information:')
