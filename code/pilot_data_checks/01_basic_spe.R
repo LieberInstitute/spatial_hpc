@@ -1,11 +1,13 @@
 
-#setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
-library("here")
-library("SpatialExperiment")
-library("spatialLIBD")
-library("rtracklayer")
-library("lobstr")
-library("sessioninfo")
+#cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
+suppressPackageStartupMessages(library("here"))
+#install.packages("remotes")
+#remotes::install_github("drighelli/SpatialExperiment")
+suppressPackageStartupMessages(library("SpatialExperiment"))
+suppressPackageStartupMessages(library("spatialLIBD"))
+suppressPackageStartupMessages(library("rtracklayer"))
+suppressPackageStartupMessages(library("lobstr"))
+suppressPackageStartupMessages(library("sessioninfo"))
 
 ## Define some info for the samples
 sample_info <- data.frame(
@@ -55,14 +57,14 @@ spe <- read10xVisiumWrapper(
 )
 Sys.time()
 
-# [1] "2022-02-17 14:05:30 EST"
-# 2022-02-17 14:05:31 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger
-# 2022-02-17 14:07:45 read10xVisiumAnalysis: reading analysis output from SpaceRanger
-# 2022-02-17 14:07:56 add10xVisiumAnalysis: adding analysis output from SpaceRanger
-# 2022-02-17 14:07:58 rtracklayer::import: reading the reference GTF file
-# 2022-02-17 14:09:22 adding gene information to the SPE object
-# 2022-02-17 14:09:23 adding information used by spatialLIBD
-# [1] "2022-02-17 14:09:30 EST"
+# [1] "2022-02-19 16:16:50 EST"
+# 2022-02-19 16:16:51 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger
+# 2022-02-19 16:17:39 read10xVisiumAnalysis: reading analysis output from SpaceRanger
+# 2022-02-19 16:17:40 add10xVisiumAnalysis: adding analysis output from SpaceRanger
+# 2022-02-19 16:17:41 rtracklayer::import: reading the reference GTF file
+# 2022-02-19 16:18:13 adding gene information to the SPE object
+# 2022-02-19 16:18:13 adding information used by spatialLIBD
+# [1] "2022-02-19 16:18:16 EST"
 
 ## Add the study design info
 add_design <- function(spe) {
@@ -116,7 +118,7 @@ save(spe_basic,file = here::here("processed-data", "pilot_data_checks", "spe_Bas
 
 ## Size in Gb
 lobstr::obj_size(spe_basic) / 1024 ^ 3
-# 1.345027 B
+# 1.344729 B
 dim(spe_basic)
 # [1] 36601 39936
 
@@ -129,12 +131,11 @@ session_info()
 
 
 # Reproducibility information
-# [1] "2022-02-17 14:27:02 EST"
-# proc.time()
+# [1] "2022-02-19 16:26:16 EST"
 # user   system  elapsed 
-# 554.785   31.026 9059.914 
-# options(width = 120)
-# ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────
+# 313.013   15.466 1453.319 
+# 
+# ─ Session info ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -144,10 +145,10 @@ session_info()
 # collate  en_US.UTF-8
 # ctype    en_US.UTF-8
 # tz       US/Eastern
-# date     2022-02-17
+# date     2022-02-19
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
-# ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────
+# ─ Packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # package                * version  date (UTC) lib source
 # AnnotationDbi            1.56.2   2021-11-09 [2] Bioconductor
 # AnnotationHub            3.2.1    2022-01-23 [2] Bioconductor
@@ -211,11 +212,11 @@ session_info()
 # GenomicAlignments        1.30.0   2021-10-26 [2] Bioconductor
 # GenomicRanges          * 1.46.1   2021-11-18 [2] Bioconductor
 # ggbeeswarm               0.6.0    2017-08-07 [1] CRAN (R 4.1.1)
-# ggplot2                  3.3.5    2021-06-25 [2] CRAN (R 4.1.0)
+# ggplot2                * 3.3.5    2021-06-25 [2] CRAN (R 4.1.0)
 # ggrepel                  0.9.1    2021-01-15 [2] CRAN (R 4.1.0)
 # glue                     1.6.1    2022-01-22 [2] CRAN (R 4.1.2)
 # golem                    0.3.1    2021-04-17 [1] CRAN (R 4.1.1)
-# gridExtra                2.3      2017-09-09 [2] CRAN (R 4.1.0)
+# gridExtra              * 2.3      2017-09-09 [2] CRAN (R 4.1.0)
 # gtable                   0.3.0    2019-03-25 [2] CRAN (R 4.1.0)
 # HDF5Array                1.22.1   2021-11-14 [2] Bioconductor
 # here                   * 1.0.1    2020-12-13 [1] CRAN (R 4.1.1)
@@ -235,7 +236,7 @@ session_info()
 # lattice                  0.20-45  2021-09-22 [3] CRAN (R 4.1.2)
 # lazyeval                 0.2.2    2019-03-15 [2] CRAN (R 4.1.0)
 # lifecycle                1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
-# limma                    3.50.0   2021-10-26 [2] Bioconductor
+# limma                    3.50.1   2022-02-17 [2] Bioconductor
 # lobstr                 * 1.1.1    2019-07-02 [2] CRAN (R 4.1.0)
 # locfit                   1.5-9.4  2020-03-25 [2] CRAN (R 4.1.0)
 # magick                   2.7.3    2021-08-18 [2] CRAN (R 4.1.2)
@@ -267,7 +268,7 @@ session_info()
 # RColorBrewer             1.1-2    2014-12-07 [2] CRAN (R 4.1.0)
 # Rcpp                     1.0.8    2022-01-13 [2] CRAN (R 4.1.2)
 # RCurl                    1.98-1.5 2021-09-17 [1] CRAN (R 4.1.2)
-# remotes                  2.4.2    2021-11-30 [2] CRAN (R 4.1.2)
+# remotes                  2.4.2    2021-11-30 [1] CRAN (R 4.1.2)
 # restfulr                 0.0.13   2017-08-06 [2] CRAN (R 4.1.0)
 # rhdf5                    2.38.0   2021-10-26 [2] Bioconductor
 # rhdf5filters             1.6.0    2021-10-26 [2] Bioconductor
@@ -294,7 +295,7 @@ session_info()
 # SingleCellExperiment   * 1.16.0   2021-10-26 [1] Bioconductor
 # spam                     2.8-0    2022-01-06 [2] CRAN (R 4.1.2)
 # sparseMatrixStats        1.6.0    2021-10-26 [1] Bioconductor
-# SpatialExperiment      * 1.4.0    2021-10-26 [1] Bioconductor
+# SpatialExperiment      * 1.5.2    2022-02-19 [1] Github (drighelli/SpatialExperiment@a4d45fd)
 # spatialLIBD            * 1.6.5    2022-01-12 [1] Bioconductor
 # stringi                  1.7.6    2021-11-29 [1] CRAN (R 4.1.2)
 # stringr                  1.4.0    2019-02-10 [2] CRAN (R 4.1.0)
@@ -315,7 +316,7 @@ session_info()
 # xml2                     1.3.3    2021-11-30 [2] CRAN (R 4.1.2)
 # xtable                   1.8-4    2019-04-21 [2] CRAN (R 4.1.0)
 # XVector                  0.34.0   2021-10-26 [2] Bioconductor
-# yaml                     2.2.2    2022-01-25 [2] CRAN (R 4.1.2)
+# yaml                     2.3.4    2022-02-17 [2] CRAN (R 4.1.2)
 # zlibbioc                 1.40.0   2021-10-26 [2] Bioconductor
 # 
 # [1] /users/mtippani/R/4.1.x
