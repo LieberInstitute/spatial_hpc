@@ -1,5 +1,3 @@
-library('SpatialExperiment')
-
 #   Return a copy of the input SpatialExperiment where a set of geometric
 #   transformations has been applied. These consist of an optional reflection
 #   (across the vertical axis prior to any rotation), an optional translation,
