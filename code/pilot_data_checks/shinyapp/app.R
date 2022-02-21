@@ -21,7 +21,7 @@ options(repos = BiocManager::repositories())
 # ln -s ../../../processed-data/pilot_data_checks/spe_raw.Rdata spe.Rdata
 
 ## Load the data
-load(file="spe_raw.Rdata", verbose = TRUE)
+load(file="spe.Rdata", verbose = TRUE)
 
 #speB$BayesSpace <- speB$spatial.cluster
 #speB$BayesSpace_initial <- speB$cluster.init
