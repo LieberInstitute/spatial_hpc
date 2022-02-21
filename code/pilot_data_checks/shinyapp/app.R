@@ -18,18 +18,18 @@ options(repos = BiocManager::repositories())
 ## Create a soft link to the data, otherwise rsconnect::deployApp doesn't work
 ## Note that soft link has to be relative to work
 # cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/pilot_data_checks/shinyapp/
-# ln -s ../../../processed-data/pilot_data_checks/spe_bayesSpace_50k.Rdata spe.Rdata
+# ln -s ../../../processed-data/pilot_data_checks/spe_raw.Rdata spe.Rdata
 
 ## Load the data
-load(file="spe.Rdata", verbose = TRUE)
+load(file="spe_raw.Rdata", verbose = TRUE)
 
-speB$BayesSpace <- speB$spatial.cluster
-speB$BayesSpace_initial <- speB$cluster.init
-vars <- colnames(colData(speB))
+#speB$BayesSpace <- speB$spatial.cluster
+#speB$BayesSpace_initial <- speB$cluster.init
+vars <- colnames(colData(spe_raw))
 
 ## Deploy the website
 spatialLIBD::run_app(
-  speB,
+  spe_raw,
   sce_layer = NULL,
   modeling_results = NULL,
   sig_genes = NULL,
@@ -37,8 +37,6 @@ spatialLIBD::run_app(
   spe_discrete_vars = c(
     vars[grep("^10x_", vars)],
     "ManualAnnotation",
-    "BayesSpace",
-    "BayesSpace_initial",
     "subject"
  #   "sex"
   ),
@@ -49,5 +47,5 @@ spatialLIBD::run_app(
     "expr_chrM_ratio",
     "age"
   ),
-  default_cluster = "BayesSpace"
+  default_cluster = "10x_graphclust"
 )
