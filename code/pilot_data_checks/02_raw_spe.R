@@ -10,7 +10,7 @@ suppressPackageStartupMessages(library("sessioninfo"))
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("gridExtra"))
   
-load(file=here::here("processed-data","pilot_data_checks","spe_Basic.Rdata"))
+load(file=here::here("processed-data","pilot_data_checks","spe_basic.Rdata"))
 
 # Rotations by sample:
 # V10B01-085_A1 = 90
@@ -22,45 +22,62 @@ load(file=here::here("processed-data","pilot_data_checks","spe_Basic.Rdata"))
 # V10B01-086_C1 = 0
 # V10B01-086_D1 = 180
   
-angle_list = c(180, 180, 180, 0, 0, 0, 180)
-sampleID = c('V10B01-085_B1', 'V10B01-085_C1', 'V10B01-085_D1', 'V10B01-086_A1', 'V10B01-086_B1', 'V10B01-086_C1',  'V10B01-086_D1')
+angle_list = c(90, 180, 180, 180, 0, 0, 0, 180)
+sampleID = c('V10B01-085_A1','V10B01-085_B1', 'V10B01-085_C1', 'V10B01-085_D1', 'V10B01-086_A1', 'V10B01-086_B1', 'V10B01-086_C1',  'V10B01-086_D1')
 source(file = here::here("code","pilot_data_checks","transform_spe.R"))
 
 pdf(file = here::here("plots", "pilot_data_checks", "ReferenceMapping.pdf"), h = 10, w = 20)
-
-id = 'V10B01-085_A1'
-spe = trans_geom(spe_basic, sample_id = id , degrees = 90)
-spe = rotateImg(spe, sample_id = id, image_id = TRUE, degrees = 90)
-orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
-xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
-
-p1=plot_spatial_coords(orig_spe, paste0(id," original"))
-p2=plot_spatial_coords(xnew, paste0(id," new"))
-grid.arrange(p1,p2,ncol=2)
-
-par(mfrow = c(1, 2))
-plot(imgRaster(spe_basic[, colData(spe_basic)$sample_id == id]), main= 'Original')
-plot(imgRaster(spe[, colData(spe)$sample_id == id]), main = 'New')
-
 for (i in seq_along(angle_list)){
 id = sampleID[i]
-x = trans_geom(spe_basic, sample_id = id, degrees = angle_list[i])
-spe = cbind(spe,x)
-spe = rotateImg(spe, sample_id = id, image_id = TRUE, degrees = angle_list[i])
+x = trans_geom(spe_basic, sample_id = id , degrees = 360-angle_list[i])
 
-orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
-xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
-
-p1 = plot_spatial_coords(orig_spe, 'Original Coords')
-p2 = plot_spatial_coords(xnew, 'New Coords')
-grid.arrange(p1,p2,ncol=2)
-
-par(mfrow = c(1, 2))
-plot(imgRaster(spe_basic[, colData(spe_basic)$sample_id == id]), main= 'Original')
-plot(imgRaster(spe[, colData(spe)$sample_id == id]), main = 'New')
+if (i==1) {
+  spe = x
+} else {
+  spe = cbind(spe,x)
 }
 
+spe = rotateImg(spe, sample_id = id, image_id = TRUE, angle_list[i])
+orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
+xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
+p1 = plotVisium(orig_spe,spots = TRUE,y_reverse = TRUE)
+p2 = plotVisium(xnew,spots = TRUE,y_reverse = TRUE)
+grid.arrange(p1,p2,ncol=2)
+}
 dev.off()
+
+# pdf(file = here::here("plots", "pilot_data_checks", "ReferenceMapping.pdf"), h = 10, w = 20)
+# id = 'V10B01-085_A1'
+# spe = trans_geom(spe_basic, sample_id = id , degrees = 90)
+# spe = rotateImg(spe, sample_id = id, image_id = TRUE, degrees = 90)
+# orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
+# xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
+# p1=plot_spatial_coords(orig_spe, paste0(id," original"))
+# p2=plot_spatial_coords(xnew, paste0(id," new"))
+# grid.arrange(p1,p2,ncol=2)
+# par(mfrow = c(1, 2))
+# plot(imgRaster(spe_basic[, colData(spe_basic)$sample_id == id]), main= 'Original')
+# plot(imgRaster(spe[, colData(spe)$sample_id == id]), main = 'New')
+# 
+# for (i in seq_along(angle_list)){
+# id = sampleID[i]
+# x = trans_geom(spe_basic, sample_id = id, degrees = angle_list[i])
+# spe = cbind(spe,x)
+# spe = rotateImg(spe, sample_id = id, image_id = TRUE, degrees = angle_list[i])
+# 
+# orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
+# xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
+# 
+# p1 = plot_spatial_coords(orig_spe, 'Original Coords')
+# p2 = plot_spatial_coords(xnew, 'New Coords')
+# grid.arrange(p1,p2,ncol=2)
+# 
+# par(mfrow = c(1, 2))
+# plot(imgRaster(spe_basic[, colData(spe_basic)$sample_id == id]), main= 'Original')
+# plot(imgRaster(spe[, colData(spe)$sample_id == id]), main = 'New')
+# }
+# 
+# dev.off()
 
 ## Remove genes with no data
 no_expr <- which(rowSums(counts(spe)) == 0)
@@ -75,7 +92,7 @@ spe <- spe[, colData(spe)$in_tissue]
 
 ## Size in Gb
 lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305865 B
+# 1.305859 B
 dim(spe)
 # [1] 27633 28871
 
@@ -87,7 +104,7 @@ if (any(colSums(counts(spe)) == 0)) {
 }
 
 lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305865 B
+# 1.305859 B
 dim(spe)
 # [1] 27633 28871
 
@@ -102,10 +119,10 @@ options(width = 120)
 session_info()
 
 # Reproducibility information
-# [1] "2022-02-19 19:37:53 EST"
+#  "2022-03-04 21:51:14 EST"
 # user   system  elapsed 
-# 391.855   18.563 3417.938 
-# ─ Session info ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# 1644.018   103.156 13174.481  
+# ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -115,13 +132,14 @@ session_info()
 # collate  en_US.UTF-8
 # ctype    en_US.UTF-8
 # tz       US/Eastern
-# date     2022-02-19
+# date     2022-03-04
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
-# ─ Packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# ─ Packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # package                * version  date (UTC) lib source
 # AnnotationDbi            1.56.2   2021-11-09 [2] Bioconductor
-# AnnotationHub            3.2.1    2022-01-23 [2] Bioconductor
+# AnnotationHub            3.2.2    2022-03-01 [2] Bioconductor
+# askpass                  1.1      2019-01-13 [2] CRAN (R 4.1.0)
 # assertthat               0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
 # attempt                  0.3.1    2020-05-03 [1] CRAN (R 4.1.1)
 # beachmat                 2.10.0   2021-10-26 [2] Bioconductor
@@ -148,7 +166,8 @@ session_info()
 # callr                    3.7.0    2021-04-20 [2] CRAN (R 4.1.0)
 # cli                      3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
 # codetools                0.2-18   2020-11-04 [3] CRAN (R 4.1.2)
-# colorspace               2.0-2    2021-06-24 [2] CRAN (R 4.1.0)
+# colorout               * 1.2-2    2022-03-04 [1] Github (jalvesaq/colorout@79931fd)
+# colorspace               2.0-3    2022-02-21 [2] CRAN (R 4.1.2)
 # config                   0.3.1    2020-12-17 [1] CRAN (R 4.1.1)
 # cowplot                  1.1.1    2020-12-30 [1] CRAN (R 4.1.1)
 # crayon                   1.5.0    2022-02-14 [2] CRAN (R 4.1.2)
@@ -160,13 +179,12 @@ session_info()
 # DelayedMatrixStats       1.16.0   2021-10-26 [1] Bioconductor
 # desc                     1.4.0    2021-09-28 [2] CRAN (R 4.1.2)
 # digest                   0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
-# dockerfiler              0.1.4    2021-09-03 [1] CRAN (R 4.1.1)
 # doParallel               1.0.17   2022-02-07 [2] CRAN (R 4.1.2)
 # dotCall64                1.0-1    2021-02-11 [2] CRAN (R 4.1.0)
 # dplyr                    1.0.8    2022-02-08 [2] CRAN (R 4.1.2)
 # dqrng                    0.3.0    2021-05-01 [1] CRAN (R 4.1.1)
 # DropletUtils             1.14.2   2022-01-09 [1] Bioconductor
-# DT                       0.20     2021-11-15 [2] CRAN (R 4.1.2)
+# DT                       0.21     2022-02-26 [2] CRAN (R 4.1.2)
 # edgeR                    3.36.0   2021-10-26 [1] Bioconductor
 # ellipsis                 0.3.2    2021-04-29 [2] CRAN (R 4.1.0)
 # ExperimentHub            2.2.1    2022-01-23 [2] Bioconductor
@@ -185,8 +203,10 @@ session_info()
 # ggbeeswarm               0.6.0    2017-08-07 [1] CRAN (R 4.1.1)
 # ggplot2                * 3.3.5    2021-06-25 [2] CRAN (R 4.1.0)
 # ggrepel                  0.9.1    2021-01-15 [2] CRAN (R 4.1.0)
-# glue                     1.6.1    2022-01-22 [2] CRAN (R 4.1.2)
-# golem                    0.3.1    2021-04-17 [1] CRAN (R 4.1.1)
+# ggside                   0.2.0    2021-12-11 [2] CRAN (R 4.1.2)
+# ggspavis               * 1.1.6    2022-03-04 [1] Github (lmweber/ggspavis@1b1c75c)
+# glue                     1.6.2    2022-02-24 [2] CRAN (R 4.1.2)
+# golem                    0.3.2    2022-03-04 [1] CRAN (R 4.1.2)
 # gridExtra              * 2.3      2017-09-09 [2] CRAN (R 4.1.0)
 # gtable                   0.3.0    2019-03-25 [2] CRAN (R 4.1.0)
 # HDF5Array                1.22.1   2021-11-14 [2] Bioconductor
@@ -200,7 +220,7 @@ session_info()
 # irlba                    2.3.5    2021-12-06 [2] CRAN (R 4.1.2)
 # iterators                1.0.14   2022-02-05 [2] CRAN (R 4.1.2)
 # jquerylib                0.1.4    2021-04-26 [2] CRAN (R 4.1.0)
-# jsonlite                 1.7.3    2022-01-17 [2] CRAN (R 4.1.2)
+# jsonlite                 1.8.0    2022-02-22 [2] CRAN (R 4.1.2)
 # KEGGREST                 1.34.0   2021-10-26 [2] Bioconductor
 # knitr                    1.37     2021-12-16 [2] CRAN (R 4.1.2)
 # labeling                 0.4.2    2020-10-20 [2] CRAN (R 4.1.0)
@@ -210,7 +230,7 @@ session_info()
 # lifecycle                1.0.1    2021-09-24 [2] CRAN (R 4.1.2)
 # limma                    3.50.1   2022-02-17 [2] Bioconductor
 # lobstr                 * 1.1.1    2019-07-02 [2] CRAN (R 4.1.0)
-# locfit                   1.5-9.4  2020-03-25 [2] CRAN (R 4.1.0)
+# locfit                   1.5-9.5  2022-03-03 [2] CRAN (R 4.1.2)
 # magick                   2.7.3    2021-08-18 [2] CRAN (R 4.1.2)
 # magrittr                 2.0.2    2022-01-26 [2] CRAN (R 4.1.2)
 # maps                     3.4.0    2021-09-25 [2] CRAN (R 4.1.2)
@@ -220,6 +240,8 @@ session_info()
 # memoise                  2.0.1    2021-11-26 [2] CRAN (R 4.1.2)
 # mime                     0.12     2021-09-28 [2] CRAN (R 4.1.2)
 # munsell                  0.5.0    2018-06-12 [2] CRAN (R 4.1.0)
+# openssl                  2.0.0    2022-03-02 [1] CRAN (R 4.1.2)
+# packrat                  0.7.0    2021-08-20 [2] CRAN (R 4.1.2)
 # pillar                   1.7.0    2022-02-01 [2] CRAN (R 4.1.2)
 # pkgbuild                 1.3.1    2021-12-20 [2] CRAN (R 4.1.2)
 # pkgconfig                2.0.3    2019-09-22 [2] CRAN (R 4.1.0)
@@ -239,17 +261,18 @@ session_info()
 # rappdirs                 0.3.3    2021-01-31 [2] CRAN (R 4.1.0)
 # RColorBrewer             1.1-2    2014-12-07 [2] CRAN (R 4.1.0)
 # Rcpp                     1.0.8    2022-01-13 [2] CRAN (R 4.1.2)
-# RCurl                    1.98-1.5 2021-09-17 [1] CRAN (R 4.1.2)
+# RCurl                    1.98-1.6 2022-02-08 [1] CRAN (R 4.1.2)
 # remotes                  2.4.2    2021-11-30 [1] CRAN (R 4.1.2)
 # restfulr                 0.0.13   2017-08-06 [2] CRAN (R 4.1.0)
 # rhdf5                    2.38.0   2021-10-26 [2] Bioconductor
 # rhdf5filters             1.6.0    2021-10-26 [2] Bioconductor
 # Rhdf5lib                 1.16.0   2021-10-26 [2] Bioconductor
 # rjson                    0.2.21   2022-01-09 [2] CRAN (R 4.1.2)
-# rlang                    1.0.1    2022-02-03 [2] CRAN (R 4.1.2)
+# rlang                    1.0.2    2022-03-04 [1] CRAN (R 4.1.2)
 # roxygen2                 7.1.2    2021-09-08 [2] CRAN (R 4.1.2)
 # rprojroot                2.0.2    2020-11-15 [2] CRAN (R 4.1.0)
 # Rsamtools                2.10.0   2021-10-26 [2] Bioconductor
+# rsconnect              * 0.8.25   2021-11-19 [2] CRAN (R 4.1.2)
 # RSQLite                  2.2.10   2022-02-17 [2] CRAN (R 4.1.2)
 # rstudioapi               0.13     2020-11-12 [2] CRAN (R 4.1.0)
 # rsvd                     1.0.5    2021-04-16 [1] CRAN (R 4.1.1)
@@ -263,38 +286,36 @@ session_info()
 # scuttle                  1.4.0    2021-10-26 [1] Bioconductor
 # sessioninfo            * 1.2.2    2021-12-06 [1] CRAN (R 4.1.2)
 # shiny                    1.7.1    2021-10-02 [2] CRAN (R 4.1.2)
-# shinyWidgets             0.6.3    2022-01-10 [1] CRAN (R 4.1.2)
+# shinyWidgets             0.6.4    2022-02-06 [1] CRAN (R 4.1.2)
 # SingleCellExperiment   * 1.16.0   2021-10-26 [1] Bioconductor
 # spam                     2.8-0    2022-01-06 [2] CRAN (R 4.1.2)
 # sparseMatrixStats        1.6.0    2021-10-26 [1] Bioconductor
-# SpatialExperiment      * 1.5.2    2022-02-19 [1] Github (drighelli/SpatialExperiment@a4d45fd)
-# spatialLIBD            * 1.6.5    2022-01-12 [1] Bioconductor
+# SpatialExperiment      * 1.5.3    2022-03-04 [1] Github (drighelli/SpatialExperiment@caa4209)
+# spatialLIBD            * 1.7.13   2022-03-04 [1] Github (LieberInstitute/spatialLIBD@c6a0e18)
 # stringi                  1.7.6    2021-11-29 [1] CRAN (R 4.1.2)
 # stringr                  1.4.0    2019-02-10 [2] CRAN (R 4.1.0)
 # SummarizedExperiment   * 1.24.0   2021-10-26 [1] Bioconductor
 # testthat                 3.1.2    2022-01-20 [2] CRAN (R 4.1.2)
 # tibble                   3.1.6    2021-11-07 [1] CRAN (R 4.1.2)
 # tidyr                    1.2.0    2022-02-01 [2] CRAN (R 4.1.2)
-# tidyselect               1.1.1    2021-04-30 [2] CRAN (R 4.1.0)
+# tidyselect               1.1.2    2022-02-21 [2] CRAN (R 4.1.2)
 # usethis                  2.1.5    2021-12-09 [2] CRAN (R 4.1.2)
 # utf8                     1.2.2    2021-07-24 [2] CRAN (R 4.1.0)
 # vctrs                    0.3.8    2021-04-29 [2] CRAN (R 4.1.0)
 # vipor                    0.4.5    2017-03-22 [1] CRAN (R 4.1.1)
 # viridis                  0.6.2    2021-10-13 [2] CRAN (R 4.1.2)
 # viridisLite              0.4.0    2021-04-13 [2] CRAN (R 4.1.0)
-# withr                    2.4.3    2021-11-30 [2] CRAN (R 4.1.2)
-# xfun                     0.29     2021-12-14 [2] CRAN (R 4.1.2)
-# XML                      3.99-0.8 2021-09-17 [2] CRAN (R 4.1.2)
+# withr                    2.5.0    2022-03-03 [2] CRAN (R 4.1.2)
+# xfun                     0.30     2022-03-02 [2] CRAN (R 4.1.2)
+# XML                      3.99-0.9 2022-02-24 [2] CRAN (R 4.1.2)
 # xml2                     1.3.3    2021-11-30 [2] CRAN (R 4.1.2)
 # xtable                   1.8-4    2019-04-21 [2] CRAN (R 4.1.0)
 # XVector                  0.34.0   2021-10-26 [2] Bioconductor
-# yaml                     2.3.4    2022-02-17 [2] CRAN (R 4.1.2)
+# yaml                     2.3.5    2022-02-21 [2] CRAN (R 4.1.2)
 # zlibbioc                 1.40.0   2021-10-26 [2] Bioconductor
 # 
 # [1] /users/mtippani/R/4.1.x
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 # 
-# ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-# 
-#   
+# ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
