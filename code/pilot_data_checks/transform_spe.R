@@ -81,11 +81,11 @@ trans_geom = function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degree
   
   #   When performing the rotation, we want the coordinates to be centered at
   #   the origin
-  x_center = (max(spatialCoords(x)[,1]) + min(spatialCoords(x)[,1])) / 2
-  y_center = (max(spatialCoords(x)[,2]) + min(spatialCoords(x)[,2])) / 2
+  x_center = (max(spatialCoords(x)[,'pxl_col_in_fullres']) + min(spatialCoords(x)[,'pxl_col_in_fullres'])) / 2
+  y_center = (max(spatialCoords(x)[,'pxl_row_in_fullres']) + min(spatialCoords(x)[,'pxl_row_in_fullres'])) / 2
   dist_to_origin = c(x_center, y_center)
   
-  #   Perform geometric transformation(s)
+  # Perform geometric transformation(s)
   new_coords = t(spatialCoords(x)) - dist_to_origin   # center at origin
   new_coords = refl_vec * new_coords                  # reflect across v. axis
   new_coords = rotation_mat %*% new_coords            # rotate about origin
@@ -93,13 +93,13 @@ trans_geom = function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degree
   
   colnames(new_coords) = colnames(spatialCoords(x))
   
-  #   Verify the center of the points has moved exactly by 'trans'
+  # Verify the center of the points has moved exactly by 'trans'
   new_x_center = (max(new_coords[,1]) + min(new_coords[,1])) / 2
   new_y_center = (max(new_coords[,2]) + min(new_coords[,2])) / 2
   new_dist_to_origin = c(new_x_center, new_y_center)
   stopifnot(all(new_dist_to_origin - dist_to_origin - trans < tol))
   
-  #   Ensure points are at integer values
+  # Ensure points are at integer values
   new_coords = round(new_coords)
   
   #   Return a copy of the SpatialExperiment with the new coordinates
@@ -126,13 +126,18 @@ transform_spe = function(x, refl = FALSE, trans = c(0, 0), degrees = 0) {
 xlab = "spatialCoords axis 2"
 ylab = "spatialCoords axis 1"
 
+#   Given a SpatialExperiment object 'x', plot the 'spatialCoords' in the same
+#   orientation as 'plot(imgRaster(x))'. Note the names of the 'spatialCoords'
+#   columns were swapped (a bug) until a recent update to SpatialExperiment
+#   under Bioc 3.15, so this function works properly since Bioc 3.15.
 plot_spatial_coords = function(x, title) {
   ggplot(
     data.frame(spatialCoords(x)),
-    aes(x = spatialCoords(x)[,2], y = spatialCoords(x)[,1])
-  ) +
+    aes(x = pxl_col_in_fullres, y = pxl_row_in_fullres)
+  ) + 
     geom_point() +
+    coord_fixed() +
     scale_y_reverse() +
-    labs(title = title, x = xlab, y = ylab)
+    labs(title = title)
 }
 
