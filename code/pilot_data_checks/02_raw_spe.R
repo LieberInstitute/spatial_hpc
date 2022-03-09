@@ -47,6 +47,25 @@ grid.arrange(p1,p2,ncol=2)
 }
 dev.off()
 
+#change order of arrays for sample alignment
+slide_order = c("V10B01-085","V10B01-086")
+sample_order <- unlist(sapply(slide_order, function(i) {
+  sort(unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
+}))
+sample_order
+
+newSlide_order = matrix(c("V10B01-085_B1","V10B01-085_A1","V10B01-085_D1","V10B01-085_C1",
+                     "V10B01-086_A1","V10B01-086_B1","V10B01-086_C1","V10B01-086_D1"),
+                   nrow=4)
+colnames(newSlide_order) = slide_order
+
+new_order <- unlist(lapply(newSlide_order, function(i) {
+  which(spe$sample_id == i)
+}))
+
+stopifnot(all(seq_len(ncol(spe)) %in% new_order))
+spe = spe[,new_order]
+
 # pdf(file = here::here("plots", "pilot_data_checks", "ReferenceMapping.pdf"), h = 10, w = 20)
 # id = 'V10B01-085_A1'
 # spe = trans_geom(spe_basic, sample_id = id , degrees = 90)
@@ -120,11 +139,11 @@ options(width = 120)
 session_info()
 
 # Reproducibility information
-# [1] "2022-03-09 09:57:21 EST"
+# [1] "2022-03-09 12:28:46 EST"
 # user   system  elapsed 
-# 642.409   32.045 1629.014 
+# 295.797   16.177 4168.846 
 # 
-# ─ Session info ───────────────────────────────────────────────────────────────
+# ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -137,7 +156,7 @@ session_info()
 # date     2022-03-09
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
-# ─ Packages ───────────────────────────────────────────────────────────────────
+# ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # package                * version  date (UTC) lib source
 # AnnotationDbi            1.56.2   2021-11-09 [2] Bioconductor
 # AnnotationHub            3.2.2    2022-03-01 [2] Bioconductor
@@ -310,4 +329,4 @@ session_info()
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 # 
-# ──────────────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
