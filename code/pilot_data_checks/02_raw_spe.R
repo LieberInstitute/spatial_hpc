@@ -9,6 +9,7 @@ suppressPackageStartupMessages(library("lobstr"))
 suppressPackageStartupMessages(library("sessioninfo"))
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("gridExtra"))
+suppressPackageStartupMessages(library("ggspavis"))
   
 load(file=here::here("processed-data","pilot_data_checks","spe_basic.Rdata"))
 
@@ -29,7 +30,7 @@ source(file = here::here("code","pilot_data_checks","transform_spe.R"))
 pdf(file = here::here("plots", "pilot_data_checks", "ReferenceMapping.pdf"), h = 10, w = 20)
 for (i in seq_along(angle_list)){
 id = sampleID[i]
-x = trans_geom(spe_basic, sample_id = id , degrees = 360-angle_list[i])
+x = trans_geom(spe_basic, sample_id = id , degrees = angle_list[i])
 
 if (i==1) {
   spe = x
@@ -119,10 +120,11 @@ options(width = 120)
 session_info()
 
 # Reproducibility information
-#  "2022-03-04 21:51:14 EST"
+# [1] "2022-03-09 09:57:21 EST"
 # user   system  elapsed 
-# 1644.018   103.156 13174.481  
-# ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# 642.409   32.045 1629.014 
+# 
+# ─ Session info ───────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
 # os       CentOS Linux 7 (Core)
@@ -132,14 +134,13 @@ session_info()
 # collate  en_US.UTF-8
 # ctype    en_US.UTF-8
 # tz       US/Eastern
-# date     2022-03-04
+# date     2022-03-09
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
 # 
-# ─ Packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# ─ Packages ───────────────────────────────────────────────────────────────────
 # package                * version  date (UTC) lib source
 # AnnotationDbi            1.56.2   2021-11-09 [2] Bioconductor
 # AnnotationHub            3.2.2    2022-03-01 [2] Bioconductor
-# askpass                  1.1      2019-01-13 [2] CRAN (R 4.1.0)
 # assertthat               0.2.1    2019-03-21 [2] CRAN (R 4.1.0)
 # attempt                  0.3.1    2020-05-03 [1] CRAN (R 4.1.1)
 # beachmat                 2.10.0   2021-10-26 [2] Bioconductor
@@ -163,7 +164,6 @@ session_info()
 # brio                     1.1.3    2021-11-30 [2] CRAN (R 4.1.2)
 # bslib                    0.3.1    2021-10-06 [2] CRAN (R 4.1.2)
 # cachem                   1.0.6    2021-08-19 [2] CRAN (R 4.1.2)
-# callr                    3.7.0    2021-04-20 [2] CRAN (R 4.1.0)
 # cli                      3.2.0    2022-02-14 [2] CRAN (R 4.1.2)
 # codetools                0.2-18   2020-11-04 [3] CRAN (R 4.1.2)
 # colorout               * 1.2-2    2022-03-04 [1] Github (jalvesaq/colorout@79931fd)
@@ -177,7 +177,7 @@ session_info()
 # dbplyr                   2.1.1    2021-04-06 [2] CRAN (R 4.1.0)
 # DelayedArray             0.20.0   2021-10-26 [1] Bioconductor
 # DelayedMatrixStats       1.16.0   2021-10-26 [1] Bioconductor
-# desc                     1.4.0    2021-09-28 [2] CRAN (R 4.1.2)
+# desc                     1.4.1    2022-03-06 [2] CRAN (R 4.1.2)
 # digest                   0.6.29   2021-12-01 [2] CRAN (R 4.1.2)
 # doParallel               1.0.17   2022-02-07 [2] CRAN (R 4.1.2)
 # dotCall64                1.0-1    2021-02-11 [2] CRAN (R 4.1.0)
@@ -240,19 +240,13 @@ session_info()
 # memoise                  2.0.1    2021-11-26 [2] CRAN (R 4.1.2)
 # mime                     0.12     2021-09-28 [2] CRAN (R 4.1.2)
 # munsell                  0.5.0    2018-06-12 [2] CRAN (R 4.1.0)
-# openssl                  2.0.0    2022-03-02 [1] CRAN (R 4.1.2)
-# packrat                  0.7.0    2021-08-20 [2] CRAN (R 4.1.2)
 # pillar                   1.7.0    2022-02-01 [2] CRAN (R 4.1.2)
-# pkgbuild                 1.3.1    2021-12-20 [2] CRAN (R 4.1.2)
 # pkgconfig                2.0.3    2019-09-22 [2] CRAN (R 4.1.0)
 # pkgload                  1.2.4    2021-11-30 [2] CRAN (R 4.1.2)
 # plotly                   4.10.0   2021-10-09 [2] CRAN (R 4.1.2)
 # png                      0.1-7    2013-12-03 [2] CRAN (R 4.1.0)
 # Polychrome               1.3.1    2021-07-16 [1] CRAN (R 4.1.1)
-# prettyunits              1.1.1    2020-01-24 [2] CRAN (R 4.1.0)
-# processx                 3.5.2    2021-04-30 [2] CRAN (R 4.1.0)
 # promises                 1.2.0.1  2021-02-11 [2] CRAN (R 4.1.0)
-# ps                       1.6.0    2021-02-28 [2] CRAN (R 4.1.0)
 # purrr                    0.3.4    2020-04-17 [2] CRAN (R 4.1.0)
 # R.methodsS3              1.8.1    2020-08-26 [2] CRAN (R 4.1.0)
 # R.oo                     1.24.0   2020-08-26 [2] CRAN (R 4.1.0)
@@ -262,7 +256,6 @@ session_info()
 # RColorBrewer             1.1-2    2014-12-07 [2] CRAN (R 4.1.0)
 # Rcpp                     1.0.8    2022-01-13 [2] CRAN (R 4.1.2)
 # RCurl                    1.98-1.6 2022-02-08 [1] CRAN (R 4.1.2)
-# remotes                  2.4.2    2021-11-30 [1] CRAN (R 4.1.2)
 # restfulr                 0.0.13   2017-08-06 [2] CRAN (R 4.1.0)
 # rhdf5                    2.38.0   2021-10-26 [2] Bioconductor
 # rhdf5filters             1.6.0    2021-10-26 [2] Bioconductor
@@ -272,7 +265,6 @@ session_info()
 # roxygen2                 7.1.2    2021-09-08 [2] CRAN (R 4.1.2)
 # rprojroot                2.0.2    2020-11-15 [2] CRAN (R 4.1.0)
 # Rsamtools                2.10.0   2021-10-26 [2] Bioconductor
-# rsconnect              * 0.8.25   2021-11-19 [2] CRAN (R 4.1.2)
 # RSQLite                  2.2.10   2022-02-17 [2] CRAN (R 4.1.2)
 # rstudioapi               0.13     2020-11-12 [2] CRAN (R 4.1.0)
 # rsvd                     1.0.5    2021-04-16 [1] CRAN (R 4.1.1)
@@ -318,4 +310,4 @@ session_info()
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
 # 
-# ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
