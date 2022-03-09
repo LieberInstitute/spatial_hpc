@@ -20,7 +20,10 @@
 #           rotation, in degrees, to apply about the center of the coordinates.
 #           This is currently expected to be a multiple of 90 degrees.
 trans_geom = function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degrees = 0) {
-  tol = 1e-8
+  x_name = "pxl_col_in_fullres"
+  y_name = "pxl_row_in_fullres"
+  
+  stopifnot(all(spatialCoordsNames(x) == c(x_name, y_name)))
   
   # 'degrees' should be a single numeric divisible by 90
   stopifnot(
@@ -61,9 +64,9 @@ trans_geom = function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degree
     x = x[, colData(x)$sample_id == sample_id]
   }
   
-  #   For consistency with 'rotateImg', we use degrees and consider the
-  #   clockwise direction positive
-  radians = -1 * degrees * pi / 180
+  #   For consistency with 'rotateImg', we use degrees. Note that positive
+  #   angles represent counter-clockwise rotations
+  radians = degrees * pi / 180
   
   if (refl) {
     refl_vec = c(-1, 1)
@@ -79,33 +82,43 @@ trans_geom = function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degree
     nrow = 2
   )
   
-  #   When performing the rotation, we want the coordinates to be centered at
-  #   the origin
-  x_center = (max(spatialCoords(x)[,'pxl_col_in_fullres']) + min(spatialCoords(x)[,'pxl_col_in_fullres'])) / 2
-  y_center = (max(spatialCoords(x)[,'pxl_row_in_fullres']) + min(spatialCoords(x)[,'pxl_row_in_fullres'])) / 2
-  dist_to_origin = c(x_center, y_center)
+  #   Get the dimensions of the "rectangle" containing the set of
+  #   spatialCoords within the object
+  dim_max = dim(imgRaster(x)) / scaleFactors(x)[1]
   
-  # Perform geometric transformation(s)
-  new_coords = t(spatialCoords(x)) - dist_to_origin   # center at origin
-  new_coords = refl_vec * new_coords                  # reflect across v. axis
-  new_coords = rotation_mat %*% new_coords            # rotate about origin
-  new_coords = t(new_coords + dist_to_origin + trans) # re-center + translate
+  new_coords = refl_vec * t(spatialCoords(x)) # reflect across v. axis
   
+  #   If reflecting across v. axis, return "rectangle" to its original
+  #   location
+  if (refl) { 
+    new_coords = new_coords + c(dim_max[2], 0)
+  }
+  
+  new_coords = rotation_mat %*% new_coords    # rotate about origin
+  
+  #   Since the rotation is about the origin, we'll need to return the
+  #   "rectangle" such that its top left corner is at the spot where its
+  #   previous top left corner was
+  if (degrees %% 360 == 90) {
+    new_coords = new_coords + c(dim_max[1], 0)
+  } else if (degrees %% 360 == 180) {
+    new_coords = new_coords + rev(dim_max)
+  } else if (degrees %% 360 == 270) {
+    new_coords = new_coords + c(0, dim_max[2])
+  }
+  
+  new_coords = t(new_coords + trans)         # transpose and translate  
+  #   Add names to spatialCoords of the new object
   colnames(new_coords) = colnames(spatialCoords(x))
   
-  # Verify the center of the points has moved exactly by 'trans'
-  new_x_center = (max(new_coords[,1]) + min(new_coords[,1])) / 2
-  new_y_center = (max(new_coords[,2]) + min(new_coords[,2])) / 2
-  new_dist_to_origin = c(new_x_center, new_y_center)
-  stopifnot(all(new_dist_to_origin - dist_to_origin - trans < tol))
-  
-  # Ensure points are at integer values
+  #   Ensure points are at integer values
   new_coords = round(new_coords)
   
   #   Return a copy of the SpatialExperiment with the new coordinates
   spatialCoords(x) = new_coords
   return(x)
 }
+
 
 #   Transform both the 'spatialCoords' and 'imgData' of a SpatialExperiment
 #   object, returning the transformed copy of the full object.
@@ -122,9 +135,6 @@ transform_spe = function(x, refl = FALSE, trans = c(0, 0), degrees = 0) {
   
   return(x)
 }
-
-xlab = "spatialCoords axis 2"
-ylab = "spatialCoords axis 1"
 
 #   Given a SpatialExperiment object 'x', plot the 'spatialCoords' in the same
 #   orientation as 'plot(imgRaster(x))'. Note the names of the 'spatialCoords'
