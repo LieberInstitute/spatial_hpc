@@ -17,3 +17,6 @@ A1$array = "A1"
 B1$array = "B1"
 C1$array = "C1"
 D1$array = "D1"
+
+REDCap_table = rbind(A1,B1,C1,D1)
+REDCap_HPC = REDCap_table[which(REDCap_table$project == "spatialHPC_LIBD4035"),]
