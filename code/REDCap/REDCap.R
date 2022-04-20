@@ -30,3 +30,6 @@ Samples = unique(paste0(REDCap_HPC$slide,"_",REDCap_HPC$array))
 write.table(Samples,file = (here::here("code","samples.txt")),row.names = FALSE, col.names = FALSE)
 
 save(REDCap_HPC, file = (here::here("code","REDCap_HPC.rda")))
+
+##https://jhu-genomics.slack.com/archives/CR9NYA0BF/p1650383126365919
+dir.create(here::here("raw-data","FAST","2022-04-12"))
