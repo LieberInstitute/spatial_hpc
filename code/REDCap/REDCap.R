@@ -31,11 +31,18 @@ write.table(Samples,file = (here::here("code","samples.txt")),row.names = FALSE,
 
 save(REDCap_HPC, file = (here::here("code","REDCap_HPC.rda")))
 
-##https://jhu-genomics.slack.com/archives/CR9NYA0BF/p1650383126365919
+##https://jhu-genomics.slack.com/archives/CR9NYA0BF/p1650383126365919 
+##/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2022-04-12_SPag033122/
 dir.create(here::here("raw-data","FASTQ","2022-04-12"))
 
-samples = subset(REDCap_HPC, select = c("date","slide","array"))
+samples = subset(REDCap_HPC, select = c("date","slide","array","sample_number"))
 samples$date = as.Date(samples$date)
-samples[samples$date > "2021-10-06",]
+samples = samples[samples$date > "2021-10-06",]
+samples$rawFASTQ = paste0("/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2022-04-12_SPag033122/",samples$sample_number,"*")
+samples$softlink = paste("raw-data","FASTQ","2022-04-12", paste0(samples$slide,"_",samples$array,"/"), sep = "/")
+sapply(samples$softlink, dir.create) 
 
-sapply(here::here("raw-data","FASTQ","2022-04-12", paste(samples$slide,samples$array,sep = "_")), dir.create) 
+temp = as.factor(paste("ln -s", samples$rawFASTQ, samples$softlink))
+
+write.table(temp,file = (here::here("raw-data","FASTQ","2022-04-12","READMe.md")),row.names = FALSE, col.names = FALSE, quote = FALSE)
+
