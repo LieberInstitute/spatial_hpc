@@ -32,4 +32,10 @@ write.table(Samples,file = (here::here("code","samples.txt")),row.names = FALSE,
 save(REDCap_HPC, file = (here::here("code","REDCap_HPC.rda")))
 
 ##https://jhu-genomics.slack.com/archives/CR9NYA0BF/p1650383126365919
-dir.create(here::here("raw-data","FAST","2022-04-12"))
+dir.create(here::here("raw-data","FASTQ","2022-04-12"))
+
+samples = subset(REDCap_HPC, select = c("date","slide","array"))
+samples$date = as.Date(samples$date)
+samples[samples$date > "2021-10-06",]
+
+sapply(here::here("raw-data","FASTQ","2022-04-12", paste(samples$slide,samples$array,sep = "_")), dir.create) 
