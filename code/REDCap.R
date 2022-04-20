@@ -20,3 +20,6 @@ D1$array = "D1"
 
 REDCap_table = rbind(A1,B1,C1,D1)
 REDCap_HPC = REDCap_table[which(REDCap_table$project == "spatialHPC_LIBD4035"),]
+
+Brain_nums = unique(REDCap_HPC$sample)
+write.table(Brain_nums, file = (here::here("code","BrainList_for_Geo.txt")))
