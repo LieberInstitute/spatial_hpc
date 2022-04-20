@@ -44,5 +44,5 @@ sapply(samples$softlink, dir.create)
 
 temp = as.factor(paste("ln -s", samples$rawFASTQ, samples$softlink))
 
-write.table(temp,file = (here::here("raw-data","FASTQ","2022-04-12","READMe.md")),row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(temp,file = (here::here("raw-data","FASTQ","2022-04-12","README.md")),row.names = FALSE, col.names = FALSE, quote = FALSE)
 
