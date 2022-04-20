@@ -19,10 +19,14 @@ C1$array = "C1"
 D1$array = "D1"
 
 REDCap_table = rbind(A1,B1,C1,D1)
+REDCap_table = REDCap_table[order(REDCap_table$slide),]
+
 REDCap_HPC = REDCap_table[which(REDCap_table$project == "spatialHPC_LIBD4035"),]
 
 Brain_nums = unique(REDCap_HPC$sample)
 write.table(Brain_nums, file = (here::here("code","BrainList_for_Geo.txt")),row.names = FALSE, col.names = FALSE)
 
 Samples = unique(paste0(REDCap_HPC$slide,"_",REDCap_HPC$array))
-write.table(Samples,file = (here::here("code","samples.txt"))
+write.table(Samples,file = (here::here("code","samples.txt")),row.names = FALSE, col.names = FALSE)
+
+save(REDCap_HPC, file = (here::here("code","REDCap_HPC.rda")))
