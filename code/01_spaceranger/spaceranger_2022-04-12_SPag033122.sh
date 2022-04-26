@@ -33,10 +33,11 @@ date
 ## Get slide and area
 SLIDE=$(echo ${SAMPLE} | cut -d "_" -f 1)
 CAPTUREAREA=$(echo ${SAMPLE} | cut -d "_" -f 2)
+SAM=$(paste <(echo ${SLIDE}) <(echo "-") <(echo ${CAPTUREAREA}) -d '')
 echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}"
 
 ## Find FASTQ file path
-FASTQPATH2022-04-12=$(ls -d ../../raw-data/FASTQ/2022-04-12_SPag033122/${SAMPLE}/)
+FASTQPATH=$(ls -d /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/FASTQ/2022-04-12_SPag033122/${SAMPLE}/)
 
 ## Hank from 10x Genomics recommended setting this environment
 export NUMBA_NUM_THREADS=1
@@ -45,11 +46,11 @@ export NUMBA_NUM_THREADS=1
 spaceranger count \
     --id=${SAMPLE} \
     --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A \
-    --fastqs=${FASTQPATH2022-04-12}\
-    --image=../../processed-data/Images/VistoSeg/Capture_areas/${SAMPLE}.tif \
+    --fastqs=${FASTQPATH}\
+    --image=/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/${SAMPLE}.tif \
     --slide=${SLIDE} \
     --area=${CAPTUREAREA} \
-    --loupe-alignment=../../processed-data/Images/loupe-alignment/${SAMPLE}.json \
+    --loupe-alignment=/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/loupe-alignment/${SAM}.json \
     --jobmode=local \
     --localcores=8 \
     --localmem=64
@@ -57,8 +58,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/spaceranger_2022-04-12_SPag033122/
-mv ${SAMPLE} ../../processed-data/spaceranger_2022-04-12_SPag033122/
+mkdir -p /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spaceranger_2022-04-12_SPag033122/
+mv ${SAMPLE} /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spaceranger_2022-04-12_SPag033122/
 
 echo "**** Job ends ****"
 date
