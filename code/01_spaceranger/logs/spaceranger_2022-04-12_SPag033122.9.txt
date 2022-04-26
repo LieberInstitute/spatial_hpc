@@ -1,0 +1,79 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Tue Apr 26 12:40:19 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 9934210
+Job name: spatialHPC_spaceranger_2022-04-12
+Hostname: compute-098.cm.cluster
+Task id: 9
+Loading LIBD module for spaceranger/1.3.1
+Reference files, for use with the '--transcriptome' argument, can be accessed
+or downloaded into /dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x. 
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV  11) ruby/2.6.4p104
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV      12) rmate/1.5.9
+  3) JHPCE_tools/1.0   8) git-status-size/github         13) conda/3-4.6.14
+  4) sge/8.1.9         9) git/2.28.0                     14) conda_R/4.1.x
+  5) gcc/4.4.7        10) git-lfs/2.8.0                  15) spaceranger/1.3.1
+
+ 
+
+Processing sample V11L05-335_A1
+Tue Apr 26 12:40:24 EDT 2022
+Slide: V11L05-335, capture area: A1
+/cm/local/apps/sge/sge-8.1.9/default/spool/compute-098/job_scripts/9934210: line 39: FASTQPATH2022-04-12=../../raw-data/FASTQ/2022-04-12_SPag033122/V11L05-335_A1/: No such file or directory
+error: Invalid value for '--fastqs <PATH>...': No such file or directory: '04-12'
+
+For more information try --help
+Moving results to new location
+Tue Apr 26 12:40:24 EDT 2022
+mv: cannot stat ‘V11L05-335_A1’: No such file or directory
+**** Job ends ****
+Tue Apr 26 12:40:24 EDT 2022
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Tue Apr 26 13:22:05 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 9934262
+Job name: spatialHPC_spaceranger_2022-04-12
+Hostname: compute-098.cm.cluster
+Task id: 9
+Loading LIBD module for spaceranger/1.3.1
+Reference files, for use with the '--transcriptome' argument, can be accessed
+or downloaded into /dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x. 
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV  11) ruby/2.6.4p104
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV      12) rmate/1.5.9
+  3) JHPCE_tools/1.0   8) git-status-size/github         13) conda/3-4.6.14
+  4) sge/8.1.9         9) git/2.28.0                     14) conda_R/4.1.x
+  5) gcc/4.4.7        10) git-lfs/2.8.0                  15) spaceranger/1.3.1
+
+ 
+
+Processing sample V11L05-335_A1
+Tue Apr 26 13:22:06 EDT 2022
+Slide: V11L05-335, capture area: A1
+error: Invalid value for '--loupe-alignment <PATH>': No such file or directory: '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/loupe-alignment/V11L05-335_A1.json'
+
+For more information try --help
+Moving results to new location
+Tue Apr 26 13:22:06 EDT 2022
+mv: cannot stat ‘V11L05-335_A1’: No such file or directory
+**** Job ends ****
+Tue Apr 26 13:22:06 EDT 2022
