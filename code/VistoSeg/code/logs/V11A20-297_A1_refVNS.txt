@@ -1,0 +1,75 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/devel
+**** Job starts ****
+Mon Mar  7 13:47:48 EST 2022
+**** JHPCE info ****
+User: hdivecha
+Job id: 9330300
+Job name: refineVNS.sh
+Hostname: compute-099.cm.cluster
+Task id: 1
+****
+Sample id: V11A20-297_A1
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+{Error using load
+Unable to read file
+'/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11A20-297_A1_mask.mat'.
+No such file or directory.
+
+Error in refineVNS (line 6)
+load(mask_name)
+} 
+>> **** Job ends ****
+Mon Mar  7 13:47:56 EST 2022
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/devel
+**** Job starts ****
+Mon Mar  7 13:58:11 EST 2022
+**** JHPCE info ****
+User: hdivecha
+Job id: 9330339
+Job name: refineVNS.sh
+Hostname: compute-095.cm.cluster
+Task id: 1
+****
+Sample id: V11A20-297_A1
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+Elapsed time is 9.596464 seconds.
+refining segmentations
+Elapsed time is 188.887116 seconds.
+saving final segmentations
+Elapsed time is 14.314814 seconds.
+>> **** Job ends ****
+Mon Mar  7 14:01:54 EST 2022
