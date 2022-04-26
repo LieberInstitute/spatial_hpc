@@ -19,3 +19,7 @@ sample_info$position = as.factor(REDCap_HPC$adjacent)
 sample_info$seqNum = as.factor(REDCap_HPC$sample_number)
 sample_info$experimenterSeq = as.factor(REDCap_HPC$experimenter_seq)
 sample_info$sample_id = paste(sample_info$slide,sample_info$array,sep ="_")
+
+## Define the donor info using information from
+donor_info = read.csv(file.path(here::here("raw-data","sample_info","demographicInfo_Geo.csv")),header=TRUE, stringsAsFactors=FALSE)
+donor_info = donor_info[-1]
