@@ -1,12 +1,12 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
-#$ -pe local 4
+#$ -l bluejay,mem_free=8G,h_vmem=8G,h_fsize=100G
+#$ -pe local 8
 #$ -N spatialHPC_spaceranger_2022-04-12
-#$ -o logs/spaceranger_.$TASK_ID.txt
-#$ -e logs/spaceranger_2022-04-12.$TASK_ID.txt
+#$ -o logs/spaceranger_2022-04-12_SPag033122.$TASK_ID.txt
+#$ -e logs/spaceranger_2022-04-12_SPag033122.$TASK_ID.txt
 #$ -m e
-#$ -t 1-8
+#$ -t 1-24
 #$ -tc 8
 
 echo "**** Job starts ****"
@@ -20,13 +20,13 @@ echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 
 ## load SpaceRanger
-module load spaceranger/1.3.0
+module load spaceranger/1.3.1
 
 ## List current modules for reproducibility
 module list
 
 ## Locate file
-SAMPLE=$(awk "NR==${SGE_TASK_ID}" /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/REDCap/samples.txt)
+SAMPLE=$(awk "NR==${SGE_TASK_ID}" samples_2022-04-12_SPag033122.txt)
 echo "Processing sample ${SAMPLE}"
 date
 
@@ -36,8 +36,10 @@ CAPTUREAREA=$(echo ${SAMPLE} | cut -d "_" -f 2)
 echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}"
 
 ## Find FASTQ file path
-FASTQPATH2022-04-12=$(ls -d ../../raw-data/FASTQ/2022-04-12/${SAMPLE}/)
-##FASTQPATHNOVASEQ=$(ls -d ../../raw-data/FASTQ/2022_04_12/${SAMPLE}/)
+FASTQPATH2022-04-12=$(ls -d ../../raw-data/FASTQ/2022-04-12_SPag033122/${SAMPLE}/)
+
+## Hank from 10x Genomics recommended setting this environment
+export NUMBA_NUM_THREADS=1
 
 ## Run SpaceRanger
 spaceranger count \
@@ -55,8 +57,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/spaceranger_2022-04-12/
-mv ${SAMPLE} ../../processed-data/spaceranger_2022-04-12/
+mkdir -p ../../processed-data/spaceranger_2022-04-12_SPag033122/
+mv ${SAMPLE} ../../processed-data/spaceranger_2022-04-12_SPag033122/
 
 echo "**** Job ends ****"
 date

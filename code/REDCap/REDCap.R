@@ -38,11 +38,13 @@ dir.create(here::here("raw-data","FASTQ","2022-04-12_SPag033122"))
 samples = subset(REDCap_HPC, select = c("date","slide","array","sample_number"))
 samples$date = as.Date(samples$date)
 samples = samples[samples$date > "2021-10-11",]
+samples$samples = paste0(samples$slide,"_",samples$array)
+write.table(samples$samples,file = (here::here("code","01_spaceranger","samples_2022-04-12_SPag033122.txt")),row.names = FALSE, col.names = FALSE, quote = FALSE)
+
 samples$rawFASTQ = paste0("/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2022-04-12_SPag033122/",samples$sample_number,"*")
-samples$softlink = paste("raw-data","FASTQ","2022-04-12_SPag033122", paste0(samples$slide,"_",samples$array,"/"), sep = "/")
+samples$softlink = paste("raw-data","FASTQ","2022-04-12_SPag033122", samples$samples , sep = "/")
 sapply(samples$softlink, dir.create) 
 
-temp = as.factor(paste("ln -s", samples$rawFASTQ, samples$softlink))
-
+temp = as.factor(paste0("ln -s ",samples$rawFASTQ," ", samples$softlink, "/"))
 write.table(temp,file = (here::here("raw-data","FASTQ","2022-04-12_SPag033122","README.md")),row.names = FALSE, col.names = FALSE, quote = FALSE)
 
