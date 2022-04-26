@@ -51,8 +51,8 @@ spaceranger count \
     --area=${CAPTUREAREA} \
     --loupe-alignment=../../processed-data/Images/loupe-alignment/${SAMPLE}.json \
     --jobmode=local \
-    --localcores=4 \
-    --localmem=40
+    --localcores=8 \
+    --localmem=64
 
 ## Move output
 echo "Moving results to new location"
