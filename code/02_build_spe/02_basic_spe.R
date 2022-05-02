@@ -97,3 +97,14 @@ sample_order
 # [2,] "V11L05-335_B1" "V11U08-084_B1" "V11A20-297_B1" "V11L05-336_B1"
 # [3,] "V11L05-335_C1" "V11U08-084_C1" "V11A20-297_C1" "V11L05-336_C1"
 # [4,] "V11L05-335_D1" "V11U08-084_D1" "V11A20-297_D1" "V11L05-336_D1"
+
+temp = colData(spe)
+temp = temp[order(temp$position),]
+
+Newsample_order <- unlist(sapply(slide_order, function(i) {
+  (unique(temp$sample_id)[grepl(i, unique(temp$sample_id))])
+}))
+Newsample_order
+
+colData(spe) = temp
+
