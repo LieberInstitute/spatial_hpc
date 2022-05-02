@@ -140,3 +140,18 @@ lobstr::obj_size(spe) / 1024 ^ 3
 # 4.856146 B
 dim(spe)
 # [1] 30359 137446
+
+## Remove spots without counts
+if (any(colSums(counts(spe)) == 0)) {
+  message("removing spots without counts for spe")
+  spe <- spe[, -which(colSums(counts(spe)) == 0)]
+  dim(spe)
+}
+
+lobstr::obj_size(spe) / 1024 ^ 3
+# 4.856144 B
+dim(spe)
+# [1]  30359 137440
+
+save(spe, file = here::here("processed-data","02_build_spe", "spe_basic.Rdata"))
+
