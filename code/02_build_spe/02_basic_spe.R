@@ -132,3 +132,11 @@ length(no_expr) / nrow(spe) * 100
 # [1] 17.05418
 spe <- spe[-no_expr, ]
 
+## Now drop the spots outside the tissue
+spe <- spe[, colData(spe)$in_tissue]
+
+## Size in Gb
+lobstr::obj_size(spe) / 1024 ^ 3
+# 1.305859 B
+dim(spe)
+# [1] 27633 28871
