@@ -124,4 +124,11 @@ Newsample_order
 # [3,] "V11L05-335_A1" "V11U08-084_D1" "V11A20-297_B1" "V11L05-336_A1"
 # [4,] "V11L05-335_D1" "V11U08-084_C1" "V11A20-297_A1" "V11L05-336_B1"
 
+## Remove genes with no data
+no_expr <- which(rowSums(counts(spe)) == 0)
+length(no_expr)
+# [1] 6242
+length(no_expr) / nrow(spe) * 100
+# [1] 17.05418
+spe <- spe[-no_expr, ]
 
