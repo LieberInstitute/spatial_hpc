@@ -71,16 +71,29 @@ for (i in seq_along(angle_list)){
 }
 dev.off()
 
+unique(spe$sample_id[which(spe$position == "N")])
+spe$position[which(spe$sample_id=="V11L05-335_D1")] = "BR"
+
+unique(spe$sample_id[which(spe$position == "")])
+spe$position[which(spe$sample_id=="V10B01-085_A1")] = "TR"
+spe$position[which(spe$sample_id=="V10B01-085_B1")] = "TL"
+spe$position[which(spe$sample_id=="V10B01-085_C1")] = "BR"
+spe$position[which(spe$sample_id=="V10B01-085_D1")] = "BL"
+spe$position = factor(spe$position, levels = c("TL","TR","BR","BL"))
+
 slide_order = unique(spe$slide)
 sample_order <- unlist(sapply(slide_order, function(i) {
   (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
 }))
 sample_order
 
-spe$position = factor(spe$position, levels = c("TL","TR","BR","BL"))
-spe$sample_id = spe$samlple_id[order(spe$position)]
-
-Newsample_order <- unlist(sapply(slide_order, function(i) {
-  (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
-}))
-Newsample_order
+# [,1]            [,2]            [,3]            [,4]           
+# [1,] "V10B01-086_C1" "V11U08-081_C1" "V11L05-333_A1" "V10B01-085_A1"
+# [2,] "V10B01-086_D1" "V11U08-081_D1" "V11L05-333_B1" "V10B01-085_B1"
+# [3,] "V10B01-086_A1" "V11U08-081_A1" "V11L05-333_C1" "V10B01-085_C1"
+# [4,] "V10B01-086_B1" "V11U08-081_B1" "V11L05-333_D1" "V10B01-085_D1"
+# [,5]            [,6]            [,7]            [,8]           
+# [1,] "V11L05-335_A1" "V11U08-084_A1" "V11A20-297_A1" "V11L05-336_A1"
+# [2,] "V11L05-335_B1" "V11U08-084_B1" "V11A20-297_B1" "V11L05-336_B1"
+# [3,] "V11L05-335_C1" "V11U08-084_C1" "V11A20-297_C1" "V11L05-336_C1"
+# [4,] "V11L05-335_D1" "V11U08-084_D1" "V11A20-297_D1" "V11L05-336_D1"
