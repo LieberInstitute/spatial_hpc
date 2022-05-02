@@ -137,6 +137,6 @@ spe <- spe[, colData(spe)$in_tissue]
 
 ## Size in Gb
 lobstr::obj_size(spe) / 1024 ^ 3
-# 1.305859 B
+# 4.856146 B
 dim(spe)
-# [1] 27633 28871
+# [1] 30359 137446
