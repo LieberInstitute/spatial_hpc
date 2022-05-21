@@ -26,18 +26,13 @@ spatialLIBD::run_app(
     title = "Visium HPC 2022",
     spe_discrete_vars = c(
         vars[grep("^10x_", vars)],
-        "ManualAnnotation",
-        "brnum",
-        "sex",
-        "race",
-        "sample_id"
+        "ManualAnnotation"
     ),
     spe_continuous_vars = c(
         "sum_umi",
         "sum_gene",
         "expr_chrM",
-        "expr_chrM_ratio",
-        "age"
+        "expr_chrM_ratio"
     ),
     default_cluster = "10x_graphclust"
 )
