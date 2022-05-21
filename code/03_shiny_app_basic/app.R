@@ -24,12 +24,13 @@ options(repos = BiocManager::repositories())
 load(file="spe.Rdata", verbose = TRUE)
 
 #speB$BayesSpace <- speB$spatial.cluster
-#speB$BayesSpace_initial <- speB$cluster.init
+#speB$BayesSpace_initial <- speB$cluster.init 
 vars <- colnames(colData(spe))
 lobstr::obj_size(spe) / 1024^3
 
 imgData(spe) <- imgData(spe)[!imgData(spe)$image_id %in% c("hires", "detected", "aligned"),]
 lobstr::obj_size(spe) / 1024^3
+
 ## Deploy the website
 spatialLIBD::run_app(
   spe,
@@ -42,7 +43,6 @@ spatialLIBD::run_app(
     "ManualAnnotation",
     "brnum",
     "sex",
-    "age",
     "race",
     "sample_id"
   ),
