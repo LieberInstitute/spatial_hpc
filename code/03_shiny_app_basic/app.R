@@ -13,31 +13,31 @@ options(repos = BiocManager::repositories())
 ## Load the data
 load("spe.Rdata", verbose = TRUE)
 
-#speB$BayesSpace <- speB$spatial.cluster
-#speB$BayesSpace_initial <- speB$cluster.init
+# speB$BayesSpace <- speB$spatial.cluster
+# speB$BayesSpace_initial <- speB$cluster.init
 vars <- colnames(colData(spe))
 
 ## Deploy the website
 spatialLIBD::run_app(
-  spe,
-  sce_layer = NULL,
-  modeling_results = NULL,
-  sig_genes = NULL,
-  title = "Visium HPC 2022",
-  spe_discrete_vars = c(
-    vars[grep("^10x_", vars)],
-    "ManualAnnotation",
-    "brnum",
-    "sex",
-    "race",
-    "sample_id"
-  ),
-  spe_continuous_vars = c(
-    "sum_umi",
-    "sum_gene",
-    "expr_chrM",
-    "expr_chrM_ratio",
-    "age"
-  ),
-  default_cluster = "10x_graphclust"
+    spe,
+    sce_layer = NULL,
+    modeling_results = NULL,
+    sig_genes = NULL,
+    title = "Visium HPC 2022",
+    spe_discrete_vars = c(
+        vars[grep("^10x_", vars)],
+        "ManualAnnotation",
+        "brnum",
+        "sex",
+        "race",
+        "sample_id"
+    ),
+    spe_continuous_vars = c(
+        "sum_umi",
+        "sum_gene",
+        "expr_chrM",
+        "expr_chrM_ratio",
+        "age"
+    ),
+    default_cluster = "10x_graphclust"
 )

@@ -16,12 +16,12 @@ options(repos = BiocManager::repositories())
 
 ## Deploy the app, that is, upload it to shinyapps.io
 rsconnect::deployApp(
-  appDir = here("code", "pilot_data_checks", "shinyapp"),
-  appFiles = c(
-    "app.R",
-    "spe.Rdata"
-  ),
-  appName = 'Visium_HPC_2022',
-  account = 'libd',
-  server = 'shinyapps.io'
+    appDir = here("code", "pilot_data_checks", "shinyapp"),
+    appFiles = c(
+        "app.R",
+        "spe.Rdata"
+    ),
+    appName = "Visium_HPC_2022",
+    account = "libd",
+    server = "shinyapps.io"
 )

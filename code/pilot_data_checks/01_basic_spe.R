@@ -1,8 +1,8 @@
 
-#cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
+# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
 suppressPackageStartupMessages(library("here"))
-#remotes::install_github("drighelli/SpatialExperiment")
-#remotes::install_github("LieberInstitute/spatialLIBD")
+# remotes::install_github("drighelli/SpatialExperiment")
+# remotes::install_github("LieberInstitute/spatialLIBD")
 suppressPackageStartupMessages(library("SpatialExperiment"))
 suppressPackageStartupMessages(library("spatialLIBD"))
 suppressPackageStartupMessages(library("rtracklayer"))
@@ -11,49 +11,51 @@ suppressPackageStartupMessages(library("sessioninfo"))
 
 ## Define some info for the samples
 sample_info <- data.frame(
-  subject = c("Br6423-O","Br6423-O","Br6423-O","Br6423-O","Br6432-R","Br6432-R","Br2743-Y","Br2743-Y"),
-  slice = c("Br6423-O_1","Br6423-O_1","Br6423-O_2","Br6423-O_2","Br6432-R_1","Br6432-R_1","Br2743-Y_1","Br2743-Y_1"),
-  sample_id = c(
-    "V10B01-085_A1",
-    "V10B01-085_B1",
-    "V10B01-085_C1",
-    "V10B01-085_D1",
-    "V10B01-086_A1",
-    "V10B01-086_B1",
-    "V10B01-086_C1",
-    "V10B01-086_D1"
-  )
+    subject = c("Br6423-O", "Br6423-O", "Br6423-O", "Br6423-O", "Br6432-R", "Br6432-R", "Br2743-Y", "Br2743-Y"),
+    slice = c("Br6423-O_1", "Br6423-O_1", "Br6423-O_2", "Br6423-O_2", "Br6432-R_1", "Br6432-R_1", "Br2743-Y_1", "Br2743-Y_1"),
+    sample_id = c(
+        "V10B01-085_A1",
+        "V10B01-085_B1",
+        "V10B01-085_C1",
+        "V10B01-085_D1",
+        "V10B01-086_A1",
+        "V10B01-086_B1",
+        "V10B01-086_C1",
+        "V10B01-086_D1"
+    )
 )
 sample_info$sample_path <-
-  file.path(here::here("processed-data", "spaceranger_novaseq"),
-            sample_info$sample_id,
-            "outs")
-stopifnot(all(file.exists(sample_info$sample_path)))                
-                
+    file.path(
+        here::here("processed-data", "spaceranger_novaseq"),
+        sample_info$sample_id,
+        "outs"
+    )
+stopifnot(all(file.exists(sample_info$sample_path)))
+
 ## Define the donor info using information from
 ## https://github.com/LieberInstitute/spatial_hpc/blob/main/raw-data/sample_info/Visium_HPC_Round1%2B2_110321_Master_SCP.xlsx
 donor_info <- data.frame(
-  subject = c("Br6423-O", "Br6432-R", "Br2743-Y"),
-  age = c(51.73,48.88,61.54),
-  sex = c("M", "M", "M"),
-  #race = "EA/CAUC",
-  diagnosis = "Control"
-  #rin = c(),
-  #pmi = c(),
+    subject = c("Br6423-O", "Br6432-R", "Br2743-Y"),
+    age = c(51.73, 48.88, 61.54),
+    sex = c("M", "M", "M"),
+    # race = "EA/CAUC",
+    diagnosis = "Control"
+    # rin = c(),
+    # pmi = c(),
 )
 
 ## Combine sample info with the donor info
 sample_info <- merge(sample_info, donor_info)
-                
+
 ## Build basic SPE
 Sys.time()
 spe <- read10xVisiumWrapper(
-  sample_info$sample_path,
-  sample_info$sample_id,
-  type = "sparse",
-  data = "raw",
-  images = c("lowres", "hires", "detected", "aligned"),
-  load = TRUE
+    sample_info$sample_path,
+    sample_info$sample_id,
+    type = "sparse",
+    data = "raw",
+    images = c("lowres", "hires", "detected", "aligned"),
+    load = TRUE
 )
 Sys.time()
 
@@ -68,62 +70,64 @@ Sys.time()
 
 ## Add the study design info
 add_design <- function(spe) {
-  new_col <- merge(colData(spe), sample_info)
-  ## Fix order
-  new_col <- new_col[match(spe$key, new_col$key), ]
-  stopifnot(identical(new_col$key, spe$key))
-  rownames(new_col) <- rownames(colData(spe))
-  colData(spe) <-
-    new_col[, -which(colnames(new_col) == "sample_path")]
-  return(spe)
+    new_col <- merge(colData(spe), sample_info)
+    ## Fix order
+    new_col <- new_col[match(spe$key, new_col$key), ]
+    stopifnot(identical(new_col$key, spe$key))
+    rownames(new_col) <- rownames(colData(spe))
+    colData(spe) <-
+        new_col[, -which(colnames(new_col) == "sample_path")]
+    return(spe)
 }
 spe <- add_design(spe)
 
 ## Read in cell counts and segmentation results
 segmentations_list <-
-  lapply(sample_info$sample_id, function(sampleid) {
-    file <-
-      here(
-        "processed-data",
-        "spaceranger_novaseq",
-        sampleid,
-        "outs",
-        "spatial",
-        "tissue_spot_counts.csv"
-      )
-    if (!file.exists(file))
-      return(NULL)
-    x <- read.csv(file)
-    x$key <- paste0(x$barcode, "_", sampleid)
-    return(x)
-  })
+    lapply(sample_info$sample_id, function(sampleid) {
+        file <-
+            here(
+                "processed-data",
+                "spaceranger_novaseq",
+                sampleid,
+                "outs",
+                "spatial",
+                "tissue_spot_counts.csv"
+            )
+        if (!file.exists(file)) {
+            return(NULL)
+        }
+        x <- read.csv(file)
+        x$key <- paste0(x$barcode, "_", sampleid)
+        return(x)
+    })
 
 ## Merge them (once the these files are done, this could be replaced by an rbind)
 segmentations <-
-  Reduce(function(...)
-    merge(..., all = TRUE), segmentations_list[lengths(segmentations_list) > 0])
+    Reduce(function(...) {
+        merge(..., all = TRUE)
+    }, segmentations_list[lengths(segmentations_list) > 0])
 
 ## Add the information
 segmentation_match <- match(spe$key, segmentations$key)
 segmentation_info <-
-  segmentations[segmentation_match, -which(
-    colnames(segmentations) %in% c("barcode", "tissue", "row", "col", "imagerow", "imagecol", "key")
-  )]
+    segmentations[segmentation_match, -which(
+        colnames(segmentations) %in% c("barcode", "tissue", "row", "col", "imagerow", "imagecol", "key")
+    )]
 colData(spe) <- cbind(colData(spe), segmentation_info)
 
 ## basic SPE
-spe_basic = spe
-#dir.create(here::here("processed-data", "pilot_data_checks"), showWarnings = FALSE)
-save(spe_basic,file = here::here("processed-data", "pilot_data_checks", "spe_basic.Rdata"))
+spe_basic <- spe
+# dir.create(here::here("processed-data", "pilot_data_checks"), showWarnings = FALSE)
+save(spe_basic, file = here::here("processed-data", "pilot_data_checks", "spe_basic.Rdata"))
 
 ## Size in Gb
-lobstr::obj_size(spe_basic) / 1024 ^ 3
+lobstr::obj_size(spe_basic) / 1024^3
 # 1.344729 B
 dim(spe_basic)
 # [1] 36601 39936
 
 ## Reproducibility information
-print('Reproducibility information:')
+print("Reproducibility information:")
 Sys.time()
 proc.time()
 options(width = 120)
@@ -132,9 +136,9 @@ session_info()
 
 # Reproducibility information
 # [1] "2022-03-04 15:45:31 EST"
-# user   system  elapsed 
-# 853.217   75.442 2830.776 
-# 
+# user   system  elapsed
+# 853.217   75.442 2830.776
+#
 # ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
@@ -147,7 +151,7 @@ session_info()
 # tz       US/Eastern
 # date     2022-03-04
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
-# 
+#
 # ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # package                * version  date (UTC) lib source
 # AnnotationDbi            1.56.2   2021-11-09 [2] Bioconductor
@@ -318,9 +322,9 @@ session_info()
 # XVector                  0.34.0   2021-10-26 [2] Bioconductor
 # yaml                     2.3.5    2022-02-21 [2] CRAN (R 4.1.2)
 # zlibbioc                 1.40.0   2021-10-26 [2] Bioconductor
-# 
+#
 # [1] /users/mtippani/R/4.1.x
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
-# 
+#
 # ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

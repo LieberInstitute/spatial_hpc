@@ -1,5 +1,5 @@
 
-#cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
+# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
 suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("SpatialExperiment"))
 suppressPackageStartupMessages(library("spatialLIBD"))
@@ -10,7 +10,7 @@ suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("gridExtra"))
 suppressPackageStartupMessages(library("ggspavis"))
 
-load(file=here::here("processed-data","02_build_spe","spe_raw.Rdata"))
+load(file = here::here("processed-data", "02_build_spe", "spe_raw.Rdata"))
 
 # Rotations by sample:
 
@@ -47,78 +47,78 @@ load(file=here::here("processed-data","02_build_spe","spe_raw.Rdata"))
 # V11L05-336_C1= 0, TR
 # V11L05-336_D1= 0, TL
 
-sampleID = unique(spe_raw$sample_id)
-angle_list = c(90, 180, 180, 180, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-source(file = here::here("code","pilot_data_checks","transform_spe.R"))
+sampleID <- unique(spe_raw$sample_id)
+angle_list <- c(90, 180, 180, 180, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+source(file = here::here("code", "pilot_data_checks", "transform_spe.R"))
 
 pdf(file = here::here("plots", "ReferenceMapping.pdf"), h = 10, w = 20)
-for (i in seq_along(angle_list)){
-  id = sampleID[i]
-  x = trans_geom(spe_raw, sample_id = id , degrees = angle_list[i])
-  
-  if (i==1) {
-    spe = x
-  } else {
-    spe = cbind(spe,x)
-  }
-  
-  spe = rotateImg(spe, sample_id = id, image_id = TRUE, angle_list[i])
-  orig_spe = spe_raw[, (colData(spe_raw)$in_tissue & colData(spe_raw)$sample_id == id)]
-  xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
-  p1 = plotVisium(orig_spe,spots = TRUE,y_reverse = TRUE)
-  p2 = plotVisium(xnew,spots = TRUE,y_reverse = TRUE)
-  grid.arrange(p1,p2,ncol=2)
+for (i in seq_along(angle_list)) {
+    id <- sampleID[i]
+    x <- trans_geom(spe_raw, sample_id = id, degrees = angle_list[i])
+
+    if (i == 1) {
+        spe <- x
+    } else {
+        spe <- cbind(spe, x)
+    }
+
+    spe <- rotateImg(spe, sample_id = id, image_id = TRUE, angle_list[i])
+    orig_spe <- spe_raw[, (colData(spe_raw)$in_tissue & colData(spe_raw)$sample_id == id)]
+    xnew <- spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
+    p1 <- plotVisium(orig_spe, spots = TRUE, y_reverse = TRUE)
+    p2 <- plotVisium(xnew, spots = TRUE, y_reverse = TRUE)
+    grid.arrange(p1, p2, ncol = 2)
 }
 dev.off()
 
 unique(spe$sample_id[which(spe$position == "N")])
-spe$position[which(spe$sample_id=="V11L05-335_D1")] = "BR"
+spe$position[which(spe$sample_id == "V11L05-335_D1")] <- "BR"
 
 unique(spe$sample_id[which(spe$position == "")])
-spe$position[which(spe$sample_id=="V10B01-085_A1")] = "TR"
-spe$position[which(spe$sample_id=="V10B01-085_B1")] = "TL"
-spe$position[which(spe$sample_id=="V10B01-085_C1")] = "BR"
-spe$position[which(spe$sample_id=="V10B01-085_D1")] = "BL"
-spe$position = factor(spe$position, levels = c("TL","TR","BR","BL"))
+spe$position[which(spe$sample_id == "V10B01-085_A1")] <- "TR"
+spe$position[which(spe$sample_id == "V10B01-085_B1")] <- "TL"
+spe$position[which(spe$sample_id == "V10B01-085_C1")] <- "BR"
+spe$position[which(spe$sample_id == "V10B01-085_D1")] <- "BL"
+spe$position <- factor(spe$position, levels = c("TL", "TR", "BR", "BL"))
 
-slide_order = unique(spe$slide)
+slide_order <- unique(spe$slide)
 sample_order <- unlist(sapply(slide_order, function(i) {
-  (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
+    (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
 }))
 sample_order
 
-# [,1]            [,2]            [,3]            [,4]           
+# [,1]            [,2]            [,3]            [,4]
 # [1,] "V10B01-086_C1" "V11U08-081_C1" "V11L05-333_A1" "V10B01-085_A1"
 # [2,] "V10B01-086_D1" "V11U08-081_D1" "V11L05-333_B1" "V10B01-085_B1"
 # [3,] "V10B01-086_A1" "V11U08-081_A1" "V11L05-333_C1" "V10B01-085_C1"
 # [4,] "V10B01-086_B1" "V11U08-081_B1" "V11L05-333_D1" "V10B01-085_D1"
-# [,5]            [,6]            [,7]            [,8]           
+# [,5]            [,6]            [,7]            [,8]
 # [1,] "V11L05-335_A1" "V11U08-084_A1" "V11A20-297_A1" "V11L05-336_A1"
 # [2,] "V11L05-335_B1" "V11U08-084_B1" "V11A20-297_B1" "V11L05-336_B1"
 # [3,] "V11L05-335_C1" "V11U08-084_C1" "V11A20-297_C1" "V11L05-336_C1"
 # [4,] "V11L05-335_D1" "V11U08-084_D1" "V11A20-297_D1" "V11L05-336_D1"
 
-temp = colData(spe)
-temp = temp[order(temp$position),]
+temp <- colData(spe)
+temp <- temp[order(temp$position), ]
 
 Newsample_order <- unlist(sapply(slide_order, function(i) {
-  (unique(temp$sample_id)[grepl(i, unique(temp$sample_id))])
+    (unique(temp$sample_id)[grepl(i, unique(temp$sample_id))])
 }))
 Newsample_order
 
-colData(spe) = temp
+colData(spe) <- temp
 
 Newsample_order <- unlist(sapply(slide_order, function(i) {
-  (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
+    (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
 }))
 Newsample_order
 
-# [,1]            [,2]            [,3]            [,4]           
+# [,1]            [,2]            [,3]            [,4]
 # [1,] "V10B01-086_A1" "V11U08-081_C1" "V11L05-333_A1" "V10B01-085_B1"
 # [2,] "V10B01-086_C1" "V11U08-081_A1" "V11L05-333_B1" "V10B01-085_A1"
 # [3,] "V10B01-086_D1" "V11U08-081_D1" "V11L05-333_D1" "V10B01-085_C1"
 # [4,] "V10B01-086_B1" "V11U08-081_B1" "V11L05-333_C1" "V10B01-085_D1"
-# [,5]            [,6]            [,7]            [,8]           
+# [,5]            [,6]            [,7]            [,8]
 # [1,] "V11L05-335_C1" "V11U08-084_A1" "V11A20-297_C1" "V11L05-336_D1"
 # [2,] "V11L05-335_B1" "V11U08-084_B1" "V11A20-297_D1" "V11L05-336_C1"
 # [3,] "V11L05-335_A1" "V11U08-084_D1" "V11A20-297_B1" "V11L05-336_A1"
@@ -136,22 +136,21 @@ spe <- spe[-no_expr, ]
 spe <- spe[, colData(spe)$in_tissue]
 
 ## Size in Gb
-lobstr::obj_size(spe) / 1024 ^ 3
+lobstr::obj_size(spe) / 1024^3
 # 4.856146 B
 dim(spe)
 # [1] 30359 137446
 
 ## Remove spots without counts
 if (any(colSums(counts(spe)) == 0)) {
-  message("removing spots without counts for spe")
-  spe <- spe[, -which(colSums(counts(spe)) == 0)]
-  dim(spe)
+    message("removing spots without counts for spe")
+    spe <- spe[, -which(colSums(counts(spe)) == 0)]
+    dim(spe)
 }
 
-lobstr::obj_size(spe) / 1024 ^ 3
+lobstr::obj_size(spe) / 1024^3
 # 4.856144 B
 dim(spe)
 # [1]  30359 137440
 
-save(spe, file = here::here("processed-data","02_build_spe", "spe_basic.Rdata"))
-
+save(spe, file = here::here("processed-data", "02_build_spe", "spe_basic.Rdata"))

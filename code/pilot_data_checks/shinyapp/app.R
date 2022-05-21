@@ -21,31 +21,31 @@ options(repos = BiocManager::repositories())
 # ln -s ../../../processed-data/pilot_data_checks/spe_raw.Rdata spe.Rdata
 
 ## Load the data
-load(file="spe.Rdata", verbose = TRUE)
+load(file = "spe.Rdata", verbose = TRUE)
 
-#speB$BayesSpace <- speB$spatial.cluster
-#speB$BayesSpace_initial <- speB$cluster.init
+# speB$BayesSpace <- speB$spatial.cluster
+# speB$BayesSpace_initial <- speB$cluster.init
 vars <- colnames(colData(spe_raw))
 
 ## Deploy the website
 spatialLIBD::run_app(
-  spe_raw,
-  sce_layer = NULL,
-  modeling_results = NULL,
-  sig_genes = NULL,
-  title = "Visium HPC 2022",
-  spe_discrete_vars = c(
-    vars[grep("^10x_", vars)],
-    "ManualAnnotation",
-    "subject"
- #   "sex"
-  ),
-  spe_continuous_vars = c(
-    "sum_umi",
-    "sum_gene",
-    "expr_chrM",
-    "expr_chrM_ratio",
-    "age"
-  ),
-  default_cluster = "10x_graphclust"
+    spe_raw,
+    sce_layer = NULL,
+    modeling_results = NULL,
+    sig_genes = NULL,
+    title = "Visium HPC 2022",
+    spe_discrete_vars = c(
+        vars[grep("^10x_", vars)],
+        "ManualAnnotation",
+        "subject"
+        #   "sex"
+    ),
+    spe_continuous_vars = c(
+        "sum_umi",
+        "sum_gene",
+        "expr_chrM",
+        "expr_chrM_ratio",
+        "age"
+    ),
+    default_cluster = "10x_graphclust"
 )

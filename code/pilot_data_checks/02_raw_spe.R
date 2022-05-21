@@ -1,7 +1,7 @@
 
-#cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
+# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
 suppressPackageStartupMessages(library("here"))
-#install.packages("SpatialExperiment")
+# install.packages("SpatialExperiment")
 suppressPackageStartupMessages(library("SpatialExperiment"))
 suppressPackageStartupMessages(library("spatialLIBD"))
 suppressPackageStartupMessages(library("rtracklayer"))
@@ -10,8 +10,8 @@ suppressPackageStartupMessages(library("sessioninfo"))
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("gridExtra"))
 suppressPackageStartupMessages(library("ggspavis"))
-  
-load(file=here::here("processed-data","pilot_data_checks","spe_basic.Rdata"))
+
+load(file = here::here("processed-data", "pilot_data_checks", "spe_basic.Rdata"))
 
 # Rotations by sample:
 # V10B01-085_A1 = 90
@@ -22,49 +22,52 @@ load(file=here::here("processed-data","pilot_data_checks","spe_basic.Rdata"))
 # V10B01-086_B1 = 0
 # V10B01-086_C1 = 0
 # V10B01-086_D1 = 180
-  
-angle_list = c(90, 180, 180, 180, 0, 0, 0, 180)
-sampleID = c('V10B01-085_A1','V10B01-085_B1', 'V10B01-085_C1', 'V10B01-085_D1', 'V10B01-086_A1', 'V10B01-086_B1', 'V10B01-086_C1',  'V10B01-086_D1')
-source(file = here::here("code","pilot_data_checks","transform_spe.R"))
+
+angle_list <- c(90, 180, 180, 180, 0, 0, 0, 180)
+sampleID <- c("V10B01-085_A1", "V10B01-085_B1", "V10B01-085_C1", "V10B01-085_D1", "V10B01-086_A1", "V10B01-086_B1", "V10B01-086_C1", "V10B01-086_D1")
+source(file = here::here("code", "pilot_data_checks", "transform_spe.R"))
 
 pdf(file = here::here("plots", "pilot_data_checks", "ReferenceMapping.pdf"), h = 10, w = 20)
-for (i in seq_along(angle_list)){
-id = sampleID[i]
-x = trans_geom(spe_basic, sample_id = id , degrees = angle_list[i])
+for (i in seq_along(angle_list)) {
+    id <- sampleID[i]
+    x <- trans_geom(spe_basic, sample_id = id, degrees = angle_list[i])
 
-if (i==1) {
-  spe = x
-} else {
-  spe = cbind(spe,x)
-}
+    if (i == 1) {
+        spe <- x
+    } else {
+        spe <- cbind(spe, x)
+    }
 
-spe = rotateImg(spe, sample_id = id, image_id = TRUE, angle_list[i])
-orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
-xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
-p1 = plotVisium(orig_spe,spots = TRUE,y_reverse = TRUE)
-p2 = plotVisium(xnew,spots = TRUE,y_reverse = TRUE)
-grid.arrange(p1,p2,ncol=2)
+    spe <- rotateImg(spe, sample_id = id, image_id = TRUE, angle_list[i])
+    orig_spe <- spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
+    xnew <- spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
+    p1 <- plotVisium(orig_spe, spots = TRUE, y_reverse = TRUE)
+    p2 <- plotVisium(xnew, spots = TRUE, y_reverse = TRUE)
+    grid.arrange(p1, p2, ncol = 2)
 }
 dev.off()
 
-#change order of arrays for sample alignment
-slide_order = c("V10B01-085","V10B01-086")
+# change order of arrays for sample alignment
+slide_order <- c("V10B01-085", "V10B01-086")
 sample_order <- unlist(sapply(slide_order, function(i) {
-  sort(unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
+    sort(unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
 }))
 sample_order
 
-newSlide_order = matrix(c("V10B01-085_B1","V10B01-085_A1","V10B01-085_D1","V10B01-085_C1",
-                     "V10B01-086_A1","V10B01-086_B1","V10B01-086_C1","V10B01-086_D1"),
-                   nrow=4)
-colnames(newSlide_order) = slide_order
+newSlide_order <- matrix(c(
+    "V10B01-085_B1", "V10B01-085_A1", "V10B01-085_D1", "V10B01-085_C1",
+    "V10B01-086_A1", "V10B01-086_B1", "V10B01-086_C1", "V10B01-086_D1"
+),
+nrow = 4
+)
+colnames(newSlide_order) <- slide_order
 
 new_order <- unlist(lapply(newSlide_order, function(i) {
-  which(spe$sample_id == i)
+    which(spe$sample_id == i)
 }))
 
 stopifnot(all(seq_len(ncol(spe)) %in% new_order))
-spe = spe[,new_order]
+spe <- spe[, new_order]
 
 # pdf(file = here::here("plots", "pilot_data_checks", "ReferenceMapping.pdf"), h = 10, w = 20)
 # id = 'V10B01-085_A1'
@@ -78,25 +81,25 @@ spe = spe[,new_order]
 # par(mfrow = c(1, 2))
 # plot(imgRaster(spe_basic[, colData(spe_basic)$sample_id == id]), main= 'Original')
 # plot(imgRaster(spe[, colData(spe)$sample_id == id]), main = 'New')
-# 
+#
 # for (i in seq_along(angle_list)){
 # id = sampleID[i]
 # x = trans_geom(spe_basic, sample_id = id, degrees = angle_list[i])
 # spe = cbind(spe,x)
 # spe = rotateImg(spe, sample_id = id, image_id = TRUE, degrees = angle_list[i])
-# 
+#
 # orig_spe = spe_basic[, (colData(spe_basic)$in_tissue & colData(spe_basic)$sample_id == id)]
 # xnew = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
-# 
+#
 # p1 = plot_spatial_coords(orig_spe, 'Original Coords')
 # p2 = plot_spatial_coords(xnew, 'New Coords')
 # grid.arrange(p1,p2,ncol=2)
-# 
+#
 # par(mfrow = c(1, 2))
 # plot(imgRaster(spe_basic[, colData(spe_basic)$sample_id == id]), main= 'Original')
 # plot(imgRaster(spe[, colData(spe)$sample_id == id]), main = 'New')
 # }
-# 
+#
 # dev.off()
 
 ## Remove genes with no data
@@ -111,28 +114,28 @@ spe <- spe[-no_expr, ]
 spe <- spe[, colData(spe)$in_tissue]
 
 ## Size in Gb
-lobstr::obj_size(spe) / 1024 ^ 3
+lobstr::obj_size(spe) / 1024^3
 # 1.305859 B
 dim(spe)
 # [1] 27633 28871
 
 ## Remove spots without counts
 if (any(colSums(counts(spe)) == 0)) {
-  message("removing spots without counts for spe")
-  spe <- spe[, -which(colSums(counts(spe)) == 0)]
-  dim(spe)
+    message("removing spots without counts for spe")
+    spe <- spe[, -which(colSums(counts(spe)) == 0)]
+    dim(spe)
 }
 
-lobstr::obj_size(spe) / 1024 ^ 3
+lobstr::obj_size(spe) / 1024^3
 # 1.305859 B
 dim(spe)
 # [1] 27633 28871
 
-spe_raw = spe
+spe_raw <- spe
 save(spe_raw, file = here::here("processed-data", "pilot_data_checks", "spe_raw.Rdata"))
 
 ## Reproducibility information
-print('Reproducibility information:')
+print("Reproducibility information:")
 Sys.time()
 proc.time()
 options(width = 120)
@@ -140,9 +143,9 @@ session_info()
 
 # Reproducibility information
 # [1] "2022-03-09 12:28:46 EST"
-# user   system  elapsed 
-# 295.797   16.177 4168.846 
-# 
+# user   system  elapsed
+# 295.797   16.177 4168.846
+#
 # ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # setting  value
 # version  R version 4.1.2 Patched (2021-11-04 r81138)
@@ -155,7 +158,7 @@ session_info()
 # tz       US/Eastern
 # date     2022-03-09
 # pandoc   2.13 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/bin/pandoc
-# 
+#
 # ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # package                * version  date (UTC) lib source
 # AnnotationDbi            1.56.2   2021-11-09 [2] Bioconductor
@@ -324,9 +327,9 @@ session_info()
 # XVector                  0.34.0   2021-10-26 [2] Bioconductor
 # yaml                     2.3.5    2022-02-21 [2] CRAN (R 4.1.2)
 # zlibbioc                 1.40.0   2021-10-26 [2] Bioconductor
-# 
+#
 # [1] /users/mtippani/R/4.1.x
 # [2] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/site-library
 # [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-4.1.x/R/4.1.x/lib64/R/library
-# 
+#
 # ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
