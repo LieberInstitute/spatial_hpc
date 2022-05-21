@@ -10,26 +10,12 @@ options("golem.app.prod" = TRUE)
 ## You need this to enable shinyapps to install Bioconductor packages
 options(repos = BiocManager::repositories())
 
-## Data setup
-
-## Download to my laptop
-# scp e:/dcs04/lieber/lcolladotor/with10x_LIBD001/Visium_IF_AD/processed-data/spe/spe.Rdata processed-data/spe/
-
-## Create a soft link to the data, otherwise rsconnect::deployApp doesn't work
-## Note that soft link has to be relative to work
-# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/03_shiny_app_basic/
-# ln -s ../../../processed-data/02_build_spe/spe_basic.Rdata spe.Rdata
-
 ## Load the data
-load(file="spe.Rdata", verbose = TRUE)
+load("spe.Rdata", verbose = TRUE)
 
 #speB$BayesSpace <- speB$spatial.cluster
-#speB$BayesSpace_initial <- speB$cluster.init 
+#speB$BayesSpace_initial <- speB$cluster.init
 vars <- colnames(colData(spe))
-lobstr::obj_size(spe) / 1024^3
-
-imgData(spe) <- imgData(spe)[!imgData(spe)$image_id %in% c("hires", "detected", "aligned"),]
-lobstr::obj_size(spe) / 1024^3
 
 ## Deploy the website
 spatialLIBD::run_app(
