@@ -98,18 +98,17 @@ sample_order
 # [3,] "V11L05-335_C1" "V11U08-084_C1" "V11A20-297_C1" "V11L05-336_C1"
 # [4,] "V11L05-335_D1" "V11U08-084_D1" "V11A20-297_D1" "V11L05-336_D1"
 
-temp <- colData(spe)
-temp <- temp[order(temp$position), ]
+##code for rearranging spe for better Shiny app visualization
+library(tidySingleCellExperiment)
+##change colnames(spe) and rownames(spatialCoords(spe)) to spe$key
+colnames(spe)<-spe$key
+rownames(spatialCoords(spe))<-spe$key
+##now arrange() to get the correct order
+spe<-arrange(spe,slide,array)
+
 
 Newsample_order <- unlist(sapply(slide_order, function(i) {
     (unique(temp$sample_id)[grepl(i, unique(temp$sample_id))])
-}))
-Newsample_order
-
-colData(spe) <- temp
-
-Newsample_order <- unlist(sapply(slide_order, function(i) {
-    (unique(spe$sample_id)[grepl(i, unique(spe$sample_id))])
 }))
 Newsample_order
 
