@@ -19,28 +19,26 @@ This is a description of data files for this project.
 
 # Description of analyses of HPC data 
 
+## SpaceRanger
+- Script to run space ranger with miseq and novaseq fastqs combined for samples `V10B01−085` and `V10B01−086` is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/01_spaceranger/spaceranger_NovaSeq.sh). 
+- Script to run space ranger for all other samples is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/01_spaceranger/spaceranger_2022-04-12_SPag033122.sh). 
+## Cell segmentation
+### VistoSeg [here]()
+### cellpose [here]()
 
-## Pilot data 
+## REDCap
+- Script to extract HPC info only from the redcap form and extract all relevant (demographic/biological/rotation info etc) data to add to the spe object is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/REDCap/REDCap.R)
 
-- Scripts to run space ranger with miseq and novaseq samples are [here](). 
-- Scripts to build initial SpatialExperiment (SPE) object are [here](). 
-- Scripts for preprocessing and quality control are [here](). 
-- Scripts for batch correction with harmony are [here](). 
-- Scripts for unsupervised clustering with Bayespaces with `k=7` are [here](). 
+## Build spe
+- Script to build initial raw SpatialExperiment (SPE) object from spaceranger output is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/02_build_spe/01_raw_spe.R). 
+- Script to perform rotations, remove out of tissue spots and rearrange capture areas to form the HPC structure and then build basic SpatialExperiment (SPE) object is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/02_build_spe/02_basic_spe.R)
 
-## New data 
+## shiny app
+- Script to subset the basic_spe to make it memory effecient for shiny app is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/03_shiny_app_basic/subset.R). 
+- Script to deploy the shiny app is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/03_shiny_app_basic/deploy.R). 
+- Scripts for running the shiny app is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/03_shiny_app_basic/app.R). 
 
-- Scripts to run space ranger with miseq and novaseq samples are [here](). 
-- Scripts to extract demographic/biological data from REDCap forms instead of manually entering are [here]().  
-- Scripts to reorder capture areas according to the rotations are [here](). 
-- Scripts to combine all data into one final SPE object are [here](). 
-
-## Shiny app
-
-- Build shiny app
-- Figure out rotation and flipping issues (update Vistoseg accordingly)
-- Deploy shiny app
-- Add here. 
-
+## QC checks
+- Script to build violin plots and spot plots for all samples to show outlier spots that can be discarded from analysis is [here](https://github.com/LieberInstitute/spatial_hpc/blob/main/code/04_QC/qc.R)
 
 
