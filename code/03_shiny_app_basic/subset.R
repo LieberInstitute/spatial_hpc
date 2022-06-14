@@ -8,7 +8,7 @@ load(here::here("processed-data", "02_build_spe", "spe_basic.Rdata"),
 )
 ## Check how big it is in memory
 lobstr::obj_size(spe) / 1024^3
-# 4.856404 B
+# 5.075627 B
 ## That's too big for shinyapps.io. Aim to have an object near 2GB.
 
 ## Subset the spe object outside of shinyapps.io. Otherwise, the peak memory is
@@ -18,7 +18,7 @@ lobstr::obj_size(spe) / 1024^3
 imgData(spe) <-
     imgData(spe)[!imgData(spe)$image_id %in% c("hires", "detected", "aligned"), ]
 lobstr::obj_size(spe) / 1024^3
-# 2.132348 B
+# 2.351571 B
 ## Ok, this seems reasonable.
 
 ## Save the reduced version of the spe object in the shiny app directory
