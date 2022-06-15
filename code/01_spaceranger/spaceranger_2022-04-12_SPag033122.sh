@@ -58,8 +58,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spaceranger_2022-04-12_SPag033122/
-mv ${SAMPLE} /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spaceranger_2022-04-12_SPag033122/
+mkdir -p /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger_2022-04-12_SPag033122/
+mv ${SAMPLE} /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger_2022-04-12_SPag033122/
 
 echo "**** Job ends ****"
 date

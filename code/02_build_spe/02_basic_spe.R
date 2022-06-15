@@ -51,7 +51,7 @@ sampleID <- unique(spe_raw$sample_id)
 angle_list <- c(90, 180, 180, 180, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 source(file = here::here("code", "pilot_data_checks", "transform_spe.R"))
 
-pdf(file = here::here("plots", "ReferenceMapping.pdf"), h = 10, w = 20)
+pdf(file = here::here("plots", "02_build_spe", "ReferenceMapping.pdf"), h = 10, w = 20)
 for (i in seq_along(angle_list)) {
     id <- sampleID[i]
     x <- trans_geom(spe_raw, sample_id = id, degrees = angle_list[i])

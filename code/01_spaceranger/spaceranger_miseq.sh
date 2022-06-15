@@ -54,8 +54,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/spaceranger_miseq/
-mv ${SAMPLE} ../../processed-data/spaceranger_miseq/
+mkdir -p ../../processed-data/01_spaceranger/spaceranger_miseq/
+mv ${SAMPLE} ../../processed-data/01_spaceranger/spaceranger_miseq/
 
 echo "**** Job ends ****"
 date
