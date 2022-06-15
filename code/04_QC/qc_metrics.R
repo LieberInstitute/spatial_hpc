@@ -186,11 +186,11 @@ dev.off()
 # QC plot of tissue spots discarded
 vis_grid_clus(
     spe = spe,
-    clustervar = "discard_auto_id",
-    pdf = here::here("plots", "QC_plots_discard_cap_area.pdf"),
+    clustervar = "discard_auto_br",
+    pdf = here::here("plots", "QC_plots_discard_br.pdf", onefile = FALSE),
     sort_clust = FALSE,
     colors = c("FALSE" = "grey90", "TRUE" = "orange"),
-    point_size = 0.5
+    point_size = 1
   )
 
 ## Reproducibility information
