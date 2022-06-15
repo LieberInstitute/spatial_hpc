@@ -11,14 +11,15 @@ library("sessioninfo")
 #### Compute QC metrics ####
 load(here("processed-data", "02_build_spe", "spe_basic.Rdata"), verbose = TRUE)
 length(table(spe$sample_id))
+# 32
 length(table(spe$brnum))
+# 9
 
 spe <- scuttle::addPerCellQC(
   spe,
   subsets = list(Mito = which(seqnames(spe) == "chrM")),
   BPPARAM = BiocParallel::MulticoreParam(4)
 )
-
 
 #### Check for low quality spots ####
 
@@ -85,7 +86,7 @@ table(spe$low_detected_br)
 # FALSE   TRUE 
 # 135514   1928 
 
-## All low sum are also low detected
+## are all low sum are also low detected?
 table(spe$low_sum_br, spe$low_detected_br)
 #        FALSE   TRUE
 # FALSE 135215     44
@@ -94,6 +95,16 @@ table(spe$low_sum_id, spe$low_detected_id)
 #       FALSE   TRUE
 # FALSE 135640     55
 # TRUE     148   1599
+
+## are all low sum are also high mito?
+table(spe$low_sum_br, spe$high_mito_br)
+#       FALSE   TRUE
+# FALSE 133240   2019
+# TRUE    2152     31
+table(spe$low_sum_id, spe$high_mito_id)
+#       FALSE   TRUE
+# FALSE 134517   1178
+# TRUE    1685     62
 
 ## Annotate spots to drop
 spe$discard_auto_br <- spe$high_mito_br | spe$low_sum_br | spe$low_detected_br
@@ -113,85 +124,7 @@ table(spe$discard_auto_id)
 100 * sum(spe$discard_auto_id) / ncol(spe)
 # [1] 2.165277
 
-#### QC plots brain####
-pdf(here("plots", "QC_outliers_brain.pdf"), width = 21)
-## Mito rate
-plotColData(spe, x = "brnum", y = "subsets_Mito_percent", colour_by = "high_mito_br") +
-  ggtitle("Mito Precent by brain") +
-  facet_wrap(~ spe$brnum, scales = "free_x", nrow = 1)
-
-## low sum
-plotColData(spe, x = "brnum", y = "sum", colour_by = "low_sum_br") +
-  scale_y_log10() +
-  ggtitle("Total count by brain") +
-  facet_wrap(~ spe$brnum, scales = "free_x", nrow = 1)
-
-## low detected
-plotColData(spe, x = "brnum", y = "detected", colour_by = "low_detected_br") +
-  scale_y_log10() +
-  ggtitle("Detected features by brain") +
-  facet_wrap(~ spe$brnum, scales = "free_x", nrow = 1)
-
-# Mito rate vs n detected features
-
-plotColData(spe,
-            x = "detected", y = "subsets_Mito_percent",
-            colour_by = "discard_auto_br", point_size = 2.5, point_alpha = 0.5
-)
-
-# Detected features vs total count
-
-plotColData(spe,
-            x = "sum", y = "detected",
-            colour_by = "discard_auto_br", point_size = 2.5, point_alpha = 0.5
-)
-
-dev.off()
-
-#### QC plots sample_id ####
-pdf(here("plots", "QC_outliers_capture_area.pdf"), width = 21)
-## Mito rate
-plotColData(spe, x = "sample_id", y = "subsets_Mito_percent", colour_by = "high_mito_id") +
-  ggtitle("Mito Precent by capture area") +
-  facet_wrap(~ spe$brnum, scales = "free_x", nrow = 1)
-
-## low sum
-plotColData(spe, x = "sample_id", y = "sum", colour_by = "low_sum_id") +
-  scale_y_log10() +
-  ggtitle("Total count by capture area") +
-  facet_wrap(~ spe$brnum, scales = "free_x", nrow = 1)
-
-## low detected
-plotColData(spe, x = "sample_id", y = "detected", colour_by = "low_detected_id") +
-  scale_y_log10() +
-  ggtitle("Detected features by capture area") +
-  facet_wrap(~ spe$brnum, scales = "free_x", nrow = 1)
-
-# Mito rate vs n detected features
-
-plotColData(spe,
-            x = "detected", y = "subsets_Mito_percent",
-            colour_by = "discard_auto_id", point_size = 2.5, point_alpha = 0.5
-)
-
-# Detected features vs total count
-
-plotColData(spe,
-            x = "sum", y = "detected",
-            colour_by = "discard_auto_id", point_size = 2.5, point_alpha = 0.5
-)
-
-dev.off()
-
-# QC plot of tissue spots discarded
-vis_grid_clus(
-    spe = spe,
-    clustervar = "discard_auto_br",
-    pdf = here::here("plots", "QC_plots_discard_br.pdf", onefile = FALSE),
-    sort_clust = FALSE,
-    colors = c("FALSE" = "grey90", "TRUE" = "orange"),
-    point_size = 1
-  )
+save(spe, file = here::here("processed-data", "04_QC", "spe_QC.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
