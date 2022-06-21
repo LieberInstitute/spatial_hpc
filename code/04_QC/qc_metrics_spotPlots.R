@@ -1,6 +1,7 @@
 # cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
 suppressPackageStartupMessages(library("spatialLIBD"))
 suppressPackageStartupMessages(library("ggspavis"))
+suppressPackageStartupMessages(library("gridExtra"))
 suppressPackageStartupMessages(library("here"))
 
 load(here("processed-data", "04_QC", "spe_QC.Rdata"), verbose = TRUE)
