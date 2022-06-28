@@ -10,6 +10,7 @@ suppressPackageStartupMessages({
   library("harmony")
   library("BayesSpace")
   library("scran")
+  library("schex")
 })
 
 # load SPE
@@ -32,6 +33,7 @@ spePP <- runUMAP(spePP, dimred = "PCA")
 # Bioconductor.
 
 colnames(reducedDim(spePP, "UMAP")) <- c("UMAP1", "UMAP2")
+hex <- make_hexbin(spePP, nbins = 100, dimension_reduction = "UMAP", use_dims=c(1,2))
 
 # UMAP plots
 dir.create(here::here("plots", "05_Batch_correction"), showWarnings = FALSE)
@@ -44,6 +46,9 @@ ggplot(
   labs(color = "Sample/Capture Area") +
   theme_bw()
 
+label_df <- make_hexbin_label(hex, col="sample_id")
+plot_hexbin_meta(hex, col="sample_id", action="majority", xlab='UMAP1',ylab='UMAP2') + ggtitle("Capture area") + theme(legend.position='right')
+
 ggplot(
   data.frame(reducedDim(spePP, "UMAP")),
   aes(x = UMAP1, y = UMAP2, color = factor(spePP$brnum))
@@ -51,6 +56,9 @@ ggplot(
   geom_point() +
   labs(color = "Subject/Brain") +
   theme_bw()
+
+label_df <- make_hexbin_label(hex, col="brnum")
+plot_hexbin_meta(hex, col="brnum", action="majority", xlab='UMAP1',ylab='UMAP2') + ggtitle("Brains") + theme(legend.position='right')
 
 dev.off()
 
@@ -62,6 +70,8 @@ speH <- RunHarmony(spePP, "sample_id", verbose = F)
 speH <- runUMAP(speH, dimred = "HARMONY", name = "UMAP.HARMONY")
 colnames(reducedDim(speH, "UMAP.HARMONY")) <- c("UMAP1", "UMAP2")
 
+hex <- make_hexbin(speH, nbins = 100, dimension_reduction = "UMAP.HARMONY", use_dims=c(1,2))
+
 pdf(file = here::here("plots", "05_Batch_correction", "hpc_UMAP_postHarmony.pdf"))
 ggplot(
   data.frame(reducedDim(speH, "UMAP.HARMONY")),
@@ -71,6 +81,9 @@ ggplot(
   labs(color = "Sample/Capture Area") +
   theme_bw()
 
+label_df <- make_hexbin_label(hex, col="sample_id")
+plot_hexbin_meta(hex, col="sample_id", action="majority", xlab='UMAP1',ylab='UMAP2') + ggtitle("Capture area") + theme(legend.position='right')
+
 ggplot(
   data.frame(reducedDim(speH, "UMAP.HARMONY")),
   aes(x = UMAP1, y = UMAP2, color = factor(speH$brnum))
@@ -78,6 +91,9 @@ ggplot(
   geom_point() +
   labs(color = "Subject/Brain") +
   theme_bw()
+
+label_df <- make_hexbin_label(hex, col="brnum")
+plot_hexbin_meta(hex, col="brnum", action="majority", xlab='UMAP1',ylab='UMAP2') + ggtitle("Brains") + theme(legend.position='right')
 
 dev.off()
 
