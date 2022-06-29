@@ -1,7 +1,7 @@
 ###############################
 # Set up SGE array job to run k=5 to k = 20
 # Found in BayesSpaces.sh shell script line -t 2-15
-
+setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
 suppressPackageStartupMessages({
   library(here)
   library(sessioninfo)
@@ -13,11 +13,11 @@ suppressPackageStartupMessages({
 })
 
 # Create directory for BayesSpace plots
-dir_plots <- here::here("plots","06_Clustering","BayesSpace_plots")
+dir_plots <- here::here("plots","06_Clustering","BayesSpace")
 dir.create(dir_plots, showWarnings = FALSE, recursive = TRUE)
 
 # Load SPE
-spe <- readRDS(here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
+load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
 
 # Choose k
 k <- as.numeric(Sys.getenv("SGE_TASK_ID"))
@@ -38,11 +38,12 @@ colData(spe)$col <- colData(spe)$array_col
 message("Running spatialCluster()")
 Sys.time()
 set.seed(12345)
-spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", nrep = 50000)
+spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", save.chain = TRUE, nrep = 100)
 Sys.time()
 
+nrep = 100
 spe$BayesSpace_temp<-spe$spatial.cluster
-BayesSpace_name <- paste0("BayesSpace_harmony_k", k)
+BayesSpace_name <- paste0("BayesSpace_harmony_k", k, "_nrep",nrep)
 colnames(colData(spe))[ncol(colData(spe))] <- BayesSpace_name
 
 cluster_export(
@@ -57,8 +58,8 @@ names(cols) <- sort(unique(spe$spatial.cluster))
 
 vis_grid_clus(
   spe = spe,
-  clustervar = paste0("BayesSpace_harmony_k", k),
-  pdf_file = here("plots", "06_Clustering", "BayesSpace", paste0("vis_grid_clus_BayesSpace_k",k,".pdf")),
+  clustervar = paste0("BayesSpace_harmony_k", k, "_nrep",nrep),
+  pdf_file = here("plots", "06_Clustering", "BayesSpace", paste0("vis_grid_clus_BayesSpace_k",k,"_nrep",nrep,".pdf")),
   sort_clust = FALSE,
   colors = cols,
   spatial = FALSE,
