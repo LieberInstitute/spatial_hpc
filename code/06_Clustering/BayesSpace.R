@@ -38,10 +38,10 @@ colData(spe)$col <- colData(spe)$array_col
 message("Running spatialCluster()")
 Sys.time()
 set.seed(12345)
-spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", save.chain = TRUE, nrep = 100)
+spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", save.chain = TRUE, nrep = 10000)
 Sys.time()
 
-nrep = 100
+nrep = 10000
 spe$BayesSpace_temp<-spe$spatial.cluster
 BayesSpace_name <- paste0("BayesSpace_harmony_k", k, "_nrep",nrep)
 colnames(colData(spe))[ncol(colData(spe))] <- BayesSpace_name
