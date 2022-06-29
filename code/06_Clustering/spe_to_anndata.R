@@ -7,6 +7,7 @@ library('here')
 library('sessioninfo')
 
 load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"),verbose = TRUE)
+colData(spe)$dateImg = NULL
 anndata_out = here("processed-data", "06_Clustering", "spe_harmony_anndata.h5ad")
 
 #  Append 'spatialCoords' and 'spatialData' slots to 'colData', since in
