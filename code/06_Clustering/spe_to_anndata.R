@@ -12,7 +12,7 @@ anndata_out = here("processed-data", "06_Clustering", "spe_harmony_anndata.h5ad"
 #  Append 'spatialCoords' and 'spatialData' slots to 'colData', since in
 #  conversion we're treating the spatialExperiment object as if it is a
 #  singleCellExperiment, which doesn't have those additional slots.
-colData(spe) = cbind(colData(spe), spatialData(spe), spatialCoords(spe))
+colData(spe) = cbind(colData(spe), spatialCoords(spe))
 
 write_anndata = function(sce, out_path) {
   invisible(
@@ -29,7 +29,7 @@ write_anndata = function(sce, out_path) {
         
         return()
       },
-      env = zellkonverterAnnDataEnv,
+      env = zellkonverterAnnDataEnv(),
       sce = sce,
       filename = out_path
     )
