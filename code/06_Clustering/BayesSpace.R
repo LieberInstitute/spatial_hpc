@@ -63,7 +63,7 @@ vis_grid_clus(
   sort_clust = FALSE,
   colors = cols,
   spatial = FALSE,
-  point_size = 2,
+  point_size = 1,
   sample_order = unique(spe$sample_id)
 )
 
