@@ -5,8 +5,8 @@
 #$ -o logs/BayesSpace_k5-20.$TASK_ID.txt
 #$ -e logs/BayesSpace_k5-20.$TASK_ID.txt
 #$ -m e
-#$ -t 5-6
-#$ -tc 5
+#$ -t 7-15
+#$ -tc 10
 
 echo "**** Job starts ****"
 date
