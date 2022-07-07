@@ -8,6 +8,8 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(Polychrome)
 })
+suppressPackageStartupMessages(library("ggspavis"))
+suppressPackageStartupMessages(library("gridExtra"))
 
 load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
 spe <- cluster_import(
@@ -31,30 +33,415 @@ table(spe$BayesSpace_harmony_k11_nrep10000, spe$brnum)
 # 10    282    590    479    150    739    549    716    568    468
 # 11    175    389    311     85    271   1189    730    191    507
 
+
+library(tidySingleCellExperiment)
+##change colnames(spe) and rownames(spatialCoords(spe)) to spe$key
+colnames(spe)<-spe$key
+rownames(spatialCoords(spe))<-spe$key
+##now arrange() to get the correct order
+spe<-arrange(spe,slide,array)
+
+samples = unique(spe$sample_id)
+angle_list <- c(90, 180, 180, 180, 0, 0, 270, 0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+source(file = here::here("code", "pilot_data_checks", "transform_spe.R"))
+
+for (i in seq_along(angle_list)) {
+  id <- samples[i]
+  x <- trans_geom(spe, sample_id = id, degrees = angle_list[i])
+  if (i == 1) {
+    speB <- x
+  } else {
+    speB <- cbind(speB, x)
+  }
+  speB <- rotateImg(speB, sample_id = id, image_id = TRUE, angle_list[i])
+}
+
+speB$position = factor(speB$position, levels = c("TL", "TR", "BL", "BR"))
+speB<-arrange(speB,brnum,position)
+
+brains = unique(spe$brnum)
+pdf(here("plots","06_Clustering","brains.pdf"), width = 8, height = 10)
+
+##
+ii = 1
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p3 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+p4 = plotVisium(speb[,which(speb$sample_id == samples[4])], spots = FALSE)
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 2
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+
+grid.arrange(p1,p2,nrow = 2)
+
+##
+ii = 3
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+
+grid.arrange(p1,p2,nrow = 1)
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[4])], spots = FALSE)
+
+grid.arrange(p1,p2,nrow = 2)
+
+##
+ii = 4
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p3 = plotVisium(speb[,which(speb$sample_id == samples[5])], spots = FALSE)
+p4 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+p5 = plotVisium(speb[,which(speb$sample_id == samples[4])], spots = FALSE)
+grid.arrange(p1,p2,p3,p4,p5,nrow = 2)
+
+##
+ii = 5
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p3 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+p4 = plotVisium(speb[,which(speb$sample_id == samples[4])], spots = FALSE)
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 6
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p3 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+
+grid.arrange(p1,p2,p3,nrow = 2)
+
+##
+ii = 7
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p3 = plotVisium(speb[,which(speb$sample_id == samples[4])], spots = FALSE)
+p4 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 8
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+
+grid.arrange(p1,p2,nrow = 1)
+
+##
+ii = 9
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = plotVisium(speb[,which(speb$sample_id == samples[1])], spots = FALSE)
+p2 = plotVisium(speb[,which(speb$sample_id == samples[2])], spots = FALSE)
+p3 = plotVisium(speb[,which(speb$sample_id == samples[3])], spots = FALSE)
+p4 = plotVisium(speb[,which(speb$sample_id == samples[4])], spots = FALSE)
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+dev.off()
+
+
+##
+
 k=11
 cols <- Polychrome::palette36.colors(k)
 names(cols) <- sort(unique(spe$BayesSpace_harmony_k11_nrep10000))
-brains = unique(spe$brnum)
 
-for (i in 1:9){
-vis_grid_clus(
-  spe = spe[,which(spe$brnum == brains[i])],
-  clustervar = "BayesSpace_harmony_k11_nrep10000",
-  pdf_file = here("plots", "06_Clustering", "BayesSpace", paste0("BayesSpace_k",k,"_",brains[i],".pdf")),
-  sort_clust = FALSE,
-  colors = cols,
-  spatial = FALSE,
-  point_size = 2.5,
-)}
+pdf(here("plots","06_Clustering", "BayesSpace_clusters_K11.pdf"), width = 21, height = 20)
+# QC plot of tissue spots discarded
 
+ii = 1
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000" ,colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 2
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p3,p2,p4,nrow = 2) 
+
+##
+ii = 3
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+p1 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p3,p2,p4,nrow = 2)
+
+##
+ii = 4
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[5],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p5 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+grid.arrange(p1,p2,p3,p4,p5,nrow = 2)
+
+##
+ii = 5
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 6
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,nrow = 2)
+
+##
+ii = 7
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 8
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 9
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_clus(spe = speb,sampleid = samples[2],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_clus(spe = speb,sampleid = samples[3],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_clus(spe = speb,sampleid = samples[4],clustervar = "BayesSpace_harmony_k11_nrep10000",colors = cols,point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+dev.off()
+
+#########
+pdf(here("plots","06_Clustering", "NECAB1_DG+CA3.pdf"), width = 21, height = 20)
+# QC plot of tissue spots discarded
+gene =   "NECAB1; ENSG00000123119" #, "MPPED1; ENSG00000186732", "SLC17A6; ENSG00000091664" , "PROX1; ENSG00000117707"
+ii = 1
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 2
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p3,p2,p4,nrow = 2) 
+
+##
+ii = 3
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+p1 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p3,p2,p4,nrow = 2)
+
+##
+ii = 4
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[5],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p5 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+grid.arrange(p1,p2,p3,p4,p5,nrow = 2)
+
+##
+ii = 5
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 6
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,nrow = 2)
+
+##
+ii = 7
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 8
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+##
+ii = 9
+speb = speB[,which(speB$brnum == brains[ii])]
+samples = unique(speb$sample_id)
+samples
+
+p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p2 = vis_gene(spe = speb,sampleid = samples[2],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p3 = vis_gene(spe = speb,sampleid = samples[3],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+p4 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
+
+grid.arrange(p1,p2,p3,p4,nrow = 2)
+
+dev.off()
 
 ## Cluster assignments
 # 11 = crap tissue
-# 9= GCL, dendrites (molecular layer)
+# 9 = GCL, dendrites (molecular layer)
 # 1 = white matter
 # 3 = sub granular layer (inter neurons)
-# 4 =  CA3
+# 4 = CA3
 # 2,5,8 different layers of CA3
 # 7 = CA1/CA2  
-
- 
