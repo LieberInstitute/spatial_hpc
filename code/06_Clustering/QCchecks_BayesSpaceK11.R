@@ -7,64 +7,19 @@ suppressPackageStartupMessages({
   library(BayesSpace)
   library(ggplot2)
   library(Polychrome)
+  library(tidySingleCellExperiment)
 })
 suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("gridExtra"))
 
-load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
-spe <- cluster_import(
-       spe,
-       cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace", "BayesSpace_harmony_k11_nrep10000"), 
-       prefix = ""
-   )
-
-table(spe$BayesSpace_harmony_k11_nrep10000, spe$brnum)
-
-#     Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667
-# 1    1683   2064   1743   1094   1636   3034   2499   1127   2005
-# 2     781   1957   1270    724    750   1166   2431    335   1244
-# 3      45   1179     61     65   1560    245    879   1401   3202
-# 4    4601   1741   5379   1582   1682   3071   2959    109   1006
-# 5    1693   2238   1673   1269   2754   3602   2536   1206   2870
-# 6    1277   2388   1078    888   1279   2471   1663    688   1316
-# 7    1499   2604    806   1412    726    945   1863    841   2820
-# 8    1983   3473   1137   1124   1530   1920   3492    703   1409
-# 9      68    817     66    226   1304    448    647   1203    986
-# 10    282    590    479    150    739    549    716    568    468
-# 11    175    389    311     85    271   1189    730    191    507
-
-
-library(tidySingleCellExperiment)
-##change colnames(spe) and rownames(spatialCoords(spe)) to spe$key
-colnames(spe)<-spe$key
-rownames(spatialCoords(spe))<-spe$key
-##now arrange() to get the correct order
-spe<-arrange(spe,slide,array)
-
-samples = unique(spe$sample_id)
-angle_list <- c(90, 180, 180, 180, 0, 0, 270, 0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-source(file = here::here("code", "pilot_data_checks", "transform_spe.R"))
-
-for (i in seq_along(angle_list)) {
-  id <- samples[i]
-  x <- trans_geom(spe, sample_id = id, degrees = angle_list[i])
-  if (i == 1) {
-    speB <- x
-  } else {
-    speB <- cbind(speB, x)
-  }
-  speB <- rotateImg(speB, sample_id = id, image_id = TRUE, angle_list[i])
-}
-
-speB$position = factor(speB$position, levels = c("TL", "TR", "BL", "BR"))
-speB<-arrange(speB,brnum,position)
-
+load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+spe = speB
 brains = unique(spe$brnum)
-pdf(here("plots","06_Clustering","brains.pdf"), width = 8, height = 10)
+pdf(here("plots","06_Clustering","QCchecks_BayesSpaceK11","brains.pdf"), width = 8, height = 10)
 
 ##
 ii = 1
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -76,7 +31,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 2
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -87,7 +42,7 @@ grid.arrange(p1,p2,nrow = 2)
 
 ##
 ii = 3
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -103,7 +58,7 @@ grid.arrange(p1,p2,nrow = 2)
 
 ##
 ii = 4
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -116,7 +71,7 @@ grid.arrange(p1,p2,p3,p4,p5,nrow = 2)
 
 ##
 ii = 5
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -129,7 +84,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 6
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -141,7 +96,7 @@ grid.arrange(p1,p2,p3,nrow = 2)
 
 ##
 ii = 7
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -154,7 +109,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 8
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -165,7 +120,7 @@ grid.arrange(p1,p2,nrow = 1)
 
 ##
 ii = 9
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -188,7 +143,7 @@ pdf(here("plots","06_Clustering", "BayesSpace_clusters_K11.pdf"), width = 21, he
 # QC plot of tissue spots discarded
 
 ii = 1
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 p1 = vis_clus(spe = speb,sampleid = samples[1],clustervar = "BayesSpace_harmony_k11_nrep10000" ,colors = cols,point_size = 2,... = paste0("_",brains[ii]))
@@ -200,7 +155,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 2
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -213,7 +168,7 @@ grid.arrange(p1,p3,p2,p4,nrow = 2)
 
 ##
 ii = 3
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -233,7 +188,7 @@ grid.arrange(p1,p3,p2,p4,nrow = 2)
 
 ##
 ii = 4
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -246,7 +201,7 @@ grid.arrange(p1,p2,p3,p4,p5,nrow = 2)
 
 ##
 ii = 5
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -259,7 +214,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 6
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -271,7 +226,7 @@ grid.arrange(p1,p2,p3,nrow = 2)
 
 ##
 ii = 7
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -284,7 +239,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 8
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -297,7 +252,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 9
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -311,11 +266,13 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 dev.off()
 
 #########
-pdf(here("plots","06_Clustering", "NECAB1_DG+CA3.pdf"), width = 21, height = 20)
+pdf(here("plots","06_Clustering", "NPTX2.pdf"), width = 21, height = 20)
 # QC plot of tissue spots discarded
-gene =   "NECAB1; ENSG00000123119" #, "MPPED1; ENSG00000186732", "SLC17A6; ENSG00000091664" , "PROX1; ENSG00000117707"
+gene =   "NPTX2; ENSG00000106236" #"NECAB1; ENSG00000123119" , "MPPED1; ENSG00000186732", "SLC17A6; ENSG00000091664" , "PROX1; ENSG00000117707"
+human_markers_search <- rowData(spe)$gene_search[match("NPTX2", rowData(spe)$gene_name)]
+
 ii = 1
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 p1 = vis_gene(spe = speb,sampleid = samples[1],geneid = gene, spatial = TRUE,assayname = "logcounts", minCount = 0, alpha = 0.7, viridis = TRUE, point_size = 2,... = paste0("_",brains[ii]))
@@ -327,7 +284,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 2
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -340,7 +297,7 @@ grid.arrange(p1,p3,p2,p4,nrow = 2)
 
 ##
 ii = 3
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -360,7 +317,7 @@ grid.arrange(p1,p3,p2,p4,nrow = 2)
 
 ##
 ii = 4
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -373,7 +330,7 @@ grid.arrange(p1,p2,p3,p4,p5,nrow = 2)
 
 ##
 ii = 5
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -386,7 +343,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 6
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -398,7 +355,7 @@ grid.arrange(p1,p2,p3,nrow = 2)
 
 ##
 ii = 7
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -411,7 +368,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 8
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
@@ -424,7 +381,7 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 ##
 ii = 9
-speb = speB[,which(speB$brnum == brains[ii])]
+speb = spe[,which(spe$brnum == brains[ii])]
 samples = unique(speb$sample_id)
 samples
 
