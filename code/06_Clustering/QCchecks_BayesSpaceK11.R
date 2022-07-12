@@ -139,7 +139,7 @@ k=11
 cols <- Polychrome::palette36.colors(k)
 names(cols) <- sort(unique(spe$BayesSpace_harmony_k11_nrep10000))
 
-pdf(here("plots","06_Clustering", "BayesSpace_clusters_K11.pdf"), width = 21, height = 20)
+pdf(here("plots","06_Clustering", "QCchecks_BayesSpaceK11", "BayesSpace_clusters_K11.pdf"), width = 21, height = 20)
 # QC plot of tissue spots discarded
 
 ii = 1
@@ -266,10 +266,9 @@ grid.arrange(p1,p2,p3,p4,nrow = 2)
 dev.off()
 
 #########
-pdf(here("plots","06_Clustering", "NPTX2.pdf"), width = 21, height = 20)
+pdf(here("plots","06_Clustering","QCchecks_BayesSpaceK11", "NECAB1.pdf"), width = 21, height = 20)
 # QC plot of tissue spots discarded
-gene =   "NPTX2; ENSG00000106236" #"NECAB1; ENSG00000123119" , "MPPED1; ENSG00000186732", "SLC17A6; ENSG00000091664" , "PROX1; ENSG00000117707"
-human_markers_search <- rowData(spe)$gene_search[match("NPTX2", rowData(spe)$gene_name)]
+gene = #"NECAB1; ENSG00000123119" , "MPPED1; ENSG00000186732", "SLC17A6; ENSG00000091664" , "PROX1; ENSG00000117707"
 
 ii = 1
 speb = spe[,which(spe$brnum == brains[ii])]
