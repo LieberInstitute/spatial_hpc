@@ -1,6 +1,23 @@
-gene = "NPTX2; ENSG00000106236"
+setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
+suppressPackageStartupMessages({
+  library(here)
+  library(sessioninfo)
+  library(SpatialExperiment)
+  library(spatialLIBD)
+  library(BayesSpace)
+  library(ggplot2)
+})
+suppressPackageStartupMessages(library("ggspavis"))
+suppressPackageStartupMessages(library("gridExtra"))
+
+load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+spe = speB
+brains = unique(spe$brnum)
 
 human_markers_search <- rowData(spe)$gene_search[match("NPTX2", rowData(spe)$gene_name)]
+
+pdf(here("plots","07_Feature_selection","TonySVGs","NPTX2_GCL.pdf"), width = 21, height = 20)
+gene = "NPTX2; ENSG00000106236"
 
 ii = 1
 speb = spe[,which(spe$brnum == brains[ii])]
