@@ -35,12 +35,12 @@ SVGs <- c(
   "OLFM1",
   "NNAT",
   "NCDN",
-  "CRYAB"
+  "CRYAB",
+  "CST3"
 )
 
 # Locate the marker genes
 SVG_search <- rowData(spe)$gene_search[match(SVGs, rowData(spe)$gene_name)]
-
 
 for (i in SVG_search){
 gene = i
