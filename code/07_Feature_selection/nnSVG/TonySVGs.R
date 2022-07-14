@@ -13,11 +13,39 @@ suppressPackageStartupMessages(library("gridExtra"))
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 spe = speB
 brains = unique(spe$brnum)
+# brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
+SVGs <- c(
+  "MBP",
+  "PLP1",
+  "GFAP",
+  "MTRNR2L12",
+  "TTR",
+  "SNAP25",
+  "SLC17A7",
+  "UCHL1",
+  "NPTXR",
+  "NPTX2",
+  "THY1",
+  "HPCA",
+  "ENC1",
+  "NPTX1",
+  "CHN1",
+  "NRGN",
+  "YWHAH",
+  "OLFM1",
+  "NNAT",
+  "NCDN",
+  "CRYAB"
+)
 
-human_markers_search <- rowData(spe)$gene_search[match("NPTX2", rowData(spe)$gene_name)]
+# Locate the marker genes
+SVG_search <- rowData(spe)$gene_search[match(SVGs, rowData(spe)$gene_name)]
 
-pdf(here("plots","07_Feature_selection","TonySVGs","NPTX2_GCL.pdf"), width = 21, height = 20)
-gene = "NPTX2; ENSG00000106236"
+
+for (i in SVG_search){
+gene = i
+gene_name = strsplit(i,";")[[1]][1]
+pdf(here("plots","07_Feature_selection","TonySVGs",paste0(gene_name,".pdf")), width = 21, height = 20)
 
 ii = 1
 speb = spe[,which(spe$brnum == brains[ii])]
@@ -141,3 +169,4 @@ p4 = vis_gene(spe = speb,sampleid = samples[4],geneid = gene, spatial = TRUE,ass
 grid.arrange(p1,p2,p3,p4,nrow = 2)
 
 dev.off()
+}
