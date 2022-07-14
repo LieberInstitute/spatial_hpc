@@ -15,6 +15,7 @@ suppressPackageStartupMessages(library("gridExtra"))
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 spe = speB
 brains = unique(spe$brnum)
+# brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
 pdf(here("plots","06_Clustering","QCchecks_BayesSpaceK11","brains.pdf"), width = 8, height = 10)
 
 ##
