@@ -135,7 +135,7 @@ spe <- spe[-no_expr, ]
 spe <- spe[, colData(spe)$in_tissue]
 
 ## Size in Gb
-lobstr::obj_size(spe) / 1024^3
+lobstr::obj_size(spe) 
 # 4.856146 B
 dim(spe)
 # [1] 30359 137446
@@ -147,7 +147,7 @@ if (any(colSums(counts(spe)) == 0)) {
     dim(spe)
 }
 
-lobstr::obj_size(spe) / 1024^3
+lobstr::obj_size(spe) 
 # 4.856144 B
 dim(spe)
 # [1]  30359 137440

@@ -7,7 +7,7 @@ load(here::here("processed-data", "02_build_spe", "spe_basic.Rdata"),
     verbose = TRUE
 )
 ## Check how big it is in memory
-lobstr::obj_size(spe) / 1024^3
+lobstr::obj_size(spe) 
 # 5.075627 B
 ## That's too big for shinyapps.io. Aim to have an object near 2GB.
 
@@ -17,7 +17,7 @@ lobstr::obj_size(spe) / 1024^3
 ## to run every time someone accesses the shiny app.
 imgData(spe) <-
     imgData(spe)[!imgData(spe)$image_id %in% c("hires", "detected", "aligned"), ]
-lobstr::obj_size(spe) / 1024^3
+lobstr::obj_size(spe) 
 # 2.351571 B
 ## Ok, this seems reasonable.
 

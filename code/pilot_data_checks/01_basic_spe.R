@@ -121,7 +121,7 @@ spe_basic <- spe
 save(spe_basic, file = here::here("processed-data", "pilot_data_checks", "spe_basic.Rdata"))
 
 ## Size in Gb
-lobstr::obj_size(spe_basic) / 1024^3
+lobstr::obj_size(spe_basic) 
 # 1.344729 B
 dim(spe_basic)
 # [1] 36601 39936
