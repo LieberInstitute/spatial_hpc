@@ -62,7 +62,7 @@ spe_raw <- spe
 save(spe_raw, file = here::here("processed-data", "02_build_spe", "spe_raw.Rdata"))
 
 ## Size in Gb
-lobstr::obj_size(spe_raw) 
+lobstr::obj_size(spe_raw)
 # 5.141452 B
 dim(spe_raw)
 # 36601 159744

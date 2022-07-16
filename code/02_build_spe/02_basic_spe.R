@@ -98,13 +98,13 @@ sample_order
 # [3,] "V11L05-335_C1" "V11U08-084_C1" "V11A20-297_C1" "V11L05-336_C1"
 # [4,] "V11L05-335_D1" "V11U08-084_D1" "V11A20-297_D1" "V11L05-336_D1"
 
-##code for rearranging spe for better Shiny app visualization
+## code for rearranging spe for better Shiny app visualization
 library(tidySingleCellExperiment)
-##change colnames(spe) and rownames(spatialCoords(spe)) to spe$key
-colnames(spe)<-spe$key
-rownames(spatialCoords(spe))<-spe$key
-##now arrange() to get the correct order
-spe<-arrange(spe,slide,array)
+## change colnames(spe) and rownames(spatialCoords(spe)) to spe$key
+colnames(spe) <- spe$key
+rownames(spatialCoords(spe)) <- spe$key
+## now arrange() to get the correct order
+spe <- arrange(spe, slide, array)
 
 
 Newsample_order <- unlist(sapply(slide_order, function(i) {
@@ -135,7 +135,7 @@ spe <- spe[-no_expr, ]
 spe <- spe[, colData(spe)$in_tissue]
 
 ## Size in Gb
-lobstr::obj_size(spe) 
+lobstr::obj_size(spe)
 # 4.856146 B
 dim(spe)
 # [1] 30359 137446
@@ -147,7 +147,7 @@ if (any(colSums(counts(spe)) == 0)) {
     dim(spe)
 }
 
-lobstr::obj_size(spe) 
+lobstr::obj_size(spe)
 # 4.856144 B
 dim(spe)
 # [1]  30359 137440

@@ -1,7 +1,7 @@
 library("rsconnect")
 library("here")
 
-app_dir <- here::here("code","03_shiny_app_basic")
+app_dir <- here::here("code", "03_shiny_app_basic")
 
 ## Or you can go to your shinyapps.io account and copy this
 ## Here we do this to keep our information hidden.

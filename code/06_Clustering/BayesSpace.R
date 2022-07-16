@@ -3,17 +3,17 @@
 # Found in BayesSpaces.sh shell script line -t 2-15
 setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
 suppressPackageStartupMessages({
-  library(here)
-  library(sessioninfo)
-  library(SpatialExperiment)
-  library(spatialLIBD)
-  library(BayesSpace)
-  library(ggplot2)
-  library(Polychrome)
+    library(here)
+    library(sessioninfo)
+    library(SpatialExperiment)
+    library(spatialLIBD)
+    library(BayesSpace)
+    library(ggplot2)
+    library(Polychrome)
 })
 
 # Create directory for BayesSpace plots
-dir_plots <- here::here("plots","06_Clustering","BayesSpace")
+dir_plots <- here::here("plots", "06_Clustering", "BayesSpace")
 dir.create(dir_plots, showWarnings = FALSE, recursive = TRUE)
 
 # Load SPE
@@ -30,7 +30,7 @@ metadata(spe)$BayesSpace.data <- list(platform = "Visium", is.enhanced = FALSE)
 # summary(colData(spe)$array_row)
 # summary(colData(spe)$array_col)
 auto_offset_row <- as.numeric(factor(unique(spe$sample_id))) * 100
-names(auto_offset_row) <-unique(spe$sample_id)
+names(auto_offset_row) <- unique(spe$sample_id)
 colData(spe)$row <- colData(spe)$array_row + auto_offset_row[spe$sample_id]
 colData(spe)$col <- colData(spe)$array_col
 
@@ -41,15 +41,15 @@ set.seed(12345)
 spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", save.chain = TRUE, nrep = 10000)
 Sys.time()
 
-nrep = 10000
-spe$BayesSpace_temp<-spe$spatial.cluster
-BayesSpace_name <- paste0("BayesSpace_harmony_k", k, "_nrep",nrep)
+nrep <- 10000
+spe$BayesSpace_temp <- spe$spatial.cluster
+BayesSpace_name <- paste0("BayesSpace_harmony_k", k, "_nrep", nrep)
 colnames(colData(spe))[ncol(colData(spe))] <- BayesSpace_name
 
 cluster_export(
-  spe,
-  BayesSpace_name,
-  cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace")
+    spe,
+    BayesSpace_name,
+    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace")
 )
 
 ## Visualize BayesSpace results
@@ -57,14 +57,14 @@ cols <- Polychrome::palette36.colors(k)
 names(cols) <- sort(unique(spe$spatial.cluster))
 
 vis_grid_clus(
-  spe = spe,
-  clustervar = paste0("BayesSpace_harmony_k", k, "_nrep",nrep),
-  pdf_file = here("plots", "06_Clustering", "BayesSpace", paste0("vis_grid_clus_BayesSpace_k",k,"_nrep",nrep,".pdf")),
-  sort_clust = FALSE,
-  colors = cols,
-  spatial = FALSE,
-  point_size = 1,
-  sample_order = unique(spe$sample_id)
+    spe = spe,
+    clustervar = paste0("BayesSpace_harmony_k", k, "_nrep", nrep),
+    pdf_file = here("plots", "06_Clustering", "BayesSpace", paste0("vis_grid_clus_BayesSpace_k", k, "_nrep", nrep, ".pdf")),
+    sort_clust = FALSE,
+    colors = cols,
+    spatial = FALSE,
+    point_size = 1,
+    sample_order = unique(spe$sample_id)
 )
 
 ## Reproducibility information

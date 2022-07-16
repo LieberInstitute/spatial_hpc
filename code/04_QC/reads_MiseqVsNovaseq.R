@@ -5,11 +5,11 @@ suppressPackageStartupMessages(library("spatialLIBD"))
 
 load(file = here::here("processed-data", "02_build_spe", "spe_basic.Rdata"))
 
-spe$seq_type = "novaseq"
-spe$seq_type[which(spe$slide == "V10B01-085")] = "miseq&novaseq"
-spe$seq_type[which(spe$slide == "V10B01-086")] = "miseq&novaseq"
+spe$seq_type <- "novaseq"
+spe$seq_type[which(spe$slide == "V10B01-085")] <- "miseq&novaseq"
+spe$seq_type[which(spe$slide == "V10B01-086")] <- "miseq&novaseq"
 
-aggregate(spe$sum_umi,list(spe$sample_id), FUN = sum)
+aggregate(spe$sum_umi, list(spe$sample_id), FUN = sum)
 # Group.1        x
 # 1  V10B01-085_A1 21422164
 # 2  V10B01-085_B1 11036139
@@ -44,7 +44,7 @@ aggregate(spe$sum_umi,list(spe$sample_id), FUN = sum)
 # 31 V11U08-084_C1 13570886
 # 32 V11U08-084_D1 12094183
 
-aggregate(spe$sum_gene,list(spe$sample_id), FUN = sum)
+aggregate(spe$sum_gene, list(spe$sample_id), FUN = sum)
 #   Group.1       x
 # 1  V10B01-085_A1 9901010
 # 2  V10B01-085_B1 5457058
