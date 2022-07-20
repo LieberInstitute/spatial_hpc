@@ -50,11 +50,11 @@ for (s in seq_along(brains)) {
     # store whole tissue results
     res_list[[s]] <- rowData(spe_sub)
 
-    save(res_list[[s]], file = here::here("processed-data", "nnSVG", paste(spe$sample_id, ".RData")))
+    save(res_list[[s]], file = here::here("processed-data","07_Feature_selection", "nnSVG", paste(spe$sample_id, ".RData")))
 }
 
 # save whole tissue nnSVG results
-save(res_list, file = here::here("processed-data", "nnSVG", "nnSVG.RData"))
+save(res_list, file = here::here("processed-data","07_Feature_selection", "nnSVG", "nnSVG.RData"))
 
 ## Reproducibility information
 print("Reproducibility information:")
