@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=25G,h_vmem=25G,h_fsize=100G
+#$ -l bluejay,mem_free=60G,h_vmem=60G,h_fsize=100G
 #$ -N mbkmeans
 #$ -o logs/mbkmeans.txt
 #$ -e logs/mbkmeans.txt
