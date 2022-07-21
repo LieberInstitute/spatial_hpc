@@ -15,22 +15,15 @@ suppressPackageStartupMessages({
 
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 
-# Load BayesSpace clusters onto spe object
-spe <- cluster_import(
-    spe,
-    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace"),
-    prefix = ""
-)
-
 # Create vector of samples for nnSVG on whole tissue
 brains <- as.character(unique(spe$brnum))
 samples <- unique(spe$sample_id)
 # Run nnSVG once per sample whole tissue and store lists of top SVGs
-res_list <- as.list(rep(NA, length(brains)))
+res_list <- as.list(rep(NA, length(samples)))
 
-names(res_list) <- brains
+names(res_list) <- samples
 
-for (s in seq_along(brains)) {
+for (s in seq_along(samples)) {
 
     # select sample_id
     # ix <- spe$brnum == brains[s]
