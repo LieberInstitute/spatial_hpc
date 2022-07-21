@@ -10,7 +10,7 @@ library("sessioninfo")
 # library("jaffelab")
 
 ## load data
-load(here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"), verbose = TRUE)
+load(file = here::here("processed-data", "06_Clustering","spe_modify.Rdata"), verbose = TRUE)
 
 ## neron paper returned 19 clusters for DLPFC, try 5:50
 set.seed(610)
@@ -51,6 +51,13 @@ names(km_res[[1]])
 
 
 # load(here("processed-data", "03_build_sce","km_res.Rdata"),verbose = TRUE)
+## get wcss
+wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
+
+pdf(here("plots", "06_Clustering", "mbkmeans_wcss.pdf"))
+plot(k_list, wcss, type = "b")
+abline(v = 15, lty = 2, col = "red")
+
 
 #### Use fasthplus + wcss to refine k ####
 # hpb estimate. t = pre-bootstrap sample size, D = reduced dimensions matrix, L = cluster labels, r = number of bootstrap iterations
@@ -80,22 +87,19 @@ fasthplus <- lapply(l, function(li) {
 
 fasthplus <- unlist(fasthplus)
 
-## get wcss
-wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
 
 km_metrics <- data.frame(k = k_list, wcss = wcss, fasthplus = fasthplus)
-write.csv(km_metrics, file = here("processed-data", "06_clustering", "mb_kmeans_metrics.csv"))
+write.csv(km_metrics, file = here("processed-data", "06_Clustering", "mbkmeans_metrics.csv"))
 
 #### Plot metrics to select best k ####
-pdf(here("plots", "06_clustering", "mb_kmeans_wcss-fastH.pdf"))
-plot(k_list, wcss, type = "b")
-abline(v = 15, lty = 2, col = "red")
+
+pdf(here("plots", "06_Clustering", "mbkmeans_fastH.pdf"))
 plot(k_list, fasthplus, type = "b")
 abline(v = 15, lty = 2, col = "red")
 dev.off()
 
 ## Save data
-save(km_res, km_metrics, file = here("processed-data", "06_clustering", "km_res.Rdata"))
+save(km_res, km_metrics, file = here("processed-data", "06_Clustering", "km_res.Rdata"))
 
 # sgejobs::job_single('cluster_mb_kmeans', create_shell = TRUE, queue= 'bluejay', memory = '25G', command = "Rscript cluster_mb_kmeans.R")
 ## Reproducibility information
