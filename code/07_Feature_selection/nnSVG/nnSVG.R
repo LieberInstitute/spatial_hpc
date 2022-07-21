@@ -14,7 +14,7 @@ suppressPackageStartupMessages({
 })
 
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
-spe <- speB
+
 # Load BayesSpace clusters onto spe object
 spe <- cluster_import(
     spe,
@@ -50,7 +50,7 @@ for (s in seq_along(brains)) {
     # store whole tissue results
     res_list[[s]] <- rowData(spe_sub)
 
-    save(res_list[[s]], file = here::here("processed-data","07_Feature_selection", "nnSVG", paste(spe$sample_id, ".RData")))
+    save(rowData(spe_sub), file = here::here("processed-data","07_Feature_selection", "nnSVG", paste(spe$sample_id, ".RData")))
 }
 
 # save whole tissue nnSVG results
