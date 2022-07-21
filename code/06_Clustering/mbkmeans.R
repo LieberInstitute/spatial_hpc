@@ -16,7 +16,7 @@ load(file = here::here("processed-data", "06_Clustering","spe_modify.Rdata"), ve
 set.seed(610)
 k_list <- seq(5, 30)
 
-message("Apply mbkmeans from 5:20 - ", Sys.time())
+message("Apply mbkmeans from 5:30 - ", Sys.time())
 km_res <- lapply(k_list, function(k) {
     message("k=", k)
     mbkmeans(spe,
@@ -54,7 +54,7 @@ names(km_res[[1]])
 ## get wcss
 wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
 
-pdf(here("plots", "06_Clustering", "mbkmeans_wcss.pdf"))
+pdf(here("plots", "06_Clustering", "mbkmeans", "mbkmeans_wcss.pdf"))
 plot(k_list, wcss, type = "b")
 abline(v = 15, lty = 2, col = "red")
 
