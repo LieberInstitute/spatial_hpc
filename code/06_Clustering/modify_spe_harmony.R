@@ -11,7 +11,7 @@ suppressPackageStartupMessages({
 load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
 spe <- cluster_import(
     spe,
-    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace", "BayesSpace_harmony_k11_nrep10000"),
+    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace"),
     prefix = ""
 )
 
@@ -53,5 +53,5 @@ for (i in seq_along(angle_list)) {
 
 speB$position <- factor(speB$position, levels = c("TL", "TR", "BL", "BR"))
 speB <- arrange(speB, brnum, position)
-
-save(speB, file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+spe = speB
+save(spe, file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
