@@ -38,16 +38,18 @@ for (s in seq_along(samples)) {
 
     # run nnSVG
     set.seed(12345)
+    message('running nnSVG')
     spe_sub <- nnSVG(spe_sub, n_threads = 10)
 
     # store whole tissue results
+    message('saving data')
     res_list[[s]] <- rowData(spe_sub)
-
-    save(rowData(spe_sub), file = here::here("processed-data","07_Feature_selection", "nnSVG", paste(spe$sample_id, ".RData")))
+    temp = rowData(spe_sub)
+    save(temp, file = here::here("processed-data","07_Feature_selection", "nnSVG", paste0(samples[s], ".Rdata")))
 }
 
 # save whole tissue nnSVG results
-save(res_list, file = here::here("processed-data","07_Feature_selection", "nnSVG", "nnSVG.RData"))
+save(res_list, file = here::here("processed-data","07_Feature_selection", "nnSVG", "nnSVG.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
