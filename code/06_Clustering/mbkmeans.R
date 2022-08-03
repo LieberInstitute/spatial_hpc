@@ -9,8 +9,8 @@ library("here")
 library("sessioninfo")
 library("jaffelab")
 library("ggplot2")
-library(spatialLIBD)
-library(Polychrome)
+library("spatialLIBD")
+library("Polychrome")
 suppressPackageStartupMessages(library("gridExtra"))
 
 
@@ -33,6 +33,17 @@ km_res <- lapply(k_list, function(k) {
 })
 
 names(km_res[[1]])
+save(km_res, file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
+
+# load(here("processed-data", "03_build_sce","km_res.Rdata"),verbose = TRUE)
+## get wcss
+wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
+
+pdf(here("plots", "06_Clustering", "mbkmeans", "mbkmeans_wcss.pdf"))
+plot(k_list, wcss, type = "b")
+abline(v = 15, lty = 2, col = "red")
+dev.off()
+
 brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
 
 ## Visualize mbkmeans results
@@ -179,16 +190,6 @@ grid.arrange(p1, p2, p3, p4, nrow = 2)
 dev.off()
 
 }
-
-save(km_res, file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
-
-# load(here("processed-data", "03_build_sce","km_res.Rdata"),verbose = TRUE)
-## get wcss
-wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
-
-pdf(here("plots", "06_Clustering", "mbkmeans", "mbkmeans_wcss.pdf"))
-plot(k_list, wcss, type = "b")
-abline(v = 15, lty = 2, col = "red")
 
 
 #### Use fasthplus + wcss to refine k ####
