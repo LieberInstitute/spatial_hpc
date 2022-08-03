@@ -14,11 +14,11 @@ suppressPackageStartupMessages({
 })
 
 # Create directory for BayesSpace pseudo-bulked spe object
-dir_rdata <- here::here("processed-data", "08_pseudobulk")
+dir_rdata <- here::here("processed-data", "08_pseudobulk", "BayesSpace")
 dir.create(dir_rdata, showWarnings = FALSE, recursive = TRUE)
 
 # Create directory for pseudobulked plots
-dir_plots <- here::here("plots", "08_pseudobulk")
+dir_plots <- here::here("plots", "08_pseudobulk", "BayesSpace")
 dir.create(dir_plots, showWarnings = FALSE, recursive = TRUE)
 
 # Load SPE
@@ -87,7 +87,7 @@ jaffelab::getPcaVars(pca)[seq_len(50)]
 # [41]  0.518  0.504  0.493  0.464  0.441  0.423  0.413  0.392  0.375  0.367
 
 # Plot PCA
-pdf(file = here::here("plots","08_pseudobulk", "pseudobulk_captureArea_PCA_BayesSpace11.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "BayesSpace", "pseudobulk_captureArea_PCA_BayesSpace11.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 12, point_size = 3, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "BayesSpace", ncomponents = 12, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
@@ -100,7 +100,7 @@ plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 12, point_size = 1, label_f
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "pseudobulk_captureArea_PCA_BayesSpace11_2.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "BayesSpace", "pseudobulk_captureArea_PCA_BayesSpace11_2.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "BayesSpace", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
@@ -113,7 +113,7 @@ plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, la
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "pseudobulk_captureArea_PCA_BayesSpace11_4.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "BayesSpace", "pseudobulk_captureArea_PCA_BayesSpace11_4.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
             percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "BayesSpace", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
@@ -145,12 +145,12 @@ head(vars)
 # ENSG00000188290 12.423113   20.15318 17.852229 0.343189579 2.70226293
 # ENSG00000187608 12.513031   18.93802 20.764674 0.028097713 0.08933338
 
-pdf(file = here::here("plots","08_pseudobulk", "plot_explanatory_vars_BayesSpace11.pdf"))
+pdf(file = here::here("plots","08_pseudobulk", "BayesSpace", "plot_explanatory_vars_captureArea_BayesSpace11.pdf"))
 plotExplanatoryVariables(vars)
 dev.off()
 
 # save file
-save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "spe_pseudo_captureArea_BayesSpace11.Rdata"))
+save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "BayesSpace", "spe_pseudo_captureArea_BayesSpace11.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")

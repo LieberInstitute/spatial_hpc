@@ -11,12 +11,14 @@ library('Polychrome')
 library('cluster')
 library('limma')
 library('sessioninfo')
+library('ggplot2')
+library('ggrepel')
 
 ## load spe data
-load(file = here::here("processed-data", "08_pseudobulk", "spe_pseudo_BayesSpace11.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "BayesSpace", "spe_pseudo_captureArea_BayesSpace11.Rdata"))
 
 # boxplots of spots per cluster
-pdf(file = here::here("plots", "08_pseudobulk", "ncells_per_BayesSpace11.pdf"))
+pdf(file = here::here("plots", "08_pseudobulk", "BayesSpace", "ncells_per_captureArea_BayesSpace11.pdf"))
 boxplot(ncells ~ spe_pseudo$BayesSpace, data = colData(spe_pseudo))
 dev.off()
 
@@ -27,13 +29,14 @@ mat <- assays(spe_pseudo)$logcounts
 # make mat_formula
 # var_oi = paste0("bayesSpace_harmony_",k)
 var_oi <- "BayesSpace"
-covars <- c("age", "sex")
+covars <- c("age", "sex", "brnum")
 mat_formula <- eval(str2expression(paste("~", "0", "+", var_oi, "+", paste(covars, collapse = " + "))))
 
 # make sure everything is  a factor
 colData(spe_pseudo)[[var_oi]] <- as.factor(colData(spe_pseudo)[[var_oi]])
 colData(spe_pseudo)$age <- as.numeric(colData(spe_pseudo)$age)
 colData(spe_pseudo)$sex <- as.factor(colData(spe_pseudo)$sex)
+colData(spe_pseudo)$brnum <- as.factor(colData(spe_pseudo)$brnum)
 
 ## Compute correlation
 ## Adapted from https://github.com/LieberInstitute/Visium_IF_AD/blob/7973fcebb7c4b17cc3e23be2c31ac324d1cc099b/code/10_spatial_registration/01_spatial_registration.R#L134-L150
@@ -112,7 +115,7 @@ pal <- c("black", "red")
 
 
 # volcano plot without labels
-pdf(file = here::here("plots", "08_pseudobulk","pseudobulkDE_volcano_DGfromBayesSpace11.pdf"), width = 4.5, height = 4)
+pdf(file = here::here("plots", "08_pseudobulk","BayesSpace", "pseudobulk_captureArea_DE_volcano_DGfromBayesSpace11_br.pdf"), width = 4.5, height = 4)
 ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) + 
   geom_point(size = 0.1) + 
   geom_point(data = df[df$sig, ], size = 0.5) + 

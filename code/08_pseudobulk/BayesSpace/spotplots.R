@@ -36,7 +36,7 @@ SVG_search <- rowData(spe)$gene_search[match(SVGs, rowData(spe)$gene_name)]
 for (i in SVG_search) {
   gene <- i
   gene_name <- strsplit(i, ";")[[1]][1]
-  pdf(here("plots", "08_pseudobulk", "DG",paste0(gene_name, ".pdf")), width = 21, height = 20)
+  pdf(here("plots", "08_pseudobulk", "BayesSpace", "DG",paste0(gene_name, ".pdf")), width = 21, height = 20)
   
   ii <- 1
   speb <- spe[, which(spe$brnum == brains[ii])]
