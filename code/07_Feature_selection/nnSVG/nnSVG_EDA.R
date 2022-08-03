@@ -1,4 +1,6 @@
+setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
 
+library(here)
 
 load(here::here("processed-data","07_Feature_selection", "nnSVG", "nnSVG.Rdata"))
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
