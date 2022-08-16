@@ -20,8 +20,11 @@ load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
 
 spe$kmeans <- km_res[[13]]$Clusters
+speb = spe[, which(spe$kmeans != "4")]
+speb = speb[, which(speb$kmeans != "12")]
+
 ## Pseudo-bulk for mbkmeans k = 17 results
-sce <- as(spe, "SingleCellExperiment")
+sce <- as(speb, "SingleCellExperiment")
 spe_pseudo <- aggregateAcrossCells(
   sce,
   id=DataFrame(
@@ -31,18 +34,16 @@ spe_pseudo <- aggregateAcrossCells(
 
 spe_pseudo$mbkmeans <- factor(spe_pseudo$mbkmeans)
 spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 11]
+
 #find a good expression cutoff using edgeR::filterByExpr
-rowData(spe_pseudo)$high_expr <- filterByExpr(spe_pseudo)
-rowData(spe_pseudo)$high_expr_group_sample_id <- filterByExpr(spe_pseudo, group = spe_pseudo$sample_id)
+rowData(spe_pseudo)$high_expr_group_br <- filterByExpr(spe_pseudo, group = spe_pseudo$brnum.1)
 rowData(spe_pseudo)$high_expr_group_cluster <- filterByExpr(spe_pseudo, group = spe_pseudo$mbkmeans)
-
-summary(rowData(spe_pseudo)$high_expr)
-summary(rowData(spe_pseudo)$high_expr_group_sample_id)
 summary(rowData(spe_pseudo)$high_expr_group_cluster)
-
-with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_cluster))
+summary(rowData(spe_pseudo)$high_expr_group_br)
+with(rowData(spe_pseudo), table(high_expr_group_br, high_expr_group_cluster))
 
 ## Now filter
+dim(spe_pseudo)
 spe_pseudo <- spe_pseudo[rowData(spe_pseudo)$high_expr_group_cluster, ]
 dim(spe_pseudo)
 
@@ -69,19 +70,19 @@ metadata(spe_pseudo)
 metadata(spe_pseudo) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
 metadata(spe_pseudo)
 # $PCA_var_explained
-#[1] 68.100  5.680  2.010  1.490  1.290  1.170  1.050  0.978  0.936  0.896
-#[11]  0.853  0.799  0.725  0.674  0.653  0.552  0.500  0.466  0.440  0.408
+# [1] 23.000  8.890  6.930  4.520  3.940  3.550  3.280  2.710  2.230  2.000
+# [11]  1.740  1.650  1.480  1.330  1.240  1.230  1.140  1.100  1.020  0.983
 
 pca_pseudo <- pca$x[, seq_len(50)]
 colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(spe_pseudo) <- list(PCA = pca_pseudo)
 
 jaffelab::getPcaVars(pca)[seq_len(50)]
-# [1] 68.100  5.680  2.010  1.490  1.290  1.170  1.050  0.978  0.936  0.896
-# [11]  0.853  0.799  0.725  0.674  0.653  0.552  0.500  0.466  0.440  0.408
-# [21]  0.373  0.338  0.324  0.313  0.309  0.308  0.287  0.285  0.280  0.267
-# [31]  0.260  0.248  0.241  0.226  0.220  0.216  0.204  0.196  0.190  0.187
-# [41]  0.174  0.162  0.156  0.149  0.137  0.119  0.115  0.112  0.105  0.104
+# [1] 23.000  8.890  6.930  4.520  3.940  3.550  3.280  2.710  2.230  2.000
+# [11]  1.740  1.650  1.480  1.330  1.240  1.230  1.140  1.100  1.020  0.983
+# [21]  0.961  0.898  0.873  0.849  0.812  0.768  0.749  0.740  0.686  0.641
+# [31]  0.620  0.573  0.536  0.468  0.445  0.433  0.406  0.400  0.378  0.353
+# [41]  0.346  0.330  0.327  0.321  0.311  0.310  0.304  0.298  0.289  0.282
 
 # Plot PCA
 pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_brain_PCA_mbkmenas17.pdf"), width = 14, height = 14)
@@ -132,16 +133,16 @@ spe_pseudo <- scater::runPCA(spe_pseudo, name = "runPCA")
 ####plot explanatory variables ####
 
 #uses linear regression model
-vars <- getVarianceExplained(spe_pseudo, variables=c("brnum", "mbkmeans","sample_id","age","sex"))
+vars <- getVarianceExplained(spe_pseudo, variables=c("mbkmeans","brnum","age","sex"))
 head(vars)
 
-# brnum mbkmeans sample_id         age       sex
-# ENSG00000241860 21.073382 47.30329       NaN 0.005758258 2.5406981
-# ENSG00000237491  6.826028 60.52541       NaN 0.001834419 0.8945204
-# ENSG00000228794  1.464072 93.27664       NaN 0.101931629 0.1325683
-# ENSG00000230368 21.690064 33.00999       NaN 2.809853149 0.6668615
-# ENSG00000223764  4.135560 52.18557       NaN 0.243995288 1.4884063
-# ENSG00000187634  7.494925 65.15615       NaN 0.639563646 2.8006216
+# mbkmeans     brnum         age       sex
+# ENSG00000241860 29.016831 22.786306 0.102747369 3.7426821
+# ENSG00000237491 16.659154 14.788938 0.222504868 2.1107453
+# ENSG00000228794 42.612793  4.352146 0.009069138 1.1719999
+# ENSG00000230368  9.952576 37.512726 5.291249484 0.9650065
+# ENSG00000223764 43.530548  4.313264 0.158042235 1.8903882
+# ENSG00000187634 48.375580  8.983505 1.693109811 4.4296255
 
 pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "plot_explanatory_vars_brain_mbkmeans17.pdf"))
 plotExplanatoryVariables(vars)
