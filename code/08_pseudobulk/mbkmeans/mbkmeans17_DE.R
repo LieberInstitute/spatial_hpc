@@ -15,10 +15,12 @@ library('ggplot2')
 library('ggrepel')
 
 ## load spe data
-load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea_mbkmeans17.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea_mbkmeans17.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_brain_mbkmeans17.Rdata"))
 
 # boxplots of spots per cluster
-pdf(file = here::here("plots", "08_pseudobulk", "mbkmeans", "ncells_per_captureArea_mbkmeans17.pdf"))
+#pdf(file = here::here("plots", "08_pseudobulk", "mbkmeans", "ncells_per_captureArea_mbkmeans17.pdf"))
+pdf(file = here::here("plots", "08_pseudobulk", "mbkmeans", "ncells_per_brain_mbkmeans17.pdf"))
 boxplot(ncells ~ spe_pseudo$mbkmeans, data = colData(spe_pseudo))
 dev.off()
 
@@ -42,7 +44,8 @@ colData(spe_pseudo)$brnum <- as.factor(colData(spe_pseudo)$brnum)
 ## Adapted from https://github.com/LieberInstitute/Visium_IF_AD/blob/7973fcebb7c4b17cc3e23be2c31ac324d1cc099b/code/10_spatial_registration/01_spatial_registration.R#L134-L150
 mod <- model.matrix(mat_formula, data = colData(spe_pseudo))
 message(Sys.time(), " running duplicateCorrelation()")
-corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$sample_id)
+corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$brnum)
+#corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$sample_id)
 message("Detected correlation: ", corfit$consensus.correlation)
 
 ######### ENRICHMENT t-stats ######################
@@ -63,13 +66,14 @@ eb0_list <- lapply(cluster_idx, function(x) {
     lmFit(
       mat,
       design = m,
-      block = spe_pseudo$sample_id,
+      #block = spe_pseudo$sample_id,
+      block = spe_pseudo$brnum,
       correlation = corfit$consensus.correlation
     )
   )
 })
 
-res = eb0_list[[15]]
+res = eb0_list[[13]]
 # extract p-values
 p_vals <- res$p.value[, 2]
 
@@ -115,7 +119,8 @@ pal <- c("black", "red")
 
 
 # volcano plot without labels
-pdf(file = here::here("plots", "08_pseudobulk","mbkmeans", "pseudobulk_captureArea_DE_volcano_DGfrommbkmeans17.pdf"), width = 4.5, height = 4)
+#pdf(file = here::here("plots", "08_pseudobulk","mbkmeans", "pseudobulk_captureArea_DE_volcano_DGfrommbkmeans17.pdf"), width = 4.5, height = 4)
+pdf(file = here::here("plots", "08_pseudobulk","mbkmeans", "pseudobulk_brain_DE_volcano_DGfrommbkmeans17.pdf"), width = 4.5, height = 4)
 ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) + 
   geom_point(size = 0.1) + 
   geom_point(data = df[df$sig, ], size = 0.5) + 
