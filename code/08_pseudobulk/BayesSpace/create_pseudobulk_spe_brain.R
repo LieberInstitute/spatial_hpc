@@ -21,7 +21,7 @@ spe_pseudo <- aggregateAcrossCells(
   spe,
   DataFrame(
     BayesSpace = colData(spe)$BayesSpace_harmony_k11_nrep10000,
-    brnum = spe$brnum
+    brnum = colData(spe)$brnum
   ))
 
 spe_pseudo$BayesSpace <- factor(spe_pseudo$BayesSpace)
