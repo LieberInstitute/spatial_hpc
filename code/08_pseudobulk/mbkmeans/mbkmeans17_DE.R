@@ -39,6 +39,7 @@ colData(spe_pseudo)[[var_oi]] <- as.factor(colData(spe_pseudo)[[var_oi]])
 colData(spe_pseudo)$age <- as.numeric(colData(spe_pseudo)$age)
 colData(spe_pseudo)$sex <- as.factor(colData(spe_pseudo)$sex)
 colData(spe_pseudo)$brnum <- as.factor(colData(spe_pseudo)$brnum)
+colData(spe_pseudo)$sample_id <- as.factor(colData(spe_pseudo)$sample_id)
 
 ## Compute correlation
 ## Adapted from https://github.com/LieberInstitute/Visium_IF_AD/blob/7973fcebb7c4b17cc3e23be2c31ac324d1cc099b/code/10_spatial_registration/01_spatial_registration.R#L134-L150
@@ -142,7 +143,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) +
 # highly associated significance thresholds
 
 # identify significant genes (low FDR and high logFC)
-thresh_fdr <- 1e-13
+thresh_fdr <- 1e-10
 thresh_logfc <- log2(3)
 highlyassoc <- (fdrs < thresh_fdr) & (abs(logfc) > thresh_logfc)
 
@@ -165,7 +166,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc)) +
   geom_point(size = 0.1) + 
   geom_point(data = df[df$highlyassoc, ], size = 0.5) + 
   scale_color_manual(values = pal, guide = "none") + 
-  geom_hline(yintercept = -log10(1e-13), lty = "dashed", color = "royalblue") + 
+  geom_hline(yintercept = -log10(1e-10), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = -log2(3), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = log2(3), lty = "dashed", color = "royalblue") + 
   ggtitle("DG - cluster 15 vs. all other clusters") + 
@@ -183,7 +184,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc, label = gene)) +
                   force = 0.1, force_pull = 0.1, min.segment.length = 0.1, 
                   max.overlaps = 20) + 
   scale_color_manual(values = pal, guide = "none") + 
-  geom_hline(yintercept = -log10(1e-13), lty = "dashed", color = "royalblue") + 
+  geom_hline(yintercept = -log10(1e-10), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = -log2(3), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = log2(3), lty = "dashed", color = "royalblue") + 
   ggtitle("DG - cluster 15 vs. all other clusters") + 
