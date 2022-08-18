@@ -1,0 +1,8 @@
+## find files in alphabetical order
+find /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/ -name '*nuclei.mat' -print0| sort -z | xargs -r0 sha256sum
+
+## find number of files ending with an extension
+find /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/segmentations/ -name '*nuclei.mat' | wc -l
+
+## find files in directories and subdirectories
+find /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger_novaseq/*/outs/spatial/ -name 'tissue_spot_counts.csv'
