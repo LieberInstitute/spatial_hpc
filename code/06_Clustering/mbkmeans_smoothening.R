@@ -29,7 +29,23 @@ x = spatialCoords(speb)[,1]
 y = spatialCoords(speb)[,2]
 mat = as.data.frame(cbind(x,y))
 adj = as.matrix(dist(mat, method= "euclidean", diag = TRUE, upper = TRUE))
-refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis, shape = "hexagon")
-speb$kmeans_refine = refined
 
+refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis = adj, shape = "hexagon")
+speb$kmeans_refine = refined
+vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", colors = cols, point_size = 2)
+
+pairwise.distance <- function(X) {
+  n <- nrow(X)
+  adj <- matrix(rep(0, n*n),nrow = n, ncol=n)
+  for (i in 1:n) {
+    for (j in 1:n){
+      adj[i,j] <- sqrt(sum((X[i,]-X[j,])^2))
+    }
+  }
+  return(adj)
+}
+
+adj = pairwise.distance(mat)
+refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis = adj, shape = "hexagon")
+speb$kmeans_refine = refined
 vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", colors = cols, point_size = 2)
