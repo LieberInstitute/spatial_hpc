@@ -27,12 +27,15 @@ spec = spatialEnhance(spec, q = 17, platform = "Visium", use.dimred = "HARMONY",
 speb = spe[, which(spe$sample_id == "V11U08-081_C1")]
 x = spatialCoords(speb)[,1]
 y = spatialCoords(speb)[,2]
+x = colData(speb)$array_row
+y = colData(speb)$array_col
+
 mat = as.data.frame(cbind(x,y))
 adj = as.matrix(dist(mat, method= "euclidean", diag = TRUE, upper = TRUE))
 
-refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis = adj, shape = "hexagon")
+refined = refine(sample_id = colnames(speb), pred = speb$kmeans, dis = adj, shape = "hexagon")
 speb$kmeans_refine = refined
-vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", colors = cols, point_size = 2)
+vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", point_size = 2)
 
 pairwise.distance <- function(X) {
   n <- nrow(X)
@@ -49,3 +52,17 @@ adj = pairwise.distance(mat)
 refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis = adj, shape = "hexagon")
 speb$kmeans_refine = refined
 vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", colors = cols, point_size = 2)
+
+x = speb$array_col
+y = speb$array_row
+x_pixel = spatialCoords(speb)[,1]*0.08139677
+y_pixel = spatialCoords(speb)[,2]*0.08139677
+img = imgRaster(speb, sample_id = "V11U08-081_C1", image_id = "hires")
+source(file = here::here("code", "06_Clustering","calculate_adj.R"))
+scale.fac = 0.08139677
+adj = calculate.adj.matrix(x_pixel,y_pixel,x_pixel,y_pixel,image=img,histology=TRUE)
+refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis = adj, shape = "hexagon")
+speb$kmeans_refine = refined
+vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", colors = cols, point_size = 1)
+
+source(file = here::here("code", "06_Clustering","refine.R"))
