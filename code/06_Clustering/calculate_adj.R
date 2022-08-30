@@ -1,5 +1,15 @@
+var.n <- function(array) {
+  variance <- var(array)*(length(array)-1)/length(array)
+  return(variance)
+}
+
+
+sd.n <- function(array) {
+  return(sqrt(var.n(array)))
+}
+
 calculate.adj.matrix <- function(x, y, x_pixel = NULL, y_pixel = NULL, image = NULL,
-                                 beta = 49*scale.fac, alpha = 1, histology = TRUE){
+                                 beta = 49, alpha = 1, histology = TRUE){
   # x, y, x_pixel, y_pixel are lists
   if (histology == TRUE){
     stopifnot(!is.null(x_pixel) & !is.null(y_pixel) & !is.null(image))
@@ -24,7 +34,7 @@ calculate.adj.matrix <- function(x, y, x_pixel = NULL, y_pixel = NULL, image = N
       d = as.numeric(second2)
       nbs <- image[a:b, c:d,]
       # create average rgb for each block
-      g <- rbind(g, apply(nbs,3,mean))
+      g <- rbind(g, apply(nbs,2,mean))
     }
     
     var.r <- var.n(g[,1])
