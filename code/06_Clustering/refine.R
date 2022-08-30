@@ -19,7 +19,7 @@ refine <- function(sample_id, pred, dis, shape = "hexagon"){
     nbs_pred = pred[nbs$sample_id,]
     self_pred = pred[index,]
     v_c = as.data.frame(table(nbs_pred))
-    if ((v_c[v_c$nbs_pred == self_pred, "Freq"] < num_nbs/2) && (max(v_c$Freq) > num_nbs/2)){
+    if (((v_c[v_c$nbs_pred == self_pred, "Freq"] < num_nbs/2) && v_c$nbs_pred == self_pred) && (max(v_c$Freq) > num_nbs/2)){
       refined.pred = c(refined.pred, v_c[v_c$Freq == max(v_c$Freq),"nbs_pred"])
     } else {
       refined.pred = c(refined.pred, self_pred)
