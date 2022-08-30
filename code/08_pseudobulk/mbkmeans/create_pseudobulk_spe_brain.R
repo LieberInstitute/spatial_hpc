@@ -22,6 +22,8 @@ load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
 spe$kmeans <- km_res[[13]]$Clusters
 speb = spe[, which(spe$kmeans != "4")]
 speb = speb[, which(speb$kmeans != "12")]
+speb = speb[, which(speb$kmeans != "6")]
+speb = speb[, which(speb$kmeans != "9")]
 
 ## Pseudo-bulk for mbkmeans k = 17 results
 sce <- as(speb, "SingleCellExperiment")
@@ -98,7 +100,7 @@ plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 12, point_size = 1, label_f
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_brain_PCA_mbkmenas17_2.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_brain_PCA_mbkmenas17_2_wo6&9.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "mbkmeans", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
@@ -111,7 +113,7 @@ plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, la
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_brain_PCA_mbkmeans17_4.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_brain_PCA_mbkmeans17_4_wo6&9.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "mbkmeans", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
