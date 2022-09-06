@@ -19,11 +19,11 @@ suppressPackageStartupMessages({
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 
 ## Pseudo-bulk for mbkmeans k = 17 results
-sce <- as(speb, "SingleCellExperiment")
+sce <- as(spe, "SingleCellExperiment")
 spe_pseudo <- aggregateAcrossCells(
   sce,
   id=DataFrame(
-    manual_annotations = colData(sce)$kmeans,
+    manual_annotations = colData(sce)$ManualAnnotation,
     brnum = colData(sce)$brnum)
 )
 
@@ -65,19 +65,19 @@ metadata(spe_pseudo)
 metadata(spe_pseudo) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
 metadata(spe_pseudo)
 # $PCA_var_explained
-# [1] 23.000  8.890  6.930  4.520  3.940  3.550  3.280  2.710  2.230  2.000
-# [11]  1.740  1.650  1.480  1.330  1.240  1.230  1.140  1.100  1.020  0.983
+# [1] 17.600 13.700  6.030  5.010  4.530  4.000  3.340  3.140  2.870  2.300
+# [11]  2.020  1.940  1.800  1.720  1.560  1.500  1.320  1.130  1.050  0.999
 
 pca_pseudo <- pca$x[, seq_len(50)]
 colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(spe_pseudo) <- list(PCA = pca_pseudo)
 
 jaffelab::getPcaVars(pca)[seq_len(50)]
-# [1] 23.000  8.890  6.930  4.520  3.940  3.550  3.280  2.710  2.230  2.000
-# [11]  1.740  1.650  1.480  1.330  1.240  1.230  1.140  1.100  1.020  0.983
-# [21]  0.961  0.898  0.873  0.849  0.812  0.768  0.749  0.740  0.686  0.641
-# [31]  0.620  0.573  0.536  0.468  0.445  0.433  0.406  0.400  0.378  0.353
-# [41]  0.346  0.330  0.327  0.321  0.311  0.310  0.304  0.298  0.289  0.282
+# [1] 17.600 13.700  6.030  5.010  4.530  4.000  3.340  3.140  2.870  2.300
+# [11]  2.020  1.940  1.800  1.720  1.560  1.500  1.320  1.130  1.050  0.999
+# [21]  0.862  0.837  0.782  0.748  0.702  0.658  0.642  0.634  0.609  0.589
+# [31]  0.551  0.538  0.497  0.489  0.468  0.451  0.449  0.434  0.422  0.396
+# [41]  0.391  0.370  0.356  0.350  0.341  0.330  0.323  0.308  0.300  0.295
 
 # Plot PCA
 pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA.pdf"), width = 14, height = 14)
@@ -96,7 +96,7 @@ dev.off()
 pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_2.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "manual_annotationss", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "age", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
@@ -131,13 +131,13 @@ spe_pseudo <- scater::runPCA(spe_pseudo, name = "runPCA")
 vars <- getVarianceExplained(spe_pseudo, variables=c("manual_annotations","brnum","age","sex"))
 head(vars)
 
-# mbkmeans     brnum         age       sex
-# ENSG00000241860 29.016831 22.786306 0.102747369 3.7426821
-# ENSG00000237491 16.659154 14.788938 0.222504868 2.1107453
-# ENSG00000228794 42.612793  4.352146 0.009069138 1.1719999
-# ENSG00000230368  9.952576 37.512726 5.291249484 0.9650065
-# ENSG00000223764 43.530548  4.313264 0.158042235 1.8903882
-# ENSG00000187634 48.375580  8.983505 1.693109811 4.4296255
+# manual_annotations     brnum          age          sex
+# ENSG00000241860          17.964874 34.293107 0.1138736530 2.172512e+00
+# ENSG00000237491          20.094781 14.724833 0.2492243809 2.376426e+00
+# ENSG00000228794          42.808340  8.799720 0.2036091236 4.967157e-01
+# ENSG00000225880           9.847936  5.334630 0.9348403531 7.402876e-05
+# ENSG00000230368          15.369057 30.459859 0.0002583493 1.493305e-02
+# ENSG00000223764          41.124735  8.327073 0.8089869439 1.676746e+00
 
 pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "plot_explanatory_vars_brain.pdf"))
 plotExplanatoryVariables(vars)

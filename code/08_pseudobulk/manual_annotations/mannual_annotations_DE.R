@@ -15,15 +15,14 @@ library('ggplot2')
 library('ggrepel')
 
 ## load spe data
-load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_manual_annotations.Rdata"))
-#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_manual_annotations.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain.Rdata"))
 
 # boxplots of spots per cluster
-pdf(file = here::here("plots", "08_pseudobulk", "manual_annotations", "ncells_per_captureArea.pdf"))
-#pdf(file = here::here("plots", "08_pseudobulk", "manual_annotations", "ncells_per_brain.pdf"))
+#pdf(file = here::here("plots", "08_pseudobulk", "manual_annotations", "ncells_per_captureArea.pdf"))
+pdf(file = here::here("plots", "08_pseudobulk", "manual_annotations", "ncells_per_brain.pdf"))
 boxplot(ncells ~ spe_pseudo$manual_annotations, data = colData(spe_pseudo))
 dev.off()
-
 
 ## Extract the data
 mat <- assays(spe_pseudo)$logcounts
@@ -45,8 +44,8 @@ colData(spe_pseudo)$sample_id <- as.factor(colData(spe_pseudo)$sample_id)
 ## Adapted from https://github.com/LieberInstitute/Visium_IF_AD/blob/7973fcebb7c4b17cc3e23be2c31ac324d1cc099b/code/10_spatial_registration/01_spatial_registration.R#L134-L150
 mod <- model.matrix(mat_formula, data = colData(spe_pseudo))
 message(Sys.time(), " running duplicateCorrelation()")
-#corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$brnum)
-corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$sample_id)
+corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$brnum)
+#corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$sample_id)
 message("Detected correlation: ", corfit$consensus.correlation)
 
 ######### ENRICHMENT t-stats ######################
@@ -67,8 +66,8 @@ eb0_list <- lapply(cluster_idx, function(x) {
     lmFit(
       mat,
       design = m,
-      block = spe_pseudo$sample_id,
-      #block = spe_pseudo$brnum,
+      #block = spe_pseudo$sample_id,
+      block = spe_pseudo$brnum,
       correlation = corfit$consensus.correlation
     )
   )
@@ -120,8 +119,8 @@ pal <- c("black", "red")
 
 
 # volcano plot without labels
-pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "pseudobulk_captureArea_DE_volcano.pdf"), width = 4.5, height = 4)
-#pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "pseudobulk_brain_DE_volcano.pdf"), width = 4.5, height = 4)
+#pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "pseudobulk_captureArea_DE_volcano.pdf"), width = 4.5, height = 4)
+pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "pseudobulk_brain_DE_volcano.pdf"), width = 4.5, height = 4)
 ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) + 
   geom_point(size = 0.1) + 
   geom_point(data = df[df$sig, ], size = 0.5) + 
@@ -143,7 +142,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) +
 # highly associated significance thresholds
 
 # identify significant genes (low FDR and high logFC)
-thresh_fdr <- 1e-13
+thresh_fdr <- 1e-8
 thresh_logfc <- log2(5)
 highlyassoc <- (fdrs < thresh_fdr) & (abs(logfc) > thresh_logfc)
 
@@ -166,7 +165,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc)) +
   geom_point(size = 0.1) + 
   geom_point(data = df[df$highlyassoc, ], size = 0.5) + 
   scale_color_manual(values = pal, guide = "none") + 
-  geom_hline(yintercept = -log10(1e-13), lty = "dashed", color = "royalblue") + 
+  geom_hline(yintercept = -log10(1e-8), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = -log2(5), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = log2(5), lty = "dashed", color = "royalblue") + 
   ggtitle("GCL vs all other clusters") + 
@@ -184,7 +183,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc, label = gene)) +
                   force = 0.1, force_pull = 0.1, min.segment.length = 0.1, 
                   max.overlaps = 20) + 
   scale_color_manual(values = pal, guide = "none") + 
-  geom_hline(yintercept = -log10(1e-13), lty = "dashed", color = "royalblue") + 
+  geom_hline(yintercept = -log10(1e-8), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = -log2(5), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = log2(5), lty = "dashed", color = "royalblue") + 
   ggtitle("GCL vs all other clusters") + 
@@ -195,4 +194,4 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc, label = gene)) +
 dev.off()
 
 
-length(which(res$enrichment$fdr_1 < 0.05)) WM/stratum radiatum
+
