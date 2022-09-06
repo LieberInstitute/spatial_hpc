@@ -1,12 +1,12 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
+#$ -l bluejay,mem_free=20G,h_vmem=20G,h_fsize=100G
 #$ -pe local 7
 #$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/VNS.$TASK_ID.txt
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/VNS.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 2-32
+#$ -t 3-32
 #$ -tc 6
 
 
