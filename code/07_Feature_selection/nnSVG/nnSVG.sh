@@ -3,8 +3,8 @@
 #$ -l caracol,mem_free=15G,h_vmem=15G,h_fsize=100G
 #$ -pe local 10
 #$ -N nnSVG
-#$ -o logs/nnSVG.txt
-#$ -e logs/nnSVG.txt
+#$ -o logs/nnSVG_manual_annotation_GCL.txt
+#$ -e logs/nnSVG_manual_annotation_GCL.txt
 #$ -m e
 
 USAGE_CUTOFF=10
@@ -37,7 +37,7 @@ module load conda_R/devel
 module list
 
 ## Edit with your job command
-Rscript nnSVG.R
+Rscript nnSVG_manual_annotation.R
 
 echo "**** Job ends ****"
 date
