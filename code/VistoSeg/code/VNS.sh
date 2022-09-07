@@ -6,7 +6,7 @@
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/VNS.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 3-32
+#$ -t 17-32
 #$ -tc 6
 
 
