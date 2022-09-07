@@ -29,19 +29,33 @@ for (s in seq_along(samples)) {
   # ix <- spe$brnum == brains[s]
   ix <- spe$sample_id == samples[s]
   spe_sub <- spe[, ix]
-  spe_sub <- spe_sub[, which(spe_sub$ManualAnnotation == "GCL")]
+  
+  spe_sub <- spe_sub[, colData(spe_sub)$in_tissue == 1]
+  dim(spe_sub)
+  
+  # check Manually annotated labels
+  table(colData(spe_sub)$ManualAnnotation)
   
   # run nnSVG filtering for mitochondrial gene and low-expressed genes
   spe_sub <- filter_genes(spe_sub)
   
   # re-calculate logcounts after filtering
   spe_sub <- logNormCounts(spe_sub)
+  assayNames(spe_sub)
   
-  # run nnSVG
+  # run nnSVG with covariates
+  
+  # create model matrix for cell type labels
+  X <- model.matrix(~ colData(spe_sub)$ManualAnnotation)
+  dim(X)
+  
+  stopifnot(nrow(X) == ncol(spe_sub))
+  
   set.seed(12345)
   message('running nnSVG')
-  spe_sub <- nnSVG(spe_sub, n_threads = 10)
+  spe_sub <- nnSVG(spe_sub, n_threads = 10, X = X)
   
+  rowData(spe_sub)
   # store whole tissue results
   message('saving data')
   res_list[[s]] <- rowData(spe_sub)

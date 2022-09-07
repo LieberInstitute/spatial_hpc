@@ -3,8 +3,8 @@
 #$ -l caracol,mem_free=15G,h_vmem=15G,h_fsize=100G
 #$ -pe local 10
 #$ -N nnSVG
-#$ -o logs/nnSVG_manual_annotation_GCL.txt
-#$ -e logs/nnSVG_manual_annotation_GCL.txt
+#$ -o logs/nnSVG_manual_annotation.txt
+#$ -e logs/nnSVG_manual_annotation.txt
 #$ -m e
 
 USAGE_CUTOFF=10
