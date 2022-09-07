@@ -1,0 +1,35 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Tue Sep  6 20:29:08 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 1817228
+Job name: VNS.sh
+Hostname: compute-095.cm.cluster
+Task id: 21
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11L05-336_A1.tif 
+****
+License checkout failed.
+License Manager Error -13
+SERVER and DAEMON lines are missing from the license file. 
+You will need to reinstall the network license manager to have these lines automatically added to
+the license file.
+
+Troubleshoot this issue by visiting: 
+https://www.mathworks.com/support/lme/R2019a/13
+
+Diagnostic Information:
+Feature: MATLAB 
+License path: /users/mtippani/.matlab/R2019a_licenses:/jhpce/shared/jhpce/core/matlab/R2019a/licenses/license.dat:
+/jhpce/shared/jhpce/core/matlab/R2019a/licenses/license.lic:/jhpce/shared/jhpce/core/matlab/R2019a/l
+icenses/network.lic 
+Licensing error: -13,128.
+**** Job ends ****
+Tue Sep  6 20:29:13 EDT 2022

@@ -1,0 +1,80 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Tue Sep  6 08:47:29 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 1816947
+Job name: VNS.sh
+Hostname: compute-097.cm.cluster
+Task id: 4
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V10B01-085_D1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Importing capture area
+Elapsed time is 25.284164 seconds.
+Performing smoothing and contrast adjustment
+Elapsed time is 5.392380 seconds.
+Performing rgb to Lab color space conversion
+Elapsed time is 72.033008 seconds.
+Applying Kmeans
+Elapsed time is 17.781750 seconds.
+saving outputs
+Elapsed time is 426.882172 seconds.
+>> **** Job ends ****
+Tue Sep  6 08:56:52 EDT 2022
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Tue Sep  6 12:48:43 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 1817228
+Job name: VNS.sh
+Hostname: compute-095.cm.cluster
+Task id: 4
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V10B01-085_D1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Importing capture area
+Elapsed time is 21.823216 seconds.
+Performing smoothing and contrast adjustment
+Elapsed time is 5.128826 seconds.
+Performing rgb to Lab color space conversion
+Elapsed time is 72.658063 seconds.
+Applying Kmeans
+Elapsed time is 360.288001 seconds.
+saving outputs
+Elapsed time is 421.219290 seconds.
+>> **** Job ends ****
+Tue Sep  6 13:03:36 EDT 2022
