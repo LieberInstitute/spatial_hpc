@@ -33,3 +33,43 @@ icenses/network.lic
 Licensing error: -13,128.
 **** Job ends ****
 Tue Sep  6 20:30:14 EDT 2022
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep  7 16:29:03 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 1820307
+Job name: VNS.sh
+Hostname: compute-095.cm.cluster
+Task id: 24
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11L05-336_D1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Importing capture area
+Elapsed time is 21.700701 seconds.
+Performing smoothing and contrast adjustment
+Elapsed time is 5.506508 seconds.
+Performing rgb to Lab color space conversion
+Elapsed time is 73.897432 seconds.
+Applying Kmeans
+Elapsed time is 2390.086331 seconds.
+saving outputs
+Elapsed time is 552.621710 seconds.
+>> **** Job ends ****
+Wed Sep  7 17:19:59 EDT 2022
