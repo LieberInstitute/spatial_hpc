@@ -25,6 +25,9 @@ dir.create(dir_plots, showWarnings = FALSE, recursive = TRUE)
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 
 table(spe$sample_id,spe$ManualAnnotations)
+
+spe = spe[, which(spe$ManualAnnotation != "CP")]
+
 ## Pseudo-bulk for manualannotations k = 15 results
 spe_pseudo <- aggregateAcrossCells(
   spe,
