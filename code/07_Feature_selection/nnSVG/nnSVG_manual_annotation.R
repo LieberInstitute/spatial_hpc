@@ -40,13 +40,14 @@ for (s in seq_along(samples)) {
   spe_sub <- filter_genes(spe_sub)
   
   # re-calculate logcounts after filtering
+  spe_sub <- computeLibraryFactors(spe_sub) 
   spe_sub <- logNormCounts(spe_sub)
   assayNames(spe_sub)
   
   # run nnSVG with covariates
   
   # create model matrix for cell type labels
-  X <- model.matrix(~ colData(spe_sub)$ManualAnnotation)
+  X <- model.matrix(~ droplevels(colData(spe_sub)$ManualAnnotation))
   dim(X)
   
   stopifnot(nrow(X) == ncol(spe_sub))
