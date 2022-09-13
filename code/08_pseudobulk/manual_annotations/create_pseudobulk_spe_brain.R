@@ -17,6 +17,8 @@ suppressPackageStartupMessages({
 
 # Load SPE
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+table(spe$sample_id,spe$ManualAnnotation)
+spe = spe[, which(spe$ManualAnnotation != "CP")]
 
 ## Pseudo-bulk for mbkmeans k = 17 results
 sce <- as(spe, "SingleCellExperiment")
