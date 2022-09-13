@@ -18,13 +18,6 @@ library('ggrepel')
 #load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea_mbkmeans17.Rdata"))
 load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_brain_mbkmeans17.Rdata"))
 
-# boxplots of spots per cluster
-#pdf(file = here::here("plots", "08_pseudobulk", "mbkmeans", "ncells_per_captureArea_mbkmeans17.pdf"))
-pdf(file = here::here("plots", "08_pseudobulk", "mbkmeans", "ncells_per_brain_mbkmeans17.pdf"))
-boxplot(ncells ~ spe_pseudo$mbkmeans, data = colData(spe_pseudo))
-dev.off()
-
-
 ## Extract the data
 mat <- assays(spe_pseudo)$logcounts
 
