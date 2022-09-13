@@ -88,26 +88,27 @@ table(spe$sample_id,spe$kmeans)
 # V11U08-084_C1  295  175  138  259  393
 # V11U08-084_D1  220  111    3  131  187
 
-
-# speb = spe[, which(spe$kmeans != "4")]
-# speb = speb[, which(speb$kmeans != "12")]
-# speb = speb[, which(speb$kmeans != "6")]
-# speb = speb[, which(speb$kmeans != "9")]
+speb = spe[, which(spe$kmeans != "4")]
+speb = speb[, which(speb$kmeans != "12")]
+speb = speb[, which(speb$kmeans != "6")]
+speb = speb[, which(speb$kmeans != "9")]
 
 ## Pseudo-bulk for mbkmeans k = 17 results
 spe_pseudo <- aggregateAcrossCells(
-  spe,
+  speb,
   DataFrame(
-    mbkmeans = colData(spe)$kmeans,
-    sample_id = spe$sample_id
+    mbkmeans = colData(speb)$kmeans,
+    sample_id = speb$sample_id
   ))
 
 spe_pseudo$mbkmeans <- factor(spe_pseudo$mbkmeans)
 dim(spe_pseudo)
-# [1] 13229   502
+#[1] 30359   502
+
+#[1] 30359   416 (wo clusters 4,12,6,9)
 
 ##
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "ncells_captureArea.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "ncells_captureArea_wo_4-12-6-9.pdf"), width = 14, height = 14)
 hist(spe_pseudo$ncells, breaks = 200)
 boxplot(ncells ~ spe_pseudo$mbkmeans, data = colData(spe_pseudo))
 dev.off()
@@ -122,9 +123,15 @@ summary(rowData(spe_pseudo)$high_expr_group_sample_id)
 # Mode   FALSE    TRUE 
 # logical   18833   11526 
 
+# Mode   FALSE    TRUE 
+# logical   18725   11634 
+
 summary(rowData(spe_pseudo)$high_expr_group_cluster)
 # Mode   FALSE    TRUE 
 # logical   17130   13229 
+
+# Mode   FALSE    TRUE 
+# logical   19550   10809 
 
 with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_cluster))
 #                           high_expr_group_cluster
@@ -132,10 +139,17 @@ with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_clust
 #                     FALSE 17130  1703
 #                     TRUE      0 11526
 
+#                           high_expr_group_cluster
+# high_expr_group_sample_id FALSE  TRUE
+#                     FALSE 18725     0
+#                     TRUE    825 10809
+
 ## Now filter
 spe_pseudo <- spe_pseudo[rowData(spe_pseudo)$high_expr_group_cluster, ]
 dim(spe_pseudo)
 # [1] 13229   502
+
+# [1] 10809   416 (wo clusters 4,12,6,9)
 
 # Store the log normalized counts on the spe object
 x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
@@ -151,6 +165,7 @@ logcounts(spe_pseudo) <- x
 dim(spe_pseudo)
 # [1] 13229   502
 
+# [1] 10809   416 (wo clusters 4,12,6,9)
 rm(x)
 
 #run PCA
@@ -164,6 +179,10 @@ metadata(spe_pseudo)
 # [1] 43.400  8.560  2.630  2.010  1.570  1.220  0.962  0.786  0.639  0.602
 # [11]  0.487  0.448  0.443  0.438  0.429  0.425  0.416  0.395  0.389  0.384
 
+# $PCA_var_explained (wo clusters 4,12,6,9)
+# [1] 25.500  7.060  5.470  3.750  2.890  1.980  1.650  1.430  1.180  1.060
+# [11]  0.906  0.840  0.778  0.717  0.689  0.642  0.607  0.586  0.542  0.519
+
 pca_pseudo <- pca$x[, seq_len(50)]
 colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(spe_pseudo) <- list(PCA = pca_pseudo)
@@ -175,8 +194,14 @@ jaffelab::getPcaVars(pca)[seq_len(50)]
 # [31]  0.316  0.309  0.307  0.302  0.299  0.290  0.286  0.282  0.276  0.273
 # [41]  0.260  0.256  0.251  0.248  0.243  0.239  0.236  0.234  0.232  0.226
 
+# [1] 25.500  7.060  5.470  3.750  2.890  1.980  1.650  1.430  1.180  1.060
+# [11]  0.906  0.840  0.778  0.717  0.689  0.642  0.607  0.586  0.542  0.519
+# [21]  0.515  0.490  0.475  0.457  0.447  0.441  0.421  0.414  0.400  0.391
+# [31]  0.367  0.360  0.347  0.344  0.332  0.327  0.320  0.318  0.312  0.311
+# [41]  0.305  0.296  0.293  0.288  0.281  0.277  0.273  0.271  0.266  0.264
+
 # Plot PCA
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_captureArea_PCA.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_captureArea_PCA_wo_4-12-6-9.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 12, point_size = 3, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "mbkmeans", ncomponents = 12, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
@@ -189,7 +214,7 @@ plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 12, point_size = 1, label_f
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_captureArea_PCA_2.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_captureArea_PCA_2_wo_4-12-6-9.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "mbkmeans", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
@@ -202,7 +227,7 @@ plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, la
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_captureArea_PCA_4.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "pseudobulk_captureArea_PCA_4_wo_4-12-6-9.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "mbkmeans", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
@@ -234,12 +259,20 @@ head(vars)
 # ENSG00000187961 1.4295300 26.71936  5.246689 0.037105746 0.003321983
 # ENSG00000188290 6.2041552 60.43831 10.528557 0.038585217 4.018723476
 
-pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "variance_captureArea.pdf"))
+# brnum mbkmeans sample_id        age        sex
+# ENSG00000228794  4.852904 15.81535  7.268836 0.26218853 2.05250725
+# ENSG00000188976  3.630736 23.77881  9.440578 0.03093326 0.02385326
+# ENSG00000188290 20.594178 35.00307 27.084935 2.01069440 8.85917718
+# ENSG00000187608 17.969811 24.21490 27.009651 0.03531768 0.26171027
+# ENSG00000188157 14.432904 13.61982 28.284526 0.56086167 0.03784727
+# ENSG00000131591  5.520478  9.04122 20.498037 0.12487739 0.84533899
+
+pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "variance_captureArea_wo_4-12-6-9.pdf"))
 plotExplanatoryVariables(vars)
 dev.off()
 
 # save file
-save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea.Rdata"))
+save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea_wo_4-12-6-9.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
