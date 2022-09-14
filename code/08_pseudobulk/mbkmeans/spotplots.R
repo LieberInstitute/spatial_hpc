@@ -10,13 +10,14 @@ suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("gridExtra"))
 
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
-load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_cluster15_GCL.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_cluster15_GCL.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_brain_cluster15_GCL.Rdata"))
 
 brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
 
 # Locate the marker genes
-SVGs = DOWN$gene[1:5]
-reg = "DOWN"
+SVGs = UP$gene[1:5]
+reg = "UP"
 SVG_search <- rowData(spe)$gene_search[match(SVGs, rowData(spe)$gene_name)]
 
 cols = c("aquamarine4", "springgreen", "goldenrod", "red")
