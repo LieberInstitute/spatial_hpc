@@ -4,34 +4,26 @@ suppressPackageStartupMessages({
   library(sessioninfo)
   library(SpatialExperiment)
   library(spatialLIBD)
-  library(BayesSpace)
   library(ggplot2)
 })
 suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("gridExtra"))
 
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_cluster15_GCL.Rdata"))
 
 brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
-SVGs <- c(
-  "C1QTNF9B",
-  "POSTN",
-  "AC106795.2",
-  "GRM2",
-  "TRIM54",
-  "TBC1D26",
-  "LRTM2",
-  "OTOF",
-  "PPFIA2"
-)
+
 # Locate the marker genes
+SVGs = DOWN$gene[1:5]
+reg = "DOWN"
 SVG_search <- rowData(spe)$gene_search[match(SVGs, rowData(spe)$gene_name)]
 
 cols = c("aquamarine4", "springgreen", "goldenrod", "red")
 for (i in SVG_search) {
   gene <- i
   gene_name <- strsplit(i, ";")[[1]][1]
-  pdf(here("plots", "08_pseudobulk", "mbkmeans", "DG",paste0(gene_name, ".pdf")), width = 21, height = 20)
+  pdf(here("plots", "08_pseudobulk", "mbkmeans", "cluster15_GCL", paste0(gene_name,"_",reg,".pdf")), width = 21, height = 20)
   
   ii <- 1
   speb <- spe[, which(spe$brnum == brains[ii])]
