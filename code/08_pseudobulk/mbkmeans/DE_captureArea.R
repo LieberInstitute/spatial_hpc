@@ -22,7 +22,7 @@ mat <- assays(spe_pseudo)$logcounts
 
 # make mat_formula
 var_oi <- "mbkmeans"
-covars <- c("age", "sex")
+covars <- c("age", "sex", "brnum")
 mat_formula <- eval(str2expression(paste("~", "0", "+", var_oi, "+", paste(covars, collapse = " + "))))
 
 # make sure everything is  a factor
@@ -63,4 +63,6 @@ eb0_list <- lapply(cluster_idx, function(x) {
   )
 })
 
-save(eb0_list, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list.Rdata"))
+#Coefficients not estimable: brnumBr8492 brnumBr8667 
+
+save(eb0_list, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea_adjBrnum.Rdata"))
