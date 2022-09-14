@@ -14,7 +14,6 @@ suppressPackageStartupMessages({
   library(SingleCellExperiment)
 })
 
-
 # Load SPE
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
@@ -104,6 +103,8 @@ spe_pseudo <- aggregateAcrossCells(
 )
 
 spe_pseudo$mbkmeans <- factor(spe_pseudo$mbkmeans)
+#spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 10]
+
 dim(spe_pseudo)
 # [1] 30359   147
 
@@ -114,8 +115,6 @@ pdf(file = here::here("plots","08_pseudobulk", "mbkmeans", "ncells_brain_wo_4-12
 hist(spe_pseudo$ncells, breaks = 200)
 boxplot(ncells ~ spe_pseudo$mbkmeans, data = colData(spe_pseudo))
 dev.off()
-
-# spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 10]
 
 #find a good expression cutoff using edgeR::filterByExpr
 rowData(spe_pseudo)$high_expr_group_br <- filterByExpr(spe_pseudo, group = spe_pseudo$brnum.1)
