@@ -111,8 +111,13 @@ spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 50]
 dim(spe_pseudo)
 # [1] 30359   218
 
+N = c(43,103,150,160,177)
+spe_pseudo <- spe_pseudo[, -N]
+dim(spe_pseudo)
+# [1] 30359   213
+
 ##
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "ncells_captureArea_wo_CP-THAL-CTX_Fncells50.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "ncells_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.pdf"), width = 14, height = 14)
 hist(spe_pseudo$ncells, breaks = 200)
 boxplot(ncells ~ spe_pseudo$manual_annotations, data = colData(spe_pseudo))
 dev.off()
@@ -128,12 +133,18 @@ summary(rowData(spe_pseudo)$high_expr_group_sample_id)
 # Mode   FALSE    TRUE 
 # logical   14371   15988 
 
+# Mode   FALSE    TRUE 
+# logical   14181   16178 
+
 summary(rowData(spe_pseudo)$high_expr_group_cluster)
 # Mode   FALSE    TRUE 
 # logical   17275   13084 
 
 # Mode   FALSE    TRUE 
 # logical   17094   13265 
+
+# Mode   FALSE    TRUE 
+# logical   16818   13541 
 
 with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_cluster))
 #                           high_expr_group_cluster
@@ -146,12 +157,19 @@ with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_clust
 #                     FALSE 14371     0
 #                     TRUE   2723 13265
 
+# high_expr_group_cluster
+# high_expr_group_sample_id FALSE  TRUE
+# FALSE 14181     0
+# TRUE   2637 13541
+
 ## Now filter
 spe_pseudo <- spe_pseudo[rowData(spe_pseudo)$high_expr_group_cluster, ]
 dim(spe_pseudo)
 # [1] 13084   232
 
 # [1] 13265   218
+
+# [1] 13541   213
 
 # Store the log normalized counts on the spe object
 x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
@@ -183,6 +201,9 @@ metadata(spe_pseudo)
 # [1] 20.100  6.840  5.330  3.700  3.100  2.470  2.030  1.770  1.460  1.410
 # [11]  1.340  1.220  1.180  1.170  1.100  1.040  0.964  0.921  0.905  0.834
 
+# [1] 21.000  7.110  4.690  3.780  2.810  2.330  2.060  1.890  1.570  1.490
+# [11]  1.290  1.130  1.110  1.040  1.020  0.949  0.892  0.878  0.850  0.819
+
 pca_pseudo <- pca$x[, seq_len(50)]
 colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(spe_pseudo) <- list(PCA = pca_pseudo)
@@ -200,8 +221,14 @@ jaffelab::getPcaVars(pca)[seq_len(50)]
 # [31]  0.645  0.615  0.611  0.607  0.598  0.572  0.567  0.553  0.527  0.524
 # [41]  0.502  0.480  0.476  0.471  0.452  0.448  0.434  0.420  0.413  0.403
 
+# [1] 21.000  7.110  4.690  3.780  2.810  2.330  2.060  1.890  1.570  1.490
+# [11]  1.290  1.130  1.110  1.040  1.020  0.949  0.892  0.878  0.850  0.819
+# [21]  0.813  0.774  0.761  0.748  0.734  0.710  0.682  0.671  0.664  0.652
+# [31]  0.630  0.623  0.618  0.582  0.576  0.556  0.531  0.527  0.521  0.497
+# [41]  0.496  0.480  0.464  0.456  0.451  0.432  0.423  0.419  0.412  0.398
+
 # Plot PCA
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_captureArea_PCA_wo_CP-THAL-CTX_Fncells50.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_captureArea_PCA_wo_CP-THAL-CTX_Fncells50_Fol.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 12, point_size = 3, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 12, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
@@ -214,7 +241,7 @@ plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 12, point_size = 1, label_f
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_captureArea_PCA_2_wo_CP-THAL-CTX_Fncells50.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_captureArea_PCA_2_wo_CP-THAL-CTX_Fncells50_Fol.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
@@ -227,7 +254,7 @@ plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, la
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_captureArea_PCA_4_wo_CP-THAL-CTX_Fncells50.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_captureArea_PCA_4_wo_CP-THAL-CTX_Fncells50_Fol.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
@@ -266,12 +293,20 @@ head(vars)
 # ENSG00000187961  2.282289           7.413336  21.20220 0.165908867  0.6095876
 # ENSG00000188290 22.063032          43.512749  29.05320 1.010382896 10.5379294
 
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "variance_captureArea_wo_CP-THAL-CTX_Fncells50.pdf"))
+# brnum manual_annotations sample_id        age       sex
+# ENSG00000237491 15.991494          12.732811  25.58352 0.64330460 4.6943474
+# ENSG00000228794  4.447078          27.063864  11.73993 0.03113485 0.9736146
+# ENSG00000187634  5.985940          41.378355  15.43630 0.20961758 1.2123858
+# ENSG00000188976  4.681143          36.635138  13.82725 0.02636147 0.7503163
+# ENSG00000187961  4.061338           7.409695  21.70486 0.67487958 0.9897300
+# ENSG00000188290 20.941379          44.696624  27.03404 0.46769831 9.8688075
+
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "variance_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.pdf"))
 plotExplanatoryVariables(vars)
 dev.off()
 
 # save file
-save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_wo_CP-THAL-CTX_Fncells50.Rdata"))
+save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
