@@ -14,8 +14,9 @@ library('sessioninfo')
 library('ggplot2')
 library('ggrepel')
 
-load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea.Rdata"))
 load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea_wo_4-12-6-9_Fncells50.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea_adjBrnum.Rdata"))
 
 res = eb0_list$'15'
 # extract p-values
@@ -63,7 +64,7 @@ pal <- c("black", "red")
 
 
 # volcano plot without labels
-pdf(file = here::here("plots", "08_pseudobulk","mbkmeans", "cluster15_GCL", "captureArea_volcano.pdf"), width = 4.5, height = 4)
+pdf(file = here::here("plots", "08_pseudobulk","mbkmeans", "cluster15_GCL", "captureArea_volcano_adjBrnum.pdf"), width = 4.5, height = 4)
 ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) + 
   geom_point(size = 0.1) + 
   geom_point(data = df[df$sig, ], size = 0.5) + 
@@ -141,5 +142,5 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc, label = gene)) +
 
 dev.off()
 
-save(UP,DOWN, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_cluster15_GCL.Rdata"))
+save(UP,DOWN, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_captureArea_cluster15_GCL_adjBrnum.Rdata"))
 
