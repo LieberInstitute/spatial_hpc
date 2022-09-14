@@ -104,8 +104,8 @@ spe_pseudo <- aggregateAcrossCells(
 
 spe_pseudo$manual_annotations <- factor(spe_pseudo$manual_annotations)
 
-# spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 50]
-# dim(spe_pseudo)
+spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 50]
+dim(spe_pseudo)
 
 ##
 pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "ncells_captureArea_wo_CP-THAL-CTX.pdf"), width = 14, height = 14)
