@@ -14,8 +14,11 @@ library('sessioninfo')
 library('ggplot2')
 library('ggrepel')
 
-load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.Rdata"))
-load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea.Rdata"))
+
+load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain_wo_CP-THAL-CTX_Fncells200.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations",  "DE_eb0_list_brain.Rdata"))
 
 res = eb0_list$'GCL'
 # extract p-values
@@ -62,8 +65,8 @@ df <- data.frame(
 pal <- c("black", "red")
 
 # volcano plot without labels
-pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "GCL", "captureArea_volcano.pdf"), width = 4.5, height = 4)
-#pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "pseudobulk_brain_DE_volcano.pdf"), width = 4.5, height = 4)
+#pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "GCL", "captureArea_volcano.pdf"), width = 4.5, height = 4)
+pdf(file = here::here("plots", "08_pseudobulk","manual_annotations", "GCL", "brain_volcano.pdf"), width = 4.5, height = 4)
 ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) + 
   geom_point(size = 0.1) + 
   geom_point(data = df[df$sig, ], size = 0.5) + 
@@ -85,7 +88,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = sig)) +
 # highly associated significance thresholds
 
 # identify significant genes (low FDR and high logFC)
-thresh_fdr <- 1e-18
+thresh_fdr <- 1e-10
 thresh_logfc <- log2(3)
 highlyassoc <- (fdrs < thresh_fdr) & (abs(logfc) > thresh_logfc)
 
@@ -114,7 +117,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc)) +
   geom_point(size = 0.1) + 
   geom_point(data = df[df$highlyassoc, ], size = 0.5) + 
   scale_color_manual(values = pal, guide = "none") + 
-  geom_hline(yintercept = -log10(1e-18), lty = "dashed", color = "royalblue") + 
+  geom_hline(yintercept = -log10(1e-10), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = -log2(3), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = log2(3), lty = "dashed", color = "royalblue") + 
   ggtitle("GCL vs. all other manually annotated regions") + 
@@ -132,7 +135,7 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc, label = gene)) +
                   force = 0.1, force_pull = 0.1, min.segment.length = 0.1, 
                   max.overlaps = 20) + 
   scale_color_manual(values = pal, guide = "none") + 
-  geom_hline(yintercept = -log10(1e-18), lty = "dashed", color = "royalblue") + 
+  geom_hline(yintercept = -log10(1e-10), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = -log2(3), lty = "dashed", color = "royalblue") + 
   geom_vline(xintercept = log2(3), lty = "dashed", color = "royalblue") + 
   ggtitle("GCL vs. all other manually annotated regions") + 
@@ -143,6 +146,6 @@ ggplot(df, aes(x = logFC, y = -log10(FDR), color = highlyassoc, label = gene)) +
 dev.off()
 
 
-save(UP,DOWN, file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DEgenes_captureArea_GCL.Rdata"))
+save(UP,DOWN, file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "DEgenes_brain_GCL.Rdata"))
 
 
