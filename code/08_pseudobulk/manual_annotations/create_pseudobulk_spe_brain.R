@@ -110,10 +110,14 @@ spe_pseudo$manual_annotations <- factor(spe_pseudo$manual_annotations)
 dim(spe_pseudo)
 # [1] 30359    88
 
-#spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 10]
+spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 200]
+dim(spe_pseudo)
+#[1] 30359    81
 
+dim(spe_pseudo)
+# [1] 30359    80
 ##
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "ncells_brain_wo_CP-THAL-CTX.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "ncells_brain_wo_CP-THAL-CTX_Fncells200.pdf"), width = 14, height = 14)
 hist(spe_pseudo$ncells, breaks = 200)
 boxplot(ncells ~ spe_pseudo$manual_annotations, data = colData(spe_pseudo))
 dev.off()
@@ -126,9 +130,21 @@ summary(rowData(spe_pseudo)$high_expr_group_cluster)
 # Mode   FALSE    TRUE 
 # logical   15096   15263 
 
+# Mode   FALSE    TRUE 
+# logical   14623   15736 
+
+# Mode   FALSE    TRUE 
+# logical   14618   15741 
+
 summary(rowData(spe_pseudo)$high_expr_group_br)
 # Mode   FALSE    TRUE 
 # logical   15096   15263 
+
+# Mode   FALSE    TRUE 
+# logical   14858   15501 
+
+# Mode   FALSE    TRUE 
+# logical   14846   15513 
 
 with(rowData(spe_pseudo), table(high_expr_group_br, high_expr_group_cluster))
 #                    high_expr_group_cluster
@@ -136,10 +152,24 @@ with(rowData(spe_pseudo), table(high_expr_group_br, high_expr_group_cluster))
 #             FALSE 15096     0
 #             TRUE      0 15263
 
+#                    high_expr_group_cluster
+# high_expr_group_br FALSE  TRUE
+#             FALSE 14623   235
+#             TRUE      0 15501
+
+#                    high_expr_group_cluster
+# high_expr_group_br FALSE  TRUE
+#             FALSE 14618   228
+#             TRUE      0 15513
+
 ## Now filter
 spe_pseudo <- spe_pseudo[rowData(spe_pseudo)$high_expr_group_cluster, ]
 dim(spe_pseudo)
 # [1] 15263    88
+
+# [1] 15736    81
+
+# [1] 15741    80
 
 # Store the log normalized counts on the spe object
 x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
@@ -154,6 +184,8 @@ dimnames(x) <- dimnames(spe_pseudo)
 logcounts(spe_pseudo) <- x
 dim(spe_pseudo)
 # [1] 15263    88
+# [1] 15736    81
+# [1] 15741    80
 
 rm(x)
 
@@ -168,6 +200,12 @@ metadata(spe_pseudo)
 # [1] 23.900 15.600  7.740  5.740  4.900  3.980  2.900  2.650  2.480  2.310
 # [11]  2.030  1.990  1.410  1.240  1.160  1.140  0.977  0.889  0.795  0.777
 
+# [1] 23.50 10.00  7.06  5.15  4.30  3.87  3.50  2.66  2.41  2.04  1.84  1.67
+# [13]  1.59  1.43  1.37  1.24  1.21  1.07  1.03  1.02
+
+# [1] 24.50 10.50  6.79  4.69  4.19  3.73  2.87  2.56  2.27  2.04  1.78  1.71
+# [13]  1.53  1.47  1.34  1.29  1.14  1.11  1.09  1.00
+
 pca_pseudo <- pca$x[, seq_len(50)]
 colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(spe_pseudo) <- list(PCA = pca_pseudo)
@@ -179,8 +217,20 @@ jaffelab::getPcaVars(pca)[seq_len(50)]
 # [31]  0.403  0.385  0.365  0.353  0.335  0.315  0.306  0.295  0.289  0.267
 # [41]  0.260  0.252  0.247  0.245  0.237  0.227  0.224  0.212  0.207  0.204
 
+# [1] 23.500 10.000  7.060  5.150  4.300  3.870  3.500  2.660  2.410  2.040
+# [11]  1.840  1.670  1.590  1.430  1.370  1.240  1.210  1.070  1.030  1.020
+# [21]  0.944  0.880  0.844  0.800  0.757  0.706  0.693  0.659  0.626  0.611
+# [31]  0.594  0.573  0.527  0.518  0.505  0.496  0.494  0.470  0.450  0.434
+# [41]  0.420  0.409  0.404  0.382  0.367  0.342  0.340  0.334  0.322  0.319
+
+# [1] 24.500 10.500  6.790  4.690  4.190  3.730  2.870  2.560  2.270  2.040
+# [11]  1.780  1.710  1.530  1.470  1.340  1.290  1.140  1.110  1.090  1.000
+# [21]  0.936  0.901  0.852  0.805  0.752  0.742  0.704  0.671  0.654  0.639
+# [31]  0.611  0.563  0.552  0.540  0.529  0.527  0.502  0.479  0.465  0.448
+# [41]  0.436  0.431  0.409  0.389  0.365  0.362  0.357  0.343  0.337  0.326
+
 # Plot PCA
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_wo_CP-THAL-CTX.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_wo_CP-THAL-CTX_Fncells200.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 12, point_size = 3, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 12, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
@@ -193,7 +243,7 @@ plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 12, point_size = 1, label_f
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_2_wo_CP-THAL-CTX.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_2_wo_CP-THAL-CTX_Fncells200.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
@@ -206,7 +256,7 @@ plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, la
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_4_wo_CP-THAL-CTX.pdf"), width = 14, height = 14)
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "pseudobulk_brain_PCA_4_wo_CP-THAL-CTX_Fncells200.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "manual_annotations", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
@@ -217,14 +267,13 @@ plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 4, point_size = 4, label_fo
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
-
 dev.off()
 
 ## Compute some reduced dims
 set.seed(20220423)
 spe_pseudo <- scater::runMDS(spe_pseudo, ncomponents = 20)
 spe_pseudo <- scater::runPCA(spe_pseudo, name = "runPCA")
-# Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
+#all Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE,  :
 #                         You're computing too large a percentage of total singular values, use a standard svd instead.
 
 ####plot explanatory variables ####
@@ -241,12 +290,28 @@ head(vars)
 # ENSG00000223764          44.422727  7.253375 0.82552140 1.7428269
 # ENSG00000187634          44.381149  8.474463 0.13871862 0.1331302
 
-pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "variance_brain_wo_CP-THAL-CTX.pdf"))
+#                 manual_annotations     brnum          age       sex
+# ENSG00000241860           15.70961 32.410105 0.4653593121 0.1347495
+# ENSG00000237491           12.38252 17.106779 2.5433996117 3.9205503
+# ENSG00000228794           46.87644  8.914358 0.0733701824 2.1434076
+# ENSG00000230368           13.46065 46.004120 0.3186133447 0.1447717
+# ENSG00000223764           52.89826 11.163175 1.5724392717 1.2119325
+# ENSG00000187634           56.70172 11.890608 0.0006763469 2.1110293
+
+#                  manual_annotations     brnum         age         sex
+# ENSG00000241860           18.82599 30.973560 0.179637495 0.508927543
+# ENSG00000237491           13.58481 17.145401 2.197709013 3.468695359
+# ENSG00000228794           49.58015  9.394223 0.119317750 2.434865411
+# ENSG00000230368           12.87758 42.739615 0.099654396 0.009953036
+# ENSG00000223764           51.53949 10.034915 1.278760461 0.936305356
+# ENSG00000187634           57.17409 11.873145 0.002424467 2.211696922
+
+pdf(file = here::here("plots","08_pseudobulk", "manual_annotations", "variance_brain_wo_CP-THAL-CTX_Fncells200.pdf"))
 plotExplanatoryVariables(vars)
 dev.off()
 
 # save file
-save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain_wo_CP-THAL-CTX.Rdata"))
+save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain_wo_CP-THAL-CTX_Fncells200.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
