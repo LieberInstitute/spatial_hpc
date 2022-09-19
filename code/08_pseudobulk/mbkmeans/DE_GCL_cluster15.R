@@ -13,6 +13,7 @@ library('limma')
 library('sessioninfo')
 library('ggplot2')
 library('ggrepel')
+library('dplyr')
 
 load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "spe_pseudo_captureArea_wo_4-12-6-9_Fncells50.Rdata"))
 #load(file = here::here("processed-data", "08_pseudobulk", "mbkmeans", "DE_eb0_list_captureArea.Rdata"))
@@ -110,10 +111,10 @@ df <- data.frame(
 pal <- c("black", "red")
 
 temp = df[which(df$highlyassoc == TRUE),]
-UP = temp[which(temp$logFC>0),]
+UP = temp[which(temp$log2FC>0),]
 UP = UP %>% arrange(FDR)
 
-DOWN = temp[which(temp$logFC<0),]
+DOWN = temp[which(temp$log2FC<0),]
 DOWN = DOWN %>% arrange(FDR)
 
 # volcano plot without labels

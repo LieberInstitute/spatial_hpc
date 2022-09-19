@@ -13,12 +13,13 @@ library('limma')
 library('sessioninfo')
 library('ggplot2')
 library('ggrepel')
+library('dplyr')
 
-load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.Rdata"))
-load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "DE_eb0_list_captureArea.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_captureArea_wo_CP-THAL-CTX_Fncells50_Fol.Rdata"))
+#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "DE_eb0_list_captureArea.Rdata"))
 
-#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain_wo_CP-THAL-CTX_Fncells200.Rdata"))
-#load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations",  "DE_eb0_list_brain.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations", "spe_pseudo_brain_wo_CP-THAL-CTX_Fncells200.Rdata"))
+load(file = here::here("processed-data", "08_pseudobulk", "manual_annotations",  "DE_eb0_list_brain.Rdata"))
 
 res = eb0_list$'GCL'
 # extract p-values
@@ -91,8 +92,8 @@ ggplot(df, aes(x = log2FC, y = -log10(FDR), color = sig)) +
 thresh_fdr <- 1e-10 # brain
 thresh_logfc <- log2(3) # brain
 
-thresh_fdr <- 1e-18 # captureArea
-thresh_logfc <- log2(3) # captureArea
+#thresh_fdr <- 1e-18 # captureArea
+#thresh_logfc <- log2(3) # captureArea
 
 highlyassoc <- (fdrs < thresh_fdr) & (abs(logfc) > thresh_logfc)
 
@@ -109,10 +110,10 @@ df <- data.frame(
 pal <- c("black", "red")
 
 temp = df[which(df$highlyassoc == TRUE),]
-UP = temp[which(temp$logFC>0),]
+UP = temp[which(temp$log2FC>0),]
 UP = UP %>% arrange(FDR)
 
-DOWN = temp[which(temp$logFC<0),]
+DOWN = temp[which(temp$log2FC<0),]
 DOWN = DOWN %>% arrange(FDR)
 
 # volcano plot without labels
