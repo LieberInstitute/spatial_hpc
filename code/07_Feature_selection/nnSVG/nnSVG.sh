@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -cwd
-#$ -l caracol,mem_free=15G,h_vmem=15G,h_fsize=100G
-#$ -pe local 10
+#$ -l caracol,mem_free=50G,h_vmem=50G,h_fsize=100G
+#$ -pe local 4
 #$ -N nnSVG
 #$ -o logs/nnSVG_manual_annotation.txt
 #$ -e logs/nnSVG_manual_annotation.txt
@@ -32,6 +32,7 @@ echo "Task id: ${SGE_TASK_ID}"
 
 ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
 module load conda_R/devel
+#module load conda_R/4.2
 
 ## List current modules for reproducibility
 module list

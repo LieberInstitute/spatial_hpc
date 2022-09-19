@@ -14,6 +14,9 @@ suppressPackageStartupMessages({
 })
 
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+spe = spe[, which(spe$ManualAnnotation != "CP")]
+spe = spe[, which(spe$ManualAnnotation != "THAL")]
+spe = spe[, which(spe$ManualAnnotation != "CTX")]
 
 # Create vector of samples for nnSVG on whole tissue
 brains <- as.character(unique(spe$brnum))
@@ -50,11 +53,11 @@ for (s in seq_along(samples)) {
   X <- model.matrix(~ droplevels(colData(spe_sub)$ManualAnnotation))
   dim(X)
   
-  stopifnot(nrow(X) == ncol(spe_sub))
+  # stopifnot(nrow(X) == ncol(spe_sub))
   
   set.seed(12345)
   message('running nnSVG')
-  spe_sub <- nnSVG(spe_sub, n_threads = 10, X = X)
+  spe_sub <- nnSVG(spe_sub, n_threads = 4, X = X)
   
   rowData(spe_sub)
   # store whole tissue results
