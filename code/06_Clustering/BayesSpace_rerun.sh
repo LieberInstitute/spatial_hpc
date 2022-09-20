@@ -2,8 +2,8 @@
 #$ -cwd
 #$ -l bluejay,mem_free=100G,h_vmem=100G,h_fsize=100G
 #$ -N BayesSpace_rerun
-#$ -o logs/BayesSpace_rerun.txt
-#$ -e logs/BayesSpace_rerun.txt
+#$ -o logs/BayesSpace_rerun_k17_mbkmeans.txt
+#$ -e logs/BayesSpace_rerun_k17_mbkmeans.txt
 #$ -m e
 
 echo "**** Job starts ****"
