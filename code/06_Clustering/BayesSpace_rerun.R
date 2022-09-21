@@ -19,7 +19,7 @@ load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 k <- 17
 
 load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
-spe$kmeans <- km_res[[13]]$Clusters
+spe$mbkmeans <- km_res[[13]]$Clusters
 
 ## Set the BayesSpace metadata using code from
 ## https://github.com/edward130603/BayesSpace/blob/master/R/spatialPreprocess.R#L43-L46
@@ -37,7 +37,7 @@ colData(spe)$col <- colData(spe)$array_col
 message("Running spatialCluster()")
 Sys.time()
 set.seed(12345)
-spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", init.method = "kmeans", save.chain = TRUE, nrep = 10000)
+spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", init = spe$mbkmeans, nrep = 10000)
 Sys.time()
 
 save(spe, file = here("processed-data", "06_Clustering", "BayesSpace_rerun_k17_mbkmeans.Rdata"))
