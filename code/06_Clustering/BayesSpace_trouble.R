@@ -103,11 +103,13 @@ samples <- unique(spe$sample_id)
 samples
 clustV = "cluster.init"
 cols <- Polychrome::palette36.colors(k)
+pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace_rerun_k17_mbkmeans.pdf"), width = 21, height = 20)
 p1 <- vis_clus(spe = spe, sampleid = samples[1], clustervar = clustV, colors = cols, point_size = 2)
 p2 <- vis_clus(spe = spe, sampleid = samples[4], clustervar = clustV, colors = cols, point_size = 2)
 p3 <- vis_clus(spe = spe, sampleid = samples[2], clustervar = clustV, colors = cols, point_size = 2)
 p4 <- vis_clus(spe = spe, sampleid = samples[3], clustervar = clustV, colors = cols, point_size = 2)
 grid.arrange(p1, p3, p4, p5, nrow = 2)
+dev.off()
 
 ## Reproducibility information
 print("Reproducibility information:")
