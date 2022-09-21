@@ -11,11 +11,12 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(Polychrome)
 })
+suppressPackageStartupMessages(library("gridExtra"))
 
 # Load SPE
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 unique(spe$brnum)
-
+speo = spe
 speb <- spe[,colData(spe)$brnum == "Br8325"]
 unique(speb$sample_id)
 
@@ -32,7 +33,6 @@ x = speb[,colData(speb)$sample_id == "V11L05-335_D1"]
 
 dim_max <- c(max(x$array_row), max(x$array_col))
 arrayCoords <- cbind(x$array_col, x$array_row)
-rownames(arrayCoords) <- rownames(spatialCoords(x))
 colnames(arrayCoords) <- c("array_col", "array_row")
 new_coords <- refl_vec * t(arrayCoords) 
 new_coords <- rotation_mat %*% new_coords
@@ -45,9 +45,11 @@ new_coords <- round(new_coords)
 x$array_col = new_coords[,1]
 x$array_row = new_coords[,2]
 
-ggplot(x, aes(x = x$array_row, y = x$array_col)) + geom_point(size = 1) 
+df = cbind.data.frame(colData(x))
+ggplot(df, aes(x = array_row, y = array_col)) + geom_point(size = 1) 
 
-speb[,colData(speb)$sample_id == "V11L05-335_D1"] = x
+speb = speb[,colData(speb)$sample_id != "V11L05-335_D1"]
+speb = cbind(speb,x)
 
 # The spatial locations for each sample need to be offset so that spots of different samples are not neighbors.
 # summary(colData(spe)$array_row)
@@ -101,14 +103,16 @@ save(spe, file = here("processed-data", "06_Clustering", "BayesSpace_rerun_troub
 
 samples <- unique(spe$sample_id)
 samples
-clustV = "cluster.init"
+clustV = "spatial.cluster"
 cols <- Polychrome::palette36.colors(k)
+names(cols) <- sort(unique(spe$spatial.cluster))
+
 pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace_rerun_k17_mbkmeans.pdf"), width = 21, height = 20)
 p1 <- vis_clus(spe = spe, sampleid = samples[1], clustervar = clustV, colors = cols, point_size = 2)
 p2 <- vis_clus(spe = spe, sampleid = samples[4], clustervar = clustV, colors = cols, point_size = 2)
 p3 <- vis_clus(spe = spe, sampleid = samples[2], clustervar = clustV, colors = cols, point_size = 2)
 p4 <- vis_clus(spe = spe, sampleid = samples[3], clustervar = clustV, colors = cols, point_size = 2)
-grid.arrange(p1, p3, p4, p5, nrow = 2)
+grid.arrange(p1, p2, p3, p4, nrow = 2)
 dev.off()
 
 ## Reproducibility information

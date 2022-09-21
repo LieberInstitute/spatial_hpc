@@ -1,0 +1,47 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 21 13:50:24 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 38588
+Job name: BayesSpace_trouble
+Hostname: compute-095.cm.cluster
+Task id: undefined
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV  11) ruby/2.6.4p104
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV      12) rmate/1.5.9
+  3) JHPCE_tools/1.0   8) git-status-size/github         13) conda/3-4.6.14
+  4) sge/8.1.9         9) git/2.28.0                     14) conda_R/devel
+  5) gcc/4.4.7        10) git-lfs/2.8.0
+
+ 
+
+[1] Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667
+Levels: Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667
+[1] "V11A20-297_C1" "V11A20-297_D1" "V11A20-297_A1" "V11A20-297_B1"
+[5] "V11L05-335_D1"
+Error in `fortify()`:
+! `data` must be a data frame, or other object coercible by `fortify()`, not an S4 object with class SpatialExperiment.
+Backtrace:
+    ▆
+ 1. ├─ggplot2::ggplot(x, aes(x = x$array_row, y = x$array_col))
+ 2. └─ggplot2:::ggplot.default(x, aes(x = x$array_row, y = x$array_col))
+ 3.   ├─ggplot2::fortify(data, ...)
+ 4.   └─ggplot2:::fortify.default(data, ...)
+ 5.     └─rlang::abort(msg)
+Execution halted
+**** Job ends ****
+Wed Sep 21 13:55:52 EDT 2022
