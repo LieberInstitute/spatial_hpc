@@ -6,7 +6,7 @@
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/refineVNS.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 1-32
+#$ -t 1
 #$ -tc 6
 
 echo "**** Job starts ****"
