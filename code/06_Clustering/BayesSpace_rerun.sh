@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=100G,h_vmem=100G,h_fsize=100G
+#$ -l mem_free=100G,h_vmem=200G,h_fsize=200G
 #$ -N BayesSpace_rerun
 #$ -o logs/BayesSpace_rerun_k17_mbkmeans.txt
 #$ -e logs/BayesSpace_rerun_k17_mbkmeans.txt
