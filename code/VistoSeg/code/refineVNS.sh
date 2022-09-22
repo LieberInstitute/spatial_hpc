@@ -20,13 +20,13 @@ echo "Job name: ${JOB_NAME}"
 echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 echo "****"
-echo "Sample id: $(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt | awk "NR==${SGE_TASK_ID}") "
+echo "Sample id: $(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt | awk '{print $1}' | awk "NR==${SGE_TASK_ID}") "
 echo "****"
 
 module load matlab/R2019a
 
 toolbox='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code'
-fname=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt | awk "NR==${SGE_TASK_ID}")
+fname=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt | awk '{print $1}' | awk "NR==${SGE_TASK_ID}")
 M=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt |  awk '{print $2}' | awk "NR==${SGE_TASK_ID}")
 
 matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), refineVNS('$fname',$M)"
