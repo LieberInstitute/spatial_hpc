@@ -21,12 +21,14 @@ spe = spe[, which(spe$ManualAnnotation != "CTX")]
 # Create vector of samples for nnSVG on whole tissue
 brains <- as.character(unique(spe$brnum))
 samples <- unique(spe$sample_id)
+
+samples = samples[-c(10)]
 # Run nnSVG once per sample whole tissue and store lists of top SVGs
 res_list <- as.list(rep(NA, length(samples)))
 
 names(res_list) <- samples
 
-for (s in seq_along(samples)) {
+for (s in c(10:32)) {
   
   # select sample_id
   # ix <- spe$brnum == brains[s]
