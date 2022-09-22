@@ -2,8 +2,8 @@
 #$ -cwd
 #$ -l bluejay,mem_free=100G,h_vmem=100G,h_fsize=100G
 #$ -N BayesSpace_trouble
-#$ -o logs/BayesSpace_trouble.txt
-#$ -e logs/BayesSpace_trouble.txt
+#$ -o logs/BayesSpace_trouble1.txt
+#$ -e logs/BayesSpace_trouble1.txt
 #$ -m e
 
 echo "**** Job starts ****"

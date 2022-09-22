@@ -16,6 +16,10 @@ suppressPackageStartupMessages(library("gridExtra"))
 # Load SPE
 load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
 unique(spe$brnum)
+
+load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
+spe$mbkmeans <- km_res[[13]]$Clusters
+
 speo = spe
 speb <- spe[,colData(spe)$brnum == "Br8325"]
 unique(speb$sample_id)
@@ -45,8 +49,8 @@ new_coords <- round(new_coords)
 x$array_col = new_coords[,1]
 x$array_row = new_coords[,2]
 
-df = cbind.data.frame(colData(x))
-ggplot(df, aes(x = array_row, y = array_col)) + geom_point(size = 1) 
+# df = cbind.data.frame(colData(x))
+# ggplot(df, aes(x = array_row, y = array_col)) + geom_point(size = 1) 
 
 speb = speb[,colData(speb)$sample_id != "V11L05-335_D1"]
 speb = cbind(speb,x)
@@ -59,16 +63,19 @@ row <- colData(speb)$array_row
 col <- colData(speb)$array_col
 
 ix = colData(speb)$sample_id == "V11A20-297_B1"
-row[ix] <- row[ix] + 100 
+row[ix] <- row[ix] + 75 
 
 ix = colData(speb)$sample_id == "V11A20-297_C1"
-col[ix] <- col[ix] + 150 
+row[ix] <- row[ix] - 10 
+
+ix = colData(speb)$sample_id == "V11A20-297_C1"
+col[ix] <- col[ix] + 130 
 
 ix = colData(speb)$sample_id == "V11L05-335_D1"
-row[ix] <- row[ix] + 100 
+row[ix] <- row[ix] + 70 
 
 ix = colData(speb)$sample_id == "V11L05-335_D1"
-col[ix] <- col[ix] + 150 
+col[ix] <- col[ix] + 130 
 
 pal <- unname(palette.colors(4, palette = "Okabe-Ito"))
 
@@ -90,7 +97,7 @@ ggplot(df, aes(x = row, y = col, color = sample_id)) +
 metadata(speb)$BayesSpace.data <- list(platform = "Visium", is.enhanced = FALSE)
 
 # Choose k
-k <- 15
+k <- 17
 
 # Run BayesSpace
 message("Running spatialCluster()")
@@ -99,15 +106,25 @@ set.seed(12345)
 spe <- spatialCluster(speb, use.dimred = "HARMONY", q = k, platform = "Visium", nrep = 50000)
 Sys.time()
 
-save(spe, file = here("processed-data", "06_Clustering", "BayesSpace_rerun_trouble_k15.Rdata"))
+save(spe, file = here("processed-data", "06_Clustering", "BayesSpace_rerun_trouble_k17.Rdata"))
 
 samples <- unique(spe$sample_id)
 samples
-clustV = "spatial.cluster"
-cols <- Polychrome::palette36.colors(k)
-names(cols) <- sort(unique(spe$spatial.cluster))
 
-pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace_rerun_k17_mbkmeans.pdf"), width = 21, height = 20)
+cols <- Polychrome::palette36.colors(k)
+
+
+pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace_rerun_trouble_k17.pdf"), width = 21, height = 20)
+clustV = "cluster.init"
+names(cols) <- sort(unique(spe$cluster.init))
+p1 <- vis_clus(spe = spe, sampleid = samples[1], clustervar = clustV, colors = cols, point_size = 2)
+p2 <- vis_clus(spe = spe, sampleid = samples[4], clustervar = clustV, colors = cols, point_size = 2)
+p3 <- vis_clus(spe = spe, sampleid = samples[2], clustervar = clustV, colors = cols, point_size = 2)
+p4 <- vis_clus(spe = spe, sampleid = samples[3], clustervar = clustV, colors = cols, point_size = 2)
+grid.arrange(p1, p2, p3, p4, nrow = 2)
+
+clustV = "spatial.cluster"
+names(cols) <- sort(unique(spe$spatial.cluster))
 p1 <- vis_clus(spe = spe, sampleid = samples[1], clustervar = clustV, colors = cols, point_size = 2)
 p2 <- vis_clus(spe = spe, sampleid = samples[4], clustervar = clustV, colors = cols, point_size = 2)
 p3 <- vis_clus(spe = spe, sampleid = samples[2], clustervar = clustV, colors = cols, point_size = 2)
