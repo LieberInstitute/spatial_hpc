@@ -1,14 +1,13 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=20G,h_vmem=20G,h_fsize=100G
+#$ -l mem_free=20G,h_vmem=20G,h_fsize=100G
 #$ -pe local 7
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/V11U08-084_D1_refVNS.txt
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/V11U08-084_D1_refVNS.txt
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/refineVNS.$TASK_ID.txt
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/refineVNS.$TASK_ID.txt
 #$ -m e
-#$ -M heenadivecha@gmail.com
-#$ -t 1
-#$ -tc 2
-
+#$ -M madhavitippani28@gmail.com
+#$ -t 1-32
+#$ -tc 6
 
 echo "**** Job starts ****"
 date
@@ -21,15 +20,16 @@ echo "Job name: ${JOB_NAME}"
 echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 echo "****"
-echo "Sample id: V11U08-084_D1"
+echo "Sample id: $(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt | awk "NR==${SGE_TASK_ID}") "
 echo "****"
 
 module load matlab/R2019a
 
 toolbox='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code'
-fname='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11U08-084_D1.tif'
+fname=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt | awk "NR==${SGE_TASK_ID}")
+M=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt |  awk '{print $2}' | awk "NR==${SGE_TASK_ID}")
 
-matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), refineVNS('$fname',3)"
+matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), refineVNS('$fname',$M)"
 
 echo "**** Job ends ****"
 date
