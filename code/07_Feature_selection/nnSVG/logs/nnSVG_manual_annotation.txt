@@ -273,3 +273,98 @@ removed 13 mitochondrial genes
 Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
 removed 26382 out of 30346 genes due to low expression
 running nnSVG
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 21 13:40:36 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 38579
+Job name: nnSVG
+Hostname: compute-115.cm.cluster
+Task id: undefined
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV  11) ruby/2.6.4p104
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV      12) rmate/1.5.9
+  3) JHPCE_tools/1.0   8) git-status-size/github         13) conda/3-4.6.14
+  4) sge/8.1.9         9) git/2.28.0                     14) conda_R/devel
+  5) gcc/4.4.7        10) git-lfs/2.8.0
+
+ 
+
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
+removed 26382 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 13) of spatial locations
+removed 27149 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 26777 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 17) of spatial locations
+removed 27157 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 26303 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 25919 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 26990 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 27960 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 17) of spatial locations
+removed 26627 out of 30346 genes due to low expression
+running nnSVG
+saving data
+Gene filtering: removing mitochondrial genes
+removed 13 mitochondrial genes
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 18) of spatial locations
+removed 24409 out of 30346 genes due to low expression
+Error in `contrasts<-`(`*tmp*`, value = contr.funs[1 + isOF[nn]]) : 
+  contrasts can be applied only to factors with 2 or more levels
+Calls: model.matrix -> model.matrix.default -> contrasts<-
+Execution halted
+**** Job ends ****
+Thu Sep 22 04:04:46 EDT 2022
