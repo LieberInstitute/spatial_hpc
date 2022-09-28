@@ -12,7 +12,7 @@ D2 = imimposemin(D,mask);
 Ld2 = watershed(D2);
 bw3 = mask_dark_blue;
 bw3(Ld2 == 0) = 0;
-imshow(bw3)
+%imshow(bw3)
 
 stats =  struct2table(regionprops(bw3, rgb2gray(he), 'Area', 'BoundingBox', 'Centroid', 'Circularity', 'Eccentricity', 'MajorAxisLength', 'MinorAxisLength', 'Perimeter', 'MeanIntensity' , 'WeightedCentroid'));
 writetable(stats,[fname(1:end-4),'_refineVNS_metric.csv'])
