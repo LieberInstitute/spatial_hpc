@@ -18,5 +18,7 @@ stats =  struct2table(regionprops(bw3, rgb2gray(he), 'Area', 'BoundingBox', 'Cen
 writetable(stats,[fname(1:end-4),'_refineVNS_metric.csv'])
 mask_dark_blue = bw3;
 save([fname(1:end-4),'_nuclei_WS.mat'],'mask_dark_blue','-v7.3')
+blue_nuclei = he .* uint8(mask_dark_blue);
+imwrite(blue_nuclei,[fname(1:end-4),'_nuclei.tif'])
 end
 
