@@ -30,8 +30,17 @@ for i = 1:nSpots
     idx = mask(crow(i), ccol(i));
     spot = regionprops(mask==idx);
       for C = 1:numel(O)
-        signal = regionprops(mask==idx & BW.(O{C})>0);
-        count.(O{C})(i) = length([signal.Area]);
+        signal = struct2table(regionprops(mask==idx & BW.(O{C})>0));
+        points = signal.Centroid;        
+        isincircle = sum((points - [ccol(i) crow(i)]).^2,2)<= R^2;
+
+        %check
+%         [tempx,tempy] = find(mask == idx);
+%         temp = BW.(O{C})(min(tempx):max(tempx),min(tempy):max(tempy));
+%         imshow(temp)
+%         viscircles(size(temp)/2, repelem(R, 1), 'Color', 'r');
+
+        count.(O{C})(i) = length(find(isincircle));
         prop.(O{C})(i) = sum([signal.Area])/spot.Area;
       end
       
