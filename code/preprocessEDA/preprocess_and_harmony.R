@@ -13,6 +13,7 @@ library("PCAtools")
 library("ggplot2")
 library("Polychrome")
 library("harmony")
+library("schex")
 
 
 ## Create output directories
@@ -190,8 +191,21 @@ ggplot(
   theme_bw()
 dev.off()
 
+pdf(file = here::here("plots", "preprocessEDA", "schex.pdf"), width = 9)
+hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP", use_dims = c(1, 2))
+label_df <- make_hexbin_label(hex, col = "brnum")
+plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("Brain") + theme(legend.position = "right")
+label_df <- make_hexbin_label(hex, col = "sample_id")
+plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("Capture area") + theme(legend.position = "right")
 
-saveRDS(spe, file = here::here("plots", "preprocessEDA", "spe_harmony.rds"))
+hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP.HARMONY", use_dims = c(1, 2))
+label_df <- make_hexbin_label(hex, col = "brnum")
+plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Brains") + theme(legend.position = "right")
+label_df <- make_hexbin_label(hex, col = "sample_id")
+plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Capture area") + theme(legend.position = "right")
+dev.off()
+
+saveRDS(spe, file = here::here("processed-data", "preprocessEDA", "spe_harmony.rds"))
 
 
 ## Object size in GB
