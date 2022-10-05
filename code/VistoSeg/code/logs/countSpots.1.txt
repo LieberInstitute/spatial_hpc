@@ -1,0 +1,44 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  5 09:59:03 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 167953
+Job name: countSpots.sh
+Hostname: compute-115.cm.cluster
+Task id: 1
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V10B01-085_A1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+4992 Visium spots detected
+Building spot grid
+24115 mask_dark_blue ROIS detected
+counting dots per Visium spot
+{Error using -
+Matrix dimensions must agree.
+
+Error in countSpots (line 35)
+        isincircle = sum((points - [ccol(i) crow(i)]).^2,2)<= R^2;
+
+Error in countNuclei (line 29)
+        [count,prop] = countSpots(BW, R, tbl, posPath);
+} 
+>> **** Job ends ****
+Wed Oct  5 09:59:46 EDT 2022
