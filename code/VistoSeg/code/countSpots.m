@@ -31,9 +31,12 @@ for i = 1:nSpots
     spot = regionprops(mask==idx);
       for C = 1:numel(O)
         signal = struct2table(regionprops(mask==idx & BW.(O{C})>0));
-        points = signal.Centroid;        
+        points = signal.Centroid;
+        if isempty(points)
+            isincircle = 0;
+        else 
         isincircle = sum((points - [ccol(i) crow(i)]).^2,2)<= R^2;
-
+        end
         %check
 %         [tempx,tempy] = find(mask == idx);
 %         temp = BW.(O{C})(min(tempx):max(tempx),min(tempy):max(tempy));
