@@ -188,51 +188,49 @@ k = 17
   
   grid.arrange(p1, p2, p3, p4, nrow = 2)
   dev.off()
-  
-}
 
 
 #### Use fasthplus + wcss to refine k ####
 # hpb estimate. t = pre-bootstrap sample size, D = reduced dimensions matrix, L = cluster labels, r = number of bootstrap iterations
-l <- lapply(km_res, `[[`, 5)
-length(l)
-
-find_t <- function(L, proportion = 0.05) {
-  initial_t <- floor(length(L) * proportion)
-  # message("init. t = ", initial_t)
-  smallest_cluster_size <- min(table(L))
-  n_labels <- length(unique(L))
-  message("smallest cluster: ", smallest_cluster_size, ", n lables: ", n_labels)
-  ifelse(smallest_cluster_size > (initial_t / n_labels), initial_t, smallest_cluster_size * n_labels)
-}
-
-message("Find fasthplus for clusters - ", Sys.time())
-fasthplus <- lapply(l, function(li) {
-  message(Sys.time())
-  initial_t <- find_t(L = li, proportion = 0.01)
-  h <- hpb(
-    D = reducedDims(spe)$HARMONY,
-    L = li,
-    t = initial_t,
-    r = 30
-  )
-})
-
-fasthplus <- unlist(fasthplus)
-
-
-km_metrics <- data.frame(k = k_list, wcss = wcss, fasthplus = fasthplus)
-write.csv(km_metrics, file = here("processed-data", "06_Clustering", "mbkmeans_metrics.csv"))
-
-#### Plot metrics to select best k ####
-
-pdf(here("plots", "06_Clustering", "mbkmeans_fastH.pdf"))
-plot(k_list, fasthplus, type = "b")
-abline(v = 15, lty = 2, col = "red")
-dev.off()
-
-## Save data
-save(km_res, km_metrics, file = here("processed-data", "06_Clustering", "km_res.Rdata"))
+# l <- lapply(km_res, `[[`, 5)
+# length(l)
+# 
+# find_t <- function(L, proportion = 0.05) {
+#   initial_t <- floor(length(L) * proportion)
+#   # message("init. t = ", initial_t)
+#   smallest_cluster_size <- min(table(L))
+#   n_labels <- length(unique(L))
+#   message("smallest cluster: ", smallest_cluster_size, ", n lables: ", n_labels)
+#   ifelse(smallest_cluster_size > (initial_t / n_labels), initial_t, smallest_cluster_size * n_labels)
+# }
+# 
+# message("Find fasthplus for clusters - ", Sys.time())
+# fasthplus <- lapply(l, function(li) {
+#   message(Sys.time())
+#   initial_t <- find_t(L = li, proportion = 0.01)
+#   h <- hpb(
+#     D = reducedDims(spe)$HARMONY,
+#     L = li,
+#     t = initial_t,
+#     r = 30
+#   )
+# })
+# 
+# fasthplus <- unlist(fasthplus)
+# 
+# 
+# km_metrics <- data.frame(k = k_list, wcss = wcss, fasthplus = fasthplus)
+# write.csv(km_metrics, file = here("processed-data", "06_Clustering", "mbkmeans_metrics.csv"))
+# 
+# #### Plot metrics to select best k ####
+# 
+# pdf(here("plots", "06_Clustering", "mbkmeans_fastH.pdf"))
+# plot(k_list, fasthplus, type = "b")
+# abline(v = 15, lty = 2, col = "red")
+# dev.off()
+# 
+# ## Save data
+# save(km_res, km_metrics, file = here("processed-data", "06_Clustering", "km_res.Rdata"))
 
 # sgejobs::job_single('cluster_mb_kmeans', create_shell = TRUE, queue= 'bluejay', memory = '25G', command = "Rscript cluster_mb_kmeans.R")
 ## Reproducibility information
