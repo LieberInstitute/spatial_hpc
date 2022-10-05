@@ -106,4 +106,13 @@ table(spe$sample_id,spe$position)
 # V11U08-084_C1    0 4992    0    0    0    0
 # V11U08-084_D1    0    0 4992    0    0    0
 
+unique(spe$sample_id[which(spe$position == "N")])
+spe$position[which(spe$sample_id == "V11L05-335_D1")] <- "BR"
+
+unique(spe$sample_id[which(spe$position == "")])
+spe$position[which(spe$sample_id == "V10B01-085_A1")] <- "TR"
+spe$position[which(spe$sample_id == "V10B01-085_B1")] <- "TL"
+spe$position[which(spe$sample_id == "V10B01-085_C1")] <- "BR"
+spe$position[which(spe$sample_id == "V10B01-085_D1")] <- "BL"
+spe$position <- factor(spe$position, levels = c("TL", "TR", "BR", "BL"))
 
