@@ -183,6 +183,16 @@ if (length(samples) == 1){
 dev.off()
 
 samples = unique(spe_raw$sample_id)
+samples
+# [1] "V10B01-086_D1" "V10B01-086_C1" "V11U08-081_C1" "V11U08-081_D1"
+# [5] "V11L05-333_A1" "V11L05-333_B1" "V11L05-333_C1" "V11L05-333_D1"
+# [9] "V10B01-085_B1" "V10B01-085_A1" "V10B01-085_D1" "V10B01-085_C1"
+# [13] "V10B01-086_A1" "V10B01-086_B1" "V11L05-335_C1" "V11L05-335_B1"
+# [17] "V11L05-335_A1" "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1"
+# [21] "V11U08-084_D1" "V11A20-297_C1" "V11A20-297_D1" "V11L05-335_D1"
+# [25] "V11A20-297_A1" "V11A20-297_B1" "V11U08-081_A1" "V11U08-081_B1"
+# [29] "V11L05-336_A1" "V11L05-336_B1" "V11L05-336_C1" "V11L05-336_D1"
+
 # Rotations by sample:
 angle_list <- c(270, 90, 0, 0,
                 0, 0, 0, 0,
@@ -196,7 +206,7 @@ angle_list <- c(270, 90, 0, 0,
 source(file = here::here("code", "02_build_spe", "transform_spe.R"))
 
 for (i in seq_along(angle_list)) {
-    id <- sampleID[i]
+    id <- samples[i]
     x <- trans_geom(spe_raw, sample_id = id, degrees = angle_list[i])
 
     if (i == 1) {
@@ -210,8 +220,8 @@ for (i in seq_along(angle_list)) {
 
 
 pdf(file = here::here("plots", "02_build_spe", "referenceMapping.pdf"), h = 10, w = 20)
-for (i in seq_along(sampleID)) {
-    id <- sampleID[i]
+for (i in seq_along(samples)) {
+    id <- samples[i]
     x_raw = spe_raw[, (colData(spe_raw)$in_tissue & colData(spe_raw)$sample_id == id)]
     x_trans = spe[, (colData(spe)$in_tissue & colData(spe)$sample_id == id)]
     p1 <- plotVisium(x_raw, spots = TRUE, y_reverse = TRUE)
@@ -229,20 +239,41 @@ for (i in seq_along(sampleID)) {
 }
 dev.off()
 
+brains = unique(spe$brnum)
+pdf(here("plots", "02_build_spe", "rearrangedTransformedSamples.pdf"), width = 8, height = 10)
 
+for (i in seq_along(brains)){
+    speb <- spe[, which(spe$brnum == brains[i])]
+    samples <- unique(speb$sample_id)
+    samples
+    
+    if (length(samples) == 1){
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+    } else if (length(samples) == 2){
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
+        grid.arrange(p1, p2, nrow = 2)
+    } else if (length(samples) == 3){
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
+        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
+        grid.arrange(p1, p2, p3, nrow = 2)
+    } else if (length(samples) == 4){
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
+        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
+        p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
+        grid.arrange(p1, p2, p3, p4, nrow = 2)
+    } else if (length(samples) == 5){
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
+        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
+        p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
+        p5 <- plotVisium(speb[, which(speb$sample_id == samples[5])], spots = FALSE)
+        grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
+}
 
-unique(spe$sample_id)
-# [1] "V11U08-081_C1" "V10B01-086_C1" "V11U08-081_D1" "V10B01-086_D1"
-# [5] "V11L05-333_A1" "V11L05-333_B1" "V11L05-333_C1" "V11L05-333_D1"
-# [9] "V10B01-085_B1" "V10B01-085_A1" "V10B01-085_D1" "V10B01-085_C1"
-# [13] "V10B01-086_A1" "V10B01-086_B1" "V11L05-335_C1" "V11L05-335_B1"
-# [17] "V11L05-335_A1" "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1"
-# [21] "V11U08-084_D1" "V11A20-297_C1" "V11A20-297_D1" "V11A20-297_A1"
-# [25] "V11A20-297_B1" "V11L05-335_D1" "V11U08-081_A1" "V11U08-081_B1"
-# [29] "V11L05-336_D1" "V11L05-336_C1" "V11L05-336_B1" "V11L05-336_A1"
-
-
-
+dev.off()
 
 #########
 
