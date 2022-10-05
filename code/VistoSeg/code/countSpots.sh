@@ -6,7 +6,7 @@
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/countSpots.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 1-32
+#$ -t 1
 #$ -tc 10
 
 echo "**** Job starts ****"
@@ -34,10 +34,10 @@ maskname=$mask$add
 path1=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLsamples.txt |  awk '{print $3}' | awk "NR==${SGE_TASK_ID}")
 sample=$(echo ${mask} | cut -d "/" -f 11)
 
-rest="/outs/spatial/scalefactors_json.json"
+rest='/outs/spatial/scalefactors_json.json'
 jsonname=$path1$sample$rest
 
-rest1="/outs/spatial/tissue_positions_list.csv"
+rest1='/outs/spatial/tissue_positions_list.csv'
 posname=$path1$sample$rest1
 
 matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), countNuclei('$maskname','$jsonname','$posname')"
