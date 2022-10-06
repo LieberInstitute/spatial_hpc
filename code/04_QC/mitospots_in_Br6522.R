@@ -69,22 +69,3 @@ for (i in 1:4) {
 dev.off()
 
 
-vis_grid_clus(
-    spe = spe,
-    clustervar = "high_mito_br",
-    pdf = here::here("plots", "04_QC", "QC_discard_mito_by_brain.pdf"),
-    spatial = FALSE,
-    sort_clust = FALSE,
-    colors = c("FALSE" = "grey90", "TRUE" = "red"),
-    point_size = 2
-)
-
-vis_grid_clus(
-    spe = spe,
-    clustervar = "high_mito_id",
-    pdf = here::here("plots", "04_QC", "QC_discard_mito_by_capture_area.pdf"),
-    spatial = FALSE,
-    sort_clust = FALSE,
-    colors = c("FALSE" = "grey90", "TRUE" = "red"),
-    point_size = 2
-)

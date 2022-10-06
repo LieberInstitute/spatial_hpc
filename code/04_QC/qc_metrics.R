@@ -1,16 +1,18 @@
-# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
-library("SpatialExperiment")
-library("scuttle")
-library("scran")
-library("scater")
-library("jaffelab")
-library("tidyverse")
-library("here")
-library("sessioninfo")
+setwd('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
+suppressPackageStartupMessages(library("SpatialExperiment"))
+suppressPackageStartupMessages(library("scuttle"))
+suppressPackageStartupMessages(library("scran"))
+suppressPackageStartupMessages(library("scater"))
+suppressPackageStartupMessages(library("jaffelab"))
+suppressPackageStartupMessages(library("tidyverse"))
+suppressPackageStartupMessages(library("here"))
+suppressPackageStartupMessages(library("sessioninfo"))
 
 
 #### Compute QC metrics ####
 load(here("processed-data", "02_build_spe", "spe_basic.Rdata"), verbose = TRUE)
+dim(spe)
+# [1]  30359 137442
 length(table(spe$sample_id))
 # 32
 length(table(spe$brnum))
@@ -33,38 +35,51 @@ table(spe$high_mito_id)
 table(spe$high_mito_br)
 # FALSE   TRUE
 # 135392   2050
-table(spe$high_mito_id, spe$sample_id)
-# V10B01-085_A1 V10B01-085_B1 V10B01-085_C1 V10B01-085_D1 V10B01-086_A1
-# FALSE          3648          3287          3762          3332          4666
-# TRUE             27             7            30            25            31
-#
-# V10B01-086_B1 V10B01-086_C1 V10B01-086_D1 V11A20-297_A1 V11A20-297_B1
-# FALSE          3946          2472          3415          4457          4622
-# TRUE             31           146            46            12            44
-#
-# V11A20-297_C1 V11A20-297_D1 V11L05-333_A1 V11L05-333_B1 V11L05-333_C1
-# FALSE          3551          3510          4643          4955          4762
-# TRUE            114            18           349            37            53
-#
-# V11L05-333_D1 V11L05-335_A1 V11L05-335_B1 V11L05-335_C1 V11L05-335_D1
-# FALSE          4969          4669          4765          4964          4493
-# TRUE              0             0             1             1            25
-#
-# V11L05-336_A1 V11L05-336_B1 V11L05-336_C1 V11L05-336_D1 V11U08-081_A1
-# FALSE          4677          4458          4460          4681          4558
-# TRUE              4            19             3             5            67
-#
-# V11U08-081_B1 V11U08-081_C1 V11U08-081_D1 V11U08-084_A1 V11U08-084_B1
-# FALSE          3728          3651          4366          4849          4600
-# TRUE             37             3            81            24             0
-#
-# V11U08-084_C1 V11U08-084_D1
-# FALSE          4990          4296
-# TRUE              0             0
+table(spe$sample_id, spe$high_mito_id)
+#                FALSE TRUE
+# V10B01-085_A1  3648   27
+# V10B01-085_B1  3287    7
+# V10B01-085_C1  3762   30
+# V10B01-085_D1  3332   25
+# V10B01-086_A1  4666   31
+# V10B01-086_B1  3946   31
+# V10B01-086_C1  2472  146
+# V10B01-086_D1  3415   46
+# V11A20-297_A1  4457   12
+# V11A20-297_B1  4622   44
+# V11A20-297_C1  3551  114
+# V11A20-297_D1  3510   18
+# V11L05-333_A1  4643  349
+# V11L05-333_B1  4955   37
+# V11L05-333_C1  4762   53
+# V11L05-333_D1  4969    0
+# V11L05-335_A1  4669    0
+# V11L05-335_B1  4765    1
+# V11L05-335_C1  4964    1
+# V11L05-335_D1  4493   25
+# V11L05-336_A1  4677    4
+# V11L05-336_B1  4458   19
+# V11L05-336_C1  4460    3
+# V11L05-336_D1  4681    5
+# V11U08-081_A1  4558   67
+# V11U08-081_B1  3728   37
+# V11U08-081_C1  3651    3
+# V11U08-081_D1  4366   81
+# V11U08-084_A1  4849   24
+# V11U08-084_B1  4600    0
+# V11U08-084_C1  4990    0
+# V11U08-084_D1  4296    0
 table(spe$high_mito_br, spe$brnum)
-# Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667
+#        Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667
 # FALSE  13920  19057  13901   8525  14396  18759  20363   8214  18257
 # TRUE     260    711    217    149      4      0    483    176     50
+
+#are high_mito_br spots and high_mito_id spots same? No
+table(spe$high_mito_br,spe$high_mito_id)
+#              id    id
+#            FALSE   TRUE
+# br FALSE  134496   896
+# br TRUE    1706    344
 
 ## low library size
 spe$low_sum_id <- isOutlier(spe$sum, log = TRUE, type = "lower", batch = spe$sample_id)
@@ -76,6 +91,12 @@ table(spe$low_sum_br)
 # FALSE   TRUE
 # 135259   2183
 
+#are low_sum_br spots and low_sum_id spots same? Mostly
+table(spe$low_sum_br,spe$low_sum_id)
+#              id    id
+#           FALSE   TRUE
+# br FALSE 135105    154
+# br TRUE     590   1593
 
 ## low detected features
 spe$low_detected_id <- isOutlier(spe$detected, log = TRUE, type = "lower", batch = spe$sample_id)
@@ -87,7 +108,15 @@ table(spe$low_detected_br)
 # FALSE   TRUE
 # 135514   1928
 
-## are all low sum are also low detected?
+#are low_detected_br spots and low_detected_br spots same? Yes
+table(spe$low_detected_br,spe$low_detected_br)
+#              id    id
+#           FALSE   TRUE
+# br FALSE 135514      0
+# br TRUE       0   1928
+
+
+## are all low sum are also low detected? Mostly
 table(spe$low_sum_br, spe$low_detected_br)
 #        FALSE   TRUE
 # FALSE 135215     44
@@ -97,7 +126,7 @@ table(spe$low_sum_id, spe$low_detected_id)
 # FALSE 135640     55
 # TRUE     148   1599
 
-## are all low sum are also high mito?
+## are all low sum are also high mito? No
 table(spe$low_sum_br, spe$high_mito_br)
 #       FALSE   TRUE
 # FALSE 133240   2019
@@ -128,7 +157,6 @@ table(spe$discard_auto_id)
 save(spe, file = here::here("processed-data", "04_QC", "spe_QC.Rdata"))
 
 ## Reproducibility information
-print("Reproducibility information:")
 Sys.time()
 proc.time()
 options(width = 120)
