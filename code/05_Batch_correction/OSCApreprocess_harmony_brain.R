@@ -18,7 +18,12 @@ library("schex")
 
 ## Create output directories
 ## Load the data
-load(file = here::here("processed-data", "04_QC", "spe_QCfinal.Rdata"))
+load(file = here::here("processed-data", "04_QC", "spe_QC.Rdata"))
+dim(spe)
+
+spe$discard_auto_br <- spe$low_sum_br | spe$low_detected_br
+spe <- spe[, colData(spe)$discard_auto_id == FALSE]
+dim(spe)
 
 message("Running quickCluster()")
 set.seed(20220201)
@@ -26,7 +31,7 @@ Sys.time()
 spe$scran_quick_cluster <- quickCluster(
   spe,
   BPPARAM = MulticoreParam(4),
-  block = spe$sample_id,
+  block = spe$brnum,
   block.BPPARAM = MulticoreParam(4)
 )
 Sys.time()
@@ -57,11 +62,11 @@ message("Running modelGeneVar()")
 ## From
 ## http://bioconductor.org/packages/release/bioc/vignettes/scran/inst/doc/scran.html#4_variance_modelling
 dec <- modelGeneVar(spe,
-                    block = spe$sample_id,
+                    block = spe$brnum,
                     BPPARAM = MulticoreParam(4)
 )
 
-pdf(file = here::here("plots", "preprocessEDA","scran_modelGeneVar.pdf"), useDingbats = FALSE)
+pdf(file = here::here("plots", "05_Batch_correction", "scran_modelGeneVar_brain.pdf"), useDingbats = FALSE)
 mapply(function(block, blockname) {
   plot(
     block$mean,
@@ -93,7 +98,7 @@ length(top.hvgs.fdr1)
 save(top.hvgs,
      top.hvgs.fdr5,
      top.hvgs.fdr1,
-     file = here::here("processed-data", "preprocessEDA", "top.hvgs.Rdata")
+     file = here::here("processed-data", "05_Batch_correction", "top.hvgs_brain.Rdata")
 )
 
 
@@ -108,21 +113,21 @@ percent.var <- attr(reducedDim(spe, "PCA"), "percentVar")
 chosen.elbow <- PCAtools::findElbowPoint(percent.var)
 chosen.elbow
 
-pdf(file = here::here("plots", "preprocessEDA", "pca_elbow.pdf"), useDingbats = FALSE)
+pdf(file = here::here("plots", "05_Batch_correction", "pca_elbow_brain.pdf"), useDingbats = FALSE)
 plot(percent.var, xlab = "PC", ylab = "Variance explained (%)")
 abline(v = chosen.elbow, col = "red")
 dev.off()
 
-message("Running runTSNE() perplexity 5")
-Sys.time()
-set.seed(20220201)
-spe <-
-  runTSNE(spe,
-          dimred = "PCA",
-          name = "TSNE_perplexity05",
-          perplexity = 5
-  )
-Sys.time()
+# message("Running runTSNE() perplexity 5") ignore takes long time
+# Sys.time()
+# set.seed(20220201)
+# spe <-
+#   runTSNE(spe,
+#           dimred = "PCA",
+#           name = "TSNE_perplexity05",
+#           perplexity = 5
+#   )
+# Sys.time()
 
 
 message("Running runUMAP()")
@@ -160,7 +165,7 @@ colnames(reducedDim(spe, "UMAP.HARMONY")) <- c("UMAP1", "UMAP2")
 
 
 ## Explore UMAP results
-pdf(file = here::here("plots", "preprocessEDA", "UMAP_brain.pdf"))
+pdf(file = here::here("plots", "05_Batch_correction", "OSCAPreprocess_brain_UMAP.pdf"))
 ggplot(
   data.frame(reducedDim(spe, "UMAP")),
   aes(x = UMAP1, y = UMAP2, color = factor(spe$brnum))
@@ -168,9 +173,11 @@ ggplot(
   geom_point() +
   labs(color = "brnum") +
   theme_bw()
-dev.off()
 
-pdf(file = here::here("plots", "preprocessEDA", "UMAP_sample_id.pdf"), width = 9)
+hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP", use_dims = c(1, 2))
+label_df <- make_hexbin_label(hex, col = "brnum")
+plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("Brain") + theme(legend.position = "right")
+
 ggplot(
   data.frame(reducedDim(spe, "UMAP")),
   aes(x = UMAP1, y = UMAP2, color = factor(spe$sample_id))
@@ -178,10 +185,26 @@ ggplot(
   geom_point() +
   labs(color = "sample_id") +
   theme_bw()
+
+label_df <- make_hexbin_label(hex, col = "sample_id")
+plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("Capture area") + theme(legend.position = "right")
+
 dev.off()
 
 ## Explore UMAP on HARMONY reduced dimensions
-pdf(file = here::here("plots", "preprocessEDA", "UMAP_harmony_sample_id.pdf"), width = 9)
+pdf(file = here::here("plots", "05_Batch_correction", "OSCAPreprocess_brain_UMAP_harmony.pdf"), width = 9)
+ggplot(
+  data.frame(reducedDim(spe, "UMAP.HARMONY")),
+  aes(x = UMAP1, y = UMAP2, color = factor(spe$sample_id))
+) +
+  geom_point() +
+  labs(color = "brnum") +
+  theme_bw()
+
+hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP.HARMONY", use_dims = c(1, 2))
+label_df <- make_hexbin_label(hex, col = "brnum")
+plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Brains") + theme(legend.position = "right")
+
 ggplot(
   data.frame(reducedDim(spe, "UMAP.HARMONY")),
   aes(x = UMAP1, y = UMAP2, color = factor(spe$sample_id))
@@ -189,23 +212,12 @@ ggplot(
   geom_point() +
   labs(color = "sample_id") +
   theme_bw()
-dev.off()
 
-pdf(file = here::here("plots", "preprocessEDA", "schex.pdf"), width = 9)
-hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP", use_dims = c(1, 2))
-label_df <- make_hexbin_label(hex, col = "brnum")
-plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("Brain") + theme(legend.position = "right")
-label_df <- make_hexbin_label(hex, col = "sample_id")
-plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("Capture area") + theme(legend.position = "right")
-
-hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP.HARMONY", use_dims = c(1, 2))
-label_df <- make_hexbin_label(hex, col = "brnum")
-plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Brains") + theme(legend.position = "right")
 label_df <- make_hexbin_label(hex, col = "sample_id")
 plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Capture area") + theme(legend.position = "right")
 dev.off()
 
-saveRDS(spe, file = here::here("processed-data", "preprocessEDA", "spe_harmony.rds"))
+save(spe, file = here::here("processed-data", "05_Batch_correction", "OSCAPreprocess_brain_spe.Rdata"))
 
 
 ## Object size in GB
