@@ -13,11 +13,11 @@ suppressPackageStartupMessages({
 })
 
 # Create directory for BayesSpace plots
-dir_plots <- here::here("plots", "06_Clustering", "BayesSpace")
+dir_plots <- here::here("plots", "06_Clustering", "BayesSpace", "1st_run")
 dir.create(dir_plots, showWarnings = FALSE, recursive = TRUE)
 
 # Load SPE
-load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
+load(file = here::here("processed-data", "05_preprocess_batchCorrection", "spe_harmony.Rdata"))
 
 # Choose k
 k <- as.numeric(Sys.getenv("SGE_TASK_ID"))
@@ -49,7 +49,7 @@ colnames(colData(spe))[ncol(colData(spe))] <- BayesSpace_name
 cluster_export(
     spe,
     BayesSpace_name,
-    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace")
+    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run")
 )
 
 ## Visualize BayesSpace results
@@ -59,7 +59,7 @@ names(cols) <- sort(unique(spe$spatial.cluster))
 vis_grid_clus(
     spe = spe,
     clustervar = paste0("BayesSpace_harmony_k", k, "_nrep", nrep),
-    pdf_file = here("plots", "06_Clustering", "BayesSpace", paste0("vis_grid_clus_BayesSpace_k", k, "_nrep", nrep, ".pdf")),
+    pdf_file = here("plots", "06_Clustering", "BayesSpace", "1st_run", paste0("vis_grid_clus_BayesSpace_k", k, "_nrep", nrep, ".pdf")),
     sort_clust = FALSE,
     colors = cols,
     spatial = FALSE,

@@ -33,15 +33,15 @@ library("spatialLIBD")
 library("Polychrome")
 suppressPackageStartupMessages(library("gridExtra"))
 
-load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
-load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"))
+load(file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"))
 
 spe$kmeans <- km_res[[13]]$Clusters
 brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
 cols <- Polychrome::palette36.colors(17)
 names(cols) <- sort(unique(spe$kmeans))
 
-pdf(here("plots", "06_Clustering", "mbkmeans", paste0("mbkmeans17_withlabels.pdf")), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "mbkmeans", "1st_run", paste0("mbkmeans17_withlabels.pdf")), width = 21, height = 20)
 # QC plot of tissue spots discarded
 
 ii <- 1

@@ -15,7 +15,7 @@ suppressPackageStartupMessages(library("gridExtra"))
 
 
 ## load data
-load(file = here::here("processed-data", "06_Clustering","spe_modify.Rdata"), verbose = TRUE)
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"), verbose = TRUE)
 
 ## neron paper returned 19 clusters for DLPFC, try 5:50
 set.seed(610)
@@ -33,13 +33,13 @@ km_res <- lapply(k_list, function(k) {
 })
 
 names(km_res[[1]])
-save(km_res, file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
+save(km_res, file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"))
 
 # load(here("processed-data", "03_build_sce","km_res.Rdata"),verbose = TRUE)
 ## get wcss
 wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
 
-pdf(here("plots", "06_Clustering", "mbkmeans", "mbkmeans_wcss.pdf"))
+pdf(here("plots", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans_wcss.pdf"))
 plot(k_list, wcss, type = "b")
 abline(v = 15, lty = 2, col = "red")
 dev.off()
@@ -64,7 +64,7 @@ names(cols) <- sort(unique(spe$kmeans))
 # )
 # }
 
-pdf(here("plots", "06_Clustering", "mbkmeans", paste0("mbkmeans_", k, ".pdf")), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "mbkmeans", "1st_run", paste0("mbkmeans_", k, ".pdf")), width = 21, height = 20)
 # QC plot of tissue spots discarded
 
 ii <- 1
@@ -222,17 +222,17 @@ fasthplus <- unlist(fasthplus)
 
 
 km_metrics <- data.frame(k = k_list, wcss = wcss, fasthplus = fasthplus)
-write.csv(km_metrics, file = here("processed-data", "06_Clustering", "mbkmeans_metrics.csv"))
+write.csv(km_metrics, file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans_metrics.csv"))
 
 #### Plot metrics to select best k ####
 
-pdf(here("plots", "06_Clustering", "mbkmeans_fastH.pdf"))
+pdf(here("plots", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans_fastH.pdf"))
 plot(k_list, fasthplus, type = "b")
 abline(v = 15, lty = 2, col = "red")
 dev.off()
 
 ## Save data
-save(km_res, km_metrics, file = here("processed-data", "06_Clustering", "km_res.Rdata"))
+save(km_res, km_metrics, file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "km_res.Rdata"))
 
 # sgejobs::job_single('cluster_mb_kmeans', create_shell = TRUE, queue= 'bluejay', memory = '25G', command = "Rscript cluster_mb_kmeans.R")
 ## Reproducibility information

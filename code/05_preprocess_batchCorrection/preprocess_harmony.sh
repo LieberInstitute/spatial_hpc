@@ -1,10 +1,10 @@
 #!/bin/bash
 #$ -cwd
-#$ -l mem_free=10G,h_vmem=10G,h_fsize=100G
+#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
 #$ -pe local 8
 #$ -N OSCApreprocess_harmony_captureArea
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/05_preprocess_batchCorrection/logs/OSCApreprocess_harmony_captureArea.txt
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/05_preprocess_batchCorrection/logs/OSCApreprocess_harmony_captureArea.txt
+#$ -o logs/OSCApreprocess_harmony_captureArea.txt
+#$ -e logs/OSCApreprocess_harmony_captureArea.txt
 #$ -m e
 
 echo "**** Job starts ****"

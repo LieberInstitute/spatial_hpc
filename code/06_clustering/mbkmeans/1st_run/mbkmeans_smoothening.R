@@ -12,10 +12,10 @@ library("BayesSpace")
 suppressPackageStartupMessages(library("gridExtra"))
 
 ## load data
-load(file = here::here("processed-data", "06_Clustering","spe_modify.Rdata"), verbose = TRUE)
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"), verbose = TRUE)
 
 ## load clusters
-load(file = here::here("processed-data", "06_Clustering","mbkmeans.Rdata"), verbose = TRUE)
+load(file = here::here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"), verbose = TRUE)
 spe$kmeans <- km_res[[13]]$Clusters
 
 colData(spe)$imagerow = spatialCoords(spe)[,2]
@@ -58,14 +58,14 @@ y = speb$array_row
 x_pixel = spatialCoords(speb)[,1]*0.08139677
 y_pixel = spatialCoords(speb)[,2]*0.08139677
 img = imgRaster(speb, sample_id = "V11U08-081_C1", image_id = "hires")
-source(file = here::here("code", "06_Clustering","calculate_adj.R"))
+source(file = here::here("code", "06_Clustering", "mbkmeans", "1st_run", "calculate_adj.R"))
 scale.fac = 0.08139677
 adj = calculate.adj.matrix(x_pixel,y_pixel,x_pixel,y_pixel,image=img,histology=TRUE)
 refined = refine(sample_id = "V11U08-081_C1", pred = speb$kmeans, dis = adj, shape = "hexagon")
 speb$kmeans_refine = refined
 vis_clus(spe = speb, sampleid = "V11U08-081_C1", clustervar = "kmeans_refine", colors = cols, point_size = 1)
 
-source(file = here::here("code", "06_Clustering","refine.R"))
+source(file = here::here("code", "06_Clustering", "mbkmeans", "1st_run", "refine.R"))
 samples = unique(spe$sample_id)
 
 for (i in 1:length(samples)){
@@ -115,7 +115,7 @@ brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br849
 cols <- Polychrome::palette36.colors(17)
 names(cols) <- sort(unique(spe$kmeans_refine))
 
-pdf(here("plots", "06_Clustering", "mbkmeans", paste0("mbkmeans17_smoothed.pdf")), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "mbkmeans", "1st_run", paste0("mbkmeans17_smoothed.pdf")), width = 21, height = 20)
 # QC plot of tissue spots discarded
 
 ii <- 1

@@ -8,10 +8,10 @@ suppressPackageStartupMessages({
     library(tidySingleCellExperiment)
 })
 
-load(file = here::here("processed-data", "05_Batch_correction", "spe_harmony.Rdata"))
+load(file = here::here("processed-data", "05_preprocess_batchCorrection", "spe_harmony.Rdata"))
 spe <- cluster_import(
     spe,
-    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace"),
+    cluster_dir = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run"),
     prefix = ""
 )
 
@@ -40,4 +40,4 @@ for (i in seq_along(angle_list)) {
 speB$position <- factor(speB$position, levels = c("TL", "TR", "BL", "BR"))
 speB <- arrange(speB, brnum, position)
 spe = speB
-save(spe, file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+save(spe, file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"))

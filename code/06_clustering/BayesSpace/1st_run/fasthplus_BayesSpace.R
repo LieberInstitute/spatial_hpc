@@ -8,7 +8,7 @@ library(spatialLIBD)
 k <- as.numeric(Sys.getenv("SGE_TASK_ID"))
 
 # load spe object
-load(file = here::here("processed-data", "06_Clustering","spe_modify.Rdata"), verbose = TRUE)
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"), verbose = TRUE)
 
 dim(spe)
 # [1] 30359 135640

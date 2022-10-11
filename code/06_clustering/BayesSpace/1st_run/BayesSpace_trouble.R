@@ -14,10 +14,10 @@ suppressPackageStartupMessages({
 suppressPackageStartupMessages(library("gridExtra"))
 
 # Load SPE
-load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"))
 unique(spe$brnum)
 
-load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
+load(file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"))
 spe$mbkmeans <- km_res[[13]]$Clusters
 
 speo = spe
@@ -106,7 +106,7 @@ set.seed(12345)
 spe <- spatialCluster(speb, use.dimred = "HARMONY", q = k, platform = "Visium", nrep = 50000)
 Sys.time()
 
-save(spe, file = here("processed-data", "06_Clustering", "BayesSpace_rerun_trouble_k17.Rdata"))
+save(spe, file = here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "BayesSpace_rerun_trouble_k17.Rdata"))
 
 samples <- unique(spe$sample_id)
 samples
@@ -114,7 +114,7 @@ samples
 cols <- Polychrome::palette36.colors(k)
 
 
-pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace_rerun_trouble_k17.pdf"), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace", "1st_run", "BayesSpace_rerun_trouble_k17.pdf"), width = 21, height = 20)
 clustV = "cluster.init"
 names(cols) <- sort(unique(spe$cluster.init))
 p1 <- vis_clus(spe = spe, sampleid = samples[1], clustervar = clustV, colors = cols, point_size = 2)

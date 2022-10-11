@@ -12,11 +12,11 @@ suppressPackageStartupMessages({
 suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("gridExtra"))
 
-load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"))
 
 brains <- unique(spe$brnum)
 # brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
-pdf(here("plots", "06_Clustering", "QCchecks_BayesSpaceK11", "brains.pdf"), width = 8, height = 10)
+pdf(here("plots", "06_Clustering", "BayesSpace", "1st_run", "QCchecks_BayesSpaceK11", "brains.pdf"), width = 8, height = 10)
 
 ##
 ii <- 1
@@ -140,7 +140,7 @@ k <- 11
 cols <- Polychrome::palette36.colors(k)
 names(cols) <- sort(unique(spe$BayesSpace_harmony_k11_nrep10000))
 
-pdf(here("plots", "06_Clustering", "QCchecks_BayesSpaceK11", "BayesSpace_clusters_K11.pdf"), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "BayesSpace", "1st_run", "QCchecks_BayesSpaceK11", "BayesSpace_clusters_K11.pdf"), width = 21, height = 20)
 # QC plot of tissue spots discarded
 
 ii <- 1
@@ -267,7 +267,7 @@ grid.arrange(p1, p2, p3, p4, nrow = 2)
 dev.off()
 
 #########
-pdf(here("plots", "06_Clustering", "QCchecks_BayesSpaceK11", "NECAB1.pdf"), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "BayesSpace", "1st_run", "QCchecks_BayesSpaceK11", "NECAB1.pdf"), width = 21, height = 20)
 # QC plot of tissue spots discarded
 gene <- # "NECAB1; ENSG00000123119" , "MPPED1; ENSG00000186732", "SLC17A6; ENSG00000091664" , "PROX1; ENSG00000117707"
 

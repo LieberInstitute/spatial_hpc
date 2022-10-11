@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
 suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("gridExtra"))
 
-load(file = here::here("processed-data", "06_Clustering", "BayesSpace_rerun_k17_mbkmeans.Rdata"))
+load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "BayesSpace_rerun_k17_mbkmeans.Rdata"))
 
 k <- 17
 cols <- Polychrome::palette36.colors(k)
@@ -21,7 +21,7 @@ clustV = "spatial.cluster"
 
 brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
 
-pdf(here("plots", "06_Clustering", "BayesSpace", "BayesSpace_rerun_k17_mbkmeans.pdf"), width = 21, height = 20)
+pdf(here("plots", "06_Clustering", "BayesSpace", "1st_run", "BayesSpace_rerun_k17_mbkmeans.pdf"), width = 21, height = 20)
 # QC plot of tissue spots discarded
 
 ii <- 1

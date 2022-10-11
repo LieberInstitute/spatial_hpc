@@ -13,12 +13,12 @@ suppressPackageStartupMessages({
 })
 
 # Load SPE
-load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
+load(file = here::here("processed-data", "06_Clustering","BayesSpace", "1st_run", "spe_modify.Rdata"))
 
 # Choose k
 k <- 17
 
-load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
+load(file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"))
 spe$mbkmeans <- km_res[[13]]$Clusters
 
 ## Set the BayesSpace metadata using code from
@@ -40,7 +40,7 @@ set.seed(12345)
 spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, platform = "Visium", init = spe$mbkmeans, nrep = 10000)
 Sys.time()
 
-save(spe, file = here("processed-data", "06_Clustering", "BayesSpace_rerun_k17_mbkmeans.Rdata"))
+save(spe, file = here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "BayesSpace_rerun_k17_mbkmeans.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
