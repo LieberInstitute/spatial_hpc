@@ -1,6 +1,7 @@
 ## Load remaining required packages
 setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
 
+suppressPackageStartupMessages({
 library("here")
 library("SpatialExperiment")
 library("spatialLIBD")
@@ -14,16 +15,18 @@ library("ggplot2")
 library("Polychrome")
 library("harmony")
 library("schex")
-
+})
 
 ## Create output directories
 ## Load the data
 load(file = here::here("processed-data", "04_QC", "spe_QC.Rdata"))
 dim(spe)
+# [1]  30359 137442
 
-spe$discard_auto_br <- spe$low_sum_br | spe$low_detected_br
+spe$discard_auto_id <- spe$low_sum_id | spe$low_detected_id
 spe <- spe[, colData(spe)$discard_auto_id == FALSE]
 dim(spe)
+# [1]  30359 135640
 
 message("Running quickCluster()")
 set.seed(20220201)
@@ -51,8 +54,6 @@ table(spe$scran_quick_cluster)
 
 message("Running checking sizeFactors()")
 summary(sizeFactors(spe))
-# Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-# 0.006964  0.368746  0.662599  1.000000  1.223521 28.347141 
 
 message("Running logNormCounts()")
 spe <- logNormCounts(spe)
@@ -66,7 +67,7 @@ dec <- modelGeneVar(spe,
                     BPPARAM = MulticoreParam(4)
 )
 
-pdf(file = here::here("plots", "05_Batch_correction", "scran_modelGeneVar_brain.pdf"), useDingbats = FALSE)
+pdf(file = here::here("plots", "05_preprocess_batchCorrection", "scran_modelGeneVar_brain.pdf"), useDingbats = FALSE)
 mapply(function(block, blockname) {
   plot(
     block$mean,
@@ -85,20 +86,17 @@ dev.off()
 message("Running getTopHVGs()")
 top.hvgs <- getTopHVGs(dec, prop = 0.1)
 length(top.hvgs)
-#[1] 1804
 
 top.hvgs.fdr5 <- getTopHVGs(dec, fdr.threshold = 0.05)
 length(top.hvgs.fdr5)
-#[1] 14571
 
 top.hvgs.fdr1 <- getTopHVGs(dec, fdr.threshold = 0.01)
 length(top.hvgs.fdr1)
-#[1] 13820
 
 save(top.hvgs,
      top.hvgs.fdr5,
      top.hvgs.fdr1,
-     file = here::here("processed-data", "05_Batch_correction", "top.hvgs_brain.Rdata")
+     file = here::here("processed-data", "05_preprocess_batchCorrection", "top.hvgs_brain.Rdata")
 )
 
 
@@ -113,7 +111,7 @@ percent.var <- attr(reducedDim(spe, "PCA"), "percentVar")
 chosen.elbow <- PCAtools::findElbowPoint(percent.var)
 chosen.elbow
 
-pdf(file = here::here("plots", "05_Batch_correction", "pca_elbow_brain.pdf"), useDingbats = FALSE)
+pdf(file = here::here("plots", "05_preprocess_batchCorrection", "pca_elbow_brain.pdf"), useDingbats = FALSE)
 plot(percent.var, xlab = "PC", ylab = "Variance explained (%)")
 abline(v = chosen.elbow, col = "red")
 dev.off()
@@ -165,7 +163,7 @@ colnames(reducedDim(spe, "UMAP.HARMONY")) <- c("UMAP1", "UMAP2")
 
 
 ## Explore UMAP results
-pdf(file = here::here("plots", "05_Batch_correction", "OSCAPreprocess_brain_UMAP.pdf"))
+pdf(file = here::here("plots", "05_preprocess_batchCorrection", "OSCApreprocess_brain_UMAP.pdf"))
 ggplot(
   data.frame(reducedDim(spe, "UMAP")),
   aes(x = UMAP1, y = UMAP2, color = factor(spe$brnum))
@@ -192,7 +190,7 @@ plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", yl
 dev.off()
 
 ## Explore UMAP on HARMONY reduced dimensions
-pdf(file = here::here("plots", "05_Batch_correction", "OSCAPreprocess_brain_UMAP_harmony.pdf"), width = 9)
+pdf(file = here::here("plots", "05_preprocess_batchCorrection", "OSCApreprocess_brain_UMAP_harmony.pdf"), width = 9)
 ggplot(
   data.frame(reducedDim(spe, "UMAP.HARMONY")),
   aes(x = UMAP1, y = UMAP2, color = factor(spe$sample_id))
@@ -217,7 +215,7 @@ label_df <- make_hexbin_label(hex, col = "sample_id")
 plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Capture area") + theme(legend.position = "right")
 dev.off()
 
-save(spe, file = here::here("processed-data", "05_Batch_correction", "OSCAPreprocess_brain_spe.Rdata"))
+save(spe, file = here::here("processed-data", "05_preprocess_batchCorrection", "OSCApreprocess_brain_spe.Rdata"))
 
 
 ## Object size in GB
