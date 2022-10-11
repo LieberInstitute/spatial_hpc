@@ -212,7 +212,7 @@ label_df <- make_hexbin_label(hex, col = "sample_id")
 plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", ylab = "UMAP2") + ggtitle("HARMONY Capture area") + theme(legend.position = "right")
 dev.off()
 
-save(spe, file = here::here("processed-data", "05_preprocess_batchCorrection", "OSCApreprocess_captureArea_spe.Rdata"))
+save(spe, file = here::here("processed-data", "05_preprocess_batchCorrection", "OSCApreprocess_harmony_captureArea_spe.Rdata"))
 
 
 ## Object size in GB

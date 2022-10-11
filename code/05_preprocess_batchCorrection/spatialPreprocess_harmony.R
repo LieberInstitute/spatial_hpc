@@ -112,7 +112,7 @@ plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", yl
 
 dev.off()
 
-save(spe, file = here::here("processed-data", "05_preprocess_batchCorrection", "spatialPreprocess_spe.Rdata"))
+save(spe, file = here::here("processed-data", "05_preprocess_batchCorrection", "spatialPreprocess_harmony_spe.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
