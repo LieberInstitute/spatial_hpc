@@ -15,7 +15,7 @@ suppressPackageStartupMessages(library("gridExtra"))
 
 
 ## load data
-load(file = here::here("processed-data", "06_Clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"), verbose = TRUE)
+load(file = here::here("processed-data", "06_clustering", "BayesSpace", "1st_run", "spe_modify.Rdata"), verbose = TRUE)
 
 ## neron paper returned 19 clusters for DLPFC, try 5:50
 set.seed(610)
@@ -33,13 +33,13 @@ km_res <- lapply(k_list, function(k) {
 })
 
 names(km_res[[1]])
-save(km_res, file = here("processed-data", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"))
+save(km_res, file = here("processed-data", "06_clustering", "mbkmeans", "1st_run", "mbkmeans.Rdata"))
 
 # load(here("processed-data", "03_build_sce","km_res.Rdata"),verbose = TRUE)
 ## get wcss
 wcss <- sapply(km_res, function(x) sum(x$WCSS_per_cluster))
 
-pdf(here("plots", "06_Clustering", "mbkmeans", "1st_run", "mbkmeans_wcss.pdf"))
+pdf(here("plots", "06_clustering", "mbkmeans", "1st_run", "mbkmeans_wcss.pdf"))
 plot(k_list, wcss, type = "b")
 abline(v = 15, lty = 2, col = "red")
 dev.off()
