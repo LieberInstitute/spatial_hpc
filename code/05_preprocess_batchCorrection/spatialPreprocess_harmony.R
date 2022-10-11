@@ -5,25 +5,30 @@ suppressPackageStartupMessages({
     library("here")
     library("spatialLIBD")
     library("ggplot2")
-    library("patchwork")
-    library("scater")
     library("harmony")
     library("BayesSpace")
-    library("scran")
     library("schex")
+    library("scater")
 })
+
+library("patchwork")
+library("scran")
 
 # load SPE
 load(file = here::here("processed-data", "04_QC", "spe_QC.Rdata"))
 dim(spe)
-# [1] 30359 135640
+# [1] 30359 137442
 
-spe$discard_auto_br <- spe$low_sum_br | spe$low_detected_br
+spe$discard_auto_id <- spe$low_sum_id | spe$low_detected_id
 spe <- spe[, colData(spe)$discard_auto_id == FALSE]
 dim(spe)
+# [1]  30359 135640
 
 # Pre process
-spe <- spatialPreprocess(spe, n.PCs = 50)
+spe <- spatialPreprocess(spe, n.PCs = 50, log.normalize=TRUE, assay.type="logcounts")
+# Warning message:
+#     In asMethod(object) :
+#     sparse->dense coercion: allocating vector of size 2.0 GiB
 
 message("Running runUMAP()")
 Sys.time()
@@ -35,20 +40,14 @@ Sys.time()
 # Also defined by ‘spam’
 # Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
 # Also defined by ‘spam’
-# Warning message:
-#   In .check_reddim_names(x, value, withDimnames) :
-#   non-NULL 'rownames(value)' should be the same as 'colnames(x)' for
-# 'reducedDim<-'. This will be an error in the next release of
-# Bioconductor.
-
 
 hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP", use_dims = c(1, 2))
 
 # UMAP plots
-pdf(file = here::here("plots", "05_Batch_correction", "spatialPreprocess_UMAP.pdf"))
+pdf(file = here::here("plots", "05_preprocess_batchCorrection", "spatialPreprocess_UMAP.pdf"))
 ggplot(
     data.frame(reducedDim(spe, "UMAP")),
-    aes(x = UMAP1, y = UMAP2, color = factor(spePP$brnum))) +
+    aes(x = UMAP1, y = UMAP2, color = factor(spe$brnum))) +
     geom_point() +
     labs(color = "Subject/Brain") +
     theme_bw()
@@ -58,7 +57,7 @@ plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab =
 
 ggplot(
     data.frame(reducedDim(spe, "UMAP")),
-    aes(x = UMAP1, y = UMAP2, color = factor(spePP$sample_id))) +
+    aes(x = UMAP1, y = UMAP2, color = factor(spe$sample_id))) +
     geom_point() +
     labs(color = "Sample/Capture Area") +
     theme_bw()
@@ -73,15 +72,27 @@ dev.off()
 # devtools::install_github("immunogenomics/harmony")
 
 spe <- RunHarmony(spe, "sample_id", verbose = F)
+# Warning messages:
+# 1: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+# 2: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+# 3: did not converge in 25 iterations 
+# 4: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+# 5: did not converge in 25 iterations 
+
 spe <- runUMAP(spe, dimred = "HARMONY", name = "UMAP.HARMONY")
+# Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
+# Also defined by ‘spam’
+# Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
+# Also defined by ‘spam’
+
 colnames(reducedDim(spe, "UMAP.HARMONY")) <- c("UMAP1", "UMAP2")
 
 hex <- make_hexbin(spe, nbins = 100, dimension_reduction = "UMAP.HARMONY", use_dims = c(1, 2))
 
-pdf(file = here::here("plots", "05_Batch_correction", "spatialPreprocess_UMAP_harmony.pdf"))
+pdf(file = here::here("plots", "05_preprocess_batchCorrection", "spatialPreprocess_UMAP_harmony.pdf"))
 ggplot(
     data.frame(reducedDim(spe, "UMAP.HARMONY")),
-    aes(x = UMAP1, y = UMAP2, color = factor(speH$brnum))) +
+    aes(x = UMAP1, y = UMAP2, color = factor(spe$brnum))) +
     geom_point() +
     labs(color = "Subject/Brain") +
     theme_bw()
@@ -91,7 +102,7 @@ plot_hexbin_meta(hex, col = "brnum", action = "majority", xlab = "UMAP1", ylab =
 
 ggplot(
     data.frame(reducedDim(spe, "UMAP.HARMONY")),
-    aes(x = UMAP1, y = UMAP2, color = factor(speH$sample_id))) +
+    aes(x = UMAP1, y = UMAP2, color = factor(spe$sample_id))) +
     geom_point() +
     labs(color = "Sample/Capture Area") +
     theme_bw()
@@ -101,7 +112,7 @@ plot_hexbin_meta(hex, col = "sample_id", action = "majority", xlab = "UMAP1", yl
 
 dev.off()
 
-save(spe, file = here::here("processed-data", "05_Batch_correction", "spatialPreprocess_spe.Rdata"))
+save(spe, file = here::here("processed-data", "05_preprocess_batchCorrection", "spatialPreprocess_spe.Rdata"))
 
 ## Reproducibility information
 print("Reproducibility information:")
