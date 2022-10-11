@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
+#$ -l bluejay,mem_free=12G,h_vmem=12G,h_fsize=100G
 #$ -pe local 8
 #$ -N OSCApreprocess_harmony_captureArea
 #$ -o logs/OSCApreprocess_harmony_captureArea.txt
