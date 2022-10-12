@@ -1,17 +1,65 @@
 setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
+suppressPackageStartupMessages({
 library("SpatialExperiment")
 library("mclust")
 library("spatialLIBD")
-library(tidyr)
-library(ggplot2)
+library("tidyr")
+library("ggplot2")
 library("ggpubr")
-library(viridis)
-library(here)
+library("viridis")
+library("here")
+})
 
 # load spe wih mbkmeans
-load(file = here::here("processed-data", "06_Clustering", "spe_modify.Rdata"))
-load(file = here("processed-data", "06_Clustering", "mbkmeans.Rdata"))
-spe$mbkmeans <- km_res[[13]]$Clusters
+load(file = here::here("processed-data", "05_preprocess_batchCorrection", "OSCApreprocess_harmony_captureArea_spe.Rdata"))
+load(file = here("processed-data", "06_clustering", "mbkmeans", "preprocess_harmony", "spatialPreprocess_harmony_mbkmeans.Rdata"))
+spe$mbkmeans_spatialPreprocess <- km_res[[13]]$Clusters
+s1 = table(spe$sample_id,spe$mbkmeans_spatialPreprocess)
+colSums(s1)
+
+load(file = here("processed-data", "06_clustering", "mbkmeans", "preprocess_harmony", "OSCApreprocess_harmony_brain_mbkmeans.Rdata"))
+spe$mbkmeans_OSCApreprocess_brain <- km_res[[13]]$Clusters
+s2 = table(spe$sample_id,spe$mbkmeans_OSCApreprocess_brain)
+colSums(s2)
+
+load(file = here("processed-data", "06_clustering", "mbkmeans", "preprocess_harmony", "OSCApreprocess_harmony_captureArea_mbkmeans.Rdata"))
+spe$mbkmeans_OSCApreprocess_captureArea <- km_res[[13]]$Clusters
+s3 = table(spe$sample_id,spe$mbkmeans_OSCApreprocess_captureArea)
+colSums(s3)
+
+dim(spe)
+
+load(file = here::here("processed-data", "manual_annotation_csv", "compiled_annotation_before_match.Rdata"))
+csv2$sample_id = NULL
+temp = merge(colData(spe), csv2, by.x = "key", by.y = "spot_name")
+temp = as.data.frame(temp)
+
+speA = temp[which(temp$mbkmeans_spatialPreprocess != "10"),]
+speA = speA[which(speA$mbkmeans_spatialPreprocess != "6"),]
+speB = temp[which(temp$mbkmeans_OSCApreprocess_brain != "5"),]
+speB = speB[which(speB$mbkmeans_OSCApreprocess_brain != "17"),]
+speC = temp[which(temp$mbkmeans_OSCApreprocess_captureArea != "3"),]
+speC = speC[which(speC$mbkmeans_OSCApreprocess_captureArea != "9"),]
+
+sample_ids <- unique(temp$sample_id)
+ari.df <- data.frame(matrix(ncol = 4, nrow = 32))
+row.names(ari.df) <- sample_ids
+colnames(ari.df) <- c("sample_id", "spatialPreprocess_harmony", "OSCApreprocess_harmony_brain", "OSCApreprocess_harmony_captureArea")
+
+for (i in seq_along(sample_ids)) {
+  spe_subA <- temp[which(speA$sample_id == sample_ids[i]),]
+  spe_subB <- temp[which(speB$sample_id == sample_ids[i]),]
+  spe_subC <- temp[which(speC$sample_id == sample_ids[i]),]
+  
+  ari.df$sample_id <- sample_ids[i]
+  ari.df[sample_ids[i], "spatialPreprocess_harmony"] <- adjustedRandIndex(spe_subA$ManualAnnotation.y, spe_subA$mbkmeans_spatialPreprocess)
+  ari.df[sample_ids[i], "OSCApreprocess_harmony_brain"] <- adjustedRandIndex(spe_subB$ManualAnnotation.y, spe_subB$mbkmeans_OSCApreprocess_brain)
+  ari.df[sample_ids[i], "OSCApreprocess_harmony_captureArea"] <- adjustedRandIndex(spe_subC$ManualAnnotation.y, spe_subC$mbkmeans_OSCApreprocess_captureArea)
+}
+
+library(reshape)
+meltData <- melt(ari.df)
+boxplot(data=meltData, value~variable)
 
 spe$annotations = "none"
 spe$annotations[which(spe$mbkmeans == "1")]="SLM"
