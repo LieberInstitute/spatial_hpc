@@ -1,16 +1,18 @@
 
-# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
+setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
+suppressPackageStartupMessages({
 library("here")
-suppressPackageStartupMessages(library("SpatialExperiment"))
-suppressPackageStartupMessages(library("spatialLIBD"))
-suppressPackageStartupMessages(library("rtracklayer"))
-suppressPackageStartupMessages(library("lobstr"))
-suppressPackageStartupMessages(library("sessioninfo"))
+library("SpatialExperiment")
+library("spatialLIBD")
+library("rtracklayer")
+library("lobstr")
+library("sessioninfo")
+})
 
 ## Define some info for the samples
 load(here::here("code", "REDCap", "REDCap_HPC.rda"))
 
-sample_info <- data.frame(dateImg = as.Date(REDCap_HPC$date))
+sample_info <- data.frame(dateImg = as.Date(REDCap_HPC$date)) 
 sample_info$experimenterImg <- as.factor(REDCap_HPC$experimenter_img)
 sample_info$slide <- as.factor(REDCap_HPC$slide)
 sample_info$array <- as.factor(REDCap_HPC$array)
@@ -20,8 +22,8 @@ sample_info$seqNum <- as.factor(REDCap_HPC$sample_number)
 sample_info$experimenterSeq <- as.factor(REDCap_HPC$experimenter_seq)
 sample_info$sample_id <- paste(sample_info$slide, sample_info$array, sep = "_")
 
-sample_info$sample_path[sample_info$dateImg <= "2021-10-11"] <- file.path(here::here("processed-data", "spaceranger_novaseq"), sample_info$sample_id, "outs")
-sample_info$sample_path[sample_info$dateImg > "2021-10-11"] <- file.path(here::here("processed-data", "spaceranger_2022-04-12_SPag033122"), sample_info$sample_id[sample_info$dateImg > "2021-10-11"], "outs")
+sample_info$sample_path[sample_info$dateImg <= "2021-10-11"] <- file.path(here::here("processed-data", "01_spaceranger", "spaceranger_novaseq"), sample_info$sample_id, "outs")
+sample_info$sample_path[sample_info$dateImg > "2021-10-11"] <- file.path(here::here("processed-data", "01_spaceranger", "spaceranger_2022-04-12_SPag033122"), sample_info$sample_id[sample_info$dateImg > "2021-10-11"], "outs")
 stopifnot(all(file.exists(sample_info$sample_path)))
 
 ## Define the donor info using information from
@@ -56,10 +58,8 @@ add_design <- function(spe) {
 }
 spe <- add_design(spe)
 
-## basic SPE
-spe_raw <- spe
 # dir.create(here::here("processed-data", "pilot_data_checks"), showWarnings = FALSE)
-save(spe_raw, file = here::here("processed-data", "02_build_spe", "spe_raw.Rdata"))
+save(spe, file = here::here("processed-data", "02_build_spe", "spe_raw.Rdata"))
 
 ## Size in Gb
 lobstr::obj_size(spe_raw)
