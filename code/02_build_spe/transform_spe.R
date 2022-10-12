@@ -85,12 +85,12 @@ trans_geom <- function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degre
     #   Get the dimensions of the "rectangle" containing the set of
     #   spatialCoords within the object
     dim_max <- dim(imgRaster(x)) / scaleFactors(x)[1]
-    dim_max_array <- c(max(x$array_row), max(x$array_col))
+    # dim_max_array <- c(max(x$array_row), max(x$array_col))
     new_coords <- refl_vec * t(spatialCoords(x)) # reflect across v. axis
 
-    arrayCoords <- cbind(x$array_col, x$array_row)
-    colnames(arrayCoords) <- c("array_col", "array_row")
-    new_coords_array <- refl_vec * t(arrayCoords) 
+    # arrayCoords <- cbind(x$array_col, x$array_row)
+    # colnames(arrayCoords) <- c("array_col", "array_row")
+    # new_coords_array <- refl_vec * t(arrayCoords) 
     
     #   If reflecting across v. axis, return "rectangle" to its original
     #   location
@@ -99,33 +99,33 @@ trans_geom <- function(x, sample_id = NULL, refl = FALSE, trans = c(0, 0), degre
     }
 
     new_coords <- rotation_mat %*% new_coords # rotate about origin
-    new_coords_array <- rotation_mat %*% new_coords_array
+    # new_coords_array <- rotation_mat %*% new_coords_array
     
     #   Since the rotation is about the origin, we'll need to return the
     #   "rectangle" such that its top left corner is at the spot where its
     #   previous top left corner was
     if (degrees %% 360 == 90) {
         new_coords <- new_coords + c(dim_max[1], 0)
-        new_coords_array <- new_coords_array +  c(dim_max_array[1], 0)
+        # new_coords_array <- new_coords_array +  c(dim_max_array[1], 0)
     } else if (degrees %% 360 == 180) {
         new_coords <- new_coords + rev(dim_max)
-        new_coords_array <- new_coords_array + rev(dim_max_array)
+        # new_coords_array <- new_coords_array + rev(dim_max_array)
     } else if (degrees %% 360 == 270) {
         new_coords <- new_coords + c(0, dim_max[2])
-        new_coords_array <- new_coords_array + c(0, dim_max_array[2])
+        # new_coords_array <- new_coords_array + c(0, dim_max_array[2])
     }
 
     new_coords <- t(new_coords + trans) # transpose and translate
-    new_coords_array <- t(new_coords_array + trans)
+    # new_coords_array <- t(new_coords_array + trans)
     #   Add names to spatialCoords of the new object
     colnames(new_coords) <- colnames(spatialCoords(x))
-    colnames(new_coords_array) <- colnames(arrayCoords)
+    # colnames(new_coords_array) <- colnames(arrayCoords)
     
     #   Ensure points are at integer values
     new_coords <- round(new_coords)
-    new_coords_array <- round(new_coords_array)
-    x$array_col = new_coords_array[,1]
-    x$array_row = new_coords_array[,2]
+    # new_coords_array <- round(new_coords_array)
+    # x$array_col = new_coords_array[,1]
+    # x$array_row = new_coords_array[,2]
     
     #   Return a copy of the SpatialExperiment with the new coordinates
     spatialCoords(x) <- new_coords

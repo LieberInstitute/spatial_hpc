@@ -1,15 +1,18 @@
 
 setwd('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
-suppressPackageStartupMessages(library("here"))
-suppressPackageStartupMessages(library("SpatialExperiment"))
-suppressPackageStartupMessages(library("spatialLIBD"))
-suppressPackageStartupMessages(library("rtracklayer"))
-suppressPackageStartupMessages(library("lobstr"))
-suppressPackageStartupMessages(library("sessioninfo"))
-suppressPackageStartupMessages(library("ggplot2"))
-suppressPackageStartupMessages(library("gridExtra"))
-suppressPackageStartupMessages(library("ggspavis"))
-suppressPackageStartupMessages(library("tidySingleCellExperiment"))
+
+suppressPackageStartupMessages({
+library("here")
+library("SpatialExperiment")
+library("spatialLIBD")
+library("rtracklayer")
+library("lobstr")
+library("sessioninfo")
+library("ggplot2")
+library("gridExtra")
+library("ggspavis")
+library("tidySingleCellExperiment")
+})
 
 load(file = here::here("processed-data", "02_build_spe", "spe_raw.Rdata"))
 spe_raw = spe
@@ -134,7 +137,7 @@ position_list <- c("TR", "BL", "TL", "BR",
                    "BL", "TR", "TL",
                    "TL", "TR", "BL", "BR",
                    "BL", "BR", "TL", "TR", "TR",
-                   "TL", "TR",
+                   "TL", "BL",
                    "TL", "TR", "BL", "BR")
 
 for (i in seq_along(samples)){
@@ -150,34 +153,89 @@ brains = unique(spe_raw$brnum)
 pdf(here("plots", "02_build_spe", "rearrangedSamples.pdf"), width = 8, height = 10)
 
 for (i in seq_along(brains)){
-speb <- spe_raw[, which(spe_raw$brnum == brains[i])]
+speb <- spe_raw[, (colData(spe_raw)$in_tissue & colData(spe_raw)$brnum == brains[i])]
 samples <- unique(speb$sample_id)
 samples
 
 if (length(samples) == 1){
-    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
 } else if (length(samples) == 2){
-    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
+    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
     grid.arrange(p1, p2, nrow = 2)
 } else if (length(samples) == 3){
-    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
-    p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
+    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
+    p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = TRUE)
     grid.arrange(p1, p2, p3, nrow = 2)
 } else if (length(samples) == 4){
-    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
-    p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
-    p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
+    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
+    p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = TRUE)
+    p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = TRUE)
     grid.arrange(p1, p2, p3, p4, nrow = 2)
 } else if (length(samples) == 5){
-    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
-    p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
-    p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
-    p5 <- plotVisium(speb[, which(speb$sample_id == samples[5])], spots = FALSE)
+    p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+    p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
+    p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = TRUE)
+    p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = TRUE)
+    p5 <- plotVisium(speb[, which(speb$sample_id == samples[5])], spots = TRUE)
     grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
+
+if (length(samples) == 1){
+    x = speb[, which(speb$sample_id == samples[1])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+} else if (length(samples) == 2){
+    x = speb[, which(speb$sample_id == samples[1])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[2])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    grid.arrange(a1, a2, nrow = 2)
+} else if (length(samples) == 3){
+    x = speb[, which(speb$sample_id == samples[1])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[2])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[3])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a3 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    grid.arrange(a1, a2, a3, nrow = 2)
+} else if (length(samples) == 4){
+    x = speb[, which(speb$sample_id == samples[1])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[2])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[3])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a3 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[4])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a4 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    grid.arrange(a1, a2, a3, a4, nrow = 2)
+} else if (length(samples) == 5){
+    x = speb[, which(speb$sample_id == samples[1])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[2])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[3])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a3 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[4])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a4 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    x = speb[, which(speb$sample_id == samples[5])]
+    df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+    a5 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    grid.arrange(a1, a2, a3, a4, a5, nrow = 2)}
 }
 
 dev.off()
@@ -203,12 +261,21 @@ angle_list <- c(270, 90, 0, 0,
                 0, 0, 0, 0, 0,
                 90, 90, 
                 0, 0, 0, 0)
+angle_list_array <- c(270, 90, 0, 0,
+                0, 0, 0, 0,
+                180, 90, 180, 180, 
+                0, 0,
+                270, 180, 270, 
+                0, 0, 0, 0,
+                0, 0, 180, 0, 0,
+                180, 180, 
+                0, 0, 0, 0)
 source(file = here::here("code", "02_build_spe", "transform_spe.R"))
-
+source(file = here::here("code", "02_build_spe", "transform_spe_array.R"))
 for (i in seq_along(angle_list)) {
     id <- samples[i]
     x <- trans_geom(spe_raw, sample_id = id, degrees = angle_list[i])
-
+    x <- trans_spe_array(x,  degrees = angle_list_array[i])
     if (i == 1) {
         spe <- x
     } else {
