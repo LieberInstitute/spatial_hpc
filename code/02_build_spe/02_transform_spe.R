@@ -310,33 +310,33 @@ brains = unique(spe$brnum)
 pdf(here("plots", "02_build_spe", "rearrangedTransformedSamples.pdf"), width = 8, height = 10)
 
 for (i in seq_along(brains)){
-    speb <- spe[, which(spe$brnum == brains[i])]
+    speb <- spe[, (colData(spe)$in_tissue & colData(spe)$brnum == brains[i])]
     samples <- unique(speb$sample_id)
     samples
     
     if (length(samples) == 1){
-        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
     } else if (length(samples) == 2){
-        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
         grid.arrange(p1, p2, nrow = 2)
     } else if (length(samples) == 3){
-        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
-        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
+        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = TRUE)
         grid.arrange(p1, p2, p3, nrow = 2)
     } else if (length(samples) == 4){
-        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
-        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
-        p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
+        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = TRUE)
+        p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = TRUE)
         grid.arrange(p1, p2, p3, p4, nrow = 2)
     } else if (length(samples) == 5){
-        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = FALSE)
-        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = FALSE)
-        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = FALSE)
-        p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
-        p5 <- plotVisium(speb[, which(speb$sample_id == samples[5])], spots = FALSE)
+        p1 <- plotVisium(speb[, which(speb$sample_id == samples[1])], spots = TRUE)
+        p2 <- plotVisium(speb[, which(speb$sample_id == samples[2])], spots = TRUE)
+        p3 <- plotVisium(speb[, which(speb$sample_id == samples[3])], spots = TRUE)
+        p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = TRUE)
+        p5 <- plotVisium(speb[, which(speb$sample_id == samples[5])], spots = TRUE)
         grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
     if (length(samples) == 1){
         x = speb[, which(speb$sample_id == samples[1])]
