@@ -2,11 +2,11 @@
 #$ -cwd
 #$ -l mem_free=20G,h_vmem=20G,h_fsize=100G
 #$ -pe local 5
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/refineVNS.$TASK_ID.txt
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/refineVNS.$TASK_ID.txt
+#$ -o logs/refineVNS.$TASK_ID.txt
+#$ -e logs/refineVNS.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 2-32
+#$ -t 1-32
 #$ -tc 10
 
 echo "**** Job starts ****"
