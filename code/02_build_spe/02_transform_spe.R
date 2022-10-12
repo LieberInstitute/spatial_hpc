@@ -12,7 +12,7 @@ suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("tidySingleCellExperiment"))
 
 load(file = here::here("processed-data", "02_build_spe", "spe_raw.Rdata"))
-
+spe_raw = spe
 dim(spe_raw)
 # [1]  36601 159744
 
