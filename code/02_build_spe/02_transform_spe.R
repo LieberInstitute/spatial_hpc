@@ -338,9 +338,64 @@ for (i in seq_along(brains)){
         p4 <- plotVisium(speb[, which(speb$sample_id == samples[4])], spots = FALSE)
         p5 <- plotVisium(speb[, which(speb$sample_id == samples[5])], spots = FALSE)
         grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
+    if (length(samples) == 1){
+        x = speb[, which(speb$sample_id == samples[1])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+    } else if (length(samples) == 2){
+        x = speb[, which(speb$sample_id == samples[1])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[2])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        grid.arrange(a1, a2, nrow = 2)
+    } else if (length(samples) == 3){
+        x = speb[, which(speb$sample_id == samples[1])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[2])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[3])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a3 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        grid.arrange(a1, a2, a3, nrow = 2)
+    } else if (length(samples) == 4){
+        x = speb[, which(speb$sample_id == samples[1])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[2])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[3])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a3 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[4])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a4 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        grid.arrange(a1, a2, a3, a4, nrow = 2)
+    } else if (length(samples) == 5){
+        x = speb[, which(speb$sample_id == samples[1])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a1 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[2])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a2 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[3])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a3 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[4])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a4 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        x = speb[, which(speb$sample_id == samples[5])]
+        df_raw <- cbind.data.frame(colData(x), spatialCoords(x))
+        a5 <- ggplot(df_raw, aes(x = array_row, y = array_col, color = sample_id)) + geom_point(size = 1) + coord_fixed() + theme_bw()
+        grid.arrange(a1, a2, a3, a4, a5, nrow = 2)}
 }
 
 dev.off()
+
 
 #########
 
