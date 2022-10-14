@@ -10,13 +10,13 @@ suppressPackageStartupMessages({
 })
 
 offset_check <- function(spe){
-brains = unique(spe$brnum)
+speo = spe
 
 # The spatial locations for each sample need to be offset so that spots of different samples are not neighbors.
 # summary(colData(spe)$array_row)
 # summary(colData(spe)$array_col)
-speo = spe
 
+brains = unique(speo$brnum)
 brains[1]
 #Br2743
 
@@ -29,16 +29,16 @@ row <- x$array_row
 col <- x$array_col
 
 ix = colData(x)$sample_id == samples[2]
-row[ix] <- row[ix] + 130
+row[ix] <- row[ix] + 128
 ix = colData(x)$sample_id == samples[2]
-col[ix] <- col[ix] - 3 
+col[ix] <- col[ix] - 4 
 
 ix = colData(x)$sample_id == samples[3]
 col[ix] <- col[ix] + 100 
 ix = colData(x)$sample_id == samples[4]
-row[ix] <- row[ix] + 78 
+row[ix] <- row[ix] + 77 
 ix = colData(x)$sample_id == samples[4]
-col[ix] <- col[ix] + 100 
+col[ix] <- col[ix] + 101 
 
 colData(x)$row <- row
 colData(x)$col <- col
@@ -57,12 +57,12 @@ row <- x$array_row
 col <- x$array_col
 
 ix = colData(x)$sample_id == samples[1]
-col[ix] <- col[ix] + 400
+col[ix] <- col[ix] + 398
 
 ix = colData(x)$sample_id == samples[2]
 row[ix] <- row[ix] + 78
 ix = colData(x)$sample_id == samples[2]
-col[ix] <- col[ix] + 400
+col[ix] <- col[ix] + 398
 
 ix = colData(x)$sample_id == samples[3]
 col[ix] <- col[ix] + 270 
@@ -89,18 +89,20 @@ row <- x$array_row
 col <- x$array_col
 
 ix = colData(x)$sample_id == samples[1]
-col[ix] <- col[ix] + 661
+row[ix] <- row[ix] + 13
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 659
 
 ix = colData(x)$sample_id == samples[2]
-row[ix] <- row[ix] + 67
+row[ix] <- row[ix] + 76
 ix = colData(x)$sample_id == samples[2]
-col[ix] <- col[ix] + 670
+col[ix] <- col[ix] + 666
 
 ix = colData(x)$sample_id == samples[3]
 col[ix] <- col[ix] + 570 
 
 ix = colData(x)$sample_id == samples[4]
-row[ix] <- row[ix] + 79 
+row[ix] <- row[ix] + 75
 ix = colData(x)$sample_id == samples[4]
 col[ix] <- col[ix] + 539
 
@@ -123,7 +125,7 @@ col <- x$array_col
 ix = colData(x)$sample_id == samples[1]
 row[ix] <- row[ix] + 300
 ix = colData(x)$sample_id == samples[1]
-col[ix] <- col[ix] + 120
+col[ix] <- col[ix] + 128
 
 ix = colData(x)$sample_id == samples[2]
 row[ix] <- row[ix] + 300
@@ -148,32 +150,174 @@ col <- x$array_col
 ix = colData(x)$sample_id == samples[1]
 row[ix] <- row[ix] + 300
 ix = colData(x)$sample_id == samples[1]
-col[ix] <- col[ix] + 400
+col[ix] <- col[ix] + 380
 
 ix = colData(x)$sample_id == samples[2]
-row[ix] <- row[ix] + 400
+row[ix] <- row[ix] + 428
 ix = colData(x)$sample_id == samples[2]
-col[ix] <- col[ix] + 450
+col[ix] <- col[ix] + 399
 
 ix = colData(x)$sample_id == samples[3]
 row[ix] <- row[ix] + 300
 ix = colData(x)$sample_id == samples[3]
-col[ix] <- col[ix] + 270
-
+col[ix] <- col[ix] + 300
 
 colData(x)$row <- row
 colData(x)$col <- col
 
 spe = cbind(spe,x)
 
-# pal <- unname(palette.colors(12, palette = "Okabe-Ito"))
-# check offsets give non-overlapping samples
-df <- cbind.data.frame(colData(spe), spatialCoords(spe))
-ggplot(df, aes(x = row, y = col, color = sample_id)) + 
-  geom_point(size = 1) + 
-  #scale_color_manual(values = cols) + 
-  coord_fixed() + 
-  guides(color = guide_legend(override.aes = list(size = 3))) + 
-  theme_bw()
+brains[6]
+#Br6522
 
+x = speo[,colData(speo)$brnum == brains[6]]
+samples = unique(x$sample_id)
+samples
+# [1] "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1" "V11U08-084_D1"
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+row[ix] <- row[ix] + 295
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 731
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 374
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 700
+
+ix = colData(x)$sample_id == samples[3]
+row[ix] <- row[ix] + 295
+ix = colData(x)$sample_id == samples[3]
+col[ix] <- col[ix] + 602
+
+ix = colData(x)$sample_id == samples[4]
+row[ix] <- row[ix] + 374
+ix = colData(x)$sample_id == samples[4]
+col[ix] <- col[ix] + 571
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
+brains[7]
+#Br8325
+
+x = speo[,colData(speo)$brnum == brains[7]]
+samples = unique(x$sample_id)
+samples
+# [1] "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1" "V11U08-084_D1"
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+row[ix] <- row[ix] + 477
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 125
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 555
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 135
+
+ix = colData(x)$sample_id == samples[3]
+row[ix] <- row[ix] + 635
+ix = colData(x)$sample_id == samples[3]
+col[ix] <- col[ix] + 135
+
+ix = colData(x)$sample_id == samples[4]
+row[ix] <- row[ix] + 475
+
+ix = colData(x)$sample_id == samples[5]
+row[ix] <- row[ix] + 555
+ix = colData(x)$sample_id == samples[5]
+col[ix] <- col[ix] + 7
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
+brains[8]
+#Br8492
+
+x = speo[,colData(speo)$brnum == brains[8]]
+samples = unique(x$sample_id)
+samples
+# [1] "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1" "V11U08-084_D1"
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+row[ix] <- row[ix] + 550
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 412
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 565
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 284
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
+brains[9]
+#Br8667
+
+x = speo[,colData(speo)$brnum == brains[9]]
+samples = unique(x$sample_id)
+samples
+# [1] "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1" "V11U08-084_D1"
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+row[ix] <- row[ix] + 550
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 740
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 628
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 740
+
+ix = colData(x)$sample_id == samples[3]
+row[ix] <- row[ix] + 550
+ix = colData(x)$sample_id == samples[3]
+col[ix] <- col[ix] + 595
+
+ix = colData(x)$sample_id == samples[4]
+row[ix] <- row[ix] + 626
+ix = colData(x)$sample_id == samples[4]
+col[ix] <- col[ix] + 580
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
+# df <- cbind.data.frame(colData(x), spatialCoords(x))
+# ggplot(df, aes(x = row, y = col, color = sample_id)) + 
+#   geom_point(size = 1) + 
+#   #scale_color_manual(values = cols) + 
+#   coord_fixed() + 
+#   guides(color = guide_legend(override.aes = list(size = 3))) + 
+#   theme_bw()
+
+# df <- cbind.data.frame(colData(spe), spatialCoords(spe))
+# ggplot(df, aes(x = row, y = col, color = sample_id)) + 
+#   geom_point(size = 1) + 
+#   #scale_color_manual(values = cols) + 
+#   coord_fixed() + 
+#   guides(color = guide_legend(override.aes = list(size = 3))) + 
+#   theme_bw()
+return(spe)
 }
