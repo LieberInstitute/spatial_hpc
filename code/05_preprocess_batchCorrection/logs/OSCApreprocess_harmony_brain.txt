@@ -356,3 +356,122 @@ null device
  [3] /jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-devel/R/devel/lib64/R/library
 
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Oct 13 10:24:52 EDT 2022
+**** JHPCE info ****
+User: mtippani
+Job id: 227631
+Job name: OSCApreprocess_harmony_brain
+Hostname: compute-097.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV  11) ruby/2.6.4p104
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV      12) rmate/1.5.9
+  3) JHPCE_tools/1.0   8) git-status-size/github         13) conda/3-4.6.14
+  4) sge/8.1.9         9) git/2.28.0                     14) conda_R/4.1.x
+  5) gcc/4.4.7        10) git-lfs/2.8.0
+
+ 
+
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+[1]  30359 137442
+[1]  30359 135640
+Running quickCluster()
+[1] "2022-10-13 10:31:26 EDT"
+[1] "2022-10-13 10:35:22 EDT"
+Running computeSumFactors()
+[1] "2022-10-13 10:35:22 EDT"
+[1] "2022-10-13 10:47:57 EDT"
+
+   1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+2628 2460 1338 2340 2180  586  710  214  980  651 1210  168 1647 1800 3560 2022 
+  17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
+1118  419 1009 1272 2347  955 1011  104  651  147  407  530 1577 1109 1312 1980 
+  33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48 
+1748  598 1668 1109  271  826  372  319  177  984  973  961  593  757  752  331 
+  49   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64 
+ 944  670  862  328  342  122 1495  849 2871  833  342 2380 1809 1334  695  250 
+  65   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80 
+ 803  196  374 1501 1278  292 1134  656 1173 1340  390 2097 3010 1091  101  209 
+  81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96 
+ 210  404  261  307  224  905  265 1392  153  121  126 2200  477  242  324 2248 
+  97   98   99  100  101  102  103  104  105  106  107  108  109  110  111  112 
+3004  411 1094  213 2472 2785 1055  998  684  500  638  454  162  223  231  625 
+ 113  114  115  116  117  118  119  120  121  122  123  124  125  126  127  128 
+ 591  805  145 1515  587  320  160  445  527  542  711  630  134  257  249  129 
+ 129  130  131  132  133  134  135  136  137  138  139  140  141  142  143  144 
+ 533 1971 1573 1613 2345  829 1342  210 1918  694 1240 1428  338 1395  150  254 
+Running checking sizeFactors()
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+ 0.009053  0.369621  0.663299  1.000000  1.224439 28.411353 
+Running logNormCounts()
+Running modelGeneVar()
+  Br2743      Br3942      Br6423      Br6432      Br6471      Br6522     
+x numeric,101 numeric,101 numeric,101 numeric,101 numeric,101 numeric,101
+y numeric,101 numeric,101 numeric,101 numeric,101 numeric,101 numeric,101
+  Br8325      Br8492      Br8667     
+x numeric,101 numeric,101 numeric,101
+y numeric,101 numeric,101 numeric,101
+null device 
+          1 
+Running getTopHVGs()
+[1] 1849
+[1] 12331
+[1] 11039
+Running runPCA()
+[1] "2022-10-13 10:48:43 EDT"
+[1] "2022-10-13 10:52:52 EDT"
+[1] 5
+null device 
+          1 
+Running runUMAP()
+[1] "2022-10-13 10:52:54 EDT"
+Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
+Also defined by ‘spam’
+Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
+Also defined by ‘spam’
+[1] "2022-10-13 10:58:41 EDT"
+Running RunHarmony()
+[1] "2022-10-13 10:58:41 EDT"
+Warning messages:
+1: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+2: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+3: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+4: Quick-TRANSfer stage steps exceeded maximum (= 6782000) 
+5: did not converge in 25 iterations 
+[1] "2022-10-13 11:21:37 EDT"
+Running runUMAP() on HARMONY dimensions
+[1] "2022-10-13 11:21:37 EDT"
+Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
+Also defined by ‘spam’
+Found more than one class "dist" in cache; using the first, from namespace 'BiocGenerics'
+Also defined by ‘spam’
+[1] "2022-10-13 11:27:49 EDT"
+null device 
+          1 
+null device 
+          1 
+7.14 GB
+[1] "Reproducibility information:"
+[1] "2022-10-13 11:45:54 EDT"
+    user   system  elapsed 
+6429.738  303.800 4860.028 
+Error in should_show_python(pkgs) : 
+  lazy-load database '/users/mtippani/R/devel/reticulate/R/reticulate.rdb' is corrupt
+Calls: session_info -> should_show_python
+In addition: Warning message:
+In should_show_python(pkgs) : internal error -3 in R_decompress1
+Execution halted

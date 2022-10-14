@@ -2,9 +2,9 @@
 #$ -cwd
 #$ -l bluejay,mem_free=12G,h_vmem=12G,h_fsize=100G
 #$ -pe local 8
-#$ -N OSCApreprocess_harmony_captureArea
-#$ -o logs/OSCApreprocess_harmony_captureArea.txt
-#$ -e logs/OSCApreprocess_harmony_captureArea.txt
+#$ -N spatialPreprocess_harmony
+#$ -o logs/spatialPreprocess_harmony.txt
+#$ -e logs/spatialPreprocess_harmony.txt
 #$ -m e
 
 echo "**** Job starts ****"
@@ -21,4 +21,4 @@ echo "Task id: ${SGE_TASK_ID}"
 module list
 
 module load conda_R/devel
-Rscript OSCApreprocess_harmony_captureArea.R
+Rscript spatialPreprocess_harmony.R
