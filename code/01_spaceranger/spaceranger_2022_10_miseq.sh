@@ -6,8 +6,6 @@
 #$ -o logs/spaceranger_2022_10_miseq_10v.txt
 #$ -e logs/spaceranger_2022_10_miseq_10v.txt
 #$ -m e
-#$ -t 5
-#$ -tc 5
 
 echo "**** Job starts ****"
 date
@@ -17,7 +15,6 @@ echo "User: ${USER}"
 echo "Job id: ${JOB_ID}"
 echo "Job name: ${JOB_NAME}"
 echo "Hostname: ${HOSTNAME}"
-echo "Task id: ${SGE_TASK_ID}"
 
 ## load SpaceRanger
 module load spaceranger/1.3.0
@@ -26,13 +23,13 @@ module load spaceranger/1.3.0
 module list
 
 ## Locate file
-SAMPLE=$(awk "NR==${SGE_TASK_ID}" samples_2022_10.txt)
+SAMPLE=V12F14-051_A1
 echo "Processing sample ${SAMPLE}"
 date
 
 ## Get slide and area
-SLIDE=$(echo ${SAMPLE} | cut -d "_" -f 1)
-CAPTUREAREA=$(echo ${SAMPLE} | cut -d "_" -f 2)
+SLIDE=V12F14-051
+CAPTUREAREA=A1
 echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}"
 
 ## Find FASTQ file path
@@ -42,7 +39,7 @@ FASTQPATHMISEQ=$(ls -d ../../raw-data/FASTQ/2022-10-12_MiSeq_SCP_visium/V12F14-0
 spaceranger count \
     --id=${SAMPLE} \
     --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A \
-    --fastqs=${FASTQPATHNOVASEQ} \
+    --fastqs=${FASTQPATHMISEQ} \
     --image=../../processed-data/Images/VistoSeg/Capture_areas/${SAMPLE}.tif \
     --slide=${SLIDE} \
     --area=${CAPTUREAREA} \
