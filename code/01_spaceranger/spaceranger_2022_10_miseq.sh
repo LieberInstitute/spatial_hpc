@@ -2,9 +2,9 @@
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
 #$ -pe local 4
-#$ -N spatialHPC_spaceranger_miseq_10v
-#$ -o logs/spaceranger_2022_10_miseq_10v.txt
-#$ -e logs/spaceranger_2022_10_miseq_10v.txt
+#$ -N spatialHPC_spaceranger_miseq_20v
+#$ -o logs/spaceranger_2022_10_miseq_20v.txt
+#$ -e logs/spaceranger_2022_10_miseq_20v.txt
 #$ -m e
 
 echo "**** Job starts ****"
@@ -33,7 +33,7 @@ CAPTUREAREA=A1
 echo "Slide: ${SLIDE}, capture area: ${CAPTUREAREA}"
 
 ## Find FASTQ file path
-FASTQPATHMISEQ=$(ls -d ../../raw-data/FASTQ/2022-10-12_MiSeq_SCP_visium/V12F14-051_A1/10v/)
+FASTQPATHMISEQ=$(ls -d ../../raw-data/FASTQ/2022-10-12_MiSeq_SCP_visium/V12F14-051_A1/20v/)
 
 ## Run SpaceRanger
 spaceranger count \
@@ -51,8 +51,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/01_spaceranger/spaceranger_2022_10/V12F14-051_A1/10v/
-mv ${SAMPLE} ../../processed-data/01_spaceranger/spaceranger_2022_10/V12F14-051_A1/10v/
+mkdir -p ../../processed-data/01_spaceranger/spaceranger_2022_10/V12F14-051_A1/20v/
+mv ${SAMPLE} ../../processed-data/01_spaceranger/spaceranger_2022_10/V12F14-051_A1/20v/
 
 echo "**** Job ends ****"
 date
