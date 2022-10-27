@@ -32,8 +32,8 @@ date
 
 ## Run CellRanger
 cellranger-arc count --id=${SAMPLE} \
-    --reference=/fastscratch/myscratch/${USER}/refdata/refdata-cellranger-arc-GRCh38-2020-A-2.0.0.tar.gz \ ## reference human genome
-    --libraries=/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/rafael_rotation/cellranger/libraries.csv \
+    --reference=/fastscratch/myscratch/${USER}/refdata/refdata-cellranger-arc-GRCh38-2020-A-2.0.0.tar.gz \
+    --libraries=/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/rafael_rotation/cellranger/libraries_1.csv \
     --localcores=8 \
     --localmem=64 \
 
