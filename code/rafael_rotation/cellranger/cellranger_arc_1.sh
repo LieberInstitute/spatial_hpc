@@ -26,23 +26,16 @@ module load cellranger_arc/2.0.2
 module list
 
 ## Locate file
-SAMPLE=$(awk "NR==${SGE_TASK_ID}" ${JOB_NAME}.txt)
+SAMPLE=42_1
 echo "Processing sample ${SAMPLE}"
 date
 
 ## Run CellRanger
-cellranger-atac count --id
-=${SAMPLE} \
-    --reference=/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521_ATAC \ ## reference human genome
-    --fastqs=/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/FASTQ/${SAMPLE} \
-    --sample=${SAMPLE} \ ## there is no sample argument, neither fastqs, it is used though the ids
-    --jobmode=local \
+cellranger-arc count --id=${SAMPLE} \
+    --reference=/fastscratch/myscratch/${USER}/refdata/refdata-cellranger-arc-GRCh38-2020-A-2.0.0.tar.gz \ ## reference human genome
+    --libraries=/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/rafael_rotation/cellranger/libraries.csv \
     --localcores=8 \
     --localmem=64 \
-    --include-introns
-
-
-                        --fastqs=/home/jdoe/runs/HAWT7ADXX/outs/fastq_path \
 
 ## Move output
 echo "Moving data to new location"

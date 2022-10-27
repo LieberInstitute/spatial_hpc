@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mkdir ${MYSCRATCH}/2021-11-22_KMay110521/
+
+# 42_1 and 42_4
+cp -r /dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521/42_* ${MYSCRATCH}/2021-11-22_KMay110521/
+mv ${MYSCRATCH}/2021-11-22_KMay110521/42_*/* ${MYSCRATCH}/2021-11-22_KMay110521/
+rm -rf ${MYSCRATCH}/2021-11-22_KMay110521/42_*/
