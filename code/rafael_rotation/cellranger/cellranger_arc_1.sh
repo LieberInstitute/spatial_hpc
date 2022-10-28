@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=16G,h_vmem=16G,h_fsize=100G
-#$ -pe local 4
+#$ -l bluejay,mem_free=8G,h_vmem=8G,h_fsize=15G
+#$ -pe local 8
 #$ -N round1
 #$ -o logs/round1.$TASK_ID.txt
 #$ -e logs/round1.$TASK_ID.txt
