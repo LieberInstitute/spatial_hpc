@@ -34,8 +34,15 @@ spe = offset_check(spe)
 # theme_bw()
 
 ### BayesSpace on Batch Corrected
+metadata(spe)$BayesSpace.data <- list(platform = "Visium", is.enhanced = FALSE)
 
-spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, nrep = 10000)
+message("Running spatialCluster()")
+Sys.time()
+set.seed(20220201)
+spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k)
+Sys.time()
+
+#spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, nrep = 10000)
 
 spe$bayesSpace_temp <- spe$spatial.cluster
 bayesSpace_name <- paste0("bayesSpace_captureArea_", k)
