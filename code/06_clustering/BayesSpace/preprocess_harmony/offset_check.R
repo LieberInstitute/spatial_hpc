@@ -312,12 +312,15 @@ spe = cbind(spe,x)
 #   guides(color = guide_legend(override.aes = list(size = 3))) + 
 #   theme_bw()
 
+# pdf(here("plots", "06_clustering", "arrayCoord_offset_updated.pdf"), width = 8, height = 10)
 # df <- cbind.data.frame(colData(spe), spatialCoords(spe))
-# ggplot(df, aes(x = row, y = col, color = sample_id)) + 
-#   geom_point(size = 1) + 
-#   #scale_color_manual(values = cols) + 
-#   coord_fixed() + 
-#   guides(color = guide_legend(override.aes = list(size = 3))) + 
+# ggplot(df, aes(x = row, y = col, color = sample_id)) +
+#   geom_point(size = 1) +
+#   #scale_color_manual(values = cols) +
+#   coord_fixed() +
+#   guides(color = guide_legend(override.aes = list(size = 3))) +
 #   theme_bw()
+# dev.off()
+
 return(spe)
 }
