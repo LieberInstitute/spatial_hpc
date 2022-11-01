@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
-#$ -pe local 80
+#$ -pe local 8
 #$ -N PRECAST_k15
 #$ -o logs/PRECAST_k15.txt
 #$ -e logs/PRECAST_k15.txt
