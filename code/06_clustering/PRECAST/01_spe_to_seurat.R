@@ -3,32 +3,35 @@ suppressPackageStartupMessages({
 library("here")
 library("SpatialExperiment")
 library("Seurat")
+library("SeuratData")
 })
 
-spe_to_seurat <- function(spe){
-  ret <- CreateSeuratObject(
-    counts=assays(spe)$counts,
-    meta.data=data.frame(
-      row=spatialCoords(spe)[,1],
-      col=spatialCoords(spe)[,2]),
-    spot_id = colData(spe)$spot_id
-  )
-return(ret)
-}
+load(file = here::here("processed-data", "04_QC", "spe_QC.Rdata"))
+source(file = here::here("code", "06_clustering", "BayesSpace", "preprocess_harmony", "offset_check.R"))
+x = offset_check(spe)
 
-
-# Multiple sample
-spe_to_seuratList <- function(spe){
-  uniq_sample_id <- colData(spe)$sample_id |> unique()
+## check
+# df <- cbind.data.frame(colData(x), spatialCoords(x))
+# ggplot(df, aes(x = row, y = col, color = sample_id)) +
+# geom_point(size = 1) +
+# coord_fixed() +
+# guides(color = guide_legend(override.aes = list(size = 3))) +
+# theme_bw()
   
-  # Create a seurate object for each unique sample_id
-  map(uniq_sample_id,
-      .f = function(smp_id, spe){
-        # browser()
-        ret_spe <- spe[, colData(spe)$sample_id == smp_id]
-        ret_seurat <- spe_to_seurat(ret_spe)
-        
-        return(ret_seurat)
-      },
-      spe = spe)
+x$spot_id = x$key
+
+sue <- CreateSeuratObject(
+      counts=as.matrix(counts(x)),
+      meta.data=data.frame(colData(x)),
+      project="HPC")
+
+seuList = list()
+
+brains = unique(x$brnum)
+table(x$brnum, x$sample_id)
+
+for (i in seq_along(brains)){
+seuList[[i]] = subset(x=sue, subset = brnum == brains[i])
 }
+
+save(seuList, file = here("processed-data", "06_clustering", "PRECAST", "seuList.Rdata"))
