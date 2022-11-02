@@ -3,6 +3,8 @@ suppressPackageStartupMessages({
   library(dplyr)
   library(purrr)
   library(Seurat)
+  library("here")
+  library("sessioninfo")
   library(SpatialExperiment)
   library(PRECAST)
   library(tictoc)
@@ -16,7 +18,7 @@ preobj@seulist
 PRECASTObj <- AddAdjList(preobj, platform = "Visium")
 ## Add a model setting in advance for a PRECASTObj object. verbose =TRUE helps outputing the
 ## information in the algorithm.
-PRECASTObj <- AddParSetting(PRECASTObj, Sigma_equal = FALSE, coreNum = 1, maxIter = 30, verbose = TRUE)
+PRECASTObj <- AddParSetting(PRECASTObj, Sigma_equal = FALSE, coreNum = 8, maxIter = 30, verbose = TRUE)
 
 tic()
 PRECASTObj <- PRECAST(PRECASTObj, K = 15)
