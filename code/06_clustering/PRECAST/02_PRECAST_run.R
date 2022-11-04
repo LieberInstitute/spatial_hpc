@@ -20,8 +20,10 @@ PRECASTObj <- AddAdjList(preobj, platform = "Visium")
 ## information in the algorithm.
 PRECASTObj <- AddParSetting(PRECASTObj, Sigma_equal = FALSE, coreNum = 8, maxIter = 30, verbose = TRUE)
 
+K <- as.numeric(Sys.getenv("SGE_TASK_ID"))
+
 tic()
-PRECASTObj <- PRECAST(PRECASTObj, K = 15)
+PRECASTObj <- PRECAST(PRECASTObj, K = K)
 toc()
 
-save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", "PRECASTObj.Rdata"))
+save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("PRECASTObj_",K,".Rdata")))
