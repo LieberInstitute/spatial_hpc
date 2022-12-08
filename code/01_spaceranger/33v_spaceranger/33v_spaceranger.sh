@@ -59,8 +59,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/01_spaceranger/spaceranger_2022-12-07_Novaseq_33v
-mv ${SAMPLE} ../../processed-data/01_spaceranger/spaceranger_2022-12-07_Novaseq_33v
+mkdir -p ../../../processed-data/01_spaceranger/spaceranger_2022-12-07_Novaseq_33v
+mv ${SAMPLE} ../../../processed-data/01_spaceranger/spaceranger_2022-12-07_Novaseq_33v
 
 echo "**** Job ends ****"
 date
