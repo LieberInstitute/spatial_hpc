@@ -124,7 +124,7 @@ rowData(spe_pseudo)$high_expr_group_cluster <- filterByExpr(spe_pseudo, group = 
 summary(rowData(spe_pseudo)$high_expr_group_sample_id)
 #   Mode   FALSE    TRUE
 #logical   14619   15740
- 
+
 summary(rowData(spe_pseudo)$high_expr_group_cluster)
 #   Mode   FALSE    TRUE
 #logical   18005   12354
@@ -138,7 +138,7 @@ with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_clust
 spe_pseudo <- spe_pseudo[rowData(spe_pseudo)$high_expr_group_cluster, ]
 dim(spe_pseudo)
 #12354   288
- 
+
 # Store the log normalized counts on the spe object
 x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
 
@@ -200,6 +200,15 @@ plotPCA(spe_pseudo, colour_by = "age", ncomponents = 2, point_size = 8, label_fo
 plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+plotPCA(spe_pseudo, colour_by = "ncells", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+plotPCA(spe_pseudo, colour_by = "pmi", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+plotPCA(spe_pseudo, colour_by = "experimenterSeq", ncomponents = 2, point_size = 8,
+    label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+plotPCA(spe_pseudo, colour_by = "slide", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
