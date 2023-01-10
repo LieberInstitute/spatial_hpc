@@ -10,7 +10,7 @@ library("sessioninfo")
 library("dplyr")
 
 ## Define some info for the samples
-tmp <- read.delim(here("snRNA_seq","raw-data","sample_info",
+tmp <- read.delim(here("snRNAseq_hpc","raw-data","sample_info",
                   "snRNAseq_U01_HPC_AllRounds_Master_Spreadsheet_12012022.csv"),
                   header = T,sep=',')
 
@@ -27,18 +27,25 @@ sample_info <- data.frame(
 
 stopifnot(all(!duplicated(sample_info$Sample)))
 
-sample_info$sample_path <- file.path(
-  here::here("snRNAseq_hpc","processed-data", "cellranger"),
-  sample_info$sample_ID,
+sample_info$sample_path<-rep(NA,20) 
+sample_info$sample_path[1:2]<- file.path(
+  here::here("snRNAseq_hpc","processed-data", "01_align"),
+  sample_info$sample_ID[1:2],
   "outs",
   "raw_feature_bc_matrix"
 )
-stopifnot(all(file.exists(sample_info$sample_path)))
+sample_info$sample_path[3:20]<- file.path(
+  here::here("snRNAseq_hpc","code", "01_align"),
+  sample_info$sample_ID[3:20],
+  "outs",
+  "raw_feature_bc_matrix"
+)
+#stopifnot(all(file.exists(sample_info$sample_path)))
 
 ## Get the rest of the donor info from the spatialDLPFC SPE object
 ## Load SPE data
 load(here("processed-data","02_build_spe","spe_basic.Rdata"))
-m <- match(sample_info$BrNum, spe$subject)
+m <- match(sample_info$BrNum, spe$brnum)
 sample_info$age <- spe$age[m]
 sample_info$sex <- spe$sex[m]
 rm(m, spe)
@@ -52,6 +59,8 @@ sce <- read10xCounts(
   col.names = TRUE
 )
 message("RDone - ", Sys.time())
+
+save(sce,file="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_raw.rda")
 
 ## Use key similar to spe objects
 sce$key <- paste0(sce$Barcode, "_", sce$sample_ID)
@@ -104,3 +113,5 @@ Sys.time()
 proc.time()
 options(width = 120)
 session_info()
+
+
