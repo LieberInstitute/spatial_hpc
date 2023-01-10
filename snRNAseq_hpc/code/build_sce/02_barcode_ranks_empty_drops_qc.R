@@ -64,14 +64,14 @@ Sys.time()
 e.out <- DropletUtils::emptyDrops(
   sce,
   niters = 25000,
- # lower = knee_lower
+ lower = knee_lower
   # ,
   # BPPARAM = BiocParallel::MulticoreParam(4)
 )
 message("Done - saving data")
 Sys.time()
 
-save(e.out, file = here("snRNAseq_hpc","processed-data", "build_sce", paste0("droplet_scores_", sample_run, ".Rdata")))
+save(e.out, file = here("snRNAseq_hpc","processed-data", "build_sce", "droplet_scores",paste0("droplet_scores_", sample_run, ".Rdata")))
 
 #### QC Plots ####
 message("QC check")
