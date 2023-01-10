@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -cwd
 #$ -l bluejay,mem_free=50G,h_vmem=50G,h_fsize=100G
-#$ -N 02_barcode_ranks_empty_drops_qc
+#$ -N barcode_ranks_empty_drops_qc
 #$ -o logs/02_barcode_ranks_empty_drops_qc.$TASK_ID.txt
 #$ -e logs/02_barcode_ranks_empty_drops_qc.$TASK_ID.txt
 #$ -m e

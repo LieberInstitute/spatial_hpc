@@ -13,7 +13,7 @@ args <- commandArgs(trailingOnly = TRUE)
 sample_i <- as.integer(args[[1]])
 
 #### Load & Subset raw data ####
-load(here("snRNAseq_hpc","processed-data", "sce", "sce_raw.Rdata"), verbose = TRUE)
+load(here("snRNAseq_hpc","processed-data", "sce", "sce_raw.rda"), verbose = TRUE)
 
 samples <- unique(sce$Sample)
 sample_run <- samples[[sample_i]]
