@@ -31,6 +31,9 @@ pdf(here("snRNAseq_hpc","plots","UMAP_k50.pdf"))
 plotUMAP(sce,colour_by='k_50_label',text_by='k_50_label')
 dev.off()
 
+message("saving data - ", Sys.time())
+save(sce, file=here("snRNAseq_hpc","processed-data", "sce", "sce_clustered.rda"))
+
 ##add logcounts for viz
 message("normalizing counts - ", Sys.time())
 set.seed(1000)
@@ -38,7 +41,7 @@ sce <- computeSumFactors(sce, cluster=sce$k_50_label)
 sce <- logNormCounts(sce)
 
 message("saving data - ", Sys.time())
-save(sce, here("snRNAseq_hpc","processed-data", "sce", "sce_clustered.rda"))
+save(sce, file=here("snRNAseq_hpc","processed-data", "sce", "sce_clustered.rda"))
 
 pdf(here("snRNAseq_hpc","plots","markers_k50.pdf"))
 plotExpression(sce,features=c('SYT1','SLC17A7','SLC17A6',
