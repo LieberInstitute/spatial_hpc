@@ -192,24 +192,50 @@ dev.off()
 
 pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_captureArea_PCA_2_wo_9-15-NA_Fncells50.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "PRECAST_k15", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "age", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "ncells", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "pmi", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "experimenterSeq", ncomponents = 2, point_size = 8,
-    label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+    label_format = c("%s %02i", " (%i%%)"), percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "slide", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 dev.off()
 
 pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_captureArea_PCA_4_wo_9-15-NA_Fncells50.pdf"), width = 14, height = 14)
