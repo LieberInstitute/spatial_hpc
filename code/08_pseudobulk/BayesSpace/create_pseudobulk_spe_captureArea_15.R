@@ -111,15 +111,30 @@ dev.off()
 pdf(file = here::here("plots","08_pseudobulk", "BayesSpace",
     "pseudobulk_captureArea_PCA_BayesSpace15_2_wo131415.pdf"), width = 14, height = 14)
 plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "BayesSpace", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "age", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
+    theme(text = element_text(size = 20),
+        axis.text = element_text(size = 20),
+        axis.line = element_line(size=2))
 dev.off()
 
 pdf(file = here::here("plots","08_pseudobulk", "BayesSpace",
@@ -162,6 +177,7 @@ dev.off()
 
 # save file
 save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "BayesSpace", "spe_pseudo_captureArea_BayesSpace15_wo131415.Rdata"))
+
 
 ## Reproducibility information
 print("Reproducibility information:")
