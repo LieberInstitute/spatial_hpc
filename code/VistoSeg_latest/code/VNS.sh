@@ -1,12 +1,12 @@
 #!/bin/bash
 #$ -cwd
 #$ -l mem_free=100G,h_vmem=100G,h_stack=256M,h_fsize=100G
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg_latest/code/logs/$TASK_ID.txt
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg_latest/code/logs/$TASK_ID.txt
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg_latest/code/logs/$TASK_ID_VNS.txt
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg_latest/code/logs/$TASK_ID_VNS.txt
 #$ -m e
 #$ -M heenadivecha@gmail.com
-#$ -t 1
-#$ -tc 1
+#$ -t 1-4
+#$ -tc 4
 
 echo "**** Job starts ****"
 date
