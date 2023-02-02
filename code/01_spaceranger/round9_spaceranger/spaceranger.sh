@@ -60,8 +60,8 @@ spaceranger count \
 ## Move output
 echo "Moving results to new location"
 date
-mkdir -p ../../processed-data/01_spaceranger/spaceranger_2023-01-31_round9
-mv ${SAMPLE} ../../processed-data/01_spaceranger/spaceranger_2023-01-31_round9
+mkdir -p ../../../processed-data/01_spaceranger/spaceranger_2023-01-31_round9
+mv ${SAMPLE} ../../../processed-data/01_spaceranger/spaceranger_2023-01-31_round9
 
 echo "**** Job ends ****"
 date
