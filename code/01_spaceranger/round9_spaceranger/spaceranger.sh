@@ -3,8 +3,8 @@
 #$ -l mem_free=8G,h_vmem=8G,h_fsize=100G
 #$ -pe local 8
 #$ -N spatial_hpc
-#$ -o logs/spaceranger.$TASK_ID.txt
-#$ -e logs/spaceranger.$TASK_ID.txt
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/01_spaceranger/round9_spaceranger/logs/round9_spaceranger.$TASK_ID.txt
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/01_spaceranger/round9_spaceranger/logs/round9_spaceranger.$TASK_ID.txt
 #$ -m e
 #$ -M heenadivecha@gmail.com
 #$ -t 1-4
