@@ -7,7 +7,7 @@
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/01_spaceranger/round9_spaceranger/logs/round9_spaceranger.$TASK_ID.txt
 #$ -m e
 #$ -M heenadivecha@gmail.com
-#$ -t 1-4
+#$ -t 1
 #$ -tc 10
 
 echo "**** Job starts ****"
