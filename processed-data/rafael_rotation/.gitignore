@@ -1,2 +1,16 @@
 ## Ignore incomplete output files from cellranger-arc
 cellranger
+
+## Ignore regular cellranger-arc large files
+*.bam
+*.cloupe
+*.h5
+*.bam.bai
+*.mri.tgz
+analysis
+SC_ATAC_GEX_COUNTER_CS
+*bc_matrix
+atac_cut_sites.bigwig
+atac_fragments.tsv.gz
+atac_fragments.tsv.gz.tbi
+per_barcode_metrics.csv
