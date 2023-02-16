@@ -17,7 +17,7 @@ load(file = here::here("processed-data", "06_clustering", "BayesSpace", "1st_run
 
 cols <- Polychrome::palette36.colors(16)
 names(cols) <- sort(unique(spe$BayesSpace_harmony_k15_nrep10000))
-brains = c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
+brains <- c("Br6423","Br6432","Br2743","Br8325","Br3942","Br6471","Br8667","Br8492","Br6522")
 
 # Do a quick check to make sure clusters look accurately mapped to tissue
 
@@ -146,3 +146,4 @@ p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "BayesSpace_harmo
 grid.arrange(p1, p2, p3, p4, nrow = 2)
 
 dev.off()
+
