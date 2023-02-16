@@ -34,6 +34,175 @@ load(file = here::here("processed-data", "08_pseudobulk", "PRECAST",
 # Set up data frame for PRECAST clusters that will be used for volcano plots
 
 ############
+## cluster 1
+############
+
+res1 = eb0_list[[1]]
+
+# extract p-values
+p_vals1 <- res1$p.value[, 2]
+
+# calculate adjusted p-values (FDRs)
+fdrs1 <- p.adjust(p_vals1, method = "fdr")
+
+# store corresponding gene names for convenience later
+stopifnot(length(fdrs1) == length(rowData(spe_pseudo)$gene_id))
+stopifnot(all(names(fdrs1) == rowData(spe_pseudo)$gene_id))
+
+fdrs_gene_ids <- rowData(spe_pseudo)$gene_id
+fdrs_gene_names <- rowData(spe_pseudo)$gene_name
+
+names(fdrs1) <- fdrs_gene_names
+
+# extract log fold change
+logfc1 <- res1$coefficients[,2]
+
+stopifnot(length(fdrs1) == length(logfc1))
+stopifnot(all(fdrs_gene_ids == names(logfc1)))
+
+names(logfc1) <- names(fdrs1)
+
+# identify significant genes (low FDR and high logFC)
+thresh_fdr <- 0.1
+thresh_logfc <- log2(2)
+sig1 <- (fdrs1 < thresh_fdr) & (abs(logfc1) > thresh_logfc)
+
+# number of significant genes
+table(sig1)
+#FALSE  TRUE
+# 11304  1056
+
+df1 <- data.frame(
+  gene_name = names(fdrs1),
+  logFC = logfc1,
+  FDR = fdrs1,
+  sig = sig1
+)
+
+############
+## cluster 2
+############
+
+res2 = eb0_list[[2]]
+
+# extract p-values
+p_vals2 <- res2$p.value[, 2]
+
+# calculate adjusted p-values (FDRs)
+fdrs2 <- p.adjust(p_vals2, method = "fdr")
+
+# store corresponding gene names for convenience later
+stopifnot(length(fdrs2) == length(rowData(spe_pseudo)$gene_id))
+stopifnot(all(names(fdrs2) == rowData(spe_pseudo)$gene_id))
+
+names(fdrs2) <- fdrs_gene_names
+
+# extract log fold change
+logfc2 <- res2$coefficients[,2]
+
+stopifnot(length(fdrs2) == length(logfc2))
+stopifnot(all(fdrs_gene_ids == names(logfc2)))
+
+names(logfc2) <- names(fdrs2)
+
+# identify significant genes (low FDR and high logFC)
+sig2 <- (fdrs2 < thresh_fdr) & (abs(logfc2) > thresh_logfc)
+
+# number of significant genes
+table(sig2)
+#FALSE  TRUE
+# 11743    617
+
+df2 <- data.frame(
+  gene_name = names(fdrs2),
+  logFC = logfc2,
+  FDR = fdrs2,
+  sig = sig2
+)
+
+############
+## cluster 3
+############
+
+res3 = eb0_list[[3]]
+
+# extract p-values
+p_vals3 <- res3$p.value[, 2]
+
+# calculate adjusted p-values (FDRs)
+fdrs3 <- p.adjust(p_vals3, method = "fdr")
+
+# store corresponding gene names for convenience later
+stopifnot(length(fdrs3) == length(rowData(spe_pseudo)$gene_id))
+stopifnot(all(names(fdrs3) == rowData(spe_pseudo)$gene_id))
+
+names(fdrs3) <- fdrs_gene_names
+
+# extract log fold change
+logfc3 <- res3$coefficients[,2]
+
+stopifnot(length(fdrs3) == length(logfc3))
+stopifnot(all(fdrs_gene_ids == names(logfc3)))
+
+names(logfc3) <- names(fdrs3)
+
+# identify significant genes (low FDR and high logFC)
+sig3 <- (fdrs3 < thresh_fdr) & (abs(logfc3) > thresh_logfc)
+
+# number of significant genes
+table(sig3)
+#FALSE  TRUE
+# 12341    19
+
+df3 <- data.frame(
+  gene_name = names(fdrs3),
+  logFC = logfc3,
+  FDR = fdrs3,
+  sig = sig3
+)
+
+############
+## cluster 4
+############
+
+res4 = eb0_list[[4]]
+
+# extract p-values
+p_vals4 <- res4$p.value[, 2]
+
+# calculate adjusted p-values (FDRs)
+fdrs4 <- p.adjust(p_vals4, method = "fdr")
+
+# store corresponding gene names for convenience later
+stopifnot(length(fdrs4) == length(rowData(spe_pseudo)$gene_id))
+stopifnot(all(names(fdrs4) == rowData(spe_pseudo)$gene_id))
+
+names(fdrs4) <- fdrs_gene_names
+
+# extract log fold change
+logfc4 <- res4$coefficients[,2]
+
+stopifnot(length(fdrs4) == length(logfc4))
+stopifnot(all(fdrs_gene_ids == names(logfc4)))
+
+names(logfc4) <- names(fdrs4)
+
+# identify significant genes (low FDR and high logFC)
+sig4 <- (fdrs4 < thresh_fdr) & (abs(logfc4) > thresh_logfc)
+
+# number of significant genes
+table(sig4)
+#FALSE  TRUE
+# 11419   941
+
+df4 <- data.frame(
+  gene_name = names(fdrs4),
+  logFC = logfc4,
+  FDR = fdrs4,
+  sig = sig4
+)
+
+############
 ## cluster 5
 ############
 
@@ -49,9 +218,6 @@ fdrs5 <- p.adjust(p_vals5, method = "fdr")
 stopifnot(length(fdrs5) == length(rowData(spe_pseudo)$gene_id))
 stopifnot(all(names(fdrs5) == rowData(spe_pseudo)$gene_id))
 
-fdrs_gene_ids <- rowData(spe_pseudo)$gene_id
-fdrs_gene_names <- rowData(spe_pseudo)$gene_name
-
 names(fdrs5) <- fdrs_gene_names
 
 # extract log fold change
@@ -63,14 +229,12 @@ stopifnot(all(fdrs_gene_ids == names(logfc5)))
 names(logfc5) <- names(fdrs5)
 
 # identify significant genes (low FDR and high logFC)
-thresh_fdr <- 0.1
-thresh_logfc <- log2(2)
 sig5 <- (fdrs5 < thresh_fdr) & (abs(logfc5) > thresh_logfc)
 
 # number of significant genes
 table(sig5)
 #FALSE  TRUE
-# 8425  3929
+# 10845  1515
 
 df5 <- data.frame(
   gene_name = names(fdrs5),
@@ -111,7 +275,7 @@ sig6 <- (fdrs6 < thresh_fdr) & (abs(logfc6) > thresh_logfc)
 # number of significant genes
 table(sig6)
 #FALSE  TRUE
-# 8175  4179
+# 10400  1960
 
 df6 <- data.frame(
   gene_name = names(fdrs6),
@@ -152,7 +316,7 @@ sig7 <- (fdrs7 < thresh_fdr) & (abs(logfc7) > thresh_logfc)
 # number of significant genes
 table(sig7)
 #FALSE  TRUE
-# 6730  5624
+# 10059  2301
 
 df7 <- data.frame(
   gene_name = names(fdrs7),
@@ -193,7 +357,7 @@ sig8 <- (fdrs8 < thresh_fdr) & (abs(logfc8) > thresh_logfc)
 # number of significant genes
 table(sig8)
 #FALSE  TRUE
-# 6730  5624
+# 10000  2360
 
 df8 <- data.frame(
   gene_name = names(fdrs8),
@@ -234,7 +398,7 @@ sig10 <- (fdrs10 < thresh_fdr) & (abs(logfc10) > thresh_logfc)
 # number of significant genes
 table(sig10)
 #FALSE  TRUE
-# 8536  3818
+# 11718   642
 
 df10 <- data.frame(
   gene_name = names(fdrs10),
@@ -275,7 +439,7 @@ sig11 <- (fdrs11 < thresh_fdr) & (abs(logfc11) > thresh_logfc)
 # number of significant genes
 table(sig11)
 #FALSE  TRUE
-# 6552  5802
+# 9337  3023
 
 df11 <- data.frame(
   gene_name = names(fdrs11),
@@ -316,13 +480,54 @@ sig12 <- (fdrs12 < thresh_fdr) & (abs(logfc12) > thresh_logfc)
 # number of significant genes
 table(sig12)
 #FALSE  TRUE
-# 5566  6788
+# 9863  2497
 
 df12 <- data.frame(
   gene_name = names(fdrs12),
   logFC = logfc12,
   FDR = fdrs12,
   sig = sig12
+)
+
+#############
+## cluster 13
+#############
+
+res13 = eb0_list[[12]]
+
+# extract p-values
+p_vals13 <- res13$p.value[, 2]
+
+# calculate adjusted p-values (FDRs)
+fdrs13 <- p.adjust(p_vals13, method = "fdr")
+
+# store corresponding gene names for convenience later
+stopifnot(length(fdrs13) == length(rowData(spe_pseudo)$gene_id))
+stopifnot(all(names(fdrs13) == rowData(spe_pseudo)$gene_id))
+
+names(fdrs13) <- fdrs_gene_names
+
+# extract log fold change
+logfc13 <- res13$coefficients[,2]
+
+stopifnot(length(fdrs13) == length(logfc13))
+stopifnot(all(fdrs_gene_ids == names(logfc13)))
+
+names(logfc13) <- names(fdrs13)
+
+# identify significant genes (low FDR and high logFC)
+sig13 <- (fdrs13 < thresh_fdr) & (abs(logfc13) > thresh_logfc)
+
+# number of significant genes
+table(sig13)
+#FALSE  TRUE
+# 7205  5155
+
+df13 <- data.frame(
+  gene_name = names(fdrs13),
+  logFC = logfc13,
+  FDR = fdrs13,
+  sig = sig13
 )
 
 #############
@@ -357,7 +562,7 @@ sig14 <- (fdrs14 < thresh_fdr) & (abs(logfc14) > thresh_logfc)
 # number of significant genes
 table(sig14)
 #FALSE  TRUE
-# 5566  6788
+# 11754   606
 
 df14 <- data.frame(
   gene_name = names(fdrs14),
@@ -371,6 +576,58 @@ df14 <- data.frame(
 pdf(file = here::here("plots", "08_pseudobulk","PRECAST",
     "PRECAST_pseudoBulk_DE_volcano.pdf"),
     width = 8.5, height = 8)
+
+EnhancedVolcano(df1,
+    lab = df1$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 1,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_1 vs. all_others"
+    )
+
+EnhancedVolcano(df2,
+    lab = df2$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 1,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_2 vs. all_others"
+    )
+
+EnhancedVolcano(df3,
+    lab = df3$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 1,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_3 vs. all_others"
+    )
+
+EnhancedVolcano(df4,
+    lab = df4$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 1,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_4 vs. all_others"
+    )
 
 EnhancedVolcano(df5,
     lab = df5$gene,
@@ -410,7 +667,7 @@ EnhancedVolcano(df7,
     title = "PRECAST_HPC",
     subtitle = "Cluster_7 vs. all_others"
     )
-	
+
 EnhancedVolcano(df8,
     lab = df8$gene,
     x = 'logFC',
@@ -462,7 +719,20 @@ EnhancedVolcano(df12,
     title = "PRECAST_HPC",
     subtitle = "Cluster_12 vs. all_others"
     )
-	
+
+EnhancedVolcano(df13,
+    lab = df13$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 1,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_13 vs. all_others"
+    )
+
 EnhancedVolcano(df14,
     lab = df14$gene,
     x = 'logFC',
@@ -474,6 +744,38 @@ EnhancedVolcano(df14,
       'FDR & Log (base 2) FC'),
     title = "PRECAST_HPC",
     subtitle = "Cluster_14 vs. all_others"
+    )
+
+dev.off()
+
+pdf(file = here::here("plots", "08_pseudobulk","PRECAST",
+    "PRECAST_pseudoBulk_DE_cluster_3_& 13_volcano.pdf"),
+    width = 8.5, height = 8)
+
+EnhancedVolcano(df3,
+    lab = df3$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 0.01,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_3 vs. all_others"
+    )
+
+EnhancedVolcano(df13,
+    lab = df13$gene,
+    x = 'logFC',
+    y = 'FDR',
+    FCcutoff = 0.01,
+    pCutoff = 0.049,
+    ylab = "-log10 FDR",
+    legendLabels = c('Not sig.','Log (base 2) FC','FDR',
+      'FDR & Log (base 2) FC'),
+    title = "PRECAST_HPC",
+    subtitle = "Cluster_13 vs. all_others"
     )
 
 dev.off()

@@ -8,6 +8,7 @@ setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
 
 suppressPackageStartupMessages({
 library('SingleCellExperiment')
+library('SpatialExperiment')
 library('here')
 library('jaffelab')
 library('scater')
@@ -47,7 +48,7 @@ message(Sys.time(), " running duplicateCorrelation()")
 corfit <- duplicateCorrelation(mat, mod, block = spe_pseudo$sample_id)
 message("Detected correlation: ", corfit$consensus.correlation)
 # message("Detected correlation: ", corfit$consensus.correlation)
-# Detected correlation: 0.0717245612782684
+# Detected correlation: 0.0879198608028221
 
 ######### ENRICHMENT t-stats ######################
 ## Adapted from https://github.com/LieberInstitute/HumanPilot/blob/7049cd42925e00b187c0866f93409196dbcdd526/Analysis/Layer_Guesses/layer_specificity.R#L1423-L1443
@@ -152,5 +153,5 @@ rownames(f_stats) <- NULL
 
 head(f_stats)
 
-save(f_stats, eb0_list, eb_contrasts, file = here::here("processed-data", "08_pseudobulk", "PRECAST",
-    "DE_list_captureArea_adjBrnum.Rdata"))
+save(f_stats, eb0_list, eb_contrasts, file = here::here("processed-data", "08_pseudobulk",
+    "PRECAST", "DE_list_captureArea_adjBrnum.Rdata"))

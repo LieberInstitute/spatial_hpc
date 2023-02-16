@@ -37,20 +37,20 @@ rownames(t0_contrasts) <- rownames(eb_contrasts)
 summary(fdrs0_contrasts < 0.05)
 #     1               2               3               4
 # Mode :logical   Mode :logical   Mode :logical   Mode :logical
-# FALSE:10083     FALSE:10685     FALSE:12300     FALSE:9517
-# TRUE :2271      TRUE :1669      TRUE :54        TRUE :2837
+# FALSE:9653      FALSE:10318     FALSE:12199     FALSE:9337
+# TRUE :2707      TRUE :2042      TRUE :161       TRUE :3023
 #     5               6               7               8
 # Mode :logical   Mode :logical   Mode :logical   Mode :logical
-# FALSE:8425      FALSE:8175      FALSE:6730      FALSE:5374
-# TRUE :3929      TRUE :4179      TRUE :5624      TRUE :6980
+# FALSE:8149      FALSE:7824      FALSE:6368      FALSE:5363
+# TRUE :4211      TRUE :4536      TRUE :5992      TRUE :6997
 #     10              11              12              13
 # Mode :logical   Mode :logical   Mode :logical   Mode :logical
-# FALSE:8536      FALSE:6552      FALSE:5566      FALSE:2233
-# TRUE :3818      TRUE :5802      TRUE :6788      TRUE :10121
+# FALSE:8012      FALSE:5968      FALSE:5252      FALSE:3709
+# TRUE :4348      TRUE :6392      TRUE :7108      TRUE :8651
 #     14
 # Mode :logical
-# FALSE:9234
-# TRUE :3120
+# FALSE:8811
+# TRUE :3549
 
 # Merge statistics
 f_merge <- function(p, fdr, t) {
@@ -74,7 +74,7 @@ head(results_specificity)
 pvals_contrasts <- eb_contrasts$p.value
 fdrs_contrasts <- apply(pvals_contrasts, 2, p.adjust, "fdr")
 dim(pvals_contrasts)
-# [1] 12354   105
+# [1] 12360   105
 
 summary(fdrs_contrasts < 0.05)
 
@@ -107,12 +107,12 @@ results_anova <-
     ), "fdr"), "Amean")
 head(results_anova)
 #  f_stat_full  p_value_full      fdr_full full_AveExpr         ensembl      gene
-#1    60.95011  5.602754e-76  6.196635e-76     2.636586 ENSG00000237491 LINC01409
-#2   174.57190 2.278567e-128 3.645825e-128     3.879536 ENSG00000228794 LINC01128
-#3    43.82572  7.093350e-62  7.383825e-62     1.762849 ENSG00000187634    SAMD11
-#4   535.97863 2.236853e-191 6.717083e-191     5.026624 ENSG00000188976     NOC2L
-#5    56.53032  1.217997e-72  1.322941e-72     2.537504 ENSG00000187961    KLHL17
-#6  1523.38833 9.685692e-253 5.944214e-252     5.640188 ENSG00000188290      HES4
+#1    58.78945  2.044407e-73  2.257157e-73     2.688083 ENSG00000237491 LINC01409
+#2   195.02485 4.426314e-132 7.322881e-132     3.947366 ENSG00000228794 LINC01128
+#3    40.30790  7.251050e-58  7.507998e-58     1.782555 ENSG00000187634    SAMD11
+#4   575.16152 1.108182e-191 3.258892e-191     5.039527 ENSG00000188976     NOC2L
+#5    55.86286  3.278979e-71  3.578332e-71     2.586253 ENSG00000187961    KLHL17
+#6  1341.23768 3.925086e-240 2.008032e-239     5.652542 ENSG00000188290      HES4
 
 modeling_results <- list(
     "anova" = results_anova,

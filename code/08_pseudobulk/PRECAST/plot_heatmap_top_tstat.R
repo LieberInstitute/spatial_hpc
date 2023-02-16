@@ -91,7 +91,7 @@ cluster_ind <- unique(as.numeric(cluster_specific_indices))
 # Add logcounts from indexed from top genes
 exprs_heatmap <- assays(spe_pseudo)[[2]][cluster_ind, ]
 rownames(exprs_heatmap) <- rowData(spe_pseudo)$gene_name[cluster_ind]
-colnames(exprs_heatmap) <- paste("logcount", 1:288, sep = "")
+colnames(exprs_heatmap) <- paste("logcount", 1:281, sep = "")
 
 # Configure column order to match age groups per BayesSpace cluster
 Bayes_age_order <- c(
