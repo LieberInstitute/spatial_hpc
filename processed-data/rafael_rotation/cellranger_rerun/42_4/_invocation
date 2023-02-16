@@ -1,0 +1,43 @@
+@include "atac_rna/sc_atac_gex_counter_cs.mro"
+
+call SC_ATAC_GEX_COUNTER_CS(
+    sample_id                   = "42_4",
+    sample_desc                 = "42_4",
+    reference_path              = "/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-cellranger-arc-GRCh38-2020-A-2.0.0",
+    sample_def                  = [
+        {
+            "fastq_id": null,
+            "fastq_mode": "ILMN_BCL2FASTQ",
+            "gem_group": null,
+            "lanes": null,
+            "library_type": "Gene Expression",
+            "read_path": "/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521/",
+            "sample_indices": ["any"],
+            "sample_names": ["42-4"],
+            "subsample_rate": null,
+            "target_set": null,
+            "target_set_name": null,
+        },
+        {
+            "fastq_id": null,
+            "fastq_mode": "ILMN_BCL2FASTQ",
+            "gem_group": null,
+            "lanes": null,
+            "library_type": "Chromatin Accessibility",
+            "read_path": "/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521_ATAC/",
+            "sample_indices": ["any"],
+            "sample_names": ["ATAC2"],
+            "subsample_rate": null,
+            "target_set": null,
+            "target_set_name": null,
+        },
+    ],
+    force_cells                 = null,
+    skip_compatibility_check    = false,
+    rna_include_introns         = true,
+    custom_peaks                = null,
+    peak_qval                   = null,
+    feature_linkage_max_dist_mb = null,
+    k_means_max_clusters        = null,
+    no_bam                      = false,
+)

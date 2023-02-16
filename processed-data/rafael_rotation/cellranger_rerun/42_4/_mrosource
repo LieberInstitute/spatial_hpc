@@ -1,0 +1,4517 @@
+#
+# @include "atac/_atac_cloupe_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype cloupe;
+filetype csv;
+filetype json;
+filetype h5;
+filetype bed;
+filetype tsv.gz.tbi;
+#
+# @include "_basic_sc_atac_counter_stages.mro"
+#
+
+#
+# Copyright (c) 2020 10x Genomics, Inc. All rights reserved.
+#
+
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+filetype bed;
+filetype h5;
+filetype json;
+#
+# @include "_cr_atac_stages.mro"
+#
+
+#
+# Copyright (c) 2020 10X Genomics, Inc. All rights reserved.
+#
+# WARNING: This file is auto-generated.
+# DO NOT MODIFY THIS FILE DIRECTLY
+#
+
+filetype bam;
+filetype bam.bai;
+filetype bch.bincode;
+filetype bed;
+filetype bedgraph;
+filetype csv;
+filetype h5;
+filetype json;
+filetype shard;
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+#
+# @include "_peak_caller_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype bedgraph;
+filetype bigwig;
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+filetype bed;
+filetype json;
+#
+# @include "_sc_atac_metric_collector_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+filetype bed;
+filetype bam;
+filetype csv;
+filetype json;
+filetype h5;
+filetype txt;
+filetype pickle;
+#
+# @include "_sc_atac_reporter_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype json;
+filetype html;
+filetype csv;
+filetype h5;
+filetype bam;
+#
+# @include "rna/_cr_lib_stages.mro"
+#
+
+#
+# Copyright (c) 2020 10X Genomics, Inc. All rights reserved.
+#
+# WARNING: This file is auto-generated.
+# DO NOT MODIFY THIS FILE DIRECTLY
+#
+
+filetype ann.bincode.lz4;
+filetype asf;
+filetype bam;
+filetype bam.bai;
+filetype bcc.bincode;
+filetype bcm.bincode;
+filetype bi.bincode;
+filetype bincode;
+filetype bincode.lz4;
+filetype blf.json;
+filetype bmsf;
+filetype bsc.bincode;
+filetype bsf.bincode;
+filetype bui;
+filetype csf;
+filetype csv;
+filetype fbc.bincode;
+filetype frf.bincode;
+filetype h5;
+filetype json;
+filetype msh.bincode;
+filetype msm.bincode;
+filetype rpc;
+filetype shard;
+filetype smf.json;
+filetype svg;
+filetype tbcc.bincode;
+filetype umi;
+filetype vwc.json;
+#
+# @include "rna/_sc_rna_counter_stages.mro"
+#
+
+#
+# Copyright (c) 2015 10X Genomics, Inc. All rights reserved.
+#
+
+filetype csv;
+filetype json;
+filetype h5;
+filetype html;
+#
+# @include "_basic_sc_rna_counter_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10X Genomics, Inc. All rights reserved.
+#
+
+filetype bam;
+filetype bam.bai;
+filetype csv;
+filetype fastq;
+filetype json;
+filetype h5;
+filetype pickle;
+filetype bincode;
+#
+# @include "_structs.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+# Structs used in the analyzer pipeline
+
+filetype h5;
+filetype bed;
+filetype bedpe;
+filetype csv;
+filetype html;
+filetype json;
+filetype cloupe;
+filetype tsv;
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+#
+# @include "reporter_stages.mro"
+#
+
+filetype csv;
+filetype html;
+filetype json;
+#
+# @include "sc_atac_gex_counter_stages.mro"
+#
+
+filetype json;
+filetype csv;
+filetype h5;
+#
+# @include "atac/_produce_cell_barcodes_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+filetype csv;
+filetype json;
+filetype bed;
+filetype pickle;
+filetype h5;
+filetype npy;
+filetype npy.gz;
+#
+# @include "atac/_sc_atac_postprocess_cells_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype csv;
+filetype h5;
+#
+# @include "_joint_cell_detector_stages.mro"
+#
+
+filetype h5;
+filetype json;
+filetype csv;
+filetype bed;
+filetype pickle;
+filetype tsv.gz;
+filetype tsv.gz.tbi;
+#
+# @include "_peak_annotator_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype bed;
+filetype tsv;
+filetype h5;
+filetype gz;
+filetype pickle;
+#
+# @include "atac/_sc_atac_analyzer_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10x Genomics, Inc. All rights reserved.
+#
+
+filetype tsv;
+filetype h5;
+filetype pickle;
+filetype gz;
+filetype bed;
+filetype csv;
+#
+# @include "_feature_linkage_computer_stages.mro"
+#
+
+filetype csv;
+filetype tsv;
+filetype h5;
+filetype bed;
+filetype json;
+filetype pkl;
+#
+# @include "atac_rna/_sc_atac_gex_analyzer_stages.mro"
+#
+
+filetype tsv;
+filetype gz;
+#
+# @include "rna/_sc_rna_analyzer_stages.mro"
+#
+
+#
+# Copyright (c) 2019 10X Genomics, Inc. All rights reserved.
+#
+
+filetype csv;
+filetype h5;
+filetype html;
+filetype json;
+filetype pickle;
+filetype binary;
+#
+# @include "sc_atac_gex_counter.mro"
+#
+
+filetype cloupe;
+filetype asf;
+
+#
+# @include "_basic_sc_atac_counter_stages.mro"
+#
+
+struct FastqDef(
+    path   read1,
+    path   read2,
+    bool   reads_interleaved,
+    path   barcode,
+    path   sample_index,
+    int    gem_group,
+    float  subsample_rate,
+    string read_group,
+    map    chemistry,
+    string fastq_mode,
+)
+
+#
+# @include "rna/_cr_lib_stages.mro"
+#
+
+struct ReadShards(
+    shard[] valid_reads,
+    shard[] corrected_reads,
+    shard[] invalid_reads,
+)
+
+struct BarcodeReadComponent(
+    string read_type,
+    string kind,
+    int    offset,
+    int    length,
+    string whitelist,
+)
+
+struct UmiReadComponent(
+    string read_type,
+    int    offset,
+    int    length,
+    int    min_length,
+)
+
+struct RnaReadComponent(
+    string read_type,
+    int    offset,
+    int    length,
+    int    min_length,
+)
+
+struct ChemistryDef(
+    string                 name,
+    string                 description,
+    string                 endedness,
+    string                 strandedness,
+    BarcodeReadComponent[] barcode,
+    UmiReadComponent       umi,
+    RnaReadComponent       rna,
+    RnaReadComponent       rna2,
+)
+
+struct SampleBamFile(
+    string  sample,
+    bam     bam_file,
+    bam.bai bam_index_file,
+)
+
+struct SampleMetrics(
+    string sample,
+    json   summary,
+    csv    per_barcode_metrics,
+    map    per_lib_type_metrics,
+)
+
+struct DetectChemistryStageOutputs(
+    string chemistry_type,
+    bool   is_antibody_only,
+)
+
+struct GemWellVdjChemistry(
+    string chemistry_type,
+    string chain_type,
+    string receptor,
+)
+
+struct BarcodeCompatibilityStageOutputs(
+    string[] libraries_to_translate,
+)
+
+struct GemWellDetectChemistry(
+    map[]                            sample_defs_count,
+    DetectChemistryStageOutputs      detect_count_chem,
+    GemWellVdjChemistry[]            detect_vdj_chem,
+    BarcodeCompatibilityStageOutputs check_barcodes_compatibility,
+)
+
+struct GemWellFiles(
+    int[]             gem_groups,
+    asf[]             alignments,
+    map[]             read_chunks,
+    bui[]             bc_umi_info,
+    bmsf[]            per_barcode_metrics_shard,
+    ann.bincode.lz4[] annotation_files,
+    string            target_set_name,
+    path              bam_header,
+    frf.bincode       slfe_feature_reference,
+    string            barcode_whitelist,
+)
+
+struct FileOrBytes(
+    file   file,
+    string bytes,
+)
+
+struct CommonInputs(
+    string sample_id,
+    string sample_desc,
+    string multi_config_sha,
+)
+
+struct CellCalling(
+    int      recovered_cells,
+    int      force_cells,
+    json     cell_barcodes,
+    string   override_mode,
+    string[] override_library_types,
+    bool     disable_ab_aggregate_detection,
+)
+
+struct CountInputs(
+    map[]        sample_def,
+    string       chemistry,
+    ChemistryDef custom_chemistry_def,
+    path         reference_path,
+    json         gene_index,
+    map[]        primers,
+    CellCalling  cell_calling_config,
+    float        subsample_rate,
+    int          initial_reads,
+    int          primer_initial_reads,
+    string[]     special_genomic_regions,
+    int          r1_length,
+    int          r2_length,
+    int          trim_polya_min_score,
+    int          trim_tso_min_score,
+    bool         no_secondary_analysis,
+    bool         no_target_umi_filter,
+    file         feature_reference,
+    bool         include_introns,
+    string       aligner,
+    string       probe_barcodes_intended_pairing,
+    map          genetic_demux_params,
+    string       throughput,
+    bool         enforce_library_concordance,
+    bool         no_bam,
+    json         force_sample_barcodes,
+    bool         tenx_cmos,
+)
+
+struct VdjInputs(
+    map[]        sample_def,
+    string       chemistry,
+    ChemistryDef custom_chemistry_def,
+    map[]        primers,
+    int          force_cells,
+    float        subsample_rate,
+    int          initial_reads,
+    int          primer_initial_reads,
+    string[]     special_genomic_regions,
+    bool         denovo,
+    int          r1_length,
+    int          r2_length,
+    path         ground_truth_clonotype_path,
+    path         inner_enrichment_primers,
+    string       chain_type,
+    string       physical_library_id,
+)
+
+struct VdjGenInputs(
+    path reference_path,
+    path vdj_reference_path,
+)
+
+struct BasicPipelineConfig(
+    bool disable_count,
+    bool disable_vdj,
+    bool disable_multi,
+    bool disable_multi_count,
+)
+
+struct SampleMoleculeInfo(
+    string sample,
+    h5     h5_file,
+    json   summary,
+)
+
+#
+# @include "_basic_sc_rna_counter_stages.mro"
+#
+
+struct SampleMatrices(
+    string sample,
+    h5     matrix_h5,
+    path   matrix_mex,
+    h5     all_genes_matrix_h5,
+    path   all_genes_matrix_mex,
+    csv    filtered_barcodes,
+)
+
+struct CellCalling(
+    int      recovered_cells,
+    int      force_cells,
+    json     cell_barcodes,
+    string   override_mode,
+    string[] override_library_types,
+    bool     disable_ab_aggregate_detection,
+)
+
+#
+# @include "_structs.mro"
+#
+
+# Collection of structs that give you one type for each of atac|gex|atac_gex
+struct AnalysisH5(
+    h5 atac,
+    h5 gex,
+    h5 atac_gex,
+)
+
+struct AnalysisString(
+    string atac,
+    string gex,
+    string atac_gex,
+)
+
+struct AnalysisPath(
+    path atac,
+    path gex,
+    path atac_gex,
+)
+
+struct AnalysisInt(
+    int atac,
+    int gex,
+    int atac_gex,
+)
+
+struct AnalysisHTML(
+    html atac,
+    html gex,
+    html atac_gex,
+)
+
+struct AnalysisCloupe(
+    cloupe atac,
+    cloupe gex,
+    cloupe atac_gex,
+)
+
+struct AnalysisCsv(
+    csv atac,
+    csv gex,
+    csv atac_gex,
+)
+
+# Structs used to define analyzer output
+
+# We bundle together cluster assignment, differential expression and
+# accessibility
+struct ProjectionOutput(
+    path   projection,
+    string method,
+    int    num_dims,
+)
+
+struct ProjectionOutputMap(
+    ProjectionOutput atac,
+    ProjectionOutput gex,
+    ProjectionOutput atac_gex,
+)
+
+struct ClusterData(
+    csv clusters,
+    csv differential_expression,
+    csv differential_accessibility,
+)
+
+struct ClusteringOutput(
+    map<ClusterData> atac,
+    map<ClusterData> gex,
+)
+
+# Dimensionality reduction includes PCA and TSNE and UMAP
+struct DimensionReductionOutput(
+    map<csv> atac,
+    map<csv> gex,
+)
+
+struct TFAnalysisOutput(
+    path filtered_tf_bc_matrix,
+    h5   filtered_tf_bc_matrix_h5 "" "filtered_tf_bc_matrix.h5",
+    bed  peak_motif_mapping,
+)
+
+struct FeatureLinkageOutput(
+    h5    feature_linkage_matrix,
+    bedpe feature_linkage,
+)
+
+# CSV outputs of analyzer
+struct AnalysisOutput(
+    ClusteringOutput         clustering,
+    DimensionReductionOutput dimensionality_reduction,
+    FeatureLinkageOutput     feature_linkage,
+    TFAnalysisOutput         tf_analysis,
+)
+
+# GEX PD outputs
+struct PdGEXOutputs(
+    h5   barcode_summary,
+    h5   filtered_feature_bc_matrix,
+    csv  filtered_barcodes,
+    json metrics_summary_json,
+    csv  per_barcode_metrics,
+)
+
+# ATAC PD outputs
+struct PdATACOutputs(
+    json atac_summary,
+    csv  singlecell,
+    csv  insert_sizes,
+    h5   filtered_peak_bc_matrix,
+    json count_dict,
+    json excluded_barcodes,
+)
+
+# ATAC-GEX PD outputs
+struct PdATACGEXOutputs(
+    h5 analysis_h5,
+)
+
+# All PD outputs from SC_ATAC_GEX_COUNTER_PD
+struct PdOutputs(
+    PdATACOutputs    atac,
+    PdGEXOutputs     gex,
+    PdATACGEXOutputs atac_gex,
+)
+
+# The force_cells argument is a map<MinCounts> keyed by genome
+struct MinCounts(
+    int atac,
+    int gex,
+)
+
+# Aggr pipeline output
+struct AggrATACOutputs(
+    tsv.gz     fragments                   "Barcoded and aligned fragment file"               "fragments.tsv.gz",
+    tsv.gz.tbi fragments_index             "Fragment file index"                              "fragments.tsv.gz.tbi",
+    csv        singlecell                  "Per-barcode fragment counts & metrics",
+    bed        peaks                       "Bed file of all called peak locations",
+    h5         filtered_peak_bc_matrix     "Filtered peak barcode matrix in hdf5 format",
+    path       filtered_peak_bc_matrix_mex "Filtered peak barcode matrix in mex format"       "filtered_peak_bc_matrix",
+    path       analysis_csv                "Directory of analysis files"                      "analysis",
+    h5         filtered_tf_bc_matrix       "Filtered tf barcode matrix in hdf5 format",
+    path       filtered_tf_bc_matrix_mex   "Filtered tf barcode matrix in mex format"         "filtered_tf_bc_matrix",
+    json       summary                     "Summary of all data metrics",
+    tsv        peak_annotation             "Annotation of peaks with genes",
+    csv        aggregation_csv             "Csv of aggregation of libraries",
+    json       gem_group_index_json        "Json file mapping gem_group_index with sample_id",
+)
+
+struct AggrGEXOutputs(
+    h5   raw_gene_bc_matrices_h5,
+    path raw_gene_bc_matrices_mex,
+    h5   filtered_gene_bc_matrices_h5,
+    path filtered_gene_bc_matrices_mex,
+    path analysis_csv,
+    json summary,
+    json gem_group_index_json,
+)
+
+struct AggrOutputs(
+    AggrATACOutputs atac,
+    AggrGEXOutputs  gex,
+)
+
+struct BarcodeMetadata(
+    h5  smoothing_weights,
+    h5  similarity_matrix,
+    csv depth_scale_factors,
+)
+
+#
+# @include "atac/_sc_atac_analyzer_stages.mro"
+#
+
+struct TsneParams(
+    int   perplexity,
+    int   input_pcs,
+    float theta,
+    int   max_iter,
+    int   stop_lying_iter,
+    int   mom_switch_iter,
+    int   max_dims,
+)
+
+struct UmapParams(
+    int    n_neighbors,
+    int    input_pcs,
+    int    max_dims,
+    float  min_dist,
+    string metric,
+)
+
+struct ManifoldParams(
+    TsneParams tsne,
+    UmapParams umap,
+)
+
+#
+# @include "atac_rna/_sc_atac_gex_analyzer_stages.mro"
+#
+
+struct GexDe(
+    h5   h5,
+    path csv,
+)
+
+struct GexDeCluster(
+    GexDe atac,
+    GexDe atac_gex,
+    GexDe gex,
+)
+
+#
+# @include "sc_atac_gex_counter.mro"
+#
+
+# Inputs required by GEX PD stages
+struct PdGEXInputs(
+    string            barcode_whitelist,
+    ReadShards        read_shards,
+    int[]             gem_groups,
+    h5                barcode_summary_h5,
+    h5                filtered_gene_bc_matrices_h5,
+    h5                raw_gene_bc_matrices_h5,
+    csv               filtered_barcodes,
+    json              summary,
+    csv               per_barcode_metrics,
+    bool              is_multi_genome,
+    ann.bincode.lz4[] annotation_files,
+    asf[]             alignments,
+)
+
+# Inputs required by ATAC PD stages
+struct PdATACInputs(
+    json  bulk_complexity,
+    json  singlecell_complexity,
+    json  complexity_summary,
+    json  cell_calling_summary,
+    json  basic_summary,
+    json  peak_summary,
+    json  singlecell_results,
+    json  insert_summary,
+    csv   singlecell,
+    csv   tss_relpos,
+    csv   ctcf_relpos,
+    map[] sample_def,
+    csv   sc_insert_sizes,
+    json  enrichment_results,
+    json  excluded_barcodes,
+    h5    filtered_peak_bc_matrix,
+    json  count_dict,
+)
+
+#
+# @include "atac/_atac_cloupe_stages.mro"
+#
+
+stage ATAC_CLOUPE_PREPROCESS(
+    in  string     pipestance_type,
+    in  string     sample_id,
+    in  string     sample_desc,
+    in  path       reference_path,
+    in  h5         analysis,
+    in  h5         feature_barcode_matrix,
+    in  bed        peaks,
+    in  tsv.gz.tbi fragments_index,
+    in  json       metrics_json,
+    in  csv        aggregation_csv,
+    in  json       gem_group_index_json,
+    in  bool       no_secondary_analysis,
+    out cloupe     output_for_cloupe,
+    out json       gem_group_index_json,
+    src py         "../atac/stages/cloupe/atac_cloupe_preprocess",
+) split (
+) using (
+    volatile = strict,
+)
+
+#
+# @include "_basic_sc_atac_counter_stages.mro"
+#
+
+# SETUP_CHUNKS chunks up the input fastq data into sets of matched R1, R2, SI, and BC fastq files
+stage ATAC_SETUP_CHUNKS(
+    in  string     sample_id               "id of the sample",
+    in  map[]      sample_def              "list of dictionary specifying input data",
+    in  float      subsample_rate          "fraction of reads to preserve",
+    in  string     barcode_whitelist       "List of valid barcodes",
+    out FastqDef[] chunks,
+    out path       barcode_whitelist_path  "Path to valid barcodes",
+    src py         "../atac/stages/processing/setup_chunks",
+)
+
+stage GENERATE_PEAK_MATRIX(
+    in  path   reference_path,
+    in  tsv.gz fragments,
+    in  bed    peaks,
+    # optional: fragment barcode histogram. If provided we avoid a full pass of the fragments file
+    # in the split,
+    in  json   frag_bc_counts,
+    out h5     raw_matrix,
+    out path   raw_matrix_mex,
+    src py     "../atac/stages/processing/generate_peak_matrix",
+) split (
+    in  file   barcodes,
+) using (
+    mem_gb   = 4,
+    # N.B. we don't explicitly need the fragment index
+    volatile = strict,
+)
+
+#
+# @include "_cr_atac_stages.mro"
+#
+
+stage COMPUTE_FRAGMENT_METRICS(
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  bed        peaks,
+    in  csv        cell_barcodes,
+    in  path       reference_path,
+    in  bool       targeting_only,
+    out csv        singlecell,
+    out csv        ctcf_relpos,
+    out csv        tss_relpos,
+    out csv        cell_barcodes,
+    out json       frag_bc_counts,
+    src comp       "cr_atac martian compute_fragment_metrics",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage COUNT_CUT_SITES(
+    in  path       reference_path,
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    out bedgraph   cut_sites,
+    out json       count_dict,
+    src comp       "cr_atac martian count_cut_sites",
+) using (
+    mem_gb   = 8,
+    threads  = 4,
+    volatile = strict,
+)
+
+stage GET_BINNED_MATRIX(
+    in  string     barcode_whitelist,
+    in  int        num_gem_groups,
+    in  path       reference_path,
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  int        window_size,
+    in  bool       translate_atac,
+    out h5         matrix,
+    src comp       "cr_atac martian get_binned_matrix",
+) using (
+    mem_gb   = 12,
+    threads  = 4,
+    volatile = strict,
+)
+
+stage MAKE_ATAC_SHARDS(
+    in  map[]       chunks,
+    in  path        barcode_whitelist_path,
+    out shard[]     shards,
+    out string[]    chunk_chemistry_map,
+    out json        barcode_counts_json,
+    out bch.bincode barcode_counts,
+    out int         num_read_pairs,
+    src comp        "cr_atac martian make_atac_shards",
+) split (
+    in  map         chunk,
+    in  int         chunk_id,
+    out shard       shard,
+    out string      inferred_chemistry,
+    out bch.bincode chunk_barcode_counts,
+    out int         chunk_read_pairs,
+) using (
+    volatile = strict,
+)
+
+stage ALIGN_ATAC_READS(
+    in  path        reference_path,
+    in  shard[]     shards,
+    in  string[]    chunk_chemistry_map,
+    in  bch.bincode barcode_counts,
+    in  path        barcode_whitelist_path,
+    in  map[]       chunks,
+    in  string      assay,
+    in  int         num_read_pairs,
+    out shard[]     aligned_shards,
+    out shard[]     unaligned_shards,
+    out map         stats,
+    src comp        "cr_atac martian align_atac_reads",
+) split (
+    in  map         range,
+    out shard       aligned_chunk,
+    out shard       unaligned_chunk,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage ATAC_SLFE(
+    in  map[]      chunks,
+    in  path       barcode_whitelist_path,
+    in  path       reference_path,
+    in  string     assay,
+    in  string     sample_id,
+    in  string     sample_desc,
+    out bam        possorted_bam,
+    out bam.bai    possorted_bam_index,
+    out tsv.gz     fragments,
+    out tsv.gz.tbi fragments_index,
+    out csv        singlecell,
+    out json       summary,
+    out csv        insert_sizes,
+    out int        num_read_pairs,
+    src comp       "cr_atac martian atac_slfe",
+) using (
+    mem_gb   = 8,
+    threads  = 4,
+    volatile = strict,
+)
+
+stage MARK_ATAC_DUPLICATES(
+    in  shard[]     aligned_shards,
+    in  shard[]     unaligned_shards,
+    in  int         num_read_pairs,
+    in  path        reference_path,
+    in  bch.bincode barcode_counts,
+    in  string      assay,
+    in  string      sample_id,
+    in  string      sample_desc,
+    out shard[]     deduped_shards,
+    out tsv.gz      fragments,
+    out tsv.gz.tbi  fragments_index,
+    out csv         singlecell,
+    out csv         insert_sizes,
+    out json        summary,
+    out json        frag_bc_counts,
+    out int         max_items_per_footprint,
+    src comp        "cr_atac martian mark_atac_duplicates",
+) split (
+    in  map         aligned_range,
+    in  map         unaligned_range,
+    out shard       chunk_shard,
+    out shard       chunk_fragments,
+    out shard       chunk_metrics,
+    out shard       chunk_inserts,
+    out json        chunk_summary,
+    out int         reads_processed,
+    out int         frag_count,
+    out bch.bincode chunk_frag_bc_counts,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage WRITE_ATAC_BAM(
+    in  int     num_read_pairs,
+    in  shard[] deduped_shards,
+    in  path    reference_path,
+    in  map[]   fastq_defs,
+    in  int     max_items_per_footprint,
+    out bam     possorted_bam,
+    out bam.bai possorted_bam_index,
+    src comp    "cr_atac martian write_atac_bam",
+) split (
+    in  map     range,
+    in  int     chunk_id,
+    out bam     chunk,
+) using (
+    mem_gb   = 2,
+    volatile = strict,
+)
+
+#
+# @include "_peak_caller_stages.mro"
+#
+
+stage CONVERT_SIGNAL_TRACK(
+    in  path     reference_path,
+    in  bedgraph cut_sites,
+    out bigwig   cut_sites,
+    src py       "stages/processing/convert_signal_track",
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage DETECT_PEAKS(
+    in  string     sample_id,
+    in  string     sample_desc,
+    in  string     assay,
+    in  bedgraph   cut_sites,
+    in  path       reference_path,
+    in  json       count_dict,
+    in  bed        custom_peaks,
+    in  float      qval,
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    out bed        peaks,
+    out json       peak_metrics,
+    src py         "../atac/stages/processing/detect_peaks",
+) split (
+    in  string[]   contigs,
+    in  float      threshold,
+) using (
+    mem_gb   = 6,
+    volatile = strict,
+) retain (
+    peaks,
+)
+
+#
+# @include "_peak_caller.mro"
+#
+
+pipeline _PEAK_CALLER(
+    in  string     sample_id,
+    in  string     sample_desc,
+    in  string     assay,
+    in  path       reference_path,
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  bed        custom_peaks,
+    in  float      qval,
+    in  bool       disable_bigwig,
+    out bigwig     cut_sites,
+    out json       count_dict,
+    out bed        peaks,
+    out json       peak_metrics,
+)
+{
+    call COUNT_CUT_SITES(
+        reference_path  = self.reference_path,
+        fragments       = self.fragments,
+        fragments_index = self.fragments_index,
+    )
+
+    call DETECT_PEAKS(
+        sample_id       = self.sample_id,
+        sample_desc     = self.sample_desc,
+        assay           = self.assay,
+        reference_path  = self.reference_path,
+        cut_sites       = COUNT_CUT_SITES.cut_sites,
+        count_dict      = COUNT_CUT_SITES.count_dict,
+        custom_peaks    = self.custom_peaks,
+        qval            = self.qval,
+        fragments       = self.fragments,
+        fragments_index = self.fragments_index,
+    )
+
+    call CONVERT_SIGNAL_TRACK(
+        reference_path = self.reference_path,
+        cut_sites      = COUNT_CUT_SITES.cut_sites,
+    ) using (
+        disabled = self.disable_bigwig,
+    )
+
+    return (
+        cut_sites    = CONVERT_SIGNAL_TRACK.cut_sites,
+        count_dict   = COUNT_CUT_SITES.count_dict,
+        peaks        = DETECT_PEAKS.peaks,
+        peak_metrics = DETECT_PEAKS.peak_metrics,
+    )
+}
+
+#
+# @include "atac/_atac_matrix_computer.mro"
+#
+
+pipeline _ATAC_MATRIX_COMPUTER(
+    in  FastqDef[] chunks,
+    in  path       barcode_whitelist_path,
+    in  path       reference_path,
+    in  string     assay,
+    in  bed        custom_peaks,
+    in  float      peak_qval,
+    in  bool       no_bam,
+    in  string     sample_id,
+    in  string     sample_desc,
+    out bam        possorted_bam           "bam file sorted by position",
+    out bam.bai    possorted_bam_index     "position-sorted bam index",
+    out tsv.gz     fragments,
+    out tsv.gz.tbi fragments_index,
+    out bed        peaks,
+    out bigwig     cut_sites,
+    out json       count_dict,
+    out csv        singlecell_mapping,
+    out json       peak_metrics,
+    out h5         raw_peak_bc_matrix,
+    out path       raw_peak_bc_matrix_mex,
+    out csv        insert_sizes,
+    out json       basic_summary,
+    out json       bc_counts_json,
+    out json       frag_bc_counts,
+)
+{
+    call MAKE_ATAC_SHARDS(
+        chunks                 = self.chunks,
+        barcode_whitelist_path = self.barcode_whitelist_path,
+    )
+
+    call ALIGN_ATAC_READS(
+        reference_path         = self.reference_path,
+        shards                 = MAKE_ATAC_SHARDS.shards,
+        chunk_chemistry_map    = MAKE_ATAC_SHARDS.chunk_chemistry_map,
+        barcode_counts         = MAKE_ATAC_SHARDS.barcode_counts,
+        barcode_whitelist_path = self.barcode_whitelist_path,
+        chunks                 = self.chunks,
+        num_read_pairs         = MAKE_ATAC_SHARDS.num_read_pairs,
+        assay                  = self.assay,
+    )
+
+    call MARK_ATAC_DUPLICATES(
+        aligned_shards   = ALIGN_ATAC_READS.aligned_shards,
+        unaligned_shards = ALIGN_ATAC_READS.unaligned_shards,
+        num_read_pairs   = MAKE_ATAC_SHARDS.num_read_pairs,
+        reference_path   = self.reference_path,
+        barcode_counts   = MAKE_ATAC_SHARDS.barcode_counts,
+        assay            = self.assay,
+        sample_id        = self.sample_id,
+        sample_desc      = self.sample_desc,
+    )
+
+    call WRITE_ATAC_BAM(
+        num_read_pairs          = MAKE_ATAC_SHARDS.num_read_pairs,
+        deduped_shards          = MARK_ATAC_DUPLICATES.deduped_shards,
+        reference_path          = self.reference_path,
+        fastq_defs              = self.chunks,
+        max_items_per_footprint = MARK_ATAC_DUPLICATES.max_items_per_footprint,
+    ) using (
+        disabled = self.no_bam,
+    )
+
+    call _PEAK_CALLER(
+        sample_id       = self.sample_id,
+        sample_desc     = self.sample_desc,
+        assay           = self.assay,
+        fragments       = MARK_ATAC_DUPLICATES.fragments,
+        fragments_index = MARK_ATAC_DUPLICATES.fragments_index,
+        reference_path  = self.reference_path,
+        custom_peaks    = self.custom_peaks,
+        qval            = self.peak_qval,
+        disable_bigwig  = false,
+    )
+
+    call GENERATE_PEAK_MATRIX(
+        reference_path = self.reference_path,
+        fragments      = MARK_ATAC_DUPLICATES.fragments,
+        peaks          = _PEAK_CALLER.peaks,
+        frag_bc_counts = MARK_ATAC_DUPLICATES.frag_bc_counts,
+    )
+
+    return (
+        possorted_bam          = WRITE_ATAC_BAM.possorted_bam,
+        possorted_bam_index    = WRITE_ATAC_BAM.possorted_bam_index,
+        singlecell_mapping     = MARK_ATAC_DUPLICATES.singlecell,
+        peak_metrics           = _PEAK_CALLER.peak_metrics,
+        cut_sites              = _PEAK_CALLER.cut_sites,
+        count_dict             = _PEAK_CALLER.count_dict,
+        peaks                  = _PEAK_CALLER.peaks,
+        fragments              = MARK_ATAC_DUPLICATES.fragments,
+        fragments_index        = MARK_ATAC_DUPLICATES.fragments_index,
+        raw_peak_bc_matrix     = GENERATE_PEAK_MATRIX.raw_matrix,
+        raw_peak_bc_matrix_mex = GENERATE_PEAK_MATRIX.raw_matrix_mex,
+        insert_sizes           = MARK_ATAC_DUPLICATES.insert_sizes,
+        basic_summary          = MARK_ATAC_DUPLICATES.summary,
+        bc_counts_json         = MAKE_ATAC_SHARDS.barcode_counts_json,
+        frag_bc_counts         = MARK_ATAC_DUPLICATES.frag_bc_counts,
+    )
+}
+
+#
+# @include "_sc_atac_metric_collector_stages.mro"
+#
+
+stage ESTIMATE_LIBRARY_COMPLEXITY(
+    in  json   sequencing_summary,
+    in  tsv.gz fragments,
+    in  csv    cell_barcodes,
+    # fragment barcode histogram
+    in  json   frag_bc_counts,
+    out json   bulk_complexity,
+    out json   complexity_summary,
+    out json   singlecell_complexity,
+    src py     "../atac/stages/metrics/estimate_library_complexity",
+) split (
+    in  file   barcodes,
+) using (
+    mem_gb   = 2,
+    volatile = strict,
+)
+
+stage MERGE_SINGLECELL_METRICS(
+    in  path reference_path,
+    in  csv  singlecell_mapping,
+    in  csv  singlecell_targets,
+    in  csv  singlecell_cells,
+    out csv  singlecell,
+    src py   "../atac/stages/metrics/merge_singlecell_metrics",
+) using (
+    mem_gb   = 8,
+    volatile = strict,
+)
+
+stage SUMMARIZE_SINGLECELL_METRICS(
+    in  csv  singlecell,
+    in  path reference_path,
+    out json summary,
+    src py   "stages/metrics/summarize_singlecell_metrics",
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage REPORT_INSERT_SIZES(
+    in  csv  insert_sizes,
+    out json insert_summary,
+    src py   "stages/metrics/report_insert_sizes",
+) using (
+    volatile = strict,
+)
+
+stage REPORT_TSS_CTCF(
+    in  csv  tss_relpos,
+    in  csv  ctcf_relpos,
+    out json summary_metrics,
+    src py   "../atac/stages/metrics/report_tss_ctcf",
+) using (
+    volatile = strict,
+)
+
+#
+# @include "atac/_sc_atac_metric_collector.mro"
+#
+
+pipeline _SC_ATAC_METRIC_COLLECTOR(
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  bed        peaks,
+    in  path       reference_path,
+    in  csv        cell_barcodes,
+    in  csv        singlecell_mapping,
+    in  csv        singlecell_cells,
+    in  json       basic_summary,
+    in  csv        insert_sizes,
+    in  json       frag_bc_counts,
+    out json       singlecell_results,
+    out csv        singlecell,
+    out json       enrichment_results,
+    out json       insert_summary,
+    out json       bulk_complexity,
+    out json       singlecell_complexity,
+    out json       complexity_summary,
+    out csv        tss_relpos,
+    out csv        ctcf_relpos,
+)
+{
+    call COMPUTE_FRAGMENT_METRICS(
+        fragments       = self.fragments,
+        fragments_index = self.fragments_index,
+        peaks           = self.peaks,
+        reference_path  = self.reference_path,
+        cell_barcodes   = null,
+        targeting_only  = true,
+    )
+
+    call MERGE_SINGLECELL_METRICS(
+        reference_path     = self.reference_path,
+        singlecell_mapping = self.singlecell_mapping,
+        singlecell_cells   = self.singlecell_cells,
+        singlecell_targets = COMPUTE_FRAGMENT_METRICS.singlecell,
+    )
+
+    call SUMMARIZE_SINGLECELL_METRICS(
+        reference_path = self.reference_path,
+        singlecell     = MERGE_SINGLECELL_METRICS.singlecell,
+    )
+
+    call ESTIMATE_LIBRARY_COMPLEXITY(
+        sequencing_summary = self.basic_summary,
+        fragments          = self.fragments,
+        cell_barcodes      = self.cell_barcodes,
+        # note: we don't get these from COMPUTE_FRAGMENT_METRICS because that
+        # would serialize these stages. We instead get the histogram from
+        # MARK_ATAC_DUPLICATES
+        frag_bc_counts     = self.frag_bc_counts,
+    )
+
+    call REPORT_INSERT_SIZES(
+        insert_sizes = self.insert_sizes,
+    )
+
+    call REPORT_TSS_CTCF(
+        tss_relpos  = COMPUTE_FRAGMENT_METRICS.tss_relpos,
+        ctcf_relpos = COMPUTE_FRAGMENT_METRICS.ctcf_relpos,
+    )
+
+    return (
+        ###
+        singlecell            = MERGE_SINGLECELL_METRICS.singlecell,
+        singlecell_results    = SUMMARIZE_SINGLECELL_METRICS.summary,
+        ###
+        enrichment_results    = REPORT_TSS_CTCF.summary_metrics,
+        insert_summary        = REPORT_INSERT_SIZES.insert_summary,
+        bulk_complexity       = ESTIMATE_LIBRARY_COMPLEXITY.bulk_complexity,
+        singlecell_complexity = ESTIMATE_LIBRARY_COMPLEXITY.singlecell_complexity,
+        complexity_summary    = ESTIMATE_LIBRARY_COMPLEXITY.complexity_summary,
+        tss_relpos            = COMPUTE_FRAGMENT_METRICS.tss_relpos,
+        ctcf_relpos           = COMPUTE_FRAGMENT_METRICS.ctcf_relpos,
+    )
+}
+
+#
+# @include "_sc_atac_reporter_stages.mro"
+#
+
+stage SUMMARIZE_REPORTS_SINGLECELL(
+    in  string sample_id,
+    in  path   reference_path,
+    in  json   complexity_summary,
+    in  json   cell_calling_summary,
+    in  json   peak_results,
+    in  json   basic_results,
+    in  json   insert_summary,
+    in  json   singlecell_results,
+    in  json   enrichment_results,
+    out json   analysis_params,
+    out json   summary,
+    out csv    summary_csv,
+    src py     "../atac/stages/reporter/summarize_reports_singlecell",
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage CREATE_WEBSUMMARY(
+    in  path   reference_path,
+    in  string barcode_whitelist,
+    in  json   summary_results,
+    in  json   bulk_complexity,
+    in  json   singlecell_complexity,
+    in  string sample_id,
+    in  string sample_desc,
+    in  map[]  sample_def,
+    in  bool   debug,
+    in  float  peak_qval,
+    in  csv    singlecell,
+    in  csv    insert_sizes,
+    in  csv    tss_relpos,
+    in  csv    ctcf_relpos,
+    in  h5     filtered_peak_bc_matrix,
+    in  h5     analysis,
+    in  json   excluded_barcodes,
+    in  json   count_dict,
+    out html   web_summary,
+    out json   data,
+    src py     "../atac/stages/reporter/create_websummary",
+) using (
+    mem_gb   = 16,
+    volatile = strict,
+)
+
+#
+# @include "atac/_sc_atac_reporter.mro"
+#
+
+pipeline _SC_ATAC_REPORTER(
+    in  path   reference_path,
+    in  string barcode_whitelist,
+    in  json   bulk_complexity,
+    in  json   cell_calling_summary,
+    in  json   complexity_summary,
+    in  json   basic_summary,
+    in  json   peak_summary,
+    in  json   singlecell_results,
+    in  json   insert_summary,
+    in  json   singlecell_complexity,
+    in  csv    singlecell,
+    in  csv    tss_relpos,
+    in  csv    ctcf_relpos,
+    in  string sample_id,
+    in  string sample_desc,
+    in  float  peak_qval,
+    in  map[]  sample_def,
+    in  csv    sc_insert_sizes,
+    in  json   enrichment_results,
+    in  h5     filtered_peak_bc_matrix,
+    in  h5     analysis,
+    in  json   excluded_barcodes,
+    in  json   count_dict,
+    #
+    out json   summary,
+    out html   web_summary,
+    out json   ws_data,
+    out csv    summary_csv,
+)
+{
+    call SUMMARIZE_REPORTS_SINGLECELL(
+        sample_id            = self.sample_id,
+        reference_path       = self.reference_path,
+        complexity_summary   = self.complexity_summary,
+        cell_calling_summary = self.cell_calling_summary,
+        peak_results         = self.peak_summary,
+        basic_results        = self.basic_summary,
+        insert_summary       = self.insert_summary,
+        singlecell_results   = self.singlecell_results,
+        enrichment_results   = self.enrichment_results,
+    )
+
+    call CREATE_WEBSUMMARY(
+        reference_path          = self.reference_path,
+        barcode_whitelist       = self.barcode_whitelist,
+        singlecell              = self.singlecell,
+        tss_relpos              = self.tss_relpos,
+        ctcf_relpos             = self.ctcf_relpos,
+        sample_id               = self.sample_id,
+        sample_desc             = self.sample_desc,
+        sample_def              = self.sample_def,
+        insert_sizes            = self.sc_insert_sizes,
+        summary_results         = SUMMARIZE_REPORTS_SINGLECELL.summary,
+        bulk_complexity         = self.bulk_complexity,
+        singlecell_complexity   = self.singlecell_complexity,
+        analysis                = self.analysis,
+        filtered_peak_bc_matrix = self.filtered_peak_bc_matrix,
+        excluded_barcodes       = self.excluded_barcodes,
+        count_dict              = self.count_dict,
+        debug                   = false,
+        peak_qval               = self.peak_qval,
+    )
+
+    return (
+        summary     = SUMMARIZE_REPORTS_SINGLECELL.summary,
+        web_summary = CREATE_WEBSUMMARY.web_summary,
+        ws_data     = CREATE_WEBSUMMARY.data,
+        summary_csv = SUMMARIZE_REPORTS_SINGLECELL.summary_csv,
+    )
+}
+
+#
+# @include "rna/_cr_lib_stages.mro"
+#
+
+stage ALIGN_AND_COUNT(
+    in  int               gem_well,
+    in  map[]             read_chunks,
+    in  path              reference_path,
+    in  ReadShards        read_shards,
+    in  fbc.bincode       feature_counts,
+    in  frf.bincode       feature_reference,
+    in  csv               target_set,
+    in  ChemistryDef      chemistry_def,
+    in  string            aligner,
+    in  float             aligner_subsample_rate,
+    in  bool              include_introns,
+    in  bool              is_pd,
+    in  int               targeted_umi_min_read_count,
+    in  int               transcriptome_min_score,
+    in  int               trim_polya_min_score,
+    in  int               trim_tso_min_score,
+    in  tbcc.bincode      total_barcode_counts,
+    in  blf.json          barcode_subset,
+    out csf[]             counts_bc_order,
+    out csf[]             counts_feature_order,
+    out bui[]             bc_umi_info,
+    out asf[]             pos_sorted,
+    out path              bam_header,
+    out csv               barcode_summary,
+    out ann.bincode.lz4[] annotation_files,
+    out bmsf[]            per_barcode_metrics,
+    src comp              "cr_lib martian align_and_count",
+) split (
+    in  map               range,
+    in  float             read_ann_subsample_rate,
+    out csf               counts_bc_order_shard,
+    out csf               counts_feature_order_shard,
+    out bui               bc_umi_info_shard,
+    out asf               pos_sorted_shard,
+    out bsf.bincode       barcode_summary_shard,
+    out ann.bincode.lz4[] read_ann_files,
+    out bmsf              metrics_shard,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage WRITE_POS_BAM(
+    in  path            bam_header,
+    in  asf[]           alignments,
+    in  map[]           read_chunks,
+    in  string          target_set_name,
+    in  json            sample_barcodes_json,
+    in  bool            no_bam,
+    out SampleBamFile   pos_sorted_bam,
+    out SampleBamFile[] multi_pos_sorted_bam,
+    src comp            "cr_lib martian write_pos_bam",
+) split (
+    in  map             range,
+    in  bool            write_header,
+    out map<bam>        sample_pos_sorted_bam_chunks,
+) using (
+    volatile = strict,
+)
+
+stage BARCODE_CORRECTION(
+    in  int          gem_well,
+    in  shard[]      invalid_uncorrected,
+    in  ChemistryDef chemistry_def,
+    in  bsc.bincode  barcode_segment_counts,
+    in  bcc.bincode  barcode_counts,
+    in  bcm.bincode  valid_read_metrics,
+    in  string[]     libraries_to_translate,
+    out shard[]      valid_corrected,
+    out shard[]      invalid,
+    out json         summary,
+    out bcc.bincode  corrected_barcode_counts,
+    out tbcc.bincode total_barcode_counts,
+    src comp         "cr_lib martian barcode_correction",
+) split (
+    in  map          range,
+    out shard        valid_shard,
+    out shard        invalid_shard,
+    out bcm.bincode  chunk_summary,
+) using (
+    mem_gb   = 4,
+    threads  = 4,
+    volatile = strict,
+)
+
+stage WRITE_BARCODE_SUMMARY(
+    in  int[]       unique_gem_groups,
+    in  bui[]       bc_umi_info,
+    in  frf.bincode feature_reference,
+    in  bi.bincode  barcode_index,
+    out h5          barcode_summary,
+    src comp        "cr_lib martian write_barcode_summary",
+) using (
+    mem_gb   = 4,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage COLLATE_METRICS(
+    in  bmsf[]          per_barcode_metrics,
+    in  path            reference_path,
+    in  frf.bincode     feature_reference,
+    in  json            sample_barcodes_json,
+    out json            summary,
+    out csv             per_barcode_metrics,
+    out map             per_lib_type_metrics,
+    out SampleMetrics[] multi_metrics,
+    src comp            "cr_lib martian collate_metrics",
+) split (
+    in  string          sample,
+) using (
+    mem_gb   = 1,
+    volatile = strict,
+)
+
+stage WRITE_H5_MATRIX(
+    in  int          gem_well,
+    in  csf[]        counts,
+    in  frf.bincode  feature_reference,
+    in  ChemistryDef chemistry_def,
+    in  string       sample_id,
+    in  bi.bincode   barcode_index,
+    out h5           matrix,
+    src comp         "cr_lib martian write_h5_matrix",
+) using (
+    mem_gb   = 2,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage WRITE_MATRIX_MARKET(
+    in  csf[]       counts,
+    in  frf.bincode feature_reference,
+    in  bi.bincode  barcode_index,
+    out path        feature_bc_matrix,
+    src comp        "cr_lib martian write_matrix_market",
+) using (
+    mem_gb   = 2,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage DETECT_CHEMISTRY(
+    in  map[]    sample_def,
+    in  path     reference_path,
+    in  string   chemistry_name_spec,
+    in  string[] allowed_chems,
+    in  int      r1_length,
+    in  int      r2_length,
+    out string   chemistry_type,
+    out bool     is_antibody_only,
+    src comp     "cr_lib martian detect_chemistry",
+) using (
+    mem_gb   = 20,
+    volatile = strict,
+)
+
+stage COMBINE_GEM_WELL_CHEMISTRIES(
+    in  GemWellDetectChemistry[] gem_well_detect_chemistry,
+    out map<string>              library_to_chemistry,
+    out string[]                 libraries_to_translate,
+    out bool                     is_antibody_only,
+    out GemWellDetectChemistry   legacy,
+    src comp                     "cr_lib martian combine_gem_well_chemistries",
+)
+
+stage CHECK_BARCODES_COMPATIBILITY_VDJ(
+    in  string       vdj_chemistry_name,
+    in  map[]        vdj_sample_def,
+    in  string       gex_chemistry_name,
+    in  map[]        gex_sample_def,
+    in  ChemistryDef gex_custom_chemistry_def,
+    in  ChemistryDef vdj_custom_chemistry_def,
+    in  bool         enforce_library_concordance,
+    out float        similarity_score,
+    src comp         "cr_lib martian vdj_gex_bc_compat",
+)
+
+stage CHECK_BARCODES_COMPATIBILITY(
+    in  string       chemistry_name,
+    in  ChemistryDef custom_chemistry_def,
+    in  map[]        sample_def,
+    in  bool         enforce_library_concordance,
+    out string[]     libraries_to_translate,
+    src comp         "cr_lib martian barcode_compatibility",
+)
+
+stage DETECT_VDJ_RECEPTOR(
+    in  string force_receptor,
+    in  path   vdj_reference_path,
+    in  string chemistry,
+    in  map[]  sample_def,
+    out string receptor,
+    src comp   "cr_lib martian detect_vdj_receptor",
+) using (
+    mem_gb   = 1,
+    volatile = strict,
+)
+
+stage MAKE_SHARD(
+    in  ChemistryDef chemistry_def,
+    in  int          gem_well,
+    in  map[]        read_chunks,
+    in  int          r1_length,
+    in  int          r2_length,
+    in  float        subsample_rate,
+    in  int          initial_read_pairs,
+    in  path         reference_path,
+    in  csv          feature_reference_path,
+    in  csv          target_features,
+    in  csv          target_set,
+    in  string       target_set_name,
+    in  string[]     libraries_to_translate,
+    in  bool         write_bc_counts_json,
+    out shard[]      valid,
+    out shard[]      invalid,
+    out bcc.bincode  barcode_counts,
+    out bsc.bincode  barcode_segment_counts,
+    out fbc.bincode  feature_counts,
+    out json         summary,
+    out int          total_read_pairs,
+    out bool         paired_end,
+    out frf.bincode  feature_reference,
+    out bcm.bincode  bc_correct_summary,
+    out smf.json     sequencing_metrics,
+    out json         bc_counts_json,
+    src comp         "cr_lib martian make_shard",
+) split (
+    in  int          chunk_id,
+    in  frf.bincode  feature_reference,
+    out shard        valid_shard,
+    out shard        invalid_shard,
+    out rpc          read_prefix_counts,
+    out umi          umi_counts,
+    out msm.bincode  chunk_summary,
+    out msh.bincode  chunk_hist,
+) using (
+    mem_gb   = 4,
+    threads  = 4,
+    volatile = strict,
+)
+
+stage MERGE_GEM_WELL_FILES(
+    in  GemWellFiles[] unmerged_gem_well_files,
+    out GemWellFiles   merged_gem_well_files,
+    src comp           "cr_lib martian merge_gem_well_files",
+) using (
+    volatile = strict,
+)
+
+stage MERGE_METRICS(
+    in  json[] summaries,
+    out json   summary,
+    src comp   "cr_lib martian merge_metrics",
+) using (
+    volatile = strict,
+)
+
+stage MULTI_PREFLIGHT(
+    in  FileOrBytes config,
+    in  bool        is_pd,
+    src comp        "cr_lib martian multi_preflight",
+) using (
+    mem_gb   = 1,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage WRITE_MULTI_WEB_SUMMARY_JSON(
+    in  map<json>    per_sample_metrics,
+    in  json         library_metrics,
+    in  smf.json     sequencing_metrics,
+    in  csv          multi_config,
+    in  json         multi_graph,
+    in  svg          multi_graph_svg,
+    in  CommonInputs common_inputs,
+    in  CountInputs  count_inputs,
+    in  json         tag_contaminant_info,
+    in  map<json>    sample_tsne_plots,
+    in  map<json>    barcode_rank_plots,
+    in  json         jibes_biplot_histogram,
+    in  csv          targeted_per_feature_metrics,
+    in  json         cmo_tsne_plot,
+    in  vwc.json     vdj_t_contents,
+    in  vwc.json     vdj_b_contents,
+    in  string       target_set_name,
+    out map<json>    web_summary_json,
+    out map<csv>     metrics_summary_csv,
+    src comp         "cr_lib martian write_multi_web_summary_json",
+) using (
+    volatile = strict,
+) retain (
+    web_summary_json,
+)
+
+stage BUILD_VDJ_WS_CONTENTS(
+    in  json         metrics_summary,
+    in  string       receptor,
+    in  VdjInputs    vdj_inputs,
+    in  VdjGenInputs vdj_gen_inputs,
+    in  smf.json     sequencing_metrics,
+    in  json         vdj_ws_json,
+    out vwc.json     vdj_ws_contents,
+    src comp         "cr_lib martian build_vdj_ws_contents",
+) using (
+    volatile = strict,
+)
+
+stage PARSE_MULTI_CONFIG(
+    in  string              sample_id,
+    in  string              sample_desc,
+    in  FileOrBytes         config,
+    in  string              config_hash,
+    in  map                 params,
+    in  bool                is_pd,
+    out CommonInputs        common_input,
+    out CountInputs         count_input,
+    out VdjInputs[]         vdj_inputs,
+    out VdjGenInputs        vdj_gen_inputs,
+    out BasicPipelineConfig basic_config,
+    out csv                 config_file,
+    out json                multi_graph,
+    out csv                 feature_ref,
+    src comp                "cr_lib martian parse_multi_config",
+) using (
+    mem_gb   = 6,
+    threads  = 1,
+    volatile = strict,
+) retain (
+    feature_ref,
+)
+
+stage RUST_BRIDGE(
+    in  int           gem_well,
+    in  shard[]       valid_uncorrected,
+    in  shard[]       valid_corrected,
+    in  bcc.bincode   raw_barcode_counts,
+    in  bcc.bincode   corrected_barcode_counts,
+    in  bool          paired_end,
+    out bincode.lz4[] bc_sorted_rna_reads,
+    out int[]         gem_groups,
+    out json[]        barcodes,
+    out json          raw_barcode_counts_json,
+    out json          corrected_barcode_counts_json,
+    out int           n50_n50_rpu,
+    out int           processed_read_pairs,
+    src comp          "cr_lib martian rust_bridge",
+) split (
+    in  map           range,
+    in  shard[]       valid_shards,
+    out bincode.lz4   chunk_bc_sorted_rna_reads,
+    out json          barcodes_shard,
+    out bincode       n50s_shard,
+) using (
+    mem_gb = 4,
+)
+
+stage SET_ALIGNER_SUBSAMPLE_RATE(
+    in  json        barcodes_under_tissue,
+    in  bcc.bincode corrected_barcode_counts,
+    in  int         rps_limit,
+    out float       aligner_subsample_rate,
+    src comp        "cr_lib martian set_aligner_subsample_rate",
+) using (
+    mem_gb   = 8,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage SET_TARGETED_UMI_FILTER(
+    in  bui[]       bc_umi_info,
+    in  frf.bincode feature_reference,
+    out int         umi_read_count_threshold,
+    out json        summary,
+    src comp        "cr_lib martian set_targeted_umi_filter",
+) using (
+    mem_gb   = 8,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage MULTI_SETUP_CHUNKS(
+    in  string       sample_id,
+    in  map[]        sample_def,
+    in  string       chemistry_name,
+    in  ChemistryDef custom_chemistry_def,
+    in  string       default_library_type,
+    out map[]        chunks,
+    out ChemistryDef chemistry_def,
+    out string       barcode_whitelist,
+    src comp         "cr_lib martian setup_chunks",
+)
+
+stage SUBSAMPLE_BARCODES(
+    in  bcc.bincode corrected_barcode_counts,
+    out blf.json    barcode_subset,
+    src comp        "cr_lib martian subsample_barcodes",
+) using (
+    mem_gb   = 4,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage WRITE_BARCODE_INDEX(
+    in  bcc.bincode barcode_counts,
+    in  json        barcodes_under_tissue,
+    out bi.bincode  barcode_index,
+    src comp        "cr_lib martian write_barcode_index",
+) using (
+    mem_gb   = 4,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage WRITE_GENE_INDEX(
+    in  path reference_path,
+    out json gene_index,
+    src comp "cr_lib martian write_gene_index",
+) using (
+    mem_gb   = 6,
+    threads  = 1,
+    volatile = strict,
+)
+
+stage WRITE_MOLECULE_INFO(
+    in  int                  gem_well,
+    in  bui[]                counts_bc_order,
+    in  path                 reference_path,
+    in  map[]                read_chunks,
+    in  frf.bincode          feature_reference,
+    in  csv                  filtered_barcodes,
+    in  json                 target_panel_summary,
+    in  string               target_set_name,
+    in  json                 matrix_computer_summary,
+    in  int                  recovered_cells,
+    in  int                  force_cells,
+    in  bool                 include_introns,
+    in  string               multi_config_sha,
+    in  json                 sample_barcodes_json,
+    in  SampleMetrics[]      per_sample_metrics,
+    in  bi.bincode           barcode_index,
+    out SampleMoleculeInfo   single_mol_info,
+    out SampleMoleculeInfo[] multi_mol_info,
+    src comp                 "cr_lib martian write_molecule_info",
+) using (
+    mem_gb   = 16,
+    threads  = 1,
+    volatile = strict,
+)
+
+#
+# @include "rna/_sc_rna_counter_stages.mro"
+#
+
+stage SUMMARIZE_REPORTS(
+    in  json[] summaries,
+    in  string sample_id,
+    in  string sample_desc,
+    in  path   reference_path,
+    in  path   analysis,
+    in  h5     barcode_summary_h5,
+    in  h5     filtered_gene_bc_matrices_h5,
+    in  csv    filtered_barcodes,
+    in  string barcode_whitelist,
+    in  int[]  gem_groups,
+    in  csv    feature_reference,
+    in  string target_set_name,
+    in  csv    per_feature_metrics_csv,
+    in  bool   include_introns,
+    out json   metrics_summary_json,
+    out csv    metrics_summary_csv,
+    out html   web_summary,
+    out csv    feature_reference,
+    out json   ws_data,
+    src py     "../rna/stages/counter/summarize_reports",
+) using (
+    mem_gb   = 8,
+    volatile = strict,
+) retain (
+    metrics_summary_json,
+)
+
+#
+# @include "_basic_sc_rna_counter_stages.mro"
+#
+
+stage FILTER_BARCODES(
+    in  string      sample_id,
+    in  h5          matrices_h5,
+    in  csv         barcode_correction_csv,
+    in  bool        is_antibody_only,
+    in  path        reference_path,
+    in  int[]       gem_groups,
+    in  string      chemistry_description,
+    in  CellCalling config,
+    out json        summary,
+    out csv         filtered_barcodes,
+    out csv         aggregate_barcodes,
+    out h5          filtered_matrices_h5,
+    out path        filtered_matrices_mex,
+    out csv         nonambient_calls,
+    src py          "../rna/stages/counter/filter_barcodes",
+) split (
+) using (
+    mem_gb   = 8,
+    volatile = strict,
+)
+
+stage MULTI_WRITE_PER_SAMPLE_MATRICES(
+    in  h5               matrix_h5,
+    in  h5               raw_matrix_h5,
+    in  csv              filtered_barcodes,
+    in  json             sample_barcodes_json,
+    out SampleMatrices[] sample_matrices,
+    src py               "../rna/stages/multi/multi_write_per_sample_matrices",
+) split (
+    in  string           sample,
+    in  string[]         barcodes,
+) using (
+    volatile = strict,
+)
+
+stage SUMMARIZE_BASIC_REPORTS(
+    in  h5     matrices_h5,
+    in  csv    filtered_barcodes,
+    in  csv    per_barcode_metrics,
+    in  json   matrix_computer_summary,
+    in  h5     barcode_summary,
+    in  int    recovered_cells,
+    in  path   reference_path,
+    in  json[] summary_jsons,
+    in  bool   cell_bcs_only,
+    out json   summary,
+    src py     "../rna/stages/counter/summarize_basic_reports",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage SUBSAMPLE_READS(
+    in  h5     molecule_info,
+    in  csv    filtered_barcodes,
+    in  string target_mode,
+    out json   summary,
+    out pickle merged_metrics,
+    src py     "../rna/stages/counter/subsample_reads",
+) split (
+    in  int    chunk_start,
+    in  int    chunk_len,
+    in  map[]  subsample_info,
+    out pickle metrics,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage DISABLE_BAMS(
+    in  bool no_bam,
+    in  bool disable_multi,
+    in  bool is_pd,
+    out bool disable_legacy_bam,
+    out bool disable_sample_bams,
+    src py   "../rna/stages/multi/disable_bams",
+) using (
+    volatile = strict,
+)
+
+#
+# @include "rna/_slfe_cells_reporter.mro"
+#
+
+pipeline _SLFE_CELLS_REPORTER(
+    in  path        reference_path,
+    in  int         recovered_cells,
+    in  int         force_cells,
+    in  frf.bincode slfe_feature_reference,
+    in  json        target_panel_summary,
+    in  string      target_set_name,
+    in  h5          matrices_h5,
+    in  map[]       read_chunks,
+    in  int         gem_well,
+    in  bui[]       report_mol_inputs,
+    in  json        matrix_computer_summary,
+    in  h5          barcode_summary,
+    in  csv         filtered_barcodes,
+    in  json        filter_barcodes_summary,
+    in  csv         per_barcode_metrics,
+    in  bool        include_introns,
+    in  string      multi_config_sha,
+    in  bi.bincode  barcode_index,
+    out json        summary,
+    out h5          molecule_info,
+    out pickle      merged_subsampling_metrics,
+)
+{
+    call WRITE_MOLECULE_INFO(
+        gem_well                = self.gem_well,
+        counts_bc_order         = self.report_mol_inputs,
+        reference_path          = self.reference_path,
+        read_chunks             = self.read_chunks,
+        feature_reference       = self.slfe_feature_reference,
+        target_panel_summary    = self.target_panel_summary,
+        target_set_name         = self.target_set_name,
+        matrix_computer_summary = self.matrix_computer_summary,
+        recovered_cells         = self.recovered_cells,
+        force_cells             = self.force_cells,
+        filtered_barcodes       = self.filtered_barcodes,
+        include_introns         = self.include_introns,
+        multi_config_sha        = self.multi_config_sha,
+        sample_barcodes_json    = null,
+        per_sample_metrics      = null,
+        barcode_index           = self.barcode_index,
+    )
+
+    call SUBSAMPLE_READS(
+        molecule_info     = WRITE_MOLECULE_INFO.single_mol_info.h5_file,
+        filtered_barcodes = self.filtered_barcodes,
+        target_mode       = null,
+    ) using (
+        volatile = true,
+    )
+
+    call SUMMARIZE_BASIC_REPORTS(
+        matrices_h5             = self.matrices_h5,
+        filtered_barcodes       = self.filtered_barcodes,
+        per_barcode_metrics     = self.per_barcode_metrics,
+        matrix_computer_summary = self.matrix_computer_summary,
+        barcode_summary         = self.barcode_summary,
+        recovered_cells         = self.recovered_cells,
+        reference_path          = self.reference_path,
+        # this is being run "library level", use all bcs
+        cell_bcs_only           = false,
+        summary_jsons           = [
+            self.matrix_computer_summary,
+            SUBSAMPLE_READS.summary,
+            WRITE_MOLECULE_INFO.single_mol_info.summary,
+            self.filter_barcodes_summary,
+        ],
+    )
+
+    return (
+        summary                    = SUMMARIZE_BASIC_REPORTS.summary,
+        molecule_info              = WRITE_MOLECULE_INFO.single_mol_info.h5_file,
+        merged_subsampling_metrics = SUBSAMPLE_READS.merged_metrics,
+    )
+}
+
+# CELLS_REPORTER but for sliced samples, does not write the molecule info
+pipeline _SAMPLE_CELLS_REPORTER(
+    in  h5     molecule_info,
+    in  path   reference_path,
+    in  int    recovered_cells,
+    in  h5     matrices_h5,
+    in  json   matrix_computer_summary,
+    in  csv    filtered_barcodes,
+    in  csv    per_barcode_metrics,
+    in  h5     barcode_summary,
+    in  json   sample_assignment_metrics,
+    in  json   count_analyzer_metrics,
+    in  json   crispr_analyzer_metrics,
+    in  json   targeted_analyzer_metrics,
+    in  json   target_features_metrics,
+    out json   summary,
+    out pickle merged_subsampling_metrics,
+)
+{
+    call SUBSAMPLE_READS(
+        molecule_info     = self.molecule_info,
+        filtered_barcodes = self.filtered_barcodes,
+        target_mode       = null,
+    ) using (
+        volatile = true,
+    )
+
+    call SUMMARIZE_BASIC_REPORTS(
+        matrices_h5             = self.matrices_h5,
+        filtered_barcodes       = self.filtered_barcodes,
+        per_barcode_metrics     = self.per_barcode_metrics,
+        matrix_computer_summary = self.matrix_computer_summary,
+        barcode_summary         = self.barcode_summary,
+        recovered_cells         = self.recovered_cells,
+        reference_path          = self.reference_path,
+        # we want "all reads" etc to include only those with sample barcodes.
+        cell_bcs_only           = true,
+        summary_jsons           = [
+            self.matrix_computer_summary,
+            SUBSAMPLE_READS.summary,
+            self.sample_assignment_metrics,
+            self.count_analyzer_metrics,
+            self.crispr_analyzer_metrics,
+            self.targeted_analyzer_metrics,
+            self.target_features_metrics,
+        ],
+    )
+
+    return (
+        summary                    = SUMMARIZE_BASIC_REPORTS.summary,
+        merged_subsampling_metrics = SUBSAMPLE_READS.merged_metrics,
+    )
+}
+
+#
+# @include "_slfe_partial_first_pass.mro"
+#
+
+# Inputs copied crom _cr_lib_stages. Cleaner way to do this?
+pipeline _SLFE_PARTIAL_FIRST_PASS(
+    in  int          gem_well,
+    in  map[]        read_chunks,
+    in  path         reference_path,
+    in  ReadShards   read_shards,
+    in  fbc.bincode  feature_counts,
+    in  frf.bincode  feature_reference,
+    in  csv          target_set,
+    in  ChemistryDef chemistry_def,
+    in  bool         include_introns,
+    in  string       aligner,
+    in  bool         is_pd,
+    in  int          trim_polya_min_score,
+    in  int          trim_tso_min_score,
+    in  tbcc.bincode total_barcode_counts,
+    in  bcc.bincode  corrected_barcode_counts,
+    out int          umi_read_count_threshold,
+    out json         umi_filtering_summary,
+)
+{
+    call SUBSAMPLE_BARCODES(
+        corrected_barcode_counts = self.corrected_barcode_counts,
+    )
+
+    call ALIGN_AND_COUNT as INITIAL_ALIGN_AND_COUNT(
+        gem_well                    = self.gem_well,
+        read_chunks                 = self.read_chunks,
+        reference_path              = self.reference_path,
+        read_shards                 = self.read_shards,
+        feature_counts              = self.feature_counts,
+        feature_reference           = self.feature_reference,
+        target_set                  = self.target_set,
+        chemistry_def               = self.chemistry_def,
+        include_introns             = self.include_introns,
+        aligner                     = self.aligner,
+        aligner_subsample_rate      = null,
+        is_pd                       = self.is_pd,
+        transcriptome_min_score     = 30,
+        trim_polya_min_score        = self.trim_polya_min_score,
+        trim_tso_min_score          = self.trim_tso_min_score,
+        targeted_umi_min_read_count = null,
+        total_barcode_counts        = self.total_barcode_counts,
+        barcode_subset              = SUBSAMPLE_BARCODES.barcode_subset,
+    )
+
+    call SET_TARGETED_UMI_FILTER(
+        bc_umi_info       = INITIAL_ALIGN_AND_COUNT.bc_umi_info,
+        feature_reference = self.feature_reference,
+    )
+
+    return (
+        umi_read_count_threshold = SET_TARGETED_UMI_FILTER.umi_read_count_threshold,
+        umi_filtering_summary    = SET_TARGETED_UMI_FILTER.summary,
+    )
+}
+
+#
+# @include "rna/_slfe_matrix_computer.mro"
+#
+
+pipeline MAKE_READ_SHARDS_STRUCT(
+    in  shard[]    valid_reads,
+    in  shard[]    corrected_reads,
+    in  shard[]    invalid_reads,
+    out ReadShards read_shards,
+)
+{
+    return (
+        read_shards = {
+            corrected_reads: self.corrected_reads,
+            invalid_reads:   self.invalid_reads,
+            valid_reads:     self.valid_reads,
+        },
+    )
+}
+
+pipeline _SLFE_MATRIX_COMPUTER(
+    in  string            sample_id,
+    in  ChemistryDef      chemistry_def,
+    in  json              barcodes_under_tissue,
+    in  bool              is_pd,
+    in  map[]             chunks,
+    in  path              reference_path,
+    in  string[]          libraries_to_translate,
+    in  float             subsample_rate,
+    in  int               initial_reads,
+    in  int               r1_length,
+    in  int               r2_length,
+    in  int               trim_polya_min_score,
+    in  int               trim_tso_min_score,
+    in  csv               feature_reference,
+    in  csv               target_features,
+    in  csv               target_set,
+    in  string            target_set_name,
+    in  bool              include_introns,
+    in  string            aligner,
+    in  bool              disable_target_umi_filter,
+    in  int               rps_limit,
+    # Note: _SLFE_MATRIX_COMPUTER processes data from a single gem well.
+    in  int               gem_well,
+    in  bool              write_bc_counts_json,
+    out frf.bincode       slfe_feature_reference,
+    out csv               barcode_correction_csv,
+    out h5                barcode_summary,
+    out h5                raw_gene_bc_matrices_h5,
+    out path              raw_gene_bc_matrices_mex,
+    out ReadShards        read_shards,
+    out bui[]             report_mol_inputs,
+    out json              summary,
+    out ann.bincode.lz4[] annotation_files,
+    out csv               per_barcode_metrics,
+    out bmsf[]            per_barcode_metrics_shard,
+    out bui[]             bc_umi_info,
+    out path              bam_header,
+    out asf[]             alignments,
+    out SampleMetrics[]   multi_metrics,
+    out json              gem_well_alignment_metrics,
+    out bi.bincode        barcode_index,
+    out smf.json          sequencing_metrics,
+    out json              bc_counts_json,
+)
+{
+    call MAKE_SHARD(
+        gem_well               = self.gem_well,
+        chemistry_def          = self.chemistry_def,
+        read_chunks            = self.chunks,
+        r1_length              = self.r1_length,
+        r2_length              = self.r2_length,
+        subsample_rate         = self.subsample_rate,
+        initial_read_pairs     = self.initial_reads,
+        reference_path         = self.reference_path,
+        target_features        = self.target_features,
+        target_set             = self.target_set,
+        target_set_name        = self.target_set_name,
+        feature_reference_path = self.feature_reference,
+        libraries_to_translate = self.libraries_to_translate,
+        write_bc_counts_json   = self.write_bc_counts_json,
+    )
+
+    call BARCODE_CORRECTION(
+        gem_well               = self.gem_well,
+        barcode_counts         = MAKE_SHARD.barcode_counts,
+        barcode_segment_counts = MAKE_SHARD.barcode_segment_counts,
+        chemistry_def          = self.chemistry_def,
+        invalid_uncorrected    = MAKE_SHARD.invalid,
+        valid_read_metrics     = MAKE_SHARD.bc_correct_summary,
+        libraries_to_translate = self.libraries_to_translate,
+    )
+
+    call MAKE_READ_SHARDS_STRUCT(
+        valid_reads     = MAKE_SHARD.valid,
+        corrected_reads = BARCODE_CORRECTION.valid_corrected,
+        invalid_reads   = BARCODE_CORRECTION.invalid,
+    )
+
+    call _SLFE_PARTIAL_FIRST_PASS(
+        gem_well                 = self.gem_well,
+        read_chunks              = self.chunks,
+        reference_path           = self.reference_path,
+        read_shards              = MAKE_READ_SHARDS_STRUCT.read_shards,
+        feature_counts           = MAKE_SHARD.feature_counts,
+        feature_reference        = MAKE_SHARD.feature_reference,
+        target_set               = self.target_set,
+        chemistry_def            = self.chemistry_def,
+        include_introns          = self.include_introns,
+        aligner                  = self.aligner,
+        is_pd                    = self.is_pd,
+        trim_polya_min_score     = self.trim_polya_min_score,
+        trim_tso_min_score       = self.trim_tso_min_score,
+        total_barcode_counts     = BARCODE_CORRECTION.total_barcode_counts,
+        corrected_barcode_counts = BARCODE_CORRECTION.corrected_barcode_counts,
+    ) using (
+        disabled = self.disable_target_umi_filter,
+    )
+
+    call SET_ALIGNER_SUBSAMPLE_RATE(
+        rps_limit                = self.rps_limit,
+        barcodes_under_tissue    = self.barcodes_under_tissue,
+        corrected_barcode_counts = BARCODE_CORRECTION.corrected_barcode_counts,
+    )
+
+    call ALIGN_AND_COUNT(
+        gem_well                    = self.gem_well,
+        read_chunks                 = self.chunks,
+        reference_path              = self.reference_path,
+        read_shards                 = MAKE_READ_SHARDS_STRUCT.read_shards,
+        feature_counts              = MAKE_SHARD.feature_counts,
+        feature_reference           = MAKE_SHARD.feature_reference,
+        target_set                  = self.target_set,
+        chemistry_def               = self.chemistry_def,
+        include_introns             = self.include_introns,
+        aligner                     = self.aligner,
+        aligner_subsample_rate      = SET_ALIGNER_SUBSAMPLE_RATE.aligner_subsample_rate,
+        is_pd                       = self.is_pd,
+        transcriptome_min_score     = 30,
+        trim_polya_min_score        = self.trim_polya_min_score,
+        trim_tso_min_score          = self.trim_tso_min_score,
+        targeted_umi_min_read_count = _SLFE_PARTIAL_FIRST_PASS.umi_read_count_threshold,
+        total_barcode_counts        = BARCODE_CORRECTION.total_barcode_counts,
+        barcode_subset              = null,
+    )
+
+    call COLLATE_METRICS(
+        per_barcode_metrics  = ALIGN_AND_COUNT.per_barcode_metrics,
+        reference_path       = self.reference_path,
+        feature_reference    = MAKE_SHARD.feature_reference,
+        sample_barcodes_json = null,
+    )
+
+    call WRITE_BARCODE_INDEX(
+        barcode_counts        = BARCODE_CORRECTION.corrected_barcode_counts,
+        barcodes_under_tissue = self.barcodes_under_tissue,
+    )
+
+    call WRITE_BARCODE_SUMMARY(
+        unique_gem_groups = [self.gem_well],
+        bc_umi_info       = ALIGN_AND_COUNT.bc_umi_info,
+        feature_reference = MAKE_SHARD.feature_reference,
+        barcode_index     = WRITE_BARCODE_INDEX.barcode_index,
+    )
+
+    call WRITE_H5_MATRIX(
+        gem_well          = self.gem_well,
+        counts            = ALIGN_AND_COUNT.counts_bc_order,
+        feature_reference = MAKE_SHARD.feature_reference,
+        chemistry_def     = self.chemistry_def,
+        sample_id         = self.sample_id,
+        barcode_index     = WRITE_BARCODE_INDEX.barcode_index,
+    )
+
+    call WRITE_MATRIX_MARKET(
+        counts            = ALIGN_AND_COUNT.counts_bc_order,
+        feature_reference = MAKE_SHARD.feature_reference,
+        barcode_index     = WRITE_BARCODE_INDEX.barcode_index,
+    )
+
+    call MERGE_METRICS(
+        summaries = [
+            MAKE_SHARD.summary,
+            BARCODE_CORRECTION.summary,
+            _SLFE_PARTIAL_FIRST_PASS.umi_filtering_summary,
+            COLLATE_METRICS.summary,
+        ],
+    )
+
+    return (
+        barcode_correction_csv     = ALIGN_AND_COUNT.barcode_summary,
+        barcode_summary            = WRITE_BARCODE_SUMMARY.barcode_summary,
+        raw_gene_bc_matrices_h5    = WRITE_H5_MATRIX.matrix,
+        raw_gene_bc_matrices_mex   = WRITE_MATRIX_MARKET.feature_bc_matrix,
+        read_shards                = MAKE_READ_SHARDS_STRUCT.read_shards,
+        report_mol_inputs          = ALIGN_AND_COUNT.bc_umi_info,
+        summary                    = MERGE_METRICS.summary,
+        slfe_feature_reference     = MAKE_SHARD.feature_reference,
+        annotation_files           = ALIGN_AND_COUNT.annotation_files,
+        per_barcode_metrics        = COLLATE_METRICS.per_barcode_metrics,
+        per_barcode_metrics_shard  = ALIGN_AND_COUNT.per_barcode_metrics,
+        bc_umi_info                = ALIGN_AND_COUNT.bc_umi_info,
+        bam_header                 = ALIGN_AND_COUNT.bam_header,
+        alignments                 = ALIGN_AND_COUNT.pos_sorted,
+        multi_metrics              = COLLATE_METRICS.multi_metrics,
+        gem_well_alignment_metrics = COLLATE_METRICS.summary,
+        barcode_index              = WRITE_BARCODE_INDEX.barcode_index,
+        sequencing_metrics         = MAKE_SHARD.sequencing_metrics,
+        bc_counts_json             = MAKE_SHARD.bc_counts_json,
+    )
+}
+
+#
+# @include "reporter_stages.mro"
+#
+
+stage CREATE_JOINT_WEBSUMMARY(
+    in  path           reference_path,
+    in  string         sample_id,
+    in  string         sample_desc,
+    in  csv            merge_singlecell,
+    in  json           summary,
+    in  json           atac_data,
+    in  json           gex_data,
+    in  AnalysisOutput analysis_csv,
+    in  bool           debug,
+    in  bool           rna_include_introns,
+    in  float          atac_peak_qval,
+    in  float          feature_linkage_max_dist_mb,
+    out html           web_summary,
+    out json           data,
+    src py             "../atac_rna/stages/reporter/create_joint_websummary",
+) using (
+    mem_gb   = 16,
+    volatile = strict,
+)
+
+stage COMPILE_GEX_BARCODE_METRICS(
+    in  path reference_path,
+    in  csv  metrics,
+    in  csv  filtered_barcodes,
+    out csv  augmented_metrics,
+    out json wasted_data_metrics,
+    src py   "../atac_rna/stages/reporter/compile_gex_barcode_metrics",
+) using (
+    volatile = strict,
+)
+
+#
+# @include "sc_atac_gex_counter_stages.mro"
+#
+
+stage SPLIT_SAMPLE_DEF(
+    in  map[] sample_def,
+    out map[] atac_sample_def,
+    out map[] rna_sample_def,
+    src py    "../atac_rna/stages/processing/split_sample_def",
+) using (
+    volatile = strict,
+)
+
+stage ARC_COUNTER_PREFLIGHT(
+    in  bool           on_cluster,
+    in  string         sample_id,
+    in  path           reference_path,
+    in  map<MinCounts> force_cells,
+    in  map[]          sample_def,
+    in  float          feature_linkage_max_dist_mb,
+    in  int            k_means_max_clusters,
+    #
+    in  int            rna_r1_length,
+    in  int            rna_r2_length,
+    #
+    in  float          atac_subsample_rate,
+    in  bed            atac_custom_peaks,
+    in  float          atac_peak_qval,
+    src py             "../atac_rna/stages/preflight/arc_counter_preflight",
+) using (
+    volatile = strict,
+)
+
+stage MERGE_RNA_ATAC_DATA(
+    in  bool   disable_atac,
+    in  bool   disable_rna,
+    in  path   reference_path,
+    in  string atac_whitelist,
+    in  string rna_whitelist,
+    in  json   rna_summary,
+    in  json   atac_summary,
+    in  json[] joint_summaries,
+    in  csv    atac_metrics,
+    in  csv    rna_metrics,
+    in  csv    joint_metrics,
+    in  h5     atac_matrix,
+    in  h5     rna_matrix,
+    in  h5     filtered_atac_matrix,
+    in  h5     filtered_rna_matrix,
+    in  csv    atac_summary_csv_cs,
+    in  csv    rna_summary_csv_cs,
+    out csv    metrics,
+    out csv    metrics_cs,
+    out csv    metrics_cells_only,
+    out h5     matrix,
+    out json   summary,
+    out csv    summary_csv_cs,
+    src py     "../atac_rna/stages/processing/merge_rna_atac_data",
+) split (
+) using (
+    volatile = strict,
+) retain (
+    summary,
+)
+
+stage CHECK_JOINT_BARCODES_COMPATIBILITY(
+    in  json   gex_counts,
+    in  json   atac_counts,
+    in  string barcode_whitelist,
+    src py     "stages/processing/check_joint_barcodes_compatibility",
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+#
+# @include "_fastq_stager.mro"
+#
+
+pipeline _FASTQ_STAGER(
+    in  string       sample_id                    "id of the sample",
+    in  map[]        atac_sample_def,
+    in  string       atac_barcode_whitelist,
+    in  float        atac_subsample_rate,
+    in  map[]        rna_sample_def,
+    in  string       rna_chemistry,
+    in  ChemistryDef rna_custom_chemistry_def,
+    #
+    out FastqDef[]   atac_chunks,
+    out map[]        rna_chunks,
+    out ChemistryDef rna_chemistry_def,
+    out string       barcode_whitelist,
+    out path         atac_barcode_whitelist_path,
+)
+{
+    call MULTI_SETUP_CHUNKS as GEX_SETUP_CHUNKS(
+        sample_id            = self.sample_id,
+        sample_def           = self.rna_sample_def,
+        chemistry_name       = self.rna_chemistry,
+        custom_chemistry_def = self.rna_custom_chemistry_def,
+        default_library_type = null,
+    ) using (
+        local    = true,
+        volatile = true,
+    )
+
+    call ATAC_SETUP_CHUNKS(
+        sample_id         = self.sample_id,
+        sample_def        = self.atac_sample_def,
+        subsample_rate    = self.atac_subsample_rate,
+        barcode_whitelist = self.atac_barcode_whitelist,
+    ) using (
+        volatile = true,
+    )
+
+    return (
+        atac_chunks                 = ATAC_SETUP_CHUNKS.chunks,
+        rna_chunks                  = GEX_SETUP_CHUNKS.chunks,
+        rna_chemistry_def           = GEX_SETUP_CHUNKS.chemistry_def,
+        barcode_whitelist           = GEX_SETUP_CHUNKS.barcode_whitelist,
+        atac_barcode_whitelist_path = ATAC_SETUP_CHUNKS.barcode_whitelist_path,
+    )
+}
+
+#
+# @include "atac/_produce_cell_barcodes_stages.mro"
+#
+
+stage REMOVE_LOW_TARGETING_BARCODES(
+    in  bed        peaks,
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  path       reference_path,
+    out json       barcode_counts,
+    out json       low_targeting_barcodes,
+    out json       low_targeting_summary,
+    out json       fragment_lengths,
+    out json       covered_bases,
+    src py         "../atac/stages/processing/cell_calling/remove_low_targeting_barcodes",
+) split (
+    in  string[]   contigs,
+    out pickle[]   fragment_counts,
+    out pickle[]   targeted_counts,
+    out pickle[]   chunk_fragment_lengths,
+    out pickle[]   chunk_covered_bases,
+    out int[]      peak_coverage,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage REMOVE_GEL_BEAD_DOUBLET_BARCODES(
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  path       reference_path,
+    in  json       barcode_counts,
+    out json       gel_bead_doublet_barcodes,
+    out json       gel_bead_doublet_summary,
+    out csv        connect_matrix,
+    src py         "../atac/stages/processing/cell_calling/remove_gel_bead_doublet_barcodes",
+) split (
+    in  string[]   contigs,
+    in  file       valid_barcodes,
+    out npy[]      chunk_connect_matrix,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage REMOVE_BARCODE_MULTIPLETS(
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  path       reference_path,
+    in  json       barcode_counts,
+    out json       barcode_multiplets,
+    out json       barcode_multiplets_summary,
+    src py         "../atac/stages/processing/cell_calling/remove_barcode_multiplets",
+) split (
+    in  string[]   contigs,
+    in  string     gem_group,
+    out npy.gz[]   part_a_linkage_matrix,
+    out npy.gz[]   part_b_linkage_matrix,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage MERGE_EXCLUDED_BARCODES(
+    in  json[] barcode_exclusions,
+    out json   excluded_barcodes,
+    src py     "../atac/stages/processing/cell_calling/merge_excluded_barcodes",
+) using (
+    # this depends on the number of gem wells, but we are setting a constant of 4 GB for now
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+stage DETECT_CELL_BARCODES(
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  string     barcode_whitelist,
+    in  json       excluded_barcodes,
+    in  map        force_cells,
+    in  path       reference_path,
+    in  bed        peaks,
+    out csv        cell_barcodes,
+    out csv        singlecell,
+    out json       cell_calling_summary,
+    src py         "../atac/stages/processing/cell_calling/detect_cell_barcodes",
+) split (
+    in  string[]   contigs,
+    out pickle[]   barcode_counts,
+    out pickle[]   targeted_counts,
+    out int[]      fragment_depths,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+# TODO: This should be in mro/common for general use
+stage MERGE_SUMMARY_METRICS(
+    in  json[] summary_jsons,
+    out json   merged_summary,
+    src py     "../atac/stages/processing/cell_calling/merge_summary_metrics",
+) using (
+    volatile = strict,
+)
+
+#
+# @include "atac/_sc_atac_postprocess_cells_stages.mro"
+#
+
+stage FILTER_PEAK_MATRIX(
+    in  h5   raw_matrix,
+    in  int  num_analysis_bcs,
+    in  int  random_seed,
+    in  csv  cell_barcodes,
+    out h5   filtered_matrix,
+    out path filtered_matrix_mex,
+    src py   "../atac/stages/processing/filter_peak_matrix",
+) split (
+) using (
+    volatile = strict,
+)
+
+#
+# @include "_joint_cell_detector_stages.mro"
+#
+
+stage DETECT_JOINT_CELL_BARCODES(
+    in  path           reference_path,
+    in  string         barcode_whitelist,
+    in  h5             rna_raw_matrix,
+    in  h5             atac_raw_matrix,
+    in  map<MinCounts> force_cells,
+    in  json           atac_excluded_bcs,
+    out json           summary,
+    out csv            singlecell,
+    out csv            cell_barcodes,
+    out csv            atac_formatted_cell_barcodes,
+    src py             "../atac_rna/stages/processing/detect_joint_cell_barcodes",
+) split (
+) using (
+    volatile = strict,
+) retain (
+    summary,
+)
+
+stage FILTER_UMI_MATRIX(
+    in  string sample_id,
+    in  h5     rna_raw_matrix,
+    in  csv    cell_barcodes,
+    in  int[]  gem_groups,
+    out h5     filtered_matrix,
+    out path   filtered_matrix_mex,
+    out json   summary,
+    out bool   is_multi_genome,
+    src py     "../atac_rna/stages/processing/filter_umi_matrix",
+) split (
+) using (
+    mem_gb   = 8,
+    volatile = strict,
+)
+
+stage MERGE_ATAC_RNA_MATRICES(
+    in  string     sample_id,
+    in  h5         atac_raw_matrix,
+    in  h5         atac_filtered_matrix,
+    in  h5         rna_raw_matrix,
+    in  h5         rna_filtered_matrix,
+    in  string     barcode_whitelist,
+    in  path       reference_path,
+    out h5         joint_raw_matrix,
+    out AnalysisH5 filtered_matrix,
+    out path       joint_raw_matrix_mex,
+    out path       joint_filtered_matrix_mex,
+    out bool       skip_analysis,
+    src py         "../atac_rna/stages/processing/merge_atac_rna_matrices",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage GENERATE_SC_ATAC_COUNTS(
+    in  tsv.gz     fragments,
+    in  tsv.gz.tbi fragments_index,
+    in  bed        peaks,
+    in  path       reference_path,
+    in  csv        cell_barcodes,
+    in  json       excluded_barcodes,
+    out csv        atac_singlecell,
+    src py         "../atac_rna/stages/processing/generate_sc_atac_counts",
+) split (
+    in  string[]   contigs,
+    out pickle[]   barcode_counts,
+    out pickle[]   targeted_counts,
+    out int[]      fragment_depths,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+) retain (
+    atac_singlecell,
+)
+
+#
+# @include "_joint_cell_detector.mro"
+#
+
+pipeline _JOINT_CELL_DETECTOR(
+    in  string         sample_id,
+    in  path           reference_path,
+    in  string         barcode_whitelist,
+    in  h5             rna_raw_matrix,
+    in  h5             atac_raw_matrix,
+    in  bed            peaks,
+    in  tsv.gz         fragments,
+    in  tsv.gz.tbi     fragments_index,
+    in  map<MinCounts> force_cells,
+    in  int[]          rna_gem_groups,
+    in  bool           disable_bc_multiplets,
+    out csv            cell_barcodes,
+    out csv            atac_cell_barcodes,
+    out csv            singlecell,
+    out json           summary,
+    out json           excluded_barcodes,
+    out csv            atac_singlecell,
+    out json           rna_summary,
+    out h5             joint_raw_matrix,
+    out AnalysisH5     filtered_matrix,
+    out path           joint_raw_matrix_mex,
+    out path           joint_filtered_matrix_mex,
+    out bool           is_multi_genome,
+    out bool           skip_analysis,
+)
+{
+    call REMOVE_LOW_TARGETING_BARCODES(
+        fragments       = self.fragments,
+        fragments_index = self.fragments_index,
+        peaks           = self.peaks,
+        reference_path  = self.reference_path,
+    )
+
+    call REMOVE_GEL_BEAD_DOUBLET_BARCODES(
+        fragments       = self.fragments,
+        fragments_index = self.fragments_index,
+        reference_path  = self.reference_path,
+        barcode_counts  = REMOVE_LOW_TARGETING_BARCODES.barcode_counts,
+    )
+
+    call REMOVE_BARCODE_MULTIPLETS(
+        fragments       = self.fragments,
+        fragments_index = self.fragments_index,
+        reference_path  = self.reference_path,
+        barcode_counts  = REMOVE_LOW_TARGETING_BARCODES.barcode_counts,
+    ) using (
+        disabled = self.disable_bc_multiplets,
+    )
+
+    call MERGE_EXCLUDED_BARCODES(
+        barcode_exclusions = [
+            REMOVE_BARCODE_MULTIPLETS.barcode_multiplets,
+            REMOVE_GEL_BEAD_DOUBLET_BARCODES.gel_bead_doublet_barcodes,
+            REMOVE_LOW_TARGETING_BARCODES.low_targeting_barcodes,
+        ],
+    )
+
+    call DETECT_JOINT_CELL_BARCODES(
+        reference_path    = self.reference_path,
+        barcode_whitelist = self.barcode_whitelist,
+        rna_raw_matrix    = self.rna_raw_matrix,
+        atac_raw_matrix   = self.atac_raw_matrix,
+        force_cells       = self.force_cells,
+        atac_excluded_bcs = MERGE_EXCLUDED_BARCODES.excluded_barcodes,
+    )
+
+    call MERGE_SUMMARY_METRICS as MERGE_CELL_METRICS(
+        summary_jsons = [
+            REMOVE_LOW_TARGETING_BARCODES.low_targeting_summary,
+            REMOVE_GEL_BEAD_DOUBLET_BARCODES.gel_bead_doublet_summary,
+            REMOVE_BARCODE_MULTIPLETS.barcode_multiplets_summary,
+            DETECT_JOINT_CELL_BARCODES.summary,
+        ],
+    )
+
+    call GENERATE_SC_ATAC_COUNTS(
+        fragments         = self.fragments,
+        fragments_index   = self.fragments_index,
+        peaks             = self.peaks,
+        reference_path    = self.reference_path,
+        cell_barcodes     = DETECT_JOINT_CELL_BARCODES.atac_formatted_cell_barcodes,
+        excluded_barcodes = MERGE_EXCLUDED_BARCODES.excluded_barcodes,
+    )
+
+    call FILTER_PEAK_MATRIX(
+        num_analysis_bcs = null,
+        cell_barcodes    = DETECT_JOINT_CELL_BARCODES.atac_formatted_cell_barcodes,
+        raw_matrix       = self.atac_raw_matrix,
+        random_seed      = null,
+    )
+
+    call FILTER_UMI_MATRIX(
+        sample_id      = self.sample_id,
+        rna_raw_matrix = self.rna_raw_matrix,
+        cell_barcodes  = DETECT_JOINT_CELL_BARCODES.cell_barcodes,
+        gem_groups     = self.rna_gem_groups,
+    )
+
+    call MERGE_ATAC_RNA_MATRICES(
+        sample_id            = self.sample_id,
+        atac_raw_matrix      = self.atac_raw_matrix,
+        atac_filtered_matrix = FILTER_PEAK_MATRIX.filtered_matrix,
+        rna_raw_matrix       = self.rna_raw_matrix,
+        rna_filtered_matrix  = FILTER_UMI_MATRIX.filtered_matrix,
+        barcode_whitelist    = self.barcode_whitelist,
+        reference_path       = self.reference_path,
+    )
+
+    return (
+        cell_barcodes             = DETECT_JOINT_CELL_BARCODES.cell_barcodes,
+        atac_cell_barcodes        = DETECT_JOINT_CELL_BARCODES.atac_formatted_cell_barcodes,
+        singlecell                = DETECT_JOINT_CELL_BARCODES.singlecell,
+        excluded_barcodes         = MERGE_EXCLUDED_BARCODES.excluded_barcodes,
+        summary                   = MERGE_CELL_METRICS.merged_summary,
+        rna_summary               = FILTER_UMI_MATRIX.summary,
+        atac_singlecell           = GENERATE_SC_ATAC_COUNTS.atac_singlecell,
+        joint_raw_matrix          = MERGE_ATAC_RNA_MATRICES.joint_raw_matrix,
+        filtered_matrix           = MERGE_ATAC_RNA_MATRICES.filtered_matrix,
+        is_multi_genome           = FILTER_UMI_MATRIX.is_multi_genome,
+        joint_raw_matrix_mex      = MERGE_ATAC_RNA_MATRICES.joint_raw_matrix_mex,
+        joint_filtered_matrix_mex = MERGE_ATAC_RNA_MATRICES.joint_filtered_matrix_mex,
+        skip_analysis             = MERGE_ATAC_RNA_MATRICES.skip_analysis,
+    )
+}
+
+#
+# @include "_peak_annotator_stages.mro"
+#
+
+stage ANNOTATE_PEAKS(
+    in  bed  peaks,
+    in  path reference_path,
+    out tsv  peak_annotation,
+    src py   "../atac/stages/analysis/annotate_peaks",
+) split (
+    in  bool skip,
+    in  int  chunk_start,
+    in  int  chunk_end,
+) using (
+    mem_gb   = 5,
+    volatile = strict,
+)
+
+stage COMPUTE_GC_DISTRIBUTION(
+    in  bed    peaks,
+    in  path   reference_path,
+    out pickle GCdict,
+    src py     "../atac/stages/analysis/compute_gc_dist",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage SCAN_MOTIFS(
+    in  pickle globalGCdict,
+    in  bed    peaks,
+    in  path   reference_path,
+    in  float  pwm_threshold,
+    out bed    peak_motif_hits,
+    src py     "../atac/stages/analysis/scan_motifs",
+) split (
+    in  bool   skip,
+    in  file   GCdict,
+) using (
+    volatile = strict,
+)
+
+stage GENERATE_TF_MATRIX(
+    in  path reference_path,
+    in  bed  peaks,
+    in  bed  peak_motif_hits,
+    in  h5   filtered_matrix,
+    out h5   filtered_tf_bc_matrix,
+    out path filtered_tf_bc_matrix_mex,
+    out gz   tf_propZ_matrix,
+    src py   "../atac/stages/analysis/generate_tf_matrix",
+) split (
+) using (
+    volatile = strict,
+)
+
+#
+# @include "atac/_peak_annotator.mro"
+#
+
+pipeline _PEAK_ANNOTATOR(
+    in  path  reference_path,
+    in  bed   peaks,
+    in  h5    filtered_peak_bc_matrix,
+    in  float pwm_threshold,
+    out h5    filtered_tf_bc_matrix,
+    out path  filtered_tf_bc_matrix_mex,
+    out gz    tf_propZ_matrix,
+    out tsv   peak_annotation,
+    out bed   peak_motif_hits,
+)
+{
+    call ANNOTATE_PEAKS(
+        peaks          = self.peaks,
+        reference_path = self.reference_path,
+    )
+
+    call COMPUTE_GC_DISTRIBUTION(
+        peaks          = self.peaks,
+        reference_path = self.reference_path,
+    )
+
+    call SCAN_MOTIFS(
+        globalGCdict   = COMPUTE_GC_DISTRIBUTION.GCdict,
+        peaks          = self.peaks,
+        reference_path = self.reference_path,
+        pwm_threshold  = self.pwm_threshold,
+    )
+
+    call GENERATE_TF_MATRIX(
+        reference_path  = self.reference_path,
+        peaks           = self.peaks,
+        filtered_matrix = self.filtered_peak_bc_matrix,
+        peak_motif_hits = SCAN_MOTIFS.peak_motif_hits,
+    )
+
+    return (
+        filtered_tf_bc_matrix     = GENERATE_TF_MATRIX.filtered_tf_bc_matrix,
+        filtered_tf_bc_matrix_mex = GENERATE_TF_MATRIX.filtered_tf_bc_matrix_mex,
+        tf_propZ_matrix           = GENERATE_TF_MATRIX.tf_propZ_matrix,
+        peak_annotation           = ANNOTATE_PEAKS.peak_annotation,
+        peak_motif_hits           = SCAN_MOTIFS.peak_motif_hits,
+    )
+}
+
+#
+# @include "atac/_sc_atac_analyzer_stages.mro"
+#
+
+stage ATAC_ANALYZER_PREFLIGHT(
+    in  bed      peaks,
+    in  h5       filtered_peak_bc_matrix,
+    in  string[] factorization,
+    in  int      tsne_perplexity,
+    in  int      random_seed,
+    in  float    tsne_theta,
+    in  int      tsne_mom_switch_iter,
+    in  int      tsne_stop_lying_iter,
+    in  int      tsne_max_dims,
+    in  int      tsne_input_pcs,
+    in  int      tsne_max_iter,
+    in  int      max_clusters,
+    in  int      num_components,
+    in  int      num_dr_bcs,
+    in  int      num_dr_features,
+    in  float    neighbor_a,
+    in  float    neighbor_b,
+    in  int      graphclust_neighbors,
+    src py       "../atac/stages/preflight/atac_analyzer",
+)
+
+stage REDUCE_DIMENSIONS(
+    in  h5       filtered_matrix,
+    in  string[] factorization,
+    in  int      num_dims,
+    in  int      num_bcs,
+    in  int      num_features,
+    in  int      random_seed,
+    out path     reduced_data,
+    src py       "../atac/stages/analysis/reduce_dimensions",
+) split (
+    in  string   method,
+) using (
+    volatile = strict,
+)
+
+stage CLUSTER_CELLS(
+    in  h5       filtered_matrix,
+    in  path     reduced_data,
+    in  string[] factorization,
+    in  int      minclusters,
+    in  int      maxclusters,
+    in  int      num_dims,
+    in  int      random_seed,
+    out path     clustered_data,
+    src py       "../atac/stages/analysis/cluster_cells",
+) split (
+    in  int      n_clusters,
+) using (
+    volatile = strict,
+)
+
+stage RUN_MANIFOLD_PROJECTION(
+    in  h5             filtered_matrix,
+    in  path           reduced_data,
+    in  ManifoldParams params,
+    in  int            random_seed,
+    in  string[]       factorization      "lsa|plsa|pca",
+    in  string[]       projections        "tsne|umap",
+    out path           projection_output,
+    src py             "../atac/stages/analysis/run_manifold_projection",
+) split (
+    in  string         method,
+    in  string         projection,
+    in  int            projection_dims,
+) using (
+    volatile = strict,
+)
+
+stage ATAC_RUN_GRAPH_CLUSTERING(
+    in  h5       matrix_h5           "Processed matrix",
+    in  string[] factorization,
+    in  path     reduced_data,
+    in  int      num_neighbors       "Use this many neighbors",
+    in  float    neighbor_a          "Use larger of (a+b*log10(n_cells) neighbors or num_neighbors",
+    in  float    neighbor_b          "Use larger of (a+b*log10(n_cells) neighbors or num_neighbors",
+    in  int      balltree_leaf_size,
+    in  string   similarity_type     "Type of similarity to use (nn or snn)",
+    out h5       chunked_neighbors,
+    out path     knn_clusters,
+    src py       "../atac/stages/analysis/run_graph_clustering",
+) split (
+    in  string   method,
+    in  pickle   neighbor_index,
+    in  h5       submatrix,
+    in  int      row_start,
+    in  int      total_rows,
+    in  int      k_nearest,
+    in  h5       use_bcs,
+) using (
+    volatile = strict,
+)
+
+stage ATAC_COMBINE_CLUSTERING(
+    in  h5       filtered_matrix,
+    in  path     clustered_data,
+    in  path     knn_clusters,
+    in  string[] factorization,
+    out path     clustering,
+    out h5       clustering_h5    "h5 when only one factorization is provided",
+    src py       "../atac/stages/analysis/combine_clustering",
+) using (
+    volatile = strict,
+)
+
+stage ATAC_SUMMARIZE_ANALYSIS(
+    in  tsv      peak_annotation,
+    in  h5       filtered_peak_bc_matrix,
+    in  h5       filtered_tf_bc_matrix,
+    in  gz       tf_propZ_matrix,
+    in  path     reduced_data,
+    in  path     clustering,
+    in  path     tsne,
+    in  path     enrichment_analysis,
+    in  string[] factorization,
+    out h5       analysis,
+    out path     analysis_csv,
+    out h5       feature_bc_matrix,
+    out path     analysis_h5_path,
+    src py       "../atac/stages/analysis/summarize_analysis",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage PERFORM_DIFFERENTIAL_ANALYSIS(
+    in  bed      peaks,
+    in  path     reference_path,
+    in  h5       filtered_peak_bc_matrix,
+    in  h5       filtered_tf_bc_matrix,
+    in  string[] factorization,
+    in  path     clustering,
+    out path     enrichment_analysis,
+    src py       "../atac/stages/analysis/perform_differential_analysis",
+) split (
+    in  string   method,
+    in  string   clustering_key,
+    in  int      cluster,
+    out csv      tmp_diffexp,
+) using (
+    volatile = strict,
+)
+
+#
+# @include "_feature_linkage_computer_stages.mro"
+#
+
+stage PREPROCESS_JOINT_MATRIX(
+    in  h5              merged_filtered_matrix_h5,
+    in  csv             reduced_dim_projection,
+    in  path            reference_path,
+    in  float           max_dist_mb,
+    out BarcodeMetadata barcode_metadata,
+    out pkl             feature_grouping,
+    src py              "../atac_rna/stages/feature_linkage/preprocess_joint_matrix",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage COMPUTE_FEATURE_LINKAGES(
+    in  h5                   merged_filtered_matrix_h5,
+    in  tsv                  atac_peak_annotation,
+    in  path                 reference_path,
+    in  pkl                  feature_grouping,
+    in  BarcodeMetadata      barcode_metadata,
+    in  float                max_dist_mb,
+    out FeatureLinkageOutput feature_linkage,
+    out json                 summary,
+    src py                   "../atac_rna/stages/feature_linkage/compute_feature_linkages",
+) split (
+    in  int                  chunk_start,
+    in  int                  chunk_end,
+    out h5                   chunk_linkages,
+) using (
+    mem_gb   = 4,
+    volatile = strict,
+)
+
+#
+# @include "atac_rna/_feature_linkage_computer.mro"
+#
+
+pipeline _FEATURE_LINKAGE_COMPUTER(
+    in  h5                   merged_filtered_matrix_h5,
+    in  csv                  reduced_dim_projection,
+    in  tsv                  atac_peak_annotation,
+    in  path                 reference_path,
+    in  float                max_dist_mb,
+    out FeatureLinkageOutput feature_linkage,
+    out json                 summary,
+)
+{
+    call PREPROCESS_JOINT_MATRIX(
+        merged_filtered_matrix_h5 = self.merged_filtered_matrix_h5,
+        reduced_dim_projection    = self.reduced_dim_projection,
+        reference_path            = self.reference_path,
+        max_dist_mb               = self.max_dist_mb,
+    )
+
+    call COMPUTE_FEATURE_LINKAGES(
+        merged_filtered_matrix_h5 = self.merged_filtered_matrix_h5,
+        atac_peak_annotation      = self.atac_peak_annotation,
+        reference_path            = self.reference_path,
+        barcode_metadata          = PREPROCESS_JOINT_MATRIX.barcode_metadata,
+        feature_grouping          = PREPROCESS_JOINT_MATRIX.feature_grouping,
+        max_dist_mb               = self.max_dist_mb,
+    )
+
+    return (
+        feature_linkage = COMPUTE_FEATURE_LINKAGES.feature_linkage,
+        summary         = COMPUTE_FEATURE_LINKAGES.summary,
+    )
+}
+
+#
+# @include "atac_rna/_sc_atac_gex_analyzer_stages.mro"
+#
+
+stage ATAC_GEX_SUMMARIZE_ANALYSIS(
+    in  AnalysisH5               matrix,
+    in  gz                       tf_propZ_matrix,
+    in  tsv                      peak_annotation,
+    in  ProjectionOutputMap      reduced_data,
+    in  AnalysisPath             tsne,
+    in  AnalysisPath             umap,
+    in  AnalysisPath             clustering,
+    in  GexDeCluster             differential_expression,
+    in  AnalysisPath             differential_accessibility,
+    in  h5                       filtered_tf_bc_matrix_h5,
+    in  int                      max_clusters,
+    in  FeatureLinkageOutput     feature_linkage,
+    out ClusteringOutput         clustering_output,
+    out DimensionReductionOutput dr_output,
+    out h5                       analysis_h5,
+    out h5                       loupe_matrix_h5,
+    out bool                     is_multi_genome,
+    src py                       "../atac_rna/stages/analyzer/atac_gex_summarize_analysis",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage PARSE_REDUCED_DIM(
+    in  csv                 linkage_projection,
+    in  ProjectionOutputMap reduced_data,
+    in  h5                  matrix_h5,
+    out csv                 reduced_dim_projection,
+    src py                  "../atac_rna/stages/analyzer/parse_reduced_dim",
+) using (
+    volatile = strict,
+)
+
+#
+# @include "rna/_sc_rna_analyzer_stages.mro"
+#
+
+stage ANALYZER_PREFLIGHT(
+    in  bool   skip,
+    in  h5     filtered_matrices_h5,
+    in  csv    use_genes,
+    in  csv    exclude_genes,
+    in  csv    use_bcs,
+    in  int    num_analysis_bcs,
+    in  int    force_cells,
+    in  int    random_seed,
+    in  int    num_pca_bcs,
+    in  int    num_pca_genes,
+    in  int    num_principal_comps,
+    in  int    cbc_knn,
+    in  float  cbc_alpha,
+    in  float  cbc_sigma,
+    in  bool   cbc_realign_panorama,
+    in  int    max_clusters,
+    in  int    graphclust_neighbors,
+    in  float  neighbor_a,
+    in  float  neighbor_b,
+    in  int    tsne_perplexity,
+    in  int    tsne_input_pcs,
+    in  int    tsne_max_dims,
+    in  int    tsne_max_iter,
+    in  int    tsne_stop_lying_iter,
+    in  int    tsne_mom_switch_iter,
+    in  float  tsne_theta,
+    in  int    umap_n_neighbors,
+    in  int    umap_input_pcs,
+    in  int    umap_max_dims,
+    in  float  umap_min_dist,
+    in  string umap_metric,
+    out bool   skip,
+    out bool   is_antibody_only,
+    src py     "../rna/stages/analyzer/analyzer_preflight",
+) using (
+    volatile = strict,
+)
+
+stage REANALYZER_PREFLIGHT(
+    in  h5 filtered_matrices_h5,
+    src py "../rna/stages/analyzer/reanalyzer_preflight",
+) using (
+    volatile = strict,
+)
+
+stage REANALYZE_VERIFY_SAMPLE_IDS(
+    in  h5    matrix_h5,
+    in  map[] sample_defs,
+    out map[] sample_defs,
+    src py    "../rna/stages/analyzer/reanalyze_verify_sample_ids",
+)
+
+stage PREPROCESS_MATRIX(
+    in  h5   matrix_h5,
+    in  bool skip,
+    in  int  random_seed,
+    in  csv  use_genes,
+    in  csv  exclude_genes,
+    in  csv  use_bcs,
+    in  int  num_bcs,
+    in  int  force_cells,
+    in  bool is_antibody_only,
+    out h5   cloupe_matrix_h5,
+    out h5   preprocessed_matrix_h5,
+    out bool is_multi_genome,
+    src py   "../rna/stages/analyzer/preprocess_matrix",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage RUN_MULTIGENOME_ANALYSIS(
+    in  h5   filtered_matrices_h5,
+    in  bool is_multi_genome,
+    in  bool skip,
+    out path multi_genome_csv,
+    out path multi_genome_json,
+    out json multi_genome_summary,
+    src py   "../rna/stages/analyzer/run_multigenome_analysis",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage RUN_PCA(
+    in  h5   matrix_h5,
+    in  bool skip,
+    in  int  random_seed,
+    in  int  num_bcs,
+    in  int  num_genes,
+    in  int  num_pcs,
+    in  bool is_antibody_only,
+    out h5   pca_h5,
+    out path pca_csv,
+    src py   "../rna/stages/analyzer/run_pca",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage RUN_KMEANS(
+    in  h5   matrix_h5,
+    in  h5   pca_h5,
+    in  bool skip,
+    in  int  random_seed,
+    in  int  max_clusters,
+    in  int  num_bcs,
+    in  int  num_pcs,
+    out h5   kmeans_h5,
+    out path kmeans_csv,
+    src py   "../rna/stages/analyzer/run_kmeans",
+) split (
+    in  int  n_clusters,
+) using (
+    volatile = strict,
+)
+
+stage RUN_GRAPH_CLUSTERING(
+    in  h5     matrix_h5,
+    in  h5     pca_h5,
+    in  int    num_neighbors       "Use this many neighbors",
+    in  float  neighbor_a          "Use larger of (a+b*log10(n_cells) neighbors or num_neighbors",
+    in  float  neighbor_b          "Use larger of (a+b*log10(n_cells) neighbors or num_neighbors",
+    in  int    num_bcs             "Use this many cell-barcodes in clustering",
+    in  int    input_pcs           "Use top N PCs",
+    in  int    balltree_leaf_size,
+    in  string similarity_type     "Type of similarity to use (nn or snn)",
+    in  bool   skip,
+    out h5     chunked_neighbors,
+    out h5     clusters_h5,
+    out path   clusters_csv,
+    src py     "../rna/stages/analyzer/run_graph_clustering",
+) split (
+    in  pickle neighbor_index,
+    in  h5     submatrix,
+    in  int    row_start,
+    in  int    total_rows,
+    in  int    k_nearest,
+    in  h5     use_bcs,
+) using (
+    volatile = strict,
+)
+
+stage MERGE_CLUSTERS(
+    in  h5   matrix_h5,
+    in  h5   pca_h5,
+    in  h5   clusters_h5,
+    in  bool skip,
+    out h5   clusters_h5,
+    out path clusters_csv,
+    src py   "../rna/stages/analyzer/merge_clusters",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage COMBINE_CLUSTERING(
+    in  bool skip,
+    in  h5   kmeans_h5,
+    in  path kmeans_csv,
+    in  h5   graphclust_h5,
+    in  path graphclust_csv,
+    out h5   clustering_h5,
+    out path clustering_csv,
+    src py   "../rna/stages/analyzer/combine_clustering",
+) using (
+    volatile = strict,
+)
+
+stage RUN_DIFFERENTIAL_EXPRESSION(
+    in  h5     matrix_h5,
+    in  h5     clustering_h5,
+    in  bool   skip,
+    in  int    random_seed,
+    in  int    max_clusters,
+    in  bool   is_antibody_only,
+    out h5     diffexp_h5,
+    out path   diffexp_csv,
+    src py     "../rna/stages/analyzer/run_differential_expression",
+) split (
+    in  string clustering_key,
+) using (
+    volatile = strict,
+)
+
+stage RUN_TSNE(
+    in  h5     matrix_h5,
+    in  h5     pca_h5,
+    in  bool   skip,
+    in  int    random_seed,
+    in  int    perplexity,
+    in  int    input_pcs,
+    in  int    max_dims,
+    in  int    max_iter,
+    in  int    stop_lying_iter,
+    in  int    mom_switch_iter,
+    in  float  theta,
+    in  bool   is_antibody_only,
+    out h5     tsne_h5,
+    out path   tsne_csv,
+    src py     "../rna/stages/analyzer/run_tsne",
+) split (
+    in  int    tsne_dims,
+    in  string feature_type,
+) using (
+    volatile = strict,
+)
+
+stage RUN_UMAP(
+    in  h5     matrix_h5,
+    in  h5     pca_h5,
+    in  bool   skip,
+    in  int    random_seed,
+    in  int    n_neighbors,
+    in  int    input_pcs,
+    in  int    max_dims,
+    in  float  min_dist,
+    in  string metric,
+    in  bool   is_antibody_only,
+    out h5     umap_h5,
+    out path   umap_csv,
+    src py     "../rna/stages/analyzer/run_umap",
+) split (
+    in  int    umap_dims,
+    in  string feature_type,
+) using (
+    volatile = strict,
+)
+
+stage SUMMARIZE_ANALYSIS(
+    in  h5    matrix_h5,
+    in  h5    pca_h5,
+    in  h5    clustering_h5,
+    in  h5    diffexp_h5,
+    in  h5    tsne_h5,
+    in  h5    umap_h5,
+    in  path  pca_csv,
+    in  path  clustering_csv,
+    in  path  diffexp_csv,
+    in  path  tsne_csv,
+    in  path  umap_csv,
+    in  json  multi_genome_summary,
+    in  path  multi_genome_csv,
+    in  path  multi_genome_json,
+    in  bool  is_multi_genome,
+    in  bool  chemistry_batch_correction,
+    in  float batch_score_before_correction,
+    in  float batch_score_after_correction,
+    in  bool  skip,
+    out path  analysis,
+    out path  analysis_csv,
+    out json  summary,
+    src py    "../rna/stages/analyzer/summarize_analysis",
+) split (
+) using (
+    volatile = strict,
+)
+
+stage PARSE_PARAM_CSV(
+    in  csv    params_csv,
+    out csv    params_csv,
+    out int    num_analysis_bcs,
+    out int    random_seed,
+    out int    num_pca_bcs,
+    out int    num_pca_genes,
+    out int    num_principal_comps,
+    out int    cbc_knn,
+    out float  cbc_alpha,
+    out float  cbc_sigma,
+    out bool   cbc_realign_panorama,
+    out int    max_clusters,
+    out int    graphclust_neighbors,
+    out float  neighbor_a,
+    out float  neighbor_b,
+    out int    tsne_perplexity,
+    out int    tsne_input_pcs,
+    out int    tsne_max_dims,
+    out int    tsne_max_iter,
+    out int    tsne_stop_lying_iter,
+    out int    tsne_mom_switch_iter,
+    out float  tsne_theta,
+    out int    umap_n_neighbors,
+    out int    umap_input_pcs,
+    out int    umap_max_dims,
+    out float  umap_min_dist,
+    out string umap_metric,
+    src py     "../rna/stages/analyzer/parse_csv",
+) using (
+    volatile = strict,
+)
+
+stage SUMMARIZE_REANALYSIS(
+    in  string sample_id,
+    in  string sample_desc,
+    in  h5     filtered_matrices,
+    in  path   analysis,
+    in  json   analyze_matrices_summary,
+    out html   web_summary,
+    out json   summary,
+    out path   feature_bc_matrix_mex,
+    src py     "../rna/stages/analyzer/summarize_reanalysis",
+) split (
+) using (
+    volatile = strict,
+) retain (
+    summary,
+)
+
+stage CORRECT_CHEMISTRY_BATCH(
+    in  pickle dimred_matrix,
+    in  pickle matrix_barcode_feature_info,
+    in  map[]  library_info,
+    in  int    cbc_knn,
+    in  float  cbc_alpha,
+    in  float  cbc_sigma,
+    in  bool   cbc_realign_panorama,
+    in  bool   skip,
+    out float  batch_score_before_correction,
+    out float  batch_score_after_correction,
+    out h5     aligned_pca_h5,
+    out path   aligned_pca_csv,
+    src py     "../rna/stages/analyzer/correct_chemistry_batch",
+) split (
+    in  int    batch_id,
+    in  map    batch_to_bc_indices,
+    in  pickle ordered_dimred_matrix,
+    in  pickle idx_to_batch_id,
+    in  bool   need_reorder_barcode,
+    in  pickle barcode_reorder_index,
+    out binary batch_nearest_neighbor,
+) using (
+    mem_gb = 4,
+)
+
+stage CHOOSE_DIMENSION_REDUCTION(
+    in  bool chemistry_batch_correction,
+    out bool disable_run_pca,
+    out bool disable_correct_chemistry_batch,
+    src py   "../rna/stages/analyzer/choose_dimension_reduction",
+)
+
+stage CHOOSE_DIMENSION_REDUCTION_OUTPUT(
+    in  bool   skip,
+    in  h5[]   pca_h5_list,
+    in  path[] pca_csv_list,
+    out h5     pca_h5,
+    out path   pca_csv,
+    src py     "../rna/stages/analyzer/choose_dimension_reduction_output",
+)
+
+#
+# @include "_sc_atac_gex_analyzer.mro"
+#
+
+pipeline _CLUSTER_COMPUTER_CORE(
+    in  ProjectionOutput reduced_data,
+    in  h5               matrix_clustering      "matrix to use for clustering",
+    in  path             reference_path         "used in differential accessiblity",
+    in  bed              peaks                  "used in differential accessiblity",
+    in  h5               filtered_tf_bc_matrix  "used in differential accessiblity",
+    in  AnalysisH5       matrix                 "matrix.gex -> diff_exp, matrix.atac -> diff_atac",
+    in  int              max_clusters           "K-means max # of clusters",
+    in  int              random_seed,
+    in  float            neighbor_a,
+    in  float            neighbor_b,
+    in  int              graphclust_neighbors,
+    out path             clustering,
+    out path             enrichment_atac,
+    out GexDe            enrichment_gex,
+)
+{
+    call CLUSTER_CELLS(
+        filtered_matrix = self.matrix_clustering,
+        reduced_data    = self.reduced_data.projection,
+        factorization   = [self.reduced_data.method],
+        minclusters     = 2,
+        maxclusters     = self.max_clusters,
+        num_dims        = null,
+        random_seed     = self.random_seed,
+    )
+
+    call ATAC_RUN_GRAPH_CLUSTERING(
+        matrix_h5          = self.matrix_clustering,
+        factorization      = [self.reduced_data.method],
+        reduced_data       = self.reduced_data.projection,
+        num_neighbors      = self.graphclust_neighbors,
+        neighbor_a         = self.neighbor_a,
+        neighbor_b         = self.neighbor_b,
+        balltree_leaf_size = null,
+        similarity_type    = "nn",
+    )
+
+    call ATAC_COMBINE_CLUSTERING as COMBINE_CLUSTERING(
+        filtered_matrix = self.matrix_clustering,
+        clustered_data  = CLUSTER_CELLS.clustered_data,
+        knn_clusters    = ATAC_RUN_GRAPH_CLUSTERING.knn_clusters,
+        factorization   = [self.reduced_data.method],
+    )
+
+    call PERFORM_DIFFERENTIAL_ANALYSIS as COMPUTE_DIFFERENTIAL_ATAC(
+        reference_path          = self.reference_path,
+        peaks                   = self.peaks,
+        filtered_peak_bc_matrix = self.matrix.atac,
+        filtered_tf_bc_matrix   = self.filtered_tf_bc_matrix,
+        factorization           = [self.reduced_data.method],
+        clustering              = COMBINE_CLUSTERING.clustering,
+    )
+
+    call RUN_DIFFERENTIAL_EXPRESSION as COMPUTE_DIFFERENTIAL_GEX(
+        matrix_h5        = self.matrix.gex,
+        clustering_h5    = COMBINE_CLUSTERING.clustering_h5,
+        random_seed      = self.random_seed,
+        max_clusters     = self.max_clusters,
+        is_antibody_only = false,
+        skip             = false,
+    ) using (
+        volatile = true,
+    )
+
+    return (
+        clustering      = COMBINE_CLUSTERING.clustering,
+        enrichment_atac = COMPUTE_DIFFERENTIAL_ATAC.enrichment_analysis,
+        enrichment_gex  = {
+            csv: COMPUTE_DIFFERENTIAL_GEX.diffexp_csv,
+            h5:  COMPUTE_DIFFERENTIAL_GEX.diffexp_h5,
+        },
+    )
+}
+
+# Pipeline to run dimensionality reduction, TSNE and UMAP
+pipeline _DIMENSION_REDUCER_CORE(
+    in  h5               matrix,
+    in  string           method,
+    in  int              random_seed,
+    in  int              num_dims,
+    out ProjectionOutput reduced_data,
+    out path             tsne,
+    out path             umap,
+)
+{
+    call REDUCE_DIMENSIONS(
+        filtered_matrix = self.matrix,
+        factorization   = [self.method],
+        num_dims        = self.num_dims,
+        num_bcs         = null,
+        num_features    = null,
+        random_seed     = self.random_seed,
+    )
+
+    call RUN_MANIFOLD_PROJECTION(
+        filtered_matrix = self.matrix,
+        reduced_data    = REDUCE_DIMENSIONS.reduced_data,
+        params          = null,
+        random_seed     = self.random_seed,
+        factorization   = [self.method],
+        projections     = [
+            "tsne",
+            "umap",
+        ],
+    )
+
+    return (
+        reduced_data = {
+            method:     self.method,
+            num_dims:   self.num_dims,
+            projection: REDUCE_DIMENSIONS.reduced_data,
+        },
+        tsne         = RUN_MANIFOLD_PROJECTION.projection_output,
+        umap         = RUN_MANIFOLD_PROJECTION.projection_output,
+    )
+}
+
+# Run _DIMENSION_REDUCER_CORE for atac, gex
+pipeline _DIMENSION_REDUCER(
+    in  AnalysisH5          matrix,
+    in  AnalysisString      method,
+    in  int                 random_seed,
+    in  AnalysisInt         projection_dims,
+    out ProjectionOutputMap reduced_data,
+    out AnalysisPath        tsne,
+    out AnalysisPath        umap,
+)
+{
+    call _DIMENSION_REDUCER_CORE as _ATAC_DIMENSION_REDUCER(
+        matrix      = self.matrix.atac,
+        method      = self.method.atac,
+        num_dims    = self.projection_dims.atac,
+        random_seed = self.random_seed,
+    )
+
+    call _DIMENSION_REDUCER_CORE as _GEX_DIMENSION_REDUCER(
+        matrix      = self.matrix.gex,
+        method      = self.method.gex,
+        num_dims    = self.projection_dims.gex,
+        random_seed = self.random_seed,
+    )
+
+    return (
+        reduced_data = {
+            atac:     _ATAC_DIMENSION_REDUCER.reduced_data,
+            atac_gex: null,
+            gex:      _GEX_DIMENSION_REDUCER.reduced_data,
+        },
+        tsne         = {
+            atac:     _ATAC_DIMENSION_REDUCER.tsne,
+            atac_gex: null,
+            gex:      _GEX_DIMENSION_REDUCER.tsne,
+        },
+        umap         = {
+            atac:     _ATAC_DIMENSION_REDUCER.umap,
+            atac_gex: null,
+            gex:      _GEX_DIMENSION_REDUCER.umap,
+        },
+    )
+}
+
+# Analyzer pipeline
+pipeline _SC_ATAC_GEX_ANALYZER(
+    in  AnalysisH5     matrix,
+    in  AnalysisString method,
+    in  AnalysisInt    projection_dims,
+    in  int            random_seed,
+    in  path           reference_path,
+    in  bed            peaks,
+    in  int            max_clusters,
+    in  float          feature_linkage_max_dist_mb,
+    in  csv            linkage_projection,
+    out AnalysisOutput analysis_csv                 "path"  "analysis",
+    out h5             analysis_h5                  "H5"    "analysis.h5",
+    out tsv            peak_annotation,
+    out bool           is_multi_genome,
+    # joint GEX-ATAC-Motif barcode matrix for Loupe
+    out h5             loupe_matrix_h5,
+    out json           summary,
+)
+{
+    # Compute ATAC|GEX dimensionality reduction and TSNE
+    call _DIMENSION_REDUCER(
+        matrix          = self.matrix,
+        method          = self.method,
+        random_seed     = self.random_seed,
+        projection_dims = self.projection_dims,
+    )
+
+    call _PEAK_ANNOTATOR(
+        reference_path          = self.reference_path,
+        peaks                   = self.peaks,
+        filtered_peak_bc_matrix = self.matrix.atac,
+        pwm_threshold           = null,
+    )
+
+    # Compute ATAC|GEX clustering and differential GEX and ATAC for
+    # the particular clustering
+    call _CLUSTER_COMPUTER_CORE as _ATAC_CLUSTERING_COMPUTER(
+        reduced_data          = _DIMENSION_REDUCER.reduced_data.atac,
+        matrix_clustering     = self.matrix.atac,
+        max_clusters          = self.max_clusters,
+        random_seed           = self.random_seed,
+        reference_path        = self.reference_path,
+        matrix                = self.matrix,
+        peaks                 = self.peaks,
+        filtered_tf_bc_matrix = _PEAK_ANNOTATOR.filtered_tf_bc_matrix,
+        neighbor_a            = null,
+        neighbor_b            = null,
+        graphclust_neighbors  = null,
+    )
+
+    call _CLUSTER_COMPUTER_CORE as _GEX_CLUSTERING_COMPUTER(
+        reduced_data          = _DIMENSION_REDUCER.reduced_data.gex,
+        matrix_clustering     = self.matrix.gex,
+        max_clusters          = self.max_clusters,
+        random_seed           = self.random_seed,
+        reference_path        = self.reference_path,
+        matrix                = self.matrix,
+        peaks                 = self.peaks,
+        filtered_tf_bc_matrix = _PEAK_ANNOTATOR.filtered_tf_bc_matrix,
+        neighbor_a            = null,
+        neighbor_b            = null,
+        graphclust_neighbors  = null,
+    )
+
+    call PARSE_REDUCED_DIM(
+        linkage_projection = self.linkage_projection,
+        reduced_data       = _DIMENSION_REDUCER.reduced_data,
+        matrix_h5          = self.matrix.atac_gex,
+    )
+
+    call _FEATURE_LINKAGE_COMPUTER(
+        merged_filtered_matrix_h5 = self.matrix.atac_gex,
+        reduced_dim_projection    = PARSE_REDUCED_DIM.reduced_dim_projection,
+        atac_peak_annotation      = _PEAK_ANNOTATOR.peak_annotation,
+        reference_path            = self.reference_path,
+        max_dist_mb               = self.feature_linkage_max_dist_mb,
+    )
+
+    call ATAC_GEX_SUMMARIZE_ANALYSIS(
+        matrix                     = self.matrix,
+        tf_propZ_matrix            = _PEAK_ANNOTATOR.tf_propZ_matrix,
+        peak_annotation            = _PEAK_ANNOTATOR.peak_annotation,
+        reduced_data               = _DIMENSION_REDUCER.reduced_data,
+        tsne                       = _DIMENSION_REDUCER.tsne,
+        umap                       = _DIMENSION_REDUCER.umap,
+        clustering                 = {
+            atac:     _ATAC_CLUSTERING_COMPUTER.clustering,
+            atac_gex: null,
+            gex:      _GEX_CLUSTERING_COMPUTER.clustering,
+        },
+        differential_expression    = {
+            atac:     _ATAC_CLUSTERING_COMPUTER.enrichment_gex,
+            atac_gex: null,
+            gex:      _GEX_CLUSTERING_COMPUTER.enrichment_gex,
+        },
+        differential_accessibility = {
+            atac:     _ATAC_CLUSTERING_COMPUTER.enrichment_atac,
+            atac_gex: null,
+            gex:      _GEX_CLUSTERING_COMPUTER.enrichment_atac,
+        },
+        filtered_tf_bc_matrix_h5   = _PEAK_ANNOTATOR.filtered_tf_bc_matrix,
+        max_clusters               = self.max_clusters,
+        feature_linkage            = _FEATURE_LINKAGE_COMPUTER.feature_linkage,
+    )
+
+    return (
+        analysis_csv    = {
+            clustering:               ATAC_GEX_SUMMARIZE_ANALYSIS.clustering_output,
+            dimensionality_reduction: ATAC_GEX_SUMMARIZE_ANALYSIS.dr_output,
+            feature_linkage:          _FEATURE_LINKAGE_COMPUTER.feature_linkage,
+            tf_analysis: {
+                filtered_tf_bc_matrix:    _PEAK_ANNOTATOR.filtered_tf_bc_matrix_mex,
+                filtered_tf_bc_matrix_h5: _PEAK_ANNOTATOR.filtered_tf_bc_matrix,
+                peak_motif_mapping:       _PEAK_ANNOTATOR.peak_motif_hits,
+            },
+        },
+        analysis_h5     = ATAC_GEX_SUMMARIZE_ANALYSIS.analysis_h5,
+        peak_annotation = _PEAK_ANNOTATOR.peak_annotation,
+        is_multi_genome = ATAC_GEX_SUMMARIZE_ANALYSIS.is_multi_genome,
+        loupe_matrix_h5 = ATAC_GEX_SUMMARIZE_ANALYSIS.loupe_matrix_h5,
+        summary         = _FEATURE_LINKAGE_COMPUTER.summary,
+    )
+
+    # This retain is required because the outputs of _{ATAC|GEX}_CLUSTERING_COMPUTER and
+    # _DIMENSION_REDUCER are rearranged in the stage code for ATAC_GEX_SUMMARIZE_ANALYSIS in a way
+    # that is not transparent to martian. Even though these files are part of the top-level pipeline
+    # outputs these files will be VDR'ed if this retain is absent.
+    retain (
+        _ATAC_CLUSTERING_COMPUTER.clustering,
+        _GEX_CLUSTERING_COMPUTER.clustering,
+        _ATAC_CLUSTERING_COMPUTER.enrichment_gex,
+        _GEX_CLUSTERING_COMPUTER.enrichment_gex,
+        _ATAC_CLUSTERING_COMPUTER.enrichment_atac,
+        _GEX_CLUSTERING_COMPUTER.enrichment_atac,
+        _DIMENSION_REDUCER.reduced_data,
+        _DIMENSION_REDUCER.tsne,
+        _DIMENSION_REDUCER.umap,
+    )
+}
+
+#
+# @include "sc_atac_gex_counter.mro"
+#
+
+pipeline SC_ATAC_GEX_COUNTER(
+    in  int            gem_well,
+    in  string         sample_id,
+    in  string         sample_desc,
+    in  map[]          sample_def,
+    in  path           reference_path,
+    in  map<MinCounts> force_cells,
+    in  bool           skip_compatibility_check        "Skip checking for barcode compatibility",
+    in  float          feature_linkage_max_dist_mb,
+    in  int            k_means_max_clusters,
+    in  bool           no_bam,
+    #
+    in  string         rna_chemistry,
+    in  ChemistryDef   rna_custom_chemistry_def,
+    in  int            rna_recovered_cells,
+    in  float          rna_subsample_rate,
+    in  int            rna_initial_reads,
+    in  int            rna_r1_length,
+    in  int            rna_r2_length,
+    in  csv            rna_feature_reference,
+    in  bool           rna_include_introns,
+    in  int            rna_trim_polya_min_score,
+    in  int            rna_trim_tso_min_score,
+    #
+    in  float          atac_subsample_rate,
+    in  string         atac_barcode_whitelist          "barcode whitelist file",
+    in  bed            atac_custom_peaks,
+    in  float          atac_peak_qval,
+    in  bool           disable_bc_multiplets,
+    #
+    out AnalysisHTML   web_summary                     "Run summary HTML for ATAC|GEX|Joint",
+    out csv            summary_csv                     "Analysis summary metrics (in CSV)",
+    out csv            per_barcode_metrics             "Per barcode summary metrics for gene expression and ATAC",
+    out csv            per_barcode_metrics_cs          "Per barcode summary metrics for gene expression and ATAC",
+    out path           filtered_feature_bc_matrix_mex  "Filtered feature barcode matrix MEX",
+    out h5             filtered_feature_bc_matrix_h5   "Filtered feature barcode matrix HDF5",
+    out path           raw_feature_bc_matrix_mex       "Raw feature barcode matrix MEX",
+    out h5             raw_feature_bc_matrix_h5        "Raw feature barcode matrix HDF5",
+    out AnalysisOutput analysis                        "Secondary analysis outputs",
+    out cloupe         cloupe                          "Loupe browser visualization file",
+    out bam            gex_possorted_genome_bam        "Position-sorted gene expression alignments BAM",
+    out bam.bai        gex_possorted_genome_bam_index  "Index for position-sorted gene expression BAM",
+    out h5             gex_molecule_info               "Information about every gene expression molecule sequenced",
+    out bam            atac_possorted_bam              "Position-sorted ATAC alignments BAM",
+    out bam.bai        atac_possorted_bam_index        "Index for position-sorted ATAC BAM",
+    out tsv.gz         atac_fragments                  "Information about every ATAC fragment sequenced",
+    out tsv.gz.tbi     atac_fragments_index            "Index (TABIX) for atac_fragments file",
+    out bed            atac_peaks,
+    out bigwig         atac_cut_sites,
+    out tsv            atac_peak_annotation,
+    out bool           is_multi_genome,
+    # outputs that are inputs for PD
+    out PdGEXInputs    pd_gex_inputs,
+    out PdATACInputs   pd_atac_inputs,
+    out h5             analysis_h5                     "analysis h5 for crconverter debug",
+    out json           analysis_summary,
+)
+{
+    call SPLIT_SAMPLE_DEF(
+        sample_def = self.sample_def,
+    )
+
+    call ARC_COUNTER_PREFLIGHT(
+        on_cluster                  = true,
+        sample_id                   = self.sample_id,
+        reference_path              = self.reference_path,
+        force_cells                 = self.force_cells,
+        sample_def                  = self.sample_def,
+        feature_linkage_max_dist_mb = self.feature_linkage_max_dist_mb,
+        k_means_max_clusters        = self.k_means_max_clusters,
+        #
+        rna_r1_length               = self.rna_r1_length,
+        rna_r2_length               = self.rna_r2_length,
+        #
+        atac_subsample_rate         = self.atac_subsample_rate,
+        atac_custom_peaks           = self.atac_custom_peaks,
+        atac_peak_qval              = self.atac_peak_qval,
+    ) using (
+        preflight = true,
+    )
+
+    call _FASTQ_STAGER(
+        sample_id                = self.sample_id,
+        atac_sample_def          = SPLIT_SAMPLE_DEF.atac_sample_def,
+        atac_barcode_whitelist   = self.atac_barcode_whitelist,
+        atac_subsample_rate      = self.atac_subsample_rate,
+        rna_sample_def           = SPLIT_SAMPLE_DEF.rna_sample_def,
+        rna_chemistry            = self.rna_chemistry,
+        rna_custom_chemistry_def = self.rna_custom_chemistry_def,
+    )
+
+    call _SLFE_MATRIX_COMPUTER as _GEX_MATRIX_COMPUTER(
+        gem_well                  = self.gem_well,
+        sample_id                 = self.sample_id,
+        chemistry_def             = _FASTQ_STAGER.rna_chemistry_def,
+        barcodes_under_tissue     = null,
+        is_pd                     = true,
+        reference_path            = self.reference_path,
+        libraries_to_translate    = [],
+        chunks                    = _FASTQ_STAGER.rna_chunks,
+        subsample_rate            = self.rna_subsample_rate,
+        initial_reads             = self.rna_initial_reads,
+        r1_length                 = self.rna_r1_length,
+        r2_length                 = self.rna_r2_length,
+        trim_polya_min_score      = self.rna_trim_polya_min_score,
+        trim_tso_min_score        = self.rna_trim_tso_min_score,
+        feature_reference         = self.rna_feature_reference,
+        target_features           = null,
+        target_set                = null,
+        target_set_name           = null,
+        include_introns           = self.rna_include_introns,
+        aligner                   = null,
+        disable_target_umi_filter = true,
+        rps_limit                 = null,
+        write_bc_counts_json      = true,
+    )
+
+    call WRITE_POS_BAM(
+        target_set_name      = null,
+        read_chunks          = _FASTQ_STAGER.rna_chunks,
+        sample_barcodes_json = null,
+        no_bam               = false,
+        *                    = _GEX_MATRIX_COMPUTER,
+    ) using (
+        disabled = self.no_bam,
+    )
+
+    call _ATAC_MATRIX_COMPUTER(
+        chunks                 = _FASTQ_STAGER.atac_chunks,
+        reference_path         = self.reference_path,
+        barcode_whitelist_path = _FASTQ_STAGER.atac_barcode_whitelist_path,
+        custom_peaks           = self.atac_custom_peaks,
+        peak_qval              = self.atac_peak_qval,
+        no_bam                 = self.no_bam,
+        sample_id              = self.sample_id,
+        sample_desc            = self.sample_desc,
+        assay                  = "arc",
+    )
+
+    call CHECK_JOINT_BARCODES_COMPATIBILITY(
+        atac_counts       = _ATAC_MATRIX_COMPUTER.bc_counts_json,
+        gex_counts        = _GEX_MATRIX_COMPUTER.bc_counts_json,
+        barcode_whitelist = self.atac_barcode_whitelist,
+    ) using (
+        disabled = self.skip_compatibility_check,
+    )
+
+    call _JOINT_CELL_DETECTOR(
+        sample_id             = self.sample_id,
+        reference_path        = self.reference_path,
+        barcode_whitelist     = _FASTQ_STAGER.barcode_whitelist,
+        rna_raw_matrix        = _GEX_MATRIX_COMPUTER.raw_gene_bc_matrices_h5,
+        atac_raw_matrix       = _ATAC_MATRIX_COMPUTER.raw_peak_bc_matrix,
+        peaks                 = _ATAC_MATRIX_COMPUTER.peaks,
+        fragments             = _ATAC_MATRIX_COMPUTER.fragments,
+        fragments_index       = _ATAC_MATRIX_COMPUTER.fragments_index,
+        force_cells           = self.force_cells,
+        rna_gem_groups        = [self.gem_well],
+        disable_bc_multiplets = self.disable_bc_multiplets,
+    )
+
+    call _SC_ATAC_GEX_ANALYZER(
+        matrix                      = _JOINT_CELL_DETECTOR.filtered_matrix,
+        method                      = {
+            atac:     "lsa",
+            atac_gex: "pca",
+            gex:      "pca",
+        },
+        projection_dims             = {
+            atac:     15,
+            atac_gex: 15,
+            gex:      10,
+        },
+        random_seed                 = null,
+        reference_path              = self.reference_path,
+        peaks                       = _ATAC_MATRIX_COMPUTER.peaks,
+        max_clusters                = self.k_means_max_clusters,
+        feature_linkage_max_dist_mb = self.feature_linkage_max_dist_mb,
+        linkage_projection          = null,
+    ) using (
+        disabled = _JOINT_CELL_DETECTOR.skip_analysis,
+    )
+
+    call _SLFE_CELLS_REPORTER as _GEX_CELLS_REPORTER(
+        gem_well                = self.gem_well,
+        reference_path          = self.reference_path,
+        recovered_cells         = self.rna_recovered_cells,
+        force_cells             = null,
+        slfe_feature_reference  = _GEX_MATRIX_COMPUTER.slfe_feature_reference,
+        target_panel_summary    = null,
+        target_set_name         = null,
+        matrices_h5             = _GEX_MATRIX_COMPUTER.raw_gene_bc_matrices_h5,
+        read_chunks             = _FASTQ_STAGER.rna_chunks,
+        report_mol_inputs       = _GEX_MATRIX_COMPUTER.report_mol_inputs,
+        matrix_computer_summary = _GEX_MATRIX_COMPUTER.summary,
+        barcode_summary         = _GEX_MATRIX_COMPUTER.barcode_summary,
+        filtered_barcodes       = _JOINT_CELL_DETECTOR.cell_barcodes,
+        filter_barcodes_summary = _JOINT_CELL_DETECTOR.rna_summary,
+        per_barcode_metrics     = _GEX_MATRIX_COMPUTER.per_barcode_metrics,
+        include_introns         = self.rna_include_introns,
+        multi_config_sha        = null,
+        barcode_index           = _GEX_MATRIX_COMPUTER.barcode_index,
+    )
+
+    call COMPILE_GEX_BARCODE_METRICS(
+        reference_path    = self.reference_path,
+        metrics           = _GEX_MATRIX_COMPUTER.per_barcode_metrics,
+        filtered_barcodes = _JOINT_CELL_DETECTOR.cell_barcodes,
+    )
+
+    call _SC_ATAC_METRIC_COLLECTOR(
+        reference_path     = self.reference_path,
+        basic_summary      = _ATAC_MATRIX_COMPUTER.basic_summary,
+        fragments          = _ATAC_MATRIX_COMPUTER.fragments,
+        fragments_index    = _ATAC_MATRIX_COMPUTER.fragments_index,
+        peaks              = _ATAC_MATRIX_COMPUTER.peaks,
+        singlecell_mapping = _ATAC_MATRIX_COMPUTER.singlecell_mapping,
+        cell_barcodes      = _JOINT_CELL_DETECTOR.atac_cell_barcodes,
+        singlecell_cells   = _JOINT_CELL_DETECTOR.atac_singlecell,
+        insert_sizes       = _ATAC_MATRIX_COMPUTER.insert_sizes,
+        frag_bc_counts     = _ATAC_MATRIX_COMPUTER.frag_bc_counts,
+    )
+
+    call _SC_ATAC_REPORTER(
+        sample_id               = self.sample_id,
+        sample_desc             = self.sample_desc,
+        peak_qval               = self.atac_peak_qval,
+        sample_def              = SPLIT_SAMPLE_DEF.atac_sample_def,
+        reference_path          = self.reference_path,
+        barcode_whitelist       = self.atac_barcode_whitelist,
+        #
+        peak_summary            = _ATAC_MATRIX_COMPUTER.peak_metrics,
+        #
+        cell_calling_summary    = null,
+        filtered_peak_bc_matrix = _JOINT_CELL_DETECTOR.filtered_matrix.atac,
+        excluded_barcodes       = _JOINT_CELL_DETECTOR.excluded_barcodes,
+        #
+        bulk_complexity         = _SC_ATAC_METRIC_COLLECTOR.bulk_complexity,
+        singlecell_complexity   = _SC_ATAC_METRIC_COLLECTOR.singlecell_complexity,
+        complexity_summary      = _SC_ATAC_METRIC_COLLECTOR.complexity_summary,
+        basic_summary           = _ATAC_MATRIX_COMPUTER.basic_summary,
+        singlecell_results      = _SC_ATAC_METRIC_COLLECTOR.singlecell_results,
+        insert_summary          = _SC_ATAC_METRIC_COLLECTOR.insert_summary,
+        singlecell              = _SC_ATAC_METRIC_COLLECTOR.singlecell,
+        tss_relpos              = _SC_ATAC_METRIC_COLLECTOR.tss_relpos,
+        ctcf_relpos             = _SC_ATAC_METRIC_COLLECTOR.ctcf_relpos,
+        sc_insert_sizes         = _ATAC_MATRIX_COMPUTER.insert_sizes,
+        enrichment_results      = _SC_ATAC_METRIC_COLLECTOR.enrichment_results,
+        count_dict              = _ATAC_MATRIX_COMPUTER.count_dict,
+        #
+        analysis                = null,
+    )
+
+    call SUMMARIZE_REPORTS as GEX_SUMMARIZE_REPORTS(
+        summaries                    = [_GEX_CELLS_REPORTER.summary],
+        sample_id                    = self.sample_id,
+        sample_desc                  = self.sample_desc,
+        reference_path               = self.reference_path,
+        # TODO: build proper linker of struct and analysis h5
+        analysis                     = null,
+        barcode_summary_h5           = _GEX_MATRIX_COMPUTER.barcode_summary,
+        filtered_gene_bc_matrices_h5 = _JOINT_CELL_DETECTOR.filtered_matrix.gex,
+        filtered_barcodes            = _JOINT_CELL_DETECTOR.cell_barcodes,
+        barcode_whitelist            = _FASTQ_STAGER.barcode_whitelist,
+        gem_groups                   = [self.gem_well],
+        feature_reference            = null,
+        target_set_name              = null,
+        per_feature_metrics_csv      = null,
+        include_introns              = self.rna_include_introns,
+    )
+
+    call MERGE_RNA_ATAC_DATA(
+        disable_atac         = false,
+        disable_rna          = false,
+        atac_summary_csv_cs  = _SC_ATAC_REPORTER.summary_csv,
+        rna_summary_csv_cs   = GEX_SUMMARIZE_REPORTS.metrics_summary_csv,
+        reference_path       = self.reference_path,
+        atac_whitelist       = self.atac_barcode_whitelist,
+        rna_whitelist        = _FASTQ_STAGER.barcode_whitelist,
+        #
+        atac_metrics         = _SC_ATAC_METRIC_COLLECTOR.singlecell,
+        rna_metrics          = COMPILE_GEX_BARCODE_METRICS.augmented_metrics,
+        joint_metrics        = _JOINT_CELL_DETECTOR.singlecell,
+        #
+        atac_matrix          = _ATAC_MATRIX_COMPUTER.raw_peak_bc_matrix,
+        rna_matrix           = _GEX_MATRIX_COMPUTER.raw_gene_bc_matrices_h5,
+        filtered_atac_matrix = _JOINT_CELL_DETECTOR.filtered_matrix.atac,
+        filtered_rna_matrix  = _JOINT_CELL_DETECTOR.filtered_matrix.gex,
+        #
+        rna_summary          = GEX_SUMMARIZE_REPORTS.metrics_summary_json,
+        atac_summary         = _SC_ATAC_REPORTER.summary,
+        joint_summaries      = [
+            _JOINT_CELL_DETECTOR.summary,
+            _SC_ATAC_GEX_ANALYZER.summary,
+        ],
+    )
+
+    ## set joint_summary to null to skip barcode exchange info
+
+    call CREATE_JOINT_WEBSUMMARY(
+        reference_path              = self.reference_path,
+        sample_id                   = self.sample_id,
+        sample_desc                 = self.sample_desc,
+        summary                     = MERGE_RNA_ATAC_DATA.summary,
+        merge_singlecell            = MERGE_RNA_ATAC_DATA.metrics,
+        analysis_csv                = _SC_ATAC_GEX_ANALYZER.analysis_csv,
+        atac_data                   = _SC_ATAC_REPORTER.ws_data,
+        gex_data                    = GEX_SUMMARIZE_REPORTS.ws_data,
+        debug                       = false,
+        rna_include_introns         = self.rna_include_introns,
+        atac_peak_qval              = self.atac_peak_qval,
+        feature_linkage_max_dist_mb = self.feature_linkage_max_dist_mb,
+    )
+
+    call ATAC_CLOUPE_PREPROCESS as ATAC_GEX_CLOUPE_PREPROCESS(
+        pipestance_type        = "SC_ATAC_GEX_COUNTER",
+        reference_path         = self.reference_path,
+        sample_id              = self.sample_id,
+        sample_desc            = self.sample_desc,
+        analysis               = _SC_ATAC_GEX_ANALYZER.analysis_h5,
+        feature_barcode_matrix = _SC_ATAC_GEX_ANALYZER.loupe_matrix_h5,
+        metrics_json           = MERGE_RNA_ATAC_DATA.summary,
+        peaks                  = _ATAC_MATRIX_COMPUTER.peaks,
+        fragments_index        = _ATAC_MATRIX_COMPUTER.fragments_index,
+        aggregation_csv        = null,
+        gem_group_index_json   = null,
+        no_secondary_analysis  = false,
+    )
+
+    return (
+        web_summary                   = {
+            atac:     null,
+            atac_gex: CREATE_JOINT_WEBSUMMARY.web_summary,
+            gex:      GEX_SUMMARIZE_REPORTS.web_summary,
+        },
+        summary_csv                   = MERGE_RNA_ATAC_DATA.summary_csv_cs,
+        per_barcode_metrics           = MERGE_RNA_ATAC_DATA.metrics,
+        per_barcode_metrics_cs        = MERGE_RNA_ATAC_DATA.metrics_cs,
+        filtered_feature_bc_matrix_mex = _JOINT_CELL_DETECTOR.joint_filtered_matrix_mex,
+        filtered_feature_bc_matrix_h5 = _JOINT_CELL_DETECTOR.filtered_matrix.atac_gex,
+        raw_feature_bc_matrix_mex     = _JOINT_CELL_DETECTOR.joint_raw_matrix_mex,
+        raw_feature_bc_matrix_h5      = _JOINT_CELL_DETECTOR.joint_raw_matrix,
+        analysis                      = _SC_ATAC_GEX_ANALYZER.analysis_csv,
+        cloupe                        = ATAC_GEX_CLOUPE_PREPROCESS.output_for_cloupe,
+        gex_possorted_genome_bam      = WRITE_POS_BAM.pos_sorted_bam.bam_file,
+        gex_possorted_genome_bam_index = WRITE_POS_BAM.pos_sorted_bam.bam_index_file,
+        gex_molecule_info             = _GEX_CELLS_REPORTER.molecule_info,
+        atac_possorted_bam            = _ATAC_MATRIX_COMPUTER.possorted_bam,
+        atac_possorted_bam_index      = _ATAC_MATRIX_COMPUTER.possorted_bam_index,
+        atac_fragments                = _ATAC_MATRIX_COMPUTER.fragments,
+        atac_fragments_index          = _ATAC_MATRIX_COMPUTER.fragments_index,
+        atac_peaks                    = _ATAC_MATRIX_COMPUTER.peaks,
+        atac_cut_sites                = _ATAC_MATRIX_COMPUTER.cut_sites,
+        atac_peak_annotation          = _SC_ATAC_GEX_ANALYZER.peak_annotation,
+        is_multi_genome               = _SC_ATAC_GEX_ANALYZER.is_multi_genome,
+        #
+        pd_gex_inputs                 = {
+            alignments:                   _GEX_MATRIX_COMPUTER.alignments,
+            annotation_files:             _GEX_MATRIX_COMPUTER.annotation_files,
+            barcode_summary_h5:           _GEX_MATRIX_COMPUTER.barcode_summary,
+            barcode_whitelist:            _FASTQ_STAGER.barcode_whitelist,
+            filtered_barcodes:            _JOINT_CELL_DETECTOR.cell_barcodes,
+            filtered_gene_bc_matrices_h5: _JOINT_CELL_DETECTOR.filtered_matrix.gex,
+            gem_groups:                   [self.gem_well],
+            is_multi_genome:              _JOINT_CELL_DETECTOR.is_multi_genome,
+            per_barcode_metrics:          COMPILE_GEX_BARCODE_METRICS.augmented_metrics,
+            raw_gene_bc_matrices_h5:      _GEX_MATRIX_COMPUTER.raw_gene_bc_matrices_h5,
+            read_shards:                  _GEX_MATRIX_COMPUTER.read_shards,
+            summary:                      GEX_SUMMARIZE_REPORTS.metrics_summary_json,
+        },
+        pd_atac_inputs                = {
+            basic_summary:           _ATAC_MATRIX_COMPUTER.basic_summary,
+            bulk_complexity:         _SC_ATAC_METRIC_COLLECTOR.bulk_complexity,
+            cell_calling_summary:    _JOINT_CELL_DETECTOR.summary,
+            complexity_summary:      _SC_ATAC_METRIC_COLLECTOR.complexity_summary,
+            count_dict:              _ATAC_MATRIX_COMPUTER.count_dict,
+            ctcf_relpos:             _SC_ATAC_METRIC_COLLECTOR.ctcf_relpos,
+            enrichment_results:      _SC_ATAC_METRIC_COLLECTOR.enrichment_results,
+            excluded_barcodes:       _JOINT_CELL_DETECTOR.excluded_barcodes,
+            filtered_peak_bc_matrix: _JOINT_CELL_DETECTOR.filtered_matrix.atac,
+            insert_summary:          _SC_ATAC_METRIC_COLLECTOR.insert_summary,
+            peak_summary:            _ATAC_MATRIX_COMPUTER.peak_metrics,
+            sample_def:              SPLIT_SAMPLE_DEF.atac_sample_def,
+            sc_insert_sizes:         _ATAC_MATRIX_COMPUTER.insert_sizes,
+            singlecell:              _SC_ATAC_METRIC_COLLECTOR.singlecell,
+            singlecell_complexity:   _SC_ATAC_METRIC_COLLECTOR.singlecell_complexity,
+            singlecell_results:      _SC_ATAC_METRIC_COLLECTOR.singlecell_results,
+            tss_relpos:              _SC_ATAC_METRIC_COLLECTOR.tss_relpos,
+        },
+        analysis_h5                   = _SC_ATAC_GEX_ANALYZER.analysis_h5,
+        analysis_summary              = _SC_ATAC_GEX_ANALYZER.summary,
+    )
+
+    # retain for debugging purposes
+    retain (
+        _SC_ATAC_REPORTER.web_summary,
+        _SC_ATAC_REPORTER.summary,
+        GEX_SUMMARIZE_REPORTS.web_summary,
+        GEX_SUMMARIZE_REPORTS.metrics_summary_json,
+    )
+}
+
+#
+# @include "atac_rna/sc_atac_gex_counter_cs.mro"
+#
+
+pipeline SC_ATAC_GEX_COUNTER_CS(
+    in  string         sample_id                       "Sample identifier",
+    in  string         sample_desc                     "Detailed sample description",
+    in  path           reference_path                  "Path to joint reference",
+    in  map[]          sample_def                      "Library description",
+    in  map<MinCounts> force_cells                     "Override for cell caller",
+    in  bool           skip_compatibility_check        "Skip checking for barcode compatibility",
+    in  bool           rna_include_introns             "Include non-transcriptomic reads",
+    in  bed            custom_peaks                    "Override for peak caller",
+    in  float          peak_qval                       "Override for peak calling stringency",
+    in  float          feature_linkage_max_dist_mb     "Set maximum distance (mb) between features",
+    in  int            k_means_max_clusters            "K-means max number of clusters",
+    in  bool           no_bam                          "Skip generating BAM file outputs",
+    out AnalysisOutput analysis                        "Secondary analysis outputs",
+    out html           web_summary                     "Run summary HTML",
+    out csv            summary                         "Run summary metrics CSV",
+    out csv            per_barcode_metrics             "Per barcode summary metrics",
+    out path           filtered_feature_bc_matrix_mex  "Filtered feature barcode matrix MEX"  "filtered_feature_bc_matrix",
+    out h5             filtered_feature_bc_matrix_h5   "Filtered feature barcode matrix HDF5"  "filtered_feature_bc_matrix.h5",
+    out path           raw_feature_bc_matrix_mex       "Raw feature barcode matrix MEX"  "raw_feature_bc_matrix",
+    out h5             raw_feature_bc_matrix_h5        "Raw feature barcode matrix HDF5"  "raw_feature_bc_matrix.h5",
+    out cloupe         cloupe                          "Loupe browser visualization file",
+    out bam            gex_possorted_bam               "GEX Position-sorted alignments BAM",
+    out bam.bai        gex_possorted_bam_index         "GEX Position-sorted alignments BAM index"  "gex_possorted_bam.bam.bai",
+    out h5             gex_molecule_info               "GEX Per molecule information file",
+    out bam            atac_possorted_bam              "ATAC Position-sorted alignments BAM",
+    out bam.bai        atac_possorted_bam_index        "ATAC Position-sorted alignments BAM index"  "atac_possorted_bam.bam.bai",
+    out tsv.gz         atac_fragments                  "ATAC Per fragment information file",
+    out tsv.gz.tbi     atac_fragments_index            "ATAC Per fragment information index"  "atac_fragments.tsv.gz.tbi",
+    out bed            atac_peaks                      "ATAC peak locations",
+    out bigwig         atac_cut_sites                  "ATAC smoothed transposition site track",
+    out tsv            atac_peak_annotation            "ATAC peak annotations based on proximal genes",
+)
+{
+    call ARC_COUNTER_PREFLIGHT as ARC_COUNTER_PREFLIGHT_LOCAL(
+        on_cluster                  = false,
+        sample_id                   = self.sample_id,
+        reference_path              = self.reference_path,
+        force_cells                 = self.force_cells,
+        sample_def                  = self.sample_def,
+        feature_linkage_max_dist_mb = self.feature_linkage_max_dist_mb,
+        k_means_max_clusters        = self.k_means_max_clusters,
+        #
+        rna_r1_length               = null,
+        rna_r2_length               = null,
+        #
+        atac_subsample_rate         = null,
+        atac_custom_peaks           = self.custom_peaks,
+        atac_peak_qval              = self.peak_qval,
+    ) using (
+        local     = true,
+        preflight = true,
+    )
+
+    call SC_ATAC_GEX_COUNTER(
+        gem_well                    = 1,
+        sample_id                   = self.sample_id,
+        sample_desc                 = self.sample_desc,
+        sample_def                  = self.sample_def,
+        reference_path              = self.reference_path,
+        force_cells                 = self.force_cells,
+        skip_compatibility_check    = self.skip_compatibility_check,
+        feature_linkage_max_dist_mb = self.feature_linkage_max_dist_mb,
+        k_means_max_clusters        = self.k_means_max_clusters,
+        no_bam                      = self.no_bam,
+        #
+        rna_chemistry               = "ARC-v1",
+        rna_custom_chemistry_def    = null,
+        rna_recovered_cells         = 1000,
+        rna_subsample_rate          = 1,
+        rna_initial_reads           = null,
+        rna_r1_length               = null,
+        rna_r2_length               = null,
+        rna_feature_reference       = null,
+        rna_include_introns         = self.rna_include_introns,
+        rna_trim_polya_min_score    = 20,
+        rna_trim_tso_min_score      = 20,
+        #
+        atac_subsample_rate         = null,
+        atac_barcode_whitelist      = "737K-arc-v1",
+        atac_custom_peaks           = self.custom_peaks,
+        atac_peak_qval              = self.peak_qval,
+        disable_bc_multiplets       = true,
+    )
+
+    return (
+        web_summary                   = SC_ATAC_GEX_COUNTER.web_summary.atac_gex,
+        summary                       = SC_ATAC_GEX_COUNTER.summary_csv,
+        per_barcode_metrics           = SC_ATAC_GEX_COUNTER.per_barcode_metrics_cs,
+        filtered_feature_bc_matrix_mex = SC_ATAC_GEX_COUNTER.filtered_feature_bc_matrix_mex,
+        filtered_feature_bc_matrix_h5 = SC_ATAC_GEX_COUNTER.filtered_feature_bc_matrix_h5,
+        raw_feature_bc_matrix_mex     = SC_ATAC_GEX_COUNTER.raw_feature_bc_matrix_mex,
+        raw_feature_bc_matrix_h5      = SC_ATAC_GEX_COUNTER.raw_feature_bc_matrix_h5,
+        analysis                      = SC_ATAC_GEX_COUNTER.analysis,
+        cloupe                        = SC_ATAC_GEX_COUNTER.cloupe,
+        gex_possorted_bam             = SC_ATAC_GEX_COUNTER.gex_possorted_genome_bam,
+        gex_possorted_bam_index       = SC_ATAC_GEX_COUNTER.gex_possorted_genome_bam_index,
+        gex_molecule_info             = SC_ATAC_GEX_COUNTER.gex_molecule_info,
+        atac_possorted_bam            = SC_ATAC_GEX_COUNTER.atac_possorted_bam,
+        atac_possorted_bam_index      = SC_ATAC_GEX_COUNTER.atac_possorted_bam_index,
+        atac_fragments                = SC_ATAC_GEX_COUNTER.atac_fragments,
+        atac_fragments_index          = SC_ATAC_GEX_COUNTER.atac_fragments_index,
+        atac_peaks                    = SC_ATAC_GEX_COUNTER.atac_peaks,
+        atac_cut_sites                = SC_ATAC_GEX_COUNTER.atac_cut_sites,
+        atac_peak_annotation          = SC_ATAC_GEX_COUNTER.atac_peak_annotation,
+    )
+}
+
+#
+# @include "__42_4.mro"
+#
+
+call SC_ATAC_GEX_COUNTER_CS(
+    sample_id                   = "42_4",
+    sample_desc                 = "42_4",
+    reference_path              = "/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-cellranger-arc-GRCh38-2020-A-2.0.0",
+    sample_def                  = [
+        {
+            "fastq_id": null,
+            "fastq_mode": "ILMN_BCL2FASTQ",
+            "gem_group": null,
+            "lanes": null,
+            "library_type": "Gene Expression",
+            "read_path": "/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521/",
+            "sample_indices": ["any"],
+            "sample_names": ["42-4"],
+            "subsample_rate": null,
+            "target_set": null,
+            "target_set_name": null,
+        },
+        {
+            "fastq_id": null,
+            "fastq_mode": "ILMN_BCL2FASTQ",
+            "gem_group": null,
+            "lanes": null,
+            "library_type": "Chromatin Accessibility",
+            "read_path": "/dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521_ATAC/",
+            "sample_indices": ["any"],
+            "sample_names": ["ATAC2"],
+            "subsample_rate": null,
+            "target_set": null,
+            "target_set_name": null,
+        },
+    ],
+    force_cells                 = null,
+    skip_compatibility_check    = false,
+    rna_include_introns         = true,
+    custom_peaks                = null,
+    peak_qval                   = null,
+    feature_linkage_max_dist_mb = null,
+    k_means_max_clusters        = null,
+    no_bam                      = false,
+)
