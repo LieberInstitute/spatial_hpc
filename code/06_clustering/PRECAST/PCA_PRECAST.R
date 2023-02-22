@@ -19,6 +19,7 @@ suppressPackageStartupMessages({
   library(viridis)
   library(sessioninfo)
   library(gridExtra)
+  library(bluster)
 })
 
 # Load SPE
@@ -30,6 +31,24 @@ dim(spe)
 
 # Remove N/A cluster from PRECAST labeling
 spe = spe[, which(spe$PRECAST_k15 != "<NA>")]
+
+# Creat logcounts in assays slot
+set.seed(20220201)
+spe$scran_quick_cluster <- quickCluster(
+  spe,
+  block = spe$sample_id
+)
+
+spe <-
+  computeSumFactors(spe,
+                    clusters = spe$scran_quick_cluster
+  )
+
+table(spe$scran_quick_cluster)
+
+summary(sizeFactors(spe))
+
+spe <- logNormCounts(spe)
 
 # Feature selection
 dec <- modelGeneVar(spe, block = spe$sample_id)
@@ -46,6 +65,24 @@ head(top_hvgs)
 # Dimensionality reduction
 set.seed(12345)
 spe <- runPCA(spe, subset_row = top_hvgs, ncomponents = 50)
+
+# Check cluster purity
+
+pure_spe <- neighborPurity(reducedDim(spe, "PCA"), spe$PRECAST_k15)
+pure_spe
+
+pure_data <- as.data.frame(pure_spe)
+pure_data$maximum <- factor(pure_data$maximum)
+pure_data$cluster <- spe$PRECAST_k15
+
+pdf(file = here::here("plots","06_clustering", "PRECAST", "Cluster_Purity_wCP.pdf"), width = 10, height = 8)
+
+ggplot(pure_data, aes(x=cluster, y=purity, colour=maximum)) +
+    ggbeeswarm::geom_quasirandom(method="smiley")
+
+boxplot(split(pure_data$purity, pure_data$cluster))
+
+dev.off()
 
 pdf(file = here::here("plots","06_clustering", "PRECAST", "PC2vsPC1_wCP.pdf"), width = 14, height = 14)
 

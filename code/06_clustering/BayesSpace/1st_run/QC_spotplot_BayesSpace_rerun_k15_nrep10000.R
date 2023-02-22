@@ -1,4 +1,5 @@
 setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
+
 suppressPackageStartupMessages({
     library(here)
     library(sessioninfo)
@@ -9,6 +10,7 @@ suppressPackageStartupMessages({
     library(Polychrome)
     library(gridExtra)
     library(tidySingleCellExperiment)
+    library(bluster)
 })
 
 # Load SPE
