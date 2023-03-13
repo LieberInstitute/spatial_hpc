@@ -262,8 +262,9 @@ clusters <- unique(levels(hippo$seurat_clusters[[1]]))
 pairwise <- combn(clusters, 2)
 
 # all pairwise comparisons
+# a logistic regression framework to determine differentially accessible regions
 da_peaks <- map(1:ncol(pairwise), ~{
-  markers <- FindMarkers(hippo, ident.1 = pairwise[1, .x], ident.2 = pairwise[2, .x],test.use = 'LR')
+  markers <- FindMarkers(hippo, ident.1 = pairwise[1, .x], ident.2 = pairwise[2, .x],test.use = 'LR') 
   comparisons <- pairwise[, .x]
   markers$comparison <- paste(comparisons[1], comparisons[2], sep = '_')
   markers
@@ -273,3 +274,13 @@ da_peaks.df <- do.call(rbind, da_peaks)
 
 da_peaks.df
 
+# Find all markers
+cluster.peaks.all <- FindAllMarkers(hippo, only.pos = TRUE, min.pct = 0.1)
+cluster.markers.all %>%
+  group_by(cluster) %>%
+  slice_max(n = 5, order_by = avg_log2FC)
+
+# top 5 
+cluster.peaks.all %>%
+  group_by(cluster) %>%
+  top_n(n = 5, wt = avg_log2FC) -> top5
