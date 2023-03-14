@@ -109,7 +109,7 @@ table(spe$low_detected_br)
 # 135514   1928
 
 #are low_detected_br spots and low_detected_br spots same? Yes
-table(spe$low_detected_br,spe$low_detected_br)
+table(spe$low_detected_br,spe$low_detected_id)
 #              id    id
 #           FALSE   TRUE
 # br FALSE 135514      0

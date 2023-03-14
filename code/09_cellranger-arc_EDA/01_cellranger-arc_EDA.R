@@ -2,11 +2,14 @@
 ## 1st EDA with scCellRanger-ARC
 ## Authors. CSC + HT / LIEBER
 ## Date. March 3rd, 2023
-## LM. March 13th, 2023
 ## Reference Link. 
 ## Use this first: https://stuartlab.org/signac/articles/pbmc_multiomic.html 
 ## https://stuartlab.org/signac/articles/pbmc_vignette.html
 ########################################################################
+
+# Last modification
+Sys.time()
+#"2023-03-14 12:02:09 EDT" 
 
 # load libraries
 library(Signac)
