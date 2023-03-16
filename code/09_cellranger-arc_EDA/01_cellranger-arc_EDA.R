@@ -63,6 +63,12 @@ VlnPlot(hippo, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 
 plot1 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
+# I filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
+hippo2 <- subset(hippo, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mt < 5)
+VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+plot1 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
 
 # Peaks in standard chromosomes were used for analysis
 grange.counts <- StringToGRanges(rownames(atac_counts), sep = c(":", "-"))
