@@ -33,14 +33,24 @@ fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed
 # fragments.tsv is the full list of all unique fragments across all single cells.
 # it contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
 
-######## extract RNA and ATAC data #######
+######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
 str(sc_hippo)   # read modalities
 #sc_hippo
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
 #View(atac_counts)
+# Get gene annotations for hg38 and extract gene annotations from EnsDb
+annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
+# change to UCSC style since the data was mapped to hg38
+head(annotations)
+#names(genomeStyles('Homo_sapiens'))
+seqlevelsStyle(annotations) <- "UCSC"
+#extractSeqlevelsByGroup(species="Homo_sapiens", style="UCSC", group="sex")
+#extractSeqlevelsByGroup(species="Homo_sapiens", style="UCSC", group="auto")
+genome(annotations) <- "hg38"
 
-# Initialize the Seurat object with the raw (non-normalized data). Create a Seurat object containing the RNA data
+######## Create a Seurat object containing the RNA + ATAC data ########
+# Initialize the Seurat object with the raw (non-normalized data). 
 hippo <- CreateSeuratObject(
   counts = rna_counts,
   assay = "RNA",
@@ -70,19 +80,18 @@ plot1 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "percent.mt"
 plot2 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
 
-# Peaks in standard chromosomes were used for analysis
-grange.counts <- StringToGRanges(rownames(atac_counts), sep = c(":", "-"))
+######## Peaks in standard chromosomes were used for analysis ########
+View(head(atac_counts))
+grange.counts <- StringToGRanges(rownames(atac_counts), 
+                                 sep = c(":", "-"))      # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
+# View(head(grange.counts))
 grange.use <- seqnames(grange.counts) %in% standardChromosomes(grange.counts)
-table(grange.use)
-table(seqnames(grange.counts)[!grange.use])
+class(grange.use)       #S4Vector object.
+length(grange.use)
+#View(!grange.use)
+#View(seqnames(grange.counts)[!grange.use])
 atac_counts <- atac_counts[as.vector(grange.use), ]
-
-# get gene annotations for hg38
-# extract gene annotations from EnsDb
-annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
-# change to UCSC style since the data was mapped to hg38
-seqlevelsStyle(annotations) <- "UCSC"
-genome(annotations) <- "hg38"
+View(head(atac_counts))
 
 # Annotation custom: something is not working yet:
 ## > CoveragePlot(
@@ -122,31 +131,35 @@ genome(annotations) <- "hg38"
 # gene.coords <- keepStandardChromosomes(gene.coords, pruning.mode = 'coarse')
 # annotations <- gtf
 
-# create ATAC assay and add it to the object
+########  Create ATAC assay and add it to the object ######## 
 chrom_assay <- CreateChromatinAssay(
   counts = atac_counts,
   sep = c(":", "-"),
   fragments = fragpath,
   annotation = annotations
 )
-
+# Unfiltered
 hippo[["ATAC"]] <- chrom_assay
+# Filtered
+# hippo2[["ATAC"]] <- chrom_assay
 
-# add the gene information to the object
+View(head(hippo))
+
+# Add the gene information to the object
 Annotation(hippo[["ATAC"]]) <- annotations
+# Annotation(hippo2[["ATAC"]]) <- annotations
 
-# Quality control
-# DefaultAssay(hippo) <- "ATAC"
-#
-# hippo <- NucleosomeSignal(hippo)
-# hippo <- TSSEnrichment(hippo)
-
+######## Quality control to ATAC ########
+DefaultAssay(hippo) <- "ATAC"
+hippo <- NucleosomeSignal(hippo)
+hippo <- TSSEnrichment(hippo)
+head(hippo)
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_beforefiltering.pdf"))
 VlnPlot(
   object = hippo,
-  features = c("nCount_RNA", "nCount_ATAC", "percent.mt"),
-  ncol = 3,
+  features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"),
+  ncol = 4,
   log = TRUE,
   pt.size = 0
 )
