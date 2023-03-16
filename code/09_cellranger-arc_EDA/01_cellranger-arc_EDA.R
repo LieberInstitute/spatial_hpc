@@ -7,7 +7,7 @@
 ## https://stuartlab.org/signac/articles/pbmc_vignette.html
 ########################################################################
 
-# Last modification
+# Last modification: CSC
 Sys.time()
 #"2023-03-14 12:02:09 EDT" 
 
@@ -22,9 +22,13 @@ library(GenomeInfoDb)
 
 set.seed(1234)
 
-# load rna and atac data 
+# 1) LOAD RNA & ATAC DATA
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
+# Read10X_h5() read count matrix from 10X CellRanger hdf5 file. This can be used to read both scATAC-seq and scRNA-seq matrices.
+# In this MTX  each row represents a peak, predicted to represent a region of open chromatin.
 fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/atac_fragments.tsv.gz"
+# fragments.tsv is the full list of all unique fragments across all single cells.
+# it contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
 
 # extract RNA and ATAC data
 rna_counts <- sc_hippo$`Gene Expression`
