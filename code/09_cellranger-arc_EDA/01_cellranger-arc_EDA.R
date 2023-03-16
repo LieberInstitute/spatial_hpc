@@ -10,6 +10,7 @@
 # Last modification: CSC
 Sys.time()
 #"2023-03-14 12:02:09 EDT" 
+#"2023-03-15 16:00:57 EDT"
 
 # load libraries
 library(Signac)
@@ -19,6 +20,8 @@ library(BSgenome.Hsapiens.UCSC.hg38)
 library(tidyverse)
 library(here)
 library(GenomeInfoDb)
+library(dplyr)
+library(patchwork)
 
 set.seed(1234)
 
@@ -30,21 +33,36 @@ fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed
 # fragments.tsv is the full list of all unique fragments across all single cells.
 # it contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
 
-# extract RNA and ATAC data
+######## extract RNA and ATAC data #######
+str(sc_hippo)   # read modalities
+#sc_hippo
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
+#View(atac_counts)
 
-# create a Seurat object containing the RNA data
+# Initialize the Seurat object with the raw (non-normalized data). Create a Seurat object containing the RNA data
 hippo <- CreateSeuratObject(
   counts = rna_counts,
-  assay = "RNA"
+  assay = "RNA",
+  project = "hippo-42_1"    # , min.cells = 3, min.features = 200)
 )
-
+class(hippo)
 # check metadata
-hippo@meta.data
+head(hippo@meta.data)
+
+######## Standard pre-processing workflow ########
 
 Idents(hippo) <- "hippo-42_1"
 hippo[["percent.mt"]] <- PercentageFeatureSet(hippo, pattern = "^MT-")
+head(hippo@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
+head(hippo[["percent.mt"]][])         # Access feature-level meta-data
+
+# Visualize QC metrics as a violin plot
+VlnPlot(hippo, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+# Scatter plot to visualize feature-feature relationships, across the set of single cells.
+plot1 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
 
 # Peaks in standard chromosomes were used for analysis
 grange.counts <- StringToGRanges(rownames(atac_counts), sep = c(":", "-"))
