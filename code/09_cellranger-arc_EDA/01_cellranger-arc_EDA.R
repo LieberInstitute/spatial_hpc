@@ -76,6 +76,7 @@ VlnPlot(hippo, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 
 plot1 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
+
 # Filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
 hippo2 <- subset(hippo, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mt < 5)
 VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
@@ -189,16 +190,16 @@ VlnPlot(hippo, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal",
 # )
 # dev.off()
  
-hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
-#    nucleosome_signal < 4 & TSS.enrichment > 2
-FragmentHistogram(object = hippo, group.by = 'nucleosome_group')
-
-
-# filter out low quality cells
-# hippo <- subset(
-#   x = hippo,
-#   subset = nCount_RNA < 40000 
-# )
+######## Filter out low quality cells ########
+# Filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
+hippo2 <- subset(hippo, 
+                 subset = nFeature_RNA > 200 & nFeature_RNA < 7500 
+                 & percent.mt < 5
+                 & nucleosome_signal < 4
+                 & TSS.enrichment > 2)
+head(hippo2,n=5)
+VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(hippo2, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"), ncol = 4)
 
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_afterfiltering.pdf"))
