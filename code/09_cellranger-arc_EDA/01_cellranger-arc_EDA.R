@@ -63,7 +63,7 @@ class(hippo)
 # check metadata
 head(hippo@meta.data)
 
-######## QA Standard pre-processing workflow ########
+######## QA Standard metrics  ########
 
 Idents(hippo) <- "hippo-42_1"
 hippo[["percent.mt"]] <- PercentageFeatureSet(hippo, pattern = "^MT-")
@@ -75,13 +75,6 @@ VlnPlot(hippo, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 
 # Scatter plot to visualize feature-feature relationships, across the set of single cells.
 plot1 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-plot1 + plot2
-
-# Filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
-hippo2 <- subset(hippo, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mt < 5)
-VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-plot1 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "percent.mt")
-plot2 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
 
 ######## ATAC assay: peaks in standard chromosomes were used for analysis ########
@@ -190,7 +183,7 @@ VlnPlot(hippo, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal",
 # )
 # dev.off()
  
-######## Filter out low quality cells ########
+######## Filter out low quality cells in the RNA-Seq and ATAC assays ########
 # Filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
 hippo2 <- subset(hippo, 
                  subset = nFeature_RNA > 200 & nFeature_RNA < 7500 
@@ -200,6 +193,9 @@ hippo2 <- subset(hippo,
 head(hippo2,n=5)
 VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 VlnPlot(hippo2, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"), ncol = 4)
+plot1 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
 
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_afterfiltering.pdf"))
