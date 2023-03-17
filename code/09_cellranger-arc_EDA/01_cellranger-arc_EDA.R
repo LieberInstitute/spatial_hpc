@@ -176,18 +176,21 @@ head(hippo,n=5)
 hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
 FragmentHistogram(object = hippo, group.by = 'nucleosome_group')
 
+head(hippo,n=5)
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_beforefiltering.pdf"))
-VlnPlot(
-  object = hippo,
-  features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"),
-  ncol = 4,
-  log = TRUE,
-  pt.size = 0
-)
+# Visualize QC metrics as a violin plot / raw data 
+VlnPlot(hippo, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"), ncol = 4)
+# VlnPlot(object = hippo, 
+#   features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"),
+#   ncol = 4,
+#   log = TRUE,
+#   pt.size = 0
+# )
 # dev.off()
-# 
+ 
 hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
+#    nucleosome_signal < 4 & TSS.enrichment > 2
 FragmentHistogram(object = hippo, group.by = 'nucleosome_group')
 
 
