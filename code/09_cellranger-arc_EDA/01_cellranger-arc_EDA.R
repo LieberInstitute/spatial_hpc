@@ -161,11 +161,21 @@ head(hippo)
 
 ######## Quality control to ATAC ########
 DefaultAssay(hippo) <- "ATAC"
-# QA signac measure to calculate the strength of the nucleosome signal per cell.
+
+# Signac QA measure to calculate the strength of the nucleosome signal per cell.
 hippo <- NucleosomeSignal(hippo)
-# QA measure to compute the transcription start site (TSS) enrichment score for each cell, as defined by ENCODE.
-hippo <- TSSEnrichment(hippo)
-head(hippo)
+# Signac QA measure to compute the transcription start site (TSS) enrichment score for each cell, as defined by ENCODE.
+hippo <- TSSEnrichment(hippo, fast = FALSE)    # If fast = False, it computes the TSS enrichment scores, storing the base-resolution matrix of integration counts at each site.
+head(hippo,n=5)
+# # add blacklist ratio and fraction of reads in peaks ---------->need to add 'peak_region_fragments'
+# hippo$pct_reads_in_peaks <- hippo$peak_region_fragments / hippo$passed_filters * 100    
+# hippo$blacklist_ratio <- hippo$blacklist_region_fragments / hippo$peak_region_fragments
+# hippo$high.tss <- ifelse(hippo$TSS.enrichment > 2, 'High', 'Low')
+# TSSPlot(pbmc, group.by = 'high.tss') + NoLegend()
+# Group by cells with high or low nucleosomal signal strength. You can see that cells that are outliers for the mononucleosomal / nucleosome-free ratio
+pbmc$nucleosome_group <- ifelse(pbmc$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
+FragmentHistogram(object = pbmc, group.by = 'nucleosome_group')
+
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_beforefiltering.pdf"))
 VlnPlot(
@@ -176,6 +186,10 @@ VlnPlot(
   pt.size = 0
 )
 # dev.off()
+# 
+hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
+FragmentHistogram(object = hippo, group.by = 'nucleosome_group')
+
 
 # filter out low quality cells
 # hippo <- subset(
