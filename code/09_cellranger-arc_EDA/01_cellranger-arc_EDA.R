@@ -33,23 +33,26 @@ fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed
 # fragments.tsv is the full list of all unique fragments across all single cells.
 # it contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
 
-######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
-str(sc_hippo)   # read modalities
-#sc_hippo
-rna_counts <- sc_hippo$`Gene Expression`
-atac_counts <- sc_hippo$Peaks
-#View(atac_counts)
 # Get gene annotations for hg38 and extract gene annotations from EnsDb
 annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
 # change to UCSC style since the data was mapped to hg38
-head(annotations)
+show(annotations)   # GRanger(), By default the show method displays 5 head and 5 tail elements
+View(head(annotations,n=5))
 #names(genomeStyles('Homo_sapiens'))
 seqlevelsStyle(annotations) <- "UCSC"
 #extractSeqlevelsByGroup(species="Homo_sapiens", style="UCSC", group="sex")
 #extractSeqlevelsByGroup(species="Homo_sapiens", style="UCSC", group="auto")
 genome(annotations) <- "hg38"
+show(annotations)
 
-######## Create a Seurat object containing the RNA + ATAC data ########
+######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
+str(sc_hippo)   # read modalities
+head(sc_hippo)
+rna_counts <- sc_hippo$`Gene Expression`
+atac_counts <- sc_hippo$Peaks
+View(head(rna_counts,n=5))
+
+######## Create a Seurat object containing the RNA ########
 # Initialize the Seurat object with the raw (non-normalized data). 
 hippo <- CreateSeuratObject(
   counts = rna_counts,
@@ -60,7 +63,7 @@ class(hippo)
 # check metadata
 head(hippo@meta.data)
 
-######## Standard pre-processing workflow ########
+######## QA Standard pre-processing workflow ########
 
 Idents(hippo) <- "hippo-42_1"
 hippo[["percent.mt"]] <- PercentageFeatureSet(hippo, pattern = "^MT-")
@@ -73,25 +76,28 @@ VlnPlot(hippo, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 
 plot1 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
-# I filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
+# Filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
 hippo2 <- subset(hippo, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mt < 5)
 VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 plot1 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(hippo2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
 
-######## Peaks in standard chromosomes were used for analysis ########
-View(head(atac_counts))
+######## ATAC assay: peaks in standard chromosomes were used for analysis ########
+class(atac_counts)
+show(atac_counts)
 grange.counts <- StringToGRanges(rownames(atac_counts), 
                                  sep = c(":", "-"))      # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
-# View(head(grange.counts))
-grange.use <- seqnames(grange.counts) %in% standardChromosomes(grange.counts)
-class(grange.use)       #S4Vector object.
+length(grange.counts)
+View(head(grange.counts,n=10))
+grange.use <- seqnames(grange.counts) %in% 
+    standardChromosomes(grange.counts)
+class(grange.use)       #S4Vector object / boolean
 length(grange.use)
 #View(!grange.use)
 #View(seqnames(grange.counts)[!grange.use])
 atac_counts <- atac_counts[as.vector(grange.use), ]
-View(head(atac_counts))
+View(head(atac_counts,n=10))
 
 # Annotation custom: something is not working yet:
 ## > CoveragePlot(
@@ -138,20 +144,26 @@ chrom_assay <- CreateChromatinAssay(
   fragments = fragpath,
   annotation = annotations
 )
+chrom_assay
+class(chrom_assay)
 # Unfiltered
 hippo[["ATAC"]] <- chrom_assay
 # Filtered
 # hippo2[["ATAC"]] <- chrom_assay
-
 View(head(hippo))
 
 # Add the gene information to the object
+show(annotations)
+# Annotations of the object are set 
 Annotation(hippo[["ATAC"]]) <- annotations
+head(hippo)
 # Annotation(hippo2[["ATAC"]]) <- annotations
 
 ######## Quality control to ATAC ########
 DefaultAssay(hippo) <- "ATAC"
+# QA signac measure to calculate the strength of the nucleosome signal per cell.
 hippo <- NucleosomeSignal(hippo)
+# QA measure to compute the transcription start site (TSS) enrichment score for each cell, as defined by ENCODE.
 hippo <- TSSEnrichment(hippo)
 head(hippo)
 # Volcano plot for quality control 
