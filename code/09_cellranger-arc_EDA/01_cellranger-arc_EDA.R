@@ -173,8 +173,8 @@ head(hippo,n=5)
 # hippo$high.tss <- ifelse(hippo$TSS.enrichment > 2, 'High', 'Low')
 # TSSPlot(pbmc, group.by = 'high.tss') + NoLegend()
 # Group by cells with high or low nucleosomal signal strength. You can see that cells that are outliers for the mononucleosomal / nucleosome-free ratio
-pbmc$nucleosome_group <- ifelse(pbmc$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
-FragmentHistogram(object = pbmc, group.by = 'nucleosome_group')
+hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
+FragmentHistogram(object = hippo, group.by = 'nucleosome_group')
 
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_beforefiltering.pdf"))
