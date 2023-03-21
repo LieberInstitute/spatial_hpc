@@ -51,7 +51,12 @@ metadata_42_1 <- read.csv(
     header = TRUE,
     row.names = 1
 )
+# meta-data used to create the peaks stats
+colnames(metadata_42_1) <- c("peak_region_fragments","passed_filters","blacklist_region_fragments")
+head(metadata_42_1)
+
 # For anyone having this issue using cellranger-atac-2.0.0 - meta data is now labeled as singlecell.csv
+# peak_region_fragments, passed_filters, blacklist_region_fragments
 head(metadata_42_1)
 
 ######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
