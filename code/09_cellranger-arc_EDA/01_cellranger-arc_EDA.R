@@ -51,20 +51,17 @@ metadata_42_1 <- read.csv(
     header = TRUE,
     row.names = 1
 )
-# meta-data used to create the peaks stats
-colnames(metadata_42_1) <- c("peak_region_fragments","passed_filters","blacklist_region_fragments")
+# subset from meta-data to create the peaks stats
+#colnames(metadata_42_1) <- c("peak_region_fragments","passed_filters","blacklist_region_fragments")
 head(metadata_42_1)
-
 # For anyone having this issue using cellranger-atac-2.0.0 - meta data is now labeled as singlecell.csv
-# peak_region_fragments, passed_filters, blacklist_region_fragments
-head(metadata_42_1)
 
 ######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
 str(sc_hippo)   # read modalities
 head(sc_hippo)
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
-#View(head(rna_counts,n=5))
+View(head(atac_counts,n=5))
 
 ######## Create a Seurat object containing the RNA ########
 # Initialize the Seurat object with the raw (non-normalized data) & meta.data with per barcode metrics is attached
@@ -164,8 +161,10 @@ head(hippo)
 
 # Add the gene information to the object
 show(annotations)
-# Annotations of the object are set 
+# Annotations of the object are set
 Annotation(hippo[["ATAC"]]) <- annotations
+hippo[["ATAC"]]
+Cells(hippo)
 head(hippo)
 
 ######## Quality control to ATAC ########
@@ -176,23 +175,21 @@ hippo <- NucleosomeSignal(hippo)
 # Signac QA measure to compute the transcription start site (TSS) enrichment score for each cell, as defined by ENCODE.
 hippo <- TSSEnrichment(hippo, fast = FALSE)    # If fast = False, it computes the TSS enrichment scores, storing the base-resolution matrix of integration counts at each site.
 head(hippo,n=5)
-## Add blacklist ratio and fraction of reads in peaks. This is in "per_barcode_metrics.csv"
-hippo <- NucleosomeSignal(hippo)
 # seu_atac$pct_reads_in_peaks <- seu_atac$atac_peak_region_fragments / seu_atac$atac_fragments * 100
-# seu_atac$blacklist_fraction <- FractionCountsInRegion(
-#     object = seu_atac, 
-#     assay = 'peaks',
-#     regions = blacklist_mm10
-# )
+hippo$blacklist_fraction <- FractionCountsInRegion(
+    object = hippo,
+    assay = 'ATAC',
+    regions = blacklist_hg38
+)
 # add blacklist ratio and fraction of reads in peaks
-hippo$pct_reads_in_peaks <- hippo$peak_region_fragments / hippo$passed_filters * 100
-hippo$blacklist_ratio <- hippo$blacklist_region_fragments / hippo$peak_region_fragments
+hippo$pct_reads_in_peaks <- hippo$atac_peak_region_fragments / hippo$atac_fragments * 100
+hippo$blacklist_ratio <- hippo$blacklist_fraction / hippo$atac_peak_region_fragments
 
 #######################################################################
 
 # Classified the TSS enrichement scores in two groups
 hippo$high.tss <- ifelse(hippo$TSS.enrichment > 2, 'High', 'Low')
-TSSPlot(pbmc, group.by = 'high.tss') + NoLegend()
+TSSPlot(hippo, group.by = 'high.tss') + NoLegend()
 
 # Group by cells with high or low nucleosomal signal strength. You can see that cells that are outliers for the mononucleosomal / nucleosome-free ratio
 hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
