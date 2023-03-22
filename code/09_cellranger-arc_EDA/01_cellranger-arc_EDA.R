@@ -9,8 +9,7 @@
 
 # Last modification: CSC
 Sys.time()
-#"2023-03-14 12:02:09 EDT" 
-#"2023-03-15 16:00:57 EDT"
+#"2023-03-22 14:51:04 EDT"
 
 # load libraries
 library(Signac)
@@ -64,7 +63,7 @@ atac_counts <- sc_hippo$Peaks
 View(head(atac_counts,n=5))
 
 ######## Create a Seurat object containing the RNA ########
-# Initialize the Seurat object with the raw (non-normalized data) & meta.data with per barcode metrics is attached
+# Initialize the Seurat object with filtered_feature_bc_matrix (non-normalized data) & meta.data with per barcode metrics attached
 hippo <- CreateSeuratObject(
   counts = rna_counts,
   assay = "RNA",
@@ -74,11 +73,10 @@ hippo <- CreateSeuratObject(
 class(hippo)
 # check metadata
 head(hippo@meta.data)
-head(hippo)
 
 ######## QA Standard metrics  ########
 
-Idents(hippo) <- "hippo-42_1"
+#Idents(hippo) <- "hippo-42_1"
 hippo[["percent.mt"]] <- PercentageFeatureSet(hippo, pattern = "^MT-")
 head(hippo@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
 head(hippo[["percent.mt"]][])         # Access feature-level meta-data
@@ -91,8 +89,7 @@ plot2 <- FeatureScatter(hippo, feature1 = "nCount_RNA", feature2 = "nFeature_RNA
 plot1 + plot2
 
 ######## ATAC assay: peaks in standard chromosomes were used for analysis ########
-class(atac_counts)
-show(atac_counts)
+show(atac_counts)   #matrix
 grange.counts <- StringToGRanges(rownames(atac_counts), 
                                  sep = c(":", "-"))      # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
 length(grange.counts)
@@ -150,21 +147,20 @@ chrom_assay <- CreateChromatinAssay(
   counts = atac_counts,
   sep = c(":", "-"),
   fragments = fragpath,
-  annotation = annotations
+  annotation = annotations    # Add the gene information to the object
 )
 chrom_assay
 head(chrom_assay[])
 # Unfiltered
 hippo[["ATAC"]] <- chrom_assay
 head(hippo@meta.data)
-head(hippo)
 
-# Add the gene information to the object
+# Add the gene information to the object  ----  FUNCTIONS DUPLICATES ?? --- HEDIA 
 show(annotations)
 # Annotations of the object are set
 Annotation(hippo[["ATAC"]]) <- annotations
 hippo[["ATAC"]]
-Cells(hippo)
+#Cells(hippo)
 head(hippo)
 
 ######## Quality control to ATAC ########
@@ -175,7 +171,7 @@ hippo <- NucleosomeSignal(hippo)
 # Signac QA measure to compute the transcription start site (TSS) enrichment score for each cell, as defined by ENCODE.
 hippo <- TSSEnrichment(hippo, fast = FALSE)    # If fast = False, it computes the TSS enrichment scores, storing the base-resolution matrix of integration counts at each site.
 head(hippo,n=5)
-# seu_atac$pct_reads_in_peaks <- seu_atac$atac_peak_region_fragments / seu_atac$atac_fragments * 100
+# add blacklist ratio and fraction of reads in peaks
 hippo$blacklist_fraction <- FractionCountsInRegion(
     object = hippo,
     assay = 'ATAC',
@@ -184,11 +180,11 @@ hippo$blacklist_fraction <- FractionCountsInRegion(
 # add blacklist ratio and fraction of reads in peaks
 hippo$pct_reads_in_peaks <- hippo$atac_peak_region_fragments / hippo$atac_fragments * 100
 hippo$blacklist_ratio <- hippo$blacklist_fraction / hippo$atac_peak_region_fragments
-
-#######################################################################
-
-# Classified the TSS enrichement scores in two groups
+VlnPlot(hippo, 
+        features = c("pct_reads_in_peaks","blacklist_ratio"), ncol = 2)
+# Classified the TSS enrichment scores in two groups
 hippo$high.tss <- ifelse(hippo$TSS.enrichment > 2, 'High', 'Low')
+head(hippo)
 TSSPlot(hippo, group.by = 'high.tss') + NoLegend()
 
 # Group by cells with high or low nucleosomal signal strength. You can see that cells that are outliers for the mononucleosomal / nucleosome-free ratio
