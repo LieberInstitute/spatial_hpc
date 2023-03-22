@@ -1,0 +1,48 @@
+**** Job starts ****
+Tue Mar 21 19:53:38 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3066427
+Job name: PRECAST_k16-24
+Hostname: compute-098.cm.cluster
+Task id: 24
+Loading conda_R/devel
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.6.14
+  4) sge/8.1.9         9) conda_R/devel
+  5) gcc/4.4.7
+
+ 
+
+Error in library(Seurat) : there is no package called ‘Seurat’
+Calls: suppressPackageStartupMessages -> withCallingHandlers -> library
+Execution halted
+**** Job ends ****
+Tue Mar 21 19:53:41 EDT 2023
+**** Job starts ****
+Tue Mar 21 20:03:53 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3066438
+Job name: PRECAST_k16-24
+Hostname: compute-098.cm.cluster
+Task id: 24
+Loading conda_R/devel
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.6.14
+  4) sge/8.1.9         9) conda_R/devel
+  5) gcc/4.4.7
+
+ 
+
+Error in library("Seurat") : there is no package called ‘Seurat’
+Calls: suppressPackageStartupMessages -> withCallingHandlers -> library
+Execution halted
+**** Job ends ****
+Tue Mar 21 20:03:56 EDT 2023

@@ -3,7 +3,6 @@ suppressPackageStartupMessages({
 library("here")
 library("SpatialExperiment")
 library("Seurat")
-library("SeuratData")
 })
 
 load(file = here::here("processed-data", "04_QC", "spe_QC_allSamples.Rdata"))
@@ -11,12 +10,12 @@ source(file = here::here("code", "06_clustering", "BayesSpace", "preprocess_harm
 x = offset_check(spe)
 
 ## check
-# df <- cbind.data.frame(colData(x), spatialCoords(x))
-# ggplot(df, aes(x = row, y = col, color = sample_id)) +
-# geom_point(size = 1) +
-# coord_fixed() +
-# guides(color = guide_legend(override.aes = list(size = 3))) +
-# theme_bw()
+ df <- cbind.data.frame(colData(x), spatialCoords(x))
+ ggplot(df, aes(x = row, y = col, color = sample_id)) +
+ geom_point(size = 1) +
+ coord_fixed() +
+ guides(color = guide_legend(override.aes = list(size = 3))) +
+ theme_bw()
   
 x$spot_id = x$key
 
@@ -34,4 +33,4 @@ for (i in seq_along(brains)){
 seuList[[i]] = subset(x=sue, subset = brnum == brains[i])
 }
 
-save(seuList, file = here("processed-data", "06_clustering", "PRECAST", "seuList.Rdata"))
+save(seuList, file = here("processed-data", "06_clustering", "PRECAST", "seuList_allSamples.Rdata"))

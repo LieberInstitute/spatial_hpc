@@ -2,11 +2,11 @@
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
 #$ -pe local 8
-#$ -N PRECAST_k16-20
+#$ -N PRECAST_k16-24
 #$ -o logs/PRECAST_k.$TASK_ID.txt
 #$ -e logs/PRECAST_k.$TASK_ID.txt
 #$ -m e
-#$ -t 16-20
+#$ -t 16-24
 #$ -tc 5
 
 echo "**** Job starts ****"
@@ -20,7 +20,7 @@ echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 
 ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
-module load conda_R/devel
+module load conda_R
 
 ## List current modules for reproducibility
 module list
