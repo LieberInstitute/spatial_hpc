@@ -30,9 +30,9 @@ sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hp
 class(sc_hippo)
 # Read10X_h5() read count matrix from 10X CellRanger hdf5 file. This can be used to read both scATAC-seq and scRNA-seq matrices.
 # In this MTX  each row represents a peak, predicted to represent a region of open chromatin.
+#fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/atac_fragments.tsv.gz"
 fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/atac_fragments.tsv.gz"
-# fragments.tsv is the full list of all unique fragments across all single cells.
-# it contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
+# fragments.tsv is the full list of all unique fragments across all single cells. It contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
 
 # Get gene annotations for hg38 and extract gene annotations from EnsDb
 annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
@@ -56,6 +56,7 @@ metadata_42_1 <- read.csv(
 # subset from meta-data to create the peaks stats
 #colnames(metadata_42_1) <- c("peak_region_fragments","passed_filters","blacklist_region_fragments")
 head(metadata_42_1)
+length(colnames(metadata_42_1))
 # For anyone having this issue using cellranger-atac-2.0.0 - meta data is now labeled as singlecell.csv
 
 ######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
@@ -72,7 +73,7 @@ hippo <- CreateSeuratObject(
   counts = rna_counts,
   assay = "RNA",
   #project = "hippo-42_1",    # , min.cells = 3, min.features = 200)
-  project = "hippo-42_4",    # , min.cells = 3, min.features = 200)
+  project = "hippo-42_4",    # sample with many quality warnings
   meta.data = metadata_42_1
 )
 class(hippo)
@@ -235,7 +236,10 @@ plot1 + plot2
 # Dimensionality reduction
 # RNA analysis
 DefaultAssay(hippo) <- "RNA"
+
 hippo <- SCTransform(hippo, verbose = FALSE) %>% RunPCA() %>% RunUMAP(dims = 1:30, reduction.name = 'umap.rna', reduction.key = 'rnaUMAP_')
+# Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+# To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
 
 # ATAC analysis
 # We exclude the first dimension as this is typically correlated with sequencing depth
