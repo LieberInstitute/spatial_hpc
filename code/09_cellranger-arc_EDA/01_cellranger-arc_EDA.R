@@ -25,10 +25,12 @@ library(patchwork)
 set.seed(1234)
 
 # 1) LOAD RNA & ATAC DATA
-sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
+#sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
+sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/filtered_feature_bc_matrix.h5")
+class(sc_hippo)
 # Read10X_h5() read count matrix from 10X CellRanger hdf5 file. This can be used to read both scATAC-seq and scRNA-seq matrices.
 # In this MTX  each row represents a peak, predicted to represent a region of open chromatin.
-fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/atac_fragments.tsv.gz"
+fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/atac_fragments.tsv.gz"
 # fragments.tsv is the full list of all unique fragments across all single cells.
 # it contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
 
@@ -46,7 +48,8 @@ show(annotations)
 
 ####### Add meta-data to calculate stats to add blacklist ratio and fraction of reads in peaks  ######### 
 metadata_42_1 <- read.csv(
-    file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/per_barcode_metrics.csv",
+    #file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/per_barcode_metrics.csv",
+    file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/per_barcode_metrics.csv",
     header = TRUE,
     row.names = 1
 )
@@ -60,14 +63,16 @@ str(sc_hippo)   # read modalities
 head(sc_hippo)
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
-View(head(atac_counts,n=5))
+show(atac_counts)
+head(rna_counts,n=5)
 
 ######## Create a Seurat object containing the RNA ########
 # Initialize the Seurat object with filtered_feature_bc_matrix (non-normalized data) & meta.data with per barcode metrics attached
 hippo <- CreateSeuratObject(
   counts = rna_counts,
   assay = "RNA",
-  project = "hippo-42_1",    # , min.cells = 3, min.features = 200)
+  #project = "hippo-42_1",    # , min.cells = 3, min.features = 200)
+  project = "hippo-42_4",    # , min.cells = 3, min.features = 200)
   meta.data = metadata_42_1
 )
 class(hippo)
@@ -141,8 +146,7 @@ atac_counts <- atac_counts[as.vector(grange.use), ]
 # gene.coords <- keepStandardChromosomes(gene.coords, pruning.mode = 'coarse')
 # annotations <- gtf
 
-########  Create ATAC assay and add it to the object ######## 
-
+########  Create ATAC assay and add it to the Seurat object ######## 
 chrom_assay <- CreateChromatinAssay(
   counts = atac_counts,
   sep = c(":", "-"),
@@ -189,9 +193,7 @@ TSSPlot(hippo, group.by = 'high.tss') + NoLegend()
 
 # Group by cells with high or low nucleosomal signal strength. You can see that cells that are outliers for the mononucleosomal / nucleosome-free ratio
 hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
-#hippo$nucleosome_group <- ifelse(hippo$nucleosome_signal > 3, 'NS > 3', 'NS < 3')
 FragmentHistogram(object = hippo, group.by = 'nucleosome_group')
-
 head(hippo,n=5)
 # Volcano plot for quality control 
 # pdf(here("plots", "09_cellranger-arc_EDA", "Volcanoplot_QC_beforefiltering.pdf"))
@@ -206,12 +208,11 @@ VlnPlot(hippo, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal",
 # dev.off()
  
 ######## Filter out low quality cells in the RNA-Seq and ATAC assays ########
-# Filter cells that have unique feature counts over 2,500 or less than 200, & cells that have >5% mitochondrial counts
+# Filter cells that get a standard profile based on the QC results 
 hippo2 <- subset(hippo, 
-                 subset = nFeature_RNA > 200 & nFeature_RNA < 7500 
-                 & percent.mt < 5
+                 subset = percent.mt < 5 #subset = nFeature_RNA > 200 & nFeature_RNA < 7500 
                  & nucleosome_signal < 4
-                 & TSS.enrichment > 2)
+                 & TSS.enrichment > 1)
 head(hippo2,n=5)
 VlnPlot(hippo2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 VlnPlot(hippo2, features = c("nCount_ATAC", "nFeature_ATAC", "nucleosome_signal", "TSS.enrichment"), ncol = 4)
