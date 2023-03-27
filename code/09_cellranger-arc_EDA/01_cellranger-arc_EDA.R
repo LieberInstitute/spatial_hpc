@@ -7,9 +7,15 @@
 ## https://stuartlab.org/signac/articles/pbmc_vignette.html
 ########################################################################
 
-# Last modification: CSC
+## Reproducibility information
+library("sessioninfo")
+print('Reproducibility information:')
+# Last modification
 Sys.time()
 #"2023-03-22 14:51:04 EDT"
+proc.time()
+options(width = 120)
+session_info()
 
 # load libraries
 library(Signac)
