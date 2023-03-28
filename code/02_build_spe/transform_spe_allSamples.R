@@ -15,6 +15,7 @@ library("dplyr")
 library("tidyverse")
 })
 
+
 load(file = here::here("processed-data", "02_build_spe", "spe_raw_allSamples.Rdata"))
 spe_raw = spe
 dim(spe_raw)
@@ -165,6 +166,7 @@ table(spe_raw$sample_id,spe_raw$brnum)
 # V12F14-051_D1   4992
 
 samples = unique(spe_raw$sample_id)
+samples
 # Br2743 [1] "V10B01-086_C1" "V11U08-081_C1" "V10B01-086_D1" "V11U08-081_D1"
 # Br3942 [5] "V11L05-333_A1" "V11L05-333_B1" "V11L05-333_C1" "V11L05-333_D1"
 # Br6423 [9] "V10B01-085_A1" "V10B01-085_B1" "V10B01-085_C1" "V10B01-085_D1"
@@ -176,7 +178,7 @@ samples = unique(spe_raw$sample_id)
 # Br8667 [29] "V11L05-336_A1" "V11L05-336_B1" "V11L05-336_C1" "V11L05-336_D1"
 # Br2720 [33] "V12F14-051_A1" "V12F14-051_B1" "V12F14-051_C1" "V12F14-051_D1"
 
-position_list <- c("BL", "TR", "TL", "BR",
+position_list <- c("TR", "BL", "TL", "BR",
                    "TL", "TR", "BL", "BR",
                    "TR", "TL", "BR", "BL",
                    "TL", "BL",
@@ -319,7 +321,7 @@ angle_list_array <- c(270, 90, 0, 0,
                 0, 0, 180, 0, 0,
                 180, 180, 
                 0, 0, 0, 0,
-                0,0,0,0)
+                0,0,0,90)
 source(file = here::here("code", "02_build_spe", "transform_spe.R"))
 source(file = here::here("code", "02_build_spe", "transform_spe_array.R"))
 for (i in seq_along(angle_list)) {

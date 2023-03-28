@@ -8,24 +8,24 @@ suppressPackageStartupMessages(library("sessioninfo"))
 load(file = here::here("processed-data", "02_build_spe", "spe_transform.Rdata"))
 
 dim(spe)
-# [1]  36601 159744
+# [1]  36601 179712
 lobstr::obj_size(spe)
-# 5.53 GB
+# 6.16 GB
 
 ## Remove genes with no data
 no_expr <- which(rowSums(counts(spe)) == 0)
 length(no_expr)
-# [1] 6242
+# [1] 6113
 length(no_expr) / nrow(spe) * 100
-# [1] 17.05418
+# [1] 16.70173
 spe <- spe[-no_expr, ]
 dim(spe)
-# [1]  30359 159744
+# [1]  30432 159744
 
 ## Now drop the spots outside the tissue
 spe <- spe[, colData(spe)$in_tissue]
 dim(spe)
-# [1]  30359 137446
+# [1]  30432 153087
 
 ## Remove spots without counts
 if (any(colSums(counts(spe)) == 0)) {
@@ -34,10 +34,10 @@ if (any(colSums(counts(spe)) == 0)) {
   dim(spe)
 }
 
-# [1]  30359 137442
+# [1]  30432 153083
 
 lobstr::obj_size(spe)
-# 5.45 GB
+# 6.08 GB
 
 save(spe, file = here::here("processed-data", "02_build_spe", "spe_basic.Rdata"))
 

@@ -10,9 +10,9 @@ suppressPackageStartupMessages(library("sessioninfo"))
 
 
 #### Compute QC metrics ####
-load(here("processed-data", "02_build_spe", "spe_basic.Rdata"), verbose = TRUE)
+load(here("processed-data", "02_build_spe", "spe_basic_allSamples.Rdata"), verbose = TRUE)
 dim(spe)
-# [1]  30359 137442
+# [1]  30359 153083
 length(table(spe$sample_id))
 # 36
 length(table(spe$brnum))
@@ -73,7 +73,7 @@ table(spe$sample_id, spe$high_mito_id)
 # V12F14-051_B1  3134    1
 # V12F14-051_C1  4107   10
 # V12F14-051_D1  4625    2
-# table(spe$high_mito_br, spe$brnum)
+ table(spe$high_mito_br, spe$brnum)
 # Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667 Br2720
 # FALSE  13920  19057  13901   8525  14396  18759  20363   8214  18257  15592
 # TRUE     260    711    217    149      4      0    483    176     50     49
@@ -114,7 +114,7 @@ table(spe$low_detected_br)
 
 #are low_detected_br spots and low_detected_br spots same? Yes
 #Erik--no, so must be that round 9 samples have many of these "mismatches"
-table(spe$low_detected_br,spe$low_detected_id)
+table(spe[spe$sample_id[1:32],]$low_detected_br,spe[spe$sample_id[1:32],]$low_detected_id)
 #        FALSE   TRUE
 #FALSE 150657    193
 #TRUE     448   1785
