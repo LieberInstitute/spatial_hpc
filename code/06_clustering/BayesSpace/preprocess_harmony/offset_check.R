@@ -304,6 +304,42 @@ colData(x)$col <- col
 
 spe = cbind(spe,x)
 
+brains[9]
+#Br8667
+
+x = speo[,colData(speo)$brnum == brains[10]]
+samples = unique(x$sample_id)
+samples
+# [1] "V11U08-084_A1" "V11U08-084_B1" "V11U08-084_C1" "V11U08-084_D1"
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+row[ix] <- row[ix] + 750
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 940
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 828
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 910
+
+ix = colData(x)$sample_id == samples[3]
+row[ix] <- row[ix] + 750
+ix = colData(x)$sample_id == samples[3]
+col[ix] <- col[ix] + 810
+
+ix = colData(x)$sample_id == samples[4]
+row[ix] <- row[ix] + 826
+ix = colData(x)$sample_id == samples[4]
+col[ix] <- col[ix] + 850
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
 # df <- cbind.data.frame(colData(x), spatialCoords(x))
 # ggplot(df, aes(x = row, y = col, color = sample_id)) + 
 #   geom_point(size = 1) + 
