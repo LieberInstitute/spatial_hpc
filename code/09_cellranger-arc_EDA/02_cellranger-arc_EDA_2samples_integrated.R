@@ -101,8 +101,8 @@ atac_counts2 <- sc_hippo2$Peaks
 hippo <- CreateSeuratObject(
   counts = rna_counts,
   assay = "RNA",
-  project = "hippo-42_1",   
-  meta.data = metadata_42_1
+  project = "hippo-42_1"
+  #meta.data = metadata_42_1
 )
 class(hippo)
 # check metadata
@@ -110,17 +110,17 @@ head(hippo@meta.data)
 hippo2 <- CreateSeuratObject(
     counts = rna_counts2,
     assay = "RNA",
-    project = "hippo-42_4",   
-    meta.data = metadata_42_4
+    project = "hippo-42_4"
+    #meta.data = metadata_42_4
 )
 class(hippo2)
+show(hippo2)
+head(hippo2)
 
 # Merge two seurat objects
 hippo.combined <- merge(hippo, y = hippo2, add.cell.ids = c("Sample_42_1", "Sample_42_4"), project = "HIPPO")
-hippo.combined@meta.dat
-show(hippo.combined)
+hippo.combined
 head(colnames(hippo.combined))
-View(head(hippo.combined))
 table(hippo.combined$orig.ident)
 
 ######## QA Standard metrics  ########
@@ -129,10 +129,13 @@ table(hippo.combined$orig.ident)
 hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
 
 head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
-head(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
+tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
 
 # Visualize QC metrics as a violin plot
-VlnPlot(hippo.combined, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+head(hippo2)
+VlnPlot(object = hippo.combined, features = c('nCount_RNA','nFeature_RNA','percent.mt'), split.by = 'orig.ident')
+head(hippo.combined)
+#VlnPlot(hippo.combined, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 # Scatter plot to visualize feature-feature relationships, across the set of single cells.
 plot1 <- FeatureScatter(hippo.combined, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(hippo.combined, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
