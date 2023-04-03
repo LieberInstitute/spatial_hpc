@@ -16,22 +16,22 @@ library("gridExtra")
 
 temp = "OSCApreprocess_harmony_captureArea" #"spatialPreprocess_harmony", "OSCApreprocess_harmony_captureArea", "OSCApreprocess_harmony_brain"
 ## load data
-load(file = here::here("processed-data", "05_preprocess_batchCorrection", paste0(temp ,"_spe.Rdata")), verbose = TRUE)
+load(file = here::here("processed-data", "05_preprocess_batchCorrection", paste0(temp ,"_spe_allSamples.Rdata")), verbose = TRUE)
 dim(spe)
 
-#k <- as.numeric(Sys.getenv("SGE_TASK_ID"))
-k = 15
+k <- as.numeric(Sys.getenv("SGE_TASK_ID"))
+
 
 source(file = here::here("code", "06_clustering", "BayesSpace", "preprocess_harmony", "offset_check.R"))
 spe = offset_check(spe)
 
 ## check
-# df <- cbind.data.frame(colData(x), spatialCoords(x))
-# ggplot(df, aes(x = row, y = col, color = sample_id)) +
-# geom_point(size = 1) +
-# coord_fixed() +
-# guides(color = guide_legend(override.aes = list(size = 3))) +
-# theme_bw()
+ df <- cbind.data.frame(colData(x), spatialCoords(x))
+ ggplot(df, aes(x = row, y = col, color = sample_id)) +
+ geom_point(size = 1) +
+ coord_fixed() +
+ guides(color = guide_legend(override.aes = list(size = 3))) +
+ theme_bw()
 
 ### BayesSpace on Batch Corrected
 metadata(spe)$BayesSpace.data <- list(platform = "Visium", is.enhanced = FALSE)
@@ -39,7 +39,7 @@ metadata(spe)$BayesSpace.data <- list(platform = "Visium", is.enhanced = FALSE)
 message("Running spatialCluster()")
 Sys.time()
 set.seed(20220201)
-spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k)
+spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k,nrep=10000)
 Sys.time()
 
 #spe <- spatialCluster(spe, use.dimred = "HARMONY", q = k, nrep = 10000)
@@ -51,7 +51,7 @@ colnames(colData(spe))[ncol(colData(spe))] <- bayesSpace_name
 cluster_export(
   spe,
   bayesSpace_name,
-  cluster_dir = here::here("processed-data", "06_clustering", "BayesSpace", "preprocess_harmony", temp)
+  cluster_dir = here::here("processed-data", "06_clustering", "BayesSpace", "preprocess_harmony", bayesSpace_name)
 )
 
 sample_ids <- unique(colData(spe)$sample_id)

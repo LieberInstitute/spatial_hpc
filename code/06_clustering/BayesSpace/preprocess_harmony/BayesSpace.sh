@@ -1,10 +1,13 @@
 #!/bin/bash
 #$ -cwd
-#$ -l caracol,mem_free=200G,h_vmem=200G,h_fsize=100G
-#$ -N bayesSpace_captureArea_k15
-#$ -o logs/bayesSpace_captureArea_k15.txt
-#$ -e logs/bayesSpace_captureArea_k15.txt
+#$ -l caracol,mem_free=120G,h_vmem=120G,h_fsize=100G
+#$ -N bayesSpace_captureArea_k_many
+#$ -o logs/bayesSpace_captureArea_k.$TASK_ID.txt
+#$ -e logs/bayesSpace_captureArea_k.$TASK_ID.txt
 #$ -m e
+#$ -t 16-28
+#$ -tc 4
+
 
 USAGE_CUTOFF=10
 NUM_GPUS=1
@@ -31,7 +34,7 @@ echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 
 ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
-module load conda_R/devel
+module load conda_R
 
 ## List current modules for reproducibility
 module list
