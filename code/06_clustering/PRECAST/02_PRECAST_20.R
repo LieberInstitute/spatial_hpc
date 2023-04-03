@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
   library("here")
 })
 
-load(file = here("processed-data", "06_clustering", "PRECAST", "allSamples_PRECASTObj_20.Rdata"))
+load(file = here("processed-data", "06_clustering", "PRECAST", "stitch_PRECASTObj_20.Rdata"))
 
 resList <- PRECASTObj@resList
 PRECASTObj <- selectModel(PRECASTObj)
@@ -29,7 +29,7 @@ names(cols) <- sort(unique(seuInt$cluster))
 
 p12 <- SpaPlot(seuInt, batch = NULL, item = "cluster", point_size = 2, cols = cols)
 
-pdf(file = here::here("plots", "06_clustering", "PRECAST", "K20_all.pdf"), width = 21, height = 20)
+pdf(file = here::here("plots", "06_clustering", "PRECAST", "K20_stitch.pdf"), width = 21, height = 20)
 for (i in c(1:10)){
   print(p12[[i]])
 }

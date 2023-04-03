@@ -27,3 +27,29 @@ Active assay: PRE_CAST (2000 features, 0 variable features)
  2 dimensional reductions calculated: PRECAST, position
 null device 
           1 
+**** HOLDING FOR RDATA OBJECT ****
+**** Job starts ****
+Thu Mar 30 14:01:07 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3084537
+Job name: plots_k_20_precast
+Hostname: compute-058.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Using bouth housekeeping gene and PRECAST results to obtain the batch corrected gene expressions.
+An object of class Seurat 
+2000 features across 127572 samples within 1 assay 
+Active assay: PRE_CAST (2000 features, 0 variable features)
+ 2 dimensional reductions calculated: PRECAST, position
+null device 
+          1 

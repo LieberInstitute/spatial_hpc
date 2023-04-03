@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
   library("tictoc")
 })
 
-load(file = here::here("processed-data", "06_clustering", "PRECAST", "seuList.Rdata"))
+load(file = here::here("processed-data", "06_clustering", "PRECAST", "seuList_stitch.Rdata"))
 
 preobj = CreatePRECASTObject(seuList = seuList)
 preobj@seulist
@@ -26,4 +26,4 @@ tic()
 PRECASTObj <- PRECAST(PRECASTObj, K = K)
 toc()
 
-save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("allSamples_PRECASTObj_",K,".Rdata")))
+save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("stitch_PRECASTObj_",K,".Rdata")))

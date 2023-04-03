@@ -1,8 +1,8 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=100G
+#$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=80G
 #$ -pe local 8
-#$ -N PRECAST_k16-24
+#$ -N PRECAST_k16-25
 #$ -o logs/PRECAST_k.$TASK_ID.txt
 #$ -e logs/PRECAST_k.$TASK_ID.txt
 #$ -m e

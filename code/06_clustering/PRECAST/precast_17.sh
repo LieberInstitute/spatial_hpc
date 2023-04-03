@@ -5,7 +5,7 @@
 #$ -o logs/plots_k_17_precast.txt
 #$ -e logs/plots_k_17_precast.txt
 #$ -m e
-RDATA_FILE="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/06_clustering/PRECAST/allSamples_PRECASTObj_17.Rdata"
+RDATA_FILE="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/06_clustering/PRECAST/stitch_PRECASTObj_17.Rdata"
 echo "**** HOLDING FOR RDATA OBJECT ****"
 # Wait for the Rdata file to be available
 while [ ! -f $RDATA_FILE ]; do
