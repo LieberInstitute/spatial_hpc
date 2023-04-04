@@ -12,7 +12,7 @@ library("sessioninfo")
 print('Reproducibility information:')
 # Last modification
 Sys.time()
-#"2023-03-22 14:51:04 EDT"
+#"2023-04-04 12:42:26 EDT"
 proc.time()
 options(width = 120)
 session_info()
@@ -36,13 +36,13 @@ session_info()
 # ui       X11
 # language (EN)
 # collate  en_US.UTF-8
-# ctype    en_US.UTF-8
 # tz       US/Eastern
 # date     2023-03-27
 # pandoc   2.19.2 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.11.0/envs/svnR-4.2.x/bin/pandoc
 
 # load libraries
 library(Signac)
+# ctype    en_US.UTF-8
 library(Seurat)
 library(EnsDb.Hsapiens.v86)
 library(BSgenome.Hsapiens.UCSC.hg38)
@@ -51,8 +51,8 @@ library(here)
 library(GenomeInfoDb)
 library(dplyr)
 library(patchwork)
+library(scCustomize)          # split by group the VPlots - Seurat complement
 set.seed(1234)
-
 
 # 1) LOAD TWO RNA & ATAC DATA COMBINED
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
@@ -66,12 +66,11 @@ fragpath2 <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processe
 
 # Get gene annotations for hg38 and extract gene annotations from EnsDb
 annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
-show(annotations)   # GRanger(), By default the show method displays 5 head and 5 tail elements
+show(annotations)   
 #View(head(annotations,n=5))
 #names(genomeStyles('Homo_sapiens'))
 seqlevelsStyle(annotations) <- "UCSC"
-#extractSeqlevelsByGroup(species="Homo_sapiens", style="UCSC", group="sex")
-#extractSeqlevelsByGroup(species="Homo_sapiens", style="UCSC", group="auto")
+length(extractSeqlevelsByGroup(species = 'Homo_sapiens', style = 'UCSC', group = 'all')) #group: sex, auto, circular
 genome(annotations) <- "hg38"
 show(annotations)
 
@@ -82,15 +81,18 @@ metadata_42_1 <- read.csv(
     header = TRUE,
     row.names = 1
 )
+meta_tmp = c('atac_peak_region_fragments','atac_fragments')
+meta1 = metadata_42_1[meta_tmp]
 metadata_42_4 <- read.csv(
     file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/per_barcode_metrics.csv",
     header = TRUE,
     row.names = 1
 )
-
+meta2 = metadata_42_4[meta_tmp]
+head(meta2, n=3)
 ######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
 str(sc_hippo)   # read modalities
-head(sc_hippo)
+show(sc_hippo)
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
 rna_counts2 <- sc_hippo2$`Gene Expression`
@@ -101,8 +103,8 @@ atac_counts2 <- sc_hippo2$Peaks
 hippo <- CreateSeuratObject(
   counts = rna_counts,
   assay = "RNA",
-  project = "hippo-42_1"
-  #meta.data = metadata_42_1
+  project = "hippo-42_1",
+  meta.data = meta1
 )
 class(hippo)
 # check metadata
@@ -110,112 +112,81 @@ head(hippo@meta.data)
 hippo2 <- CreateSeuratObject(
     counts = rna_counts2,
     assay = "RNA",
-    project = "hippo-42_4"
-    #meta.data = metadata_42_4
+    project = "hippo-42_4",
+    meta.data = meta2
 )
-class(hippo2)
+head(hippo2@meta.data)
+show(hippo)
 show(hippo2)
-head(hippo2)
 
 # Merge two seurat objects
 hippo.combined <- merge(hippo, y = hippo2, add.cell.ids = c("Sample_42_1", "Sample_42_4"), project = "HIPPO")
-hippo.combined
+class(hippo.combined)
+show(hippo.combined)
 head(colnames(hippo.combined))
 table(hippo.combined$orig.ident)
+head(hippo.combined, n=3)
+tail(hippo.combined, n=3)
 
-######## QA Standard metrics  ########
+######## QA metrics for the 'Gene Expression' assay  ########
 
-#Idents(hippo) <- "hippo-42_1"
 hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
-
 head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
 tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
 
 # Visualize QC metrics as a violin plot
 head(hippo2)
-VlnPlot(object = hippo.combined, features = c('nCount_RNA','nFeature_RNA','percent.mt'), split.by = 'orig.ident')
+VlnPlot(object = hippo.combined, features = c('nCount_RNA','nFeature_RNA','percent.mt'), 
+        group.by = "orig.ident")
 head(hippo.combined)
-#VlnPlot(hippo.combined, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
 # Scatter plot to visualize feature-feature relationships, across the set of single cells.
-plot1 <- FeatureScatter(hippo.combined, feature1 = "nCount_RNA", feature2 = "percent.mt")
-plot2 <- FeatureScatter(hippo.combined, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-plot1 + plot2
+#  sample() gets rndom samples and Permutations
+# hippo.combined$sample_id <- sample(c("Sample_42_1", "Sample_42_4"), size = ncol(hippo.combined), replace = TRUE)
+Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", feature2="nFeature_RNA", 
+                     split.by = "orig.ident")
+#Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", 
+#                    split.by = "sample_id")
+Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", feature2 = "percent.mt", 
+                     split.by = 'orig.ident')
 
-######## ATAC assay: peaks in standard chromosomes were used for analysis ########
+######## ATAC assay: peaks in standard chromosomes were used for analysis of both samples ########
 show(atac_counts)   #matrix
-grange.counts <- StringToGRanges(rownames(atac_counts), 
-                                 sep = c(":", "-"))      # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
-length(grange.counts)
-#View(head(grange.counts,n=10))
-grange.use <- seqnames(grange.counts) %in% 
-    standardChromosomes(grange.counts)
+# StringToGRanges(), Convert a genomic coordinate string to a GRanges object
+grange.counts <- StringToGRanges(rownames(atac_counts), sep = c(":", "-"))      
+grange.counts2 <- StringToGRanges(rownames(atac_counts2), sep = c(":", "-"))
+length(grange.counts2)
+grange.use <- seqnames(grange.counts) %in% standardChromosomes(grange.counts)
+grange.use2 <- seqnames(grange.counts2) %in% standardChromosomes(grange.counts2)
+
 class(grange.use)       #S4Vector object / boolean
-length(grange.use)
-#View(!grange.use)
-#View(seqnames(grange.counts)[!grange.use])
 atac_counts <- atac_counts[as.vector(grange.use), ]
-#View(head(atac_counts,n=10))
-
-# Annotation custom: something is not working yet:
-## > CoveragePlot(
-##   +   object = hippo,
-##   +   region = "PEX10",
-##   +   features = "PEX10",
-##   +   expression.assay = "SCT",
-##   +   extend.upstream = 500,
-##   +   extend.downstream = 500
-##   + )
-## [W::hts_idx_load3] The index file is older than the data file: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/atac_fragments.tsv.gz.tbi
-## Error in annotation[annotation$type == "body", ] : 
-##   incorrect number of dimensions
-# annotations <- rtracklayer::import("/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-cellranger-arc-GRCh38-2020-A-2.0.0/genes/genes.gtf.gz")
-## annotations <- annotations[annotations$type == "gene"]
-# annotations <- keepStandardChromosomes(annotations, pruning.mode = "coarse")
-# genome(annotations) <- "hg38"
-# annotations$gene_biotype <- tolower(annotations$gene_type)
-
-## Takes forever to run!
-# annotations$tx_id <- annotations$transcript_id
-# annotation_txdb <- GenomicFeatures::makeTxDbFromGRanges(annotations)
-# 
-# annotation_txdb <- GenomicFeatures::makeTxDbFromGFF("/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-cellranger-arc-GRCh38-2020-A-2.0.0/genes/genes.gtf.gz")
-# annotation_chunk <- lapply(seq_along(annotations), function(x) { biovizBase::crunch(obj = annotation_txdb, which = annotations[x]) })
-# annotation_chunk_all <- do.call(c, annotation_chunk)
-# annotation_chunk_all$gene_name <- NA
-# annotation_chunk_all$gene_biotype <- NA
-# m <- match(annotation_chunk_all$gene_id, annotations$gene_id)
-# annotation_chunk_all$gene_name[!is.na(m)] <- annotations$gene_id[m[!is.na(m)]]
-# annotation_chunk_all$gene_biotype[!is.na(m)] <- annotations$gene_id[m[!is.na(m)]]
-
-# faq recommendation
-# gtf <- rtracklayer::import('/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-cellranger-arc-GRCh38-2020-A-2.0.0/genes/genes.gtf.gz')
-# gene.coords <- gtf[gtf$type == 'gene']
-# seqlevelsStyle(gene.coords) <- 'UCSC'
-# gene.coords <- keepStandardChromosomes(gene.coords, pruning.mode = 'coarse')
-# annotations <- gtf
+atac_counts2 <- atac_counts2[as.vector(grange.use2), ]
 
 ########  Create ATAC assay and add it to the Seurat object ######## 
-chrom_assay <- CreateChromatinAssay(
-  counts = atac_counts,
-  sep = c(":", "-"),
-  fragments = fragpath,
-  annotation = annotations    # Add the gene information to the object
-)
-chrom_assay
-head(chrom_assay[])
+chrom_assay <- CreateChromatinAssay(counts = atac_counts,
+                                    sep = c(":", "-"), fragments = fragpath, 
+                                    annotation =annotations)
 # Unfiltered
 hippo[["ATAC"]] <- chrom_assay
 head(hippo@meta.data)
+chrom_assay2 <- CreateChromatinAssay(counts = atac_counts2,
+                                    sep = c(":", "-"), fragments = fragpath2, 
+                                    annotation =annotations)
+# Unfiltered
+hippo2[["ATAC"]] <- chrom_assay2
+head(hippo2@meta.data)
 
 # Add the gene information to the object  ----  FUNCTIONS DUPLICATES ?? --- HEDIA 
 show(annotations)
 # Annotations of the object are set
 Annotation(hippo[["ATAC"]]) <- annotations
+Annotation(hippo2[["ATAC"]]) <- annotations
 hippo[["ATAC"]]
 #Cells(hippo)
 head(hippo)
 
-######## Quality control to ATAC ########
+######## Quality control to ATAC in sample 42_1 ########
 DefaultAssay(hippo) <- "ATAC"
 
 # Signac QA measure to calculate the strength of the nucleosome signal per cell
@@ -236,7 +207,7 @@ VlnPlot(hippo,
         features = c("pct_reads_in_peaks","blacklist_ratio"), ncol = 2)
 # Classified the TSS enrichment scores in two groups
 hippo$high.tss <- ifelse(hippo$TSS.enrichment > 2, 'High', 'Low')
-head(hippo)
+head(hippo, n =3)
 TSSPlot(hippo, group.by = 'high.tss') + NoLegend()
 
 # Group by cells with high or low nucleosomal signal strength. You can see that cells that are outliers for the mononucleosomal / nucleosome-free ratio
