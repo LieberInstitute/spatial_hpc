@@ -54,8 +54,11 @@ library(patchwork)
 library(scCustomize)          # split by group the VPlots - Seurat complement
 set.seed(1234)
 
-# 1) LOAD TWO RNA & ATAC DATA COMBINED
+# 1) LOAD TWO RNA & ATAC DATA COMBINED (hippocampus samples 42_1 and 42_4)
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
+# raw matrix
+sc_hippo_raw <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/raw_feature_bc_matrix.h5")
+
 sc_hippo2 <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/filtered_feature_bc_matrix.h5")
 class(sc_hippo)
 # Read10X_h5() read count matrix from 10X CellRanger hdf5 file. This can be used to read both scATAC-seq and scRNA-seq matrices.
@@ -93,10 +96,28 @@ head(meta2, n=3)
 ######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
 str(sc_hippo)   # read modalities
 show(sc_hippo)
+# sample 42_1
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
+# sample 42_1 raw data
+rna_counts_raw <- sc_hippo_raw$`Gene Expression`
+atac_counts_raw <- sc_hippo_raw$Peaks
+head(rna_counts, n=5)
+head(rna_counts_raw, n=5)
+# compare size 
+class(rna_counts)
+all.equal.raw(rna_counts, rna_counts_raw). #  Mean relative difference: 271.9585
+
+# sample 42_4
 rna_counts2 <- sc_hippo2$`Gene Expression`
 atac_counts2 <- sc_hippo2$Peaks
+
+# Create .RData object to load at any time
+save(rna_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/filtered_rna_seurat_42_1.RData")
+save(atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/filtered_atac_seurat_42_1.RData")
+save(rna_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/filtered_rna_seurat_42_4.RData")
+save(atac_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/filtered_atac_seurat_42_4.RData")
+# load()
 
 ######## Create a Seurat object containing the RNA ########
 # Initialize the Seurat object with filtered_feature_bc_matrix (non-normalized data) & meta.data with per barcode metrics attached
@@ -155,19 +176,25 @@ show(atac_counts)   #matrix
 # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
 grange.counts <- StringToGRanges(rownames(atac_counts), sep = c(":", "-"))      
 grange.counts2 <- StringToGRanges(rownames(atac_counts2), sep = c(":", "-"))
-length(grange.counts2)
+length(grange.counts)
 grange.use <- seqnames(grange.counts) %in% standardChromosomes(grange.counts)
 grange.use2 <- seqnames(grange.counts2) %in% standardChromosomes(grange.counts2)
+class(grange.use)       #S4Vector object / booleam
+# length(grange.use)
+# slotNames(grange.use)
+# sub_ranges = window(grange.use,92220,92279)
 
-class(grange.use)       #S4Vector object / boolean
+length(atac_counts2)
+head(atac_counts)
 atac_counts <- atac_counts[as.vector(grange.use), ]
 atac_counts2 <- atac_counts2[as.vector(grange.use2), ]
 
 ########  Create ATAC assay and add it to the Seurat object ######## 
 chrom_assay <- CreateChromatinAssay(counts = atac_counts,
                                     sep = c(":", "-"), fragments = fragpath, 
-                                    annotation =annotations)
+                                    annotation = annotations)
 # Unfiltered
+show(chrom_assay)
 hippo[["ATAC"]] <- chrom_assay
 head(hippo@meta.data)
 chrom_assay2 <- CreateChromatinAssay(counts = atac_counts2,
