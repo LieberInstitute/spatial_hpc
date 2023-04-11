@@ -5,7 +5,7 @@
 #$ -o logs/bayesSpace_captureArea_k.$TASK_ID.txt
 #$ -e logs/bayesSpace_captureArea_k.$TASK_ID.txt
 #$ -m e
-#$ -t 16-28
+#$ -t 29-30
 #$ -tc 4
 
 

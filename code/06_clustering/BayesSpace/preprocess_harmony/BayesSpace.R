@@ -26,7 +26,7 @@ source(file = here::here("code", "06_clustering", "BayesSpace", "preprocess_harm
 spe = offset_check(spe)
 
 ## check
- df <- cbind.data.frame(colData(x), spatialCoords(x))
+ df <- cbind.data.frame(colData(spe), spatialCoords(spe))
  ggplot(df, aes(x = row, y = col, color = sample_id)) +
  geom_point(size = 1) +
  coord_fixed() +

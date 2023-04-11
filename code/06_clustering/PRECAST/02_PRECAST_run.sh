@@ -2,12 +2,12 @@
 #$ -cwd
 #$ -l bluejay,mem_free=10G,h_vmem=10G,h_fsize=80G
 #$ -pe local 8
-#$ -N PRECAST_k16-25
+#$ -N PRECAST_k25-30
 #$ -o logs/PRECAST_k.$TASK_ID.txt
 #$ -e logs/PRECAST_k.$TASK_ID.txt
 #$ -m e
-#$ -t 16-24
-#$ -tc 5
+#$ -t 25-30
+#$ -tc 3
 
 echo "**** Job starts ****"
 date
