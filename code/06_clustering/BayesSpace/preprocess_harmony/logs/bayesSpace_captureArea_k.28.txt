@@ -1,0 +1,63 @@
+**** Job starts ****
+Mon Apr  3 17:34:33 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3095513
+Job name: bayesSpace_captureArea_k_many
+Hostname: compute-126.cm.cluster
+Task id: 28
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading objects:
+  spe
+[1]  30432 150917
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'x' in selecting a method for function 'colData': object 'x' not found
+Calls: cbind.data.frame -> data.frame -> colData -> .handleSimpleError -> h
+Execution halted
+**** Job ends ****
+Mon Apr  3 17:38:16 EDT 2023
+**** Job starts ****
+Tue Apr  4 12:50:27 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3095579
+Job name: bayesSpace_captureArea_k_many
+Hostname: compute-126.cm.cluster
+Task id: 28
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading objects:
+  spe
+[1]  30432 150917
+Running spatialCluster()
+[1] "2023-04-04 12:54:03 EDT"
+Neighbors were identified for 150883 out of 150917 spots.
+Fitting model...
+Calculating labels using iterations 1000 through 10000.
+[1] "2023-04-04 17:41:14 EDT"
+Overwriting 'spe$key'. Set 'overwrite = FALSE' if you do not want to overwrite it.
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'j' in selecting a method for function '[': error in evaluating the argument 'x' in selecting a method for function 'colData': object 'spe_raw' not found
+Calls: [ ... colData -> .handleSimpleError -> h -> .handleSimpleError -> h
+Execution halted
+**** Job ends ****
+Tue Apr  4 17:41:23 EDT 2023
