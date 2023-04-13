@@ -57,25 +57,39 @@ set.seed(1234)
 # 1) LOAD TWO RNA & ATAC DATA COMBINED (hippocampus samples 42_1 and 42_4)
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
 # raw matrix
-sc_hippo_raw <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/raw_feature_bc_matrix.h5")
+#sc_hippo_raw <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/raw_feature_bc_matrix.h5")
 
 sc_hippo2 <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/filtered_feature_bc_matrix.h5")
 class(sc_hippo)
 # Read10X_h5() read count matrix from 10X CellRanger hdf5 file. This can be used to read both scATAC-seq and scRNA-seq matrices.
+
+######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
+str(sc_hippo)   # read modalities
+show(sc_hippo)
+# sample 42_1
+rna_counts <- sc_hippo$`Gene Expression`
+atac_counts <- sc_hippo$Peaks
+# sample 42_1 raw data
+#rna_counts_raw <- sc_hippo_raw$`Gene Expression`
+#atac_counts_raw <- sc_hippo_raw$Peaks
+head(rna_counts, n=5)
+#head(rna_counts_raw, n=5)
+# compare size 
+#all.equal.raw(rna_counts, rna_counts_raw). #  Mean relative difference: 271.9585
+# sample 42_4
+rna_counts2 <- sc_hippo2$`Gene Expression`
+atac_counts2 <- sc_hippo2$Peaks
+
+# Create .RData object to load at any time: count matrices sample 42_1 ans 42_4
+#save(rna_counts, atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
+#load("/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
+#save(rna_counts2, atac_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/arc_atac_42_4.RData")
+#load("/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_4.RData")
+
 # In this MTX  each row represents a peak, predicted to represent a region of open chromatin.
 fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/atac_fragments.tsv.gz"
 fragpath2 <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/atac_fragments.tsv.gz"
 # fragments.tsv is the full list of all unique fragments across all single cells. It contains all fragments associated with each single cell, as opposed to only fragments that map to peaks.
-
-# Get gene annotations for hg38 and extract gene annotations from EnsDb
-annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
-show(annotations)   
-#View(head(annotations,n=5))
-#names(genomeStyles('Homo_sapiens'))
-seqlevelsStyle(annotations) <- "UCSC"
-length(extractSeqlevelsByGroup(species = 'Homo_sapiens', style = 'UCSC', group = 'all')) #group: sex, auto, circular
-genome(annotations) <- "hg38"
-show(annotations)
 
 ####### Add meta-data to calculate stats to add blacklist ratio and fraction of reads in peaks  ######### 
 # For anyone having this issue using cellranger-atac-2.0.0 - meta data is now labeled as singlecell.csv
@@ -93,31 +107,6 @@ metadata_42_4 <- read.csv(
 )
 meta2 = metadata_42_4[meta_tmp]
 head(meta2, n=3)
-######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
-str(sc_hippo)   # read modalities
-show(sc_hippo)
-# sample 42_1
-rna_counts <- sc_hippo$`Gene Expression`
-atac_counts <- sc_hippo$Peaks
-# sample 42_1 raw data
-rna_counts_raw <- sc_hippo_raw$`Gene Expression`
-atac_counts_raw <- sc_hippo_raw$Peaks
-head(rna_counts, n=5)
-head(rna_counts_raw, n=5)
-# compare size 
-class(rna_counts)
-all.equal.raw(rna_counts, rna_counts_raw). #  Mean relative difference: 271.9585
-
-# sample 42_4
-rna_counts2 <- sc_hippo2$`Gene Expression`
-atac_counts2 <- sc_hippo2$Peaks
-
-# Create .RData object to load at any time
-save(rna_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/filtered_rna_seurat_42_1.RData")
-save(atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/filtered_atac_seurat_42_1.RData")
-save(rna_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/filtered_rna_seurat_42_4.RData")
-save(atac_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/filtered_atac_seurat_42_4.RData")
-# load()
 
 ######## Create a Seurat object containing the RNA ########
 # Initialize the Seurat object with filtered_feature_bc_matrix (non-normalized data) & meta.data with per barcode metrics attached
@@ -140,6 +129,12 @@ head(hippo2@meta.data)
 show(hippo)
 show(hippo2)
 
+# Create .RData object with the Seurat rna-seq assays for samples 42_1 and 42_4
+#save(rna_counts, atac_counts, hippo, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/rna_assay_42_1.RData")
+load("/fastscratch/myscratch/csoto/counts_sample_42_1/rna_assay_42_1.RData")
+#save(rna_counts2, atac_counts2, hippo2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/rna_assay_42_4.RData")
+load("/fastscratch/myscratch/csoto/counts_sample_42_4/rna_assay_42_4.RData")
+
 # Merge two seurat objects
 hippo.combined <- merge(hippo, y = hippo2, add.cell.ids = c("Sample_42_1", "Sample_42_4"), project = "HIPPO")
 class(hippo.combined)
@@ -149,8 +144,11 @@ table(hippo.combined$orig.ident)
 head(hippo.combined, n=3)
 tail(hippo.combined, n=3)
 
-######## QA metrics for the 'Gene Expression' assay  ########
+# Create seurat object with the samples 42_1 and 42_4 merged (only rna counts mtx)
+#save(hippo.combined, file = "/fastscratch/myscratch/csoto/merged_samples_42/rna_merged_assay_42.RData")
+load("/fastscratch/myscratch/csoto/merged_samples_42/rna_merged_assay_42.RData")
 
+######## QA metrics for the 'Gene Expression' assay  ########
 hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
 head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
 tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
@@ -172,7 +170,6 @@ Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", fe
                      split.by = 'orig.ident')
 
 ######## ATAC assay: peaks in standard chromosomes were used for analysis of both samples ########
-show(atac_counts)   #matrix
 # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
 grange.counts <- StringToGRanges(rownames(atac_counts), sep = c(":", "-"))      
 grange.counts2 <- StringToGRanges(rownames(atac_counts2), sep = c(":", "-"))
@@ -184,40 +181,73 @@ class(grange.use)       #S4Vector object / booleam
 # slotNames(grange.use)
 # sub_ranges = window(grange.use,92220,92279)
 
-length(atac_counts2)
+length(atac_counts)
 head(atac_counts)
 atac_counts <- atac_counts[as.vector(grange.use), ]
 atac_counts2 <- atac_counts2[as.vector(grange.use2), ]
+rownames(atac_counts)
 
 ########  Create ATAC assay and add it to the Seurat object ######## 
+# Get gene annotations for hg38 and extract gene annotations from EnsDb
+annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v86)
+show(annotations)   
+#View(head(annotations,n=5))
+#names(genomeStyles('Homo_sapiens'))
+seqlevelsStyle(annotations) <- "UCSC"
+length(extractSeqlevelsByGroup(species = 'Homo_sapiens', style = 'UCSC', group = 'all')) #group: sex, auto, circular
+genome(annotations) <- "hg38"
+show(annotations)
+
 chrom_assay <- CreateChromatinAssay(counts = atac_counts,
                                     sep = c(":", "-"), fragments = fragpath, 
                                     annotation = annotations)
-# Unfiltered
+# Non-filtered assays by QCs - ATAC assay for sample 42_1 
 show(chrom_assay)
 hippo[["ATAC"]] <- chrom_assay
 head(hippo@meta.data)
 chrom_assay2 <- CreateChromatinAssay(counts = atac_counts2,
                                     sep = c(":", "-"), fragments = fragpath2, 
                                     annotation =annotations)
-# Unfiltered
+# Non-filtered assays by QCs - ATAC assay for sample 42_4
 hippo2[["ATAC"]] <- chrom_assay2
 head(hippo2@meta.data)
+
+# Create .RData object with the rna-seq and atac-seq assays for samples 42_1 and 42_4
+#save(chrom_assay, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/chrom_assay_42_1.RData")
+load("/fastscratch/myscratch/csoto/counts_sample_42_1/chrom_assay_42_1.RData")
+#save(chrom_assay2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/chrom_assay_42_4.RData")
+load("/fastscratch/myscratch/csoto/counts_sample_42_4/chrom_assay_42_4.RData")
+
+#save(hippo, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/rna_atac_assay_42_1.RData")
+load("/fastscratch/myscratch/csoto/counts_sample_42_1/rna_atac_assay_42_1.RData")
+#save(hippo2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/rna_atac_assay_42_4.RData")
+load("/fastscratch/myscratch/csoto/counts_sample_42_4/rna_atac_assay_42_1.RData")
 
 # Add the gene information to the object  ----  FUNCTIONS DUPLICATES ?? --- HEDIA 
 show(annotations)
 # Annotations of the object are set
 Annotation(hippo[["ATAC"]]) <- annotations
 Annotation(hippo2[["ATAC"]]) <- annotations
-hippo[["ATAC"]]
+hippo2[["ATAC"]]
 #Cells(hippo)
 head(hippo)
 
 ######## Quality control to ATAC in sample 42_1 ########
 DefaultAssay(hippo) <- "ATAC"
+DefaultAssay(hippo2) <- "ATAC"
+
+# Insert size distribution plot, called fragment length histogram 
+# Still working on this chunk
+FragmentHistogram(object = hippo)
+FragmentHistogram(object = hippo2)
+#FragmentHistogram(object = chrom_assay)
+#FragmentHistogram(object = chrom_assay2)
+#################################################################
 
 # Signac QA measure to calculate the strength of the nucleosome signal per cell
 hippo <- NucleosomeSignal(hippo)
+head(hippo, n=5)
+
 # Signac QA measure to compute the transcription start site (TSS) enrichment score for each cell, as defined by ENCODE.
 hippo <- TSSEnrichment(hippo, fast = FALSE)    # If fast = False, it computes the TSS enrichment scores, storing the base-resolution matrix of integration counts at each site.
 head(hippo,n=5)
