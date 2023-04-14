@@ -130,10 +130,10 @@ show(hippo)
 show(hippo2)
 
 # Create .RData object with the Seurat rna-seq assays for samples 42_1 and 42_4
-#save(rna_counts, atac_counts, hippo, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/rna_assay_42_1.RData")
-load("/fastscratch/myscratch/csoto/counts_sample_42_1/rna_assay_42_1.RData")
-#save(rna_counts2, atac_counts2, hippo2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/rna_assay_42_4.RData")
-load("/fastscratch/myscratch/csoto/counts_sample_42_4/rna_assay_42_4.RData")
+#save(rna_counts, atac_counts, hippo, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_1.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_1.RData")
+#save(rna_counts2, atac_counts2, hippo2, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_4.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_4.RData")
 
 # Merge two seurat objects
 hippo.combined <- merge(hippo, y = hippo2, add.cell.ids = c("Sample_42_1", "Sample_42_4"), project = "HIPPO")
@@ -145,8 +145,8 @@ head(hippo.combined, n=3)
 tail(hippo.combined, n=3)
 
 # Create seurat object with the samples 42_1 and 42_4 merged (only rna counts mtx)
-#save(hippo.combined, file = "/fastscratch/myscratch/csoto/merged_samples_42/rna_merged_assay_42.RData")
-load("/fastscratch/myscratch/csoto/merged_samples_42/rna_merged_assay_42.RData")
+#save(hippo.combined, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_merged_42.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_merged_42.RData")
 
 ######## QA metrics for the 'Gene Expression' assay  ########
 hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
@@ -213,15 +213,16 @@ hippo2[["ATAC"]] <- chrom_assay2
 head(hippo2@meta.data)
 
 # Create .RData object with the rna-seq and atac-seq assays for samples 42_1 and 42_4
-#save(chrom_assay, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/chrom_assay_42_1.RData")
-load("/fastscratch/myscratch/csoto/counts_sample_42_1/chrom_assay_42_1.RData")
-#save(chrom_assay2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/chrom_assay_42_4.RData")
-load("/fastscratch/myscratch/csoto/counts_sample_42_4/chrom_assay_42_4.RData")
-
-#save(hippo, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/rna_atac_assay_42_1.RData")
-load("/fastscratch/myscratch/csoto/counts_sample_42_1/rna_atac_assay_42_1.RData")
-#save(hippo2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/rna_atac_assay_42_4.RData")
-load("/fastscratch/myscratch/csoto/counts_sample_42_4/rna_atac_assay_42_1.RData")
+#save(chrom_assay, file ="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/chrom_assay_42_1.RData" )
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/chrom_assay_42_1.RData")
+#save(chrom_assay2, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/chrom_assay_42_4.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/chrom_assay_42_4.RData")
+# composed objects (rna+chrome)
+show(hippo)
+#save(hippo, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_chrom_assay_42_1.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_chrom_assay_42_1.RData")
+#save(hippo2, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_chrom_assay_42_4.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_chrom_assay_42_4.RData")
 
 # Add the gene information to the object  ----  FUNCTIONS DUPLICATES ?? --- HEDIA 
 show(annotations)
