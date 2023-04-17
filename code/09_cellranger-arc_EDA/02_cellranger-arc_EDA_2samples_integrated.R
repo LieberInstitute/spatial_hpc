@@ -155,15 +155,23 @@ Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", fe
                      split.by = 'orig.ident')
 
 # CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
+
+col_to_use = "nCount_RNA" # Column to use as proxy for barcodes. Optiona avail.: nFeature_RNA, percent.mt
 hippo_rank <- CalculateBarcodeInflections(
     hippo.combined,
-    barcode.column = "nCount_RNA",
+    barcode.column = col_to_use,
     group.column = "orig.ident",
     threshold.low = NULL,
     threshold.high = NULL
 )
-head(hippo_rank,n=5)
+#  Plot the calculated inflection points derived from the barcode-rank distribution.
+hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the infection points in the two samples   
 BarcodeInflectionsPlot(hippo_rank)
+# Add arrow
+
+#plt_inflexion + geom_segment(aes(x = 6, y = 0.7, xend = 500, yend = 1),
+#                 arrow = arrow(length = unit(0.3, "cm")))
+ 
 
 ######## ATAC assay: peaks in standard chromosomes were used for analysis of both samples ########
 # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
