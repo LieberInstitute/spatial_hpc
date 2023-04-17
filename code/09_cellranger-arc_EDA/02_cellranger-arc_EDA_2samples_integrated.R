@@ -7,39 +7,6 @@
 ## https://stuartlab.org/signac/articles/pbmc_vignette.html
 ########################################################################
 
-## Reproducibility information
-library("sessioninfo")
-print('Reproducibility information:')
-# Last modification
-Sys.time()
-#"2023-04-04 12:42:26 EDT"
-proc.time()
-options(width = 120)
-session_info()
-
-# > print('Reproducibility information:')
-# [1] "Reproducibility information:"
-# > # Last modification
-#     > Sys.time()
-# [1] "2023-03-27 10:08:00 EDT"
-# > #"2023-03-22 14:51:04 EDT"
-#     > proc.time()
-# user   system  elapsed 
-# 188.633   11.724 2061.430 
-# > options(width = 120)
-# > session_info()
-# ─ Session info ──────────────────────────────────────────────────────────────────────────────────────
-# setting  value
-# version  R version 4.2.3 Patched (2023-03-25 r84072)
-# os       CentOS Linux 7 (Core)
-# system   x86_64, linux-gnu
-# ui       X11
-# language (EN)
-# collate  en_US.UTF-8
-# tz       US/Eastern
-# date     2023-03-27
-# pandoc   2.19.2 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.11.0/envs/svnR-4.2.x/bin/pandoc
-
 # load libraries
 library(Signac)
 # ctype    en_US.UTF-8
@@ -54,6 +21,7 @@ library(patchwork)
 library(scCustomize)          # split by group the VPlots - Seurat complement
 set.seed(1234)
 
+plot(mtcars)
 # 1) LOAD TWO RNA & ATAC DATA COMBINED (hippocampus samples 42_1 and 42_4)
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
 # raw matrix
@@ -79,6 +47,23 @@ head(rna_counts, n=5)
 # sample 42_4
 rna_counts2 <- sc_hippo2$`Gene Expression`
 atac_counts2 <- sc_hippo2$Peaks
+
+# Create inflection point plots based on UMI read number ---> need to be review 
+# counts <- Matrix::colSums(rna_counts) # calculate total UMI read number for each cell barcode
+# head(counts, n=10)
+# countdf <- as.data.frame(counts) %>% 
+#     as_tibble(rownames = "barcode") %>% 
+#     #filter(counts >= 2) %>% # throw out cell barcodes with 1 or less UMI, this is mainly for time purposes
+#     arrange(desc(counts)) %>% # arrange by descending order
+#     mutate(rank = 1:n()) # rank
+# 
+# head(countdf) # barcodes now ranked by UMI counts
+# ggplot(countdf, aes(x = rank, y = counts)) +
+#     geom_point() +
+#     labs(x = "barcodes", y = "UMI_counts") +
+#     theme_classic() +
+#     scale_x_log10() + 
+#     scale_y_log10()
 
 # Create .RData object to load at any time: count matrices sample 42_1 ans 42_4
 #save(rna_counts, atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
@@ -168,6 +153,17 @@ Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", fe
 #                    split.by = "sample_id")
 Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", feature2 = "percent.mt", 
                      split.by = 'orig.ident')
+
+# CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
+hippo_rank <- CalculateBarcodeInflections(
+    hippo.combined,
+    barcode.column = "nCount_RNA",
+    group.column = "orig.ident",
+    threshold.low = NULL,
+    threshold.high = NULL
+)
+head(hippo_rank,n=5)
+BarcodeInflectionsPlot(hippo_rank)
 
 ######## ATAC assay: peaks in standard chromosomes were used for analysis of both samples ########
 # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
@@ -457,3 +453,36 @@ cluster.markers.all %>%
 cluster.peaks.all %>%
   group_by(cluster) %>%
   top_n(n = 5, wt = avg_log2FC) -> top5
+
+## Reproducibility information
+library("sessioninfo")
+print('Reproducibility information:')
+# Last modification
+Sys.time()
+#"2023-04-04 12:42:26 EDT"
+proc.time()
+options(width = 120)
+session_info()
+
+# > print('Reproducibility information:')
+# [1] "Reproducibility information:"
+# > # Last modification
+#     > Sys.time()
+# [1] "2023-03-27 10:08:00 EDT"
+# > #"2023-03-22 14:51:04 EDT"
+#     > proc.time()
+# user   system  elapsed 
+# 188.633   11.724 2061.430 
+# > options(width = 120)
+# > session_info()
+# ─ Session info ──────────────────────────────────────────────────────────────────────────────────────
+# setting  value
+# version  R version 4.2.3 Patched (2023-03-25 r84072)
+# os       CentOS Linux 7 (Core)
+# system   x86_64, linux-gnu
+# ui       X11
+# language (EN)
+# collate  en_US.UTF-8
+# tz       US/Eastern
+# date     2023-03-27
+# pandoc   2.19.2 @ /jhpce/shared/jhpce/core/conda/miniconda3-4.11.0/envs/svnR-4.2.x/bin/pandoc
