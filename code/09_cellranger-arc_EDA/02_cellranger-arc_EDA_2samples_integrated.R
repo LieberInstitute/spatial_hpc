@@ -24,46 +24,54 @@ set.seed(1234)
 plot(mtcars)
 # 1) LOAD TWO RNA & ATAC DATA COMBINED (hippocampus samples 42_1 and 42_4)
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
-# raw matrix
-#sc_hippo_raw <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/raw_feature_bc_matrix.h5")
-
 sc_hippo2 <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/filtered_feature_bc_matrix.h5")
+
+# For QC. The raw matrix (unfiltered) is required to assess the total UMI_counts of a cell barcode. UMI elbow plots require the unfiltered count mtx to project the inflection point.
+sc_hippo_raw <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/raw_feature_bc_matrix.h5")
+sc_hippo_raw2 <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/raw_feature_bc_matrix.h5")
+
 class(sc_hippo)
 # Read10X_h5() read count matrix from 10X CellRanger hdf5 file. This can be used to read both scATAC-seq and scRNA-seq matrices.
 
 ######## extract RNA and ATAC data, plus Gene Annotation for hg38 #######
 str(sc_hippo)   # read modalities
 show(sc_hippo)
+###############.  Filtered count mtx  ###############
 # sample 42_1
 rna_counts <- sc_hippo$`Gene Expression`
 atac_counts <- sc_hippo$Peaks
-# sample 42_1 raw data
-#rna_counts_raw <- sc_hippo_raw$`Gene Expression`
-#atac_counts_raw <- sc_hippo_raw$Peaks
 head(rna_counts, n=5)
-#head(rna_counts_raw, n=5)
-# compare size 
-#all.equal.raw(rna_counts, rna_counts_raw). #  Mean relative difference: 271.9585
 # sample 42_4
 rna_counts2 <- sc_hippo2$`Gene Expression`
 atac_counts2 <- sc_hippo2$Peaks
+###############.  UnFiltered count mtx  ###############
+# sample 42_1 raw data
+rna_counts_raw <- sc_hippo_raw$`Gene Expression`
+atac_counts_raw <- sc_hippo_raw$Peaks
+rna_counts2_raw <- sc_hippo_raw2$`Gene Expression`
+atac_counts2_raw <- sc_hippo_raw2$Peaks
+# compare size 
+#all.equal.raw(rna_counts, rna_counts_raw). #  Mean relative difference: 271.9585
 
-# Create inflection point plots based on UMI read number ---> need to be review 
-# counts <- Matrix::colSums(rna_counts) # calculate total UMI read number for each cell barcode
-# head(counts, n=10)
-# countdf <- as.data.frame(counts) %>% 
-#     as_tibble(rownames = "barcode") %>% 
-#     #filter(counts >= 2) %>% # throw out cell barcodes with 1 or less UMI, this is mainly for time purposes
-#     arrange(desc(counts)) %>% # arrange by descending order
-#     mutate(rank = 1:n()) # rank
-# 
-# head(countdf) # barcodes now ranked by UMI counts
-# ggplot(countdf, aes(x = rank, y = counts)) +
-#     geom_point() +
-#     labs(x = "barcodes", y = "UMI_counts") +
-#     theme_classic() +
-#     scale_x_log10() + 
-#     scale_y_log10()
+# Create inflection point plots based on UMI read number 
+class(rna_counts2_raw)
+counts <- Matrix::colSums(rna_counts2_raw) # calculate total UMI read number for each cell barcode
+class(counts)
+countdf <- as.data.frame(counts) %>%
+    as_tibble(rownames = "barcode") %>%
+    filter(counts >= 1) %>% # throw out cell barcodes with x or less UMI, Cells<500 is the std low cut off threshold 
+    arrange(desc(counts)) %>% # arrange by descending order
+    mutate(rank = 1:n()) # rank
+head(countdf) # barcodes now ranked by UMI counts
+tail(countdf)
+ggplot(countdf, aes(x = rank, y = counts)) +
+    geom_point() +
+    labs(x = "barcodes (Unfiltered-log10)", y = "UMI_counts ") +
+    theme_classic() +
+    scale_x_log10() +
+    scale_y_log10() +
+#    geom_hline(yintercept = 2364) + #geom_vline(xintercept = 2364) +
+    ggtitle("Sample 42_4: Mean Genes Per Cell")
 
 # Create .RData object to load at any time: count matrices sample 42_1 ans 42_4
 #save(rna_counts, atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
@@ -156,16 +164,16 @@ Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", fe
 
 # CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
 
-col_to_use = "nCount_RNA" # Column to use as proxy for barcodes. Optiona avail.: nFeature_RNA, percent.mt
+col_to_use = "percent.mt" # Column to use as proxy for barcodes. Optiona avail.: nCount_RNA, nFeature_RNA, percent.mt
 hippo_rank <- CalculateBarcodeInflections(
     hippo.combined,
     barcode.column = col_to_use,
     group.column = "orig.ident",
-    threshold.low = NULL,
+    threshold.low = 37,
     threshold.high = NULL
 )
 #  Plot the calculated inflection points derived from the barcode-rank distribution.
-hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the infection points in the two samples   
+hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the inflection points in the two samples   
 BarcodeInflectionsPlot(hippo_rank)
 # Add arrow
 
