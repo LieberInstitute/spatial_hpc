@@ -21,7 +21,6 @@ library(patchwork)
 library(scCustomize)          # split by group the VPlots - Seurat complement
 set.seed(1234)
 
-plot(mtcars)
 # 1) LOAD TWO RNA & ATAC DATA COMBINED (hippocampus samples 42_1 and 42_4)
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
 sc_hippo2 <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/filtered_feature_bc_matrix.h5")
@@ -44,8 +43,8 @@ head(rna_counts, n=5)
 # sample 42_4
 rna_counts2 <- sc_hippo2$`Gene Expression`
 atac_counts2 <- sc_hippo2$Peaks
-###############.  UnFiltered count mtx  ###############
-# sample 42_1 raw data
+###############.  UnFiltered count mtx  #############
+# sample 42_1 and 42_4 raw data
 rna_counts_raw <- sc_hippo_raw$`Gene Expression`
 atac_counts_raw <- sc_hippo_raw$Peaks
 rna_counts2_raw <- sc_hippo_raw2$`Gene Expression`
@@ -53,9 +52,17 @@ atac_counts2_raw <- sc_hippo_raw2$Peaks
 # compare size 
 #all.equal.raw(rna_counts, rna_counts_raw). #  Mean relative difference: 271.9585
 
-# Create inflection point plots based on UMI read number 
-class(rna_counts2_raw)
-counts <- Matrix::colSums(rna_counts2_raw) # calculate total UMI read number for each cell barcode
+# Create .RData object to load at any time: count matrices sample 42_1 ans 42_4
+#save(rna_counts, atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
+#load("/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
+#save(rna_counts2, atac_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/arc_atac_42_4.RData")
+#load("/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_4.RData")
+
+############## Create inflection point plots based on UMI read number ##########
+# Use the raw mtx instead of the filtered cellranger output
+#class(rna_counts2_raw)
+# All genes x all barcodes
+counts <- Matrix::colSums(rna_counts1_raw) # calculate total UMI read number for each cell barcode
 class(counts)
 countdf <- as.data.frame(counts) %>%
     as_tibble(rownames = "barcode") %>%
@@ -70,14 +77,13 @@ ggplot(countdf, aes(x = rank, y = counts)) +
     theme_classic() +
     scale_x_log10() +
     scale_y_log10() +
-#    geom_hline(yintercept = 2364) + #geom_vline(xintercept = 2364) +
-    ggtitle("Sample 42_4: Mean Genes Per Cell")
-
-# Create .RData object to load at any time: count matrices sample 42_1 ans 42_4
-#save(rna_counts, atac_counts, file = "/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
-#load("/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_1.RData")
-#save(rna_counts2, atac_counts2, file = "/fastscratch/myscratch/csoto/counts_sample_42_4/arc_atac_42_4.RData")
-#load("/fastscratch/myscratch/csoto/counts_sample_42_1/arc_atac_42_4.RData")
+    geom_hline(yintercept = 12000, col = 'darkgreen') +     #SAMPLE 42_1
+    geom_hline(yintercept = 2364, col = 'dodgerblue') +    #SAMPLE 42_1  
+#    geom_hline(yintercept = 9000, col = 'darkgreen') +     #SAMPLE 42_4
+#    geom_hline(yintercept = 615, col = 'dodgerblue') +    #SAMPLE 42_4       
+    ggtitle("Sample 42_1: Mean Genes Per Cell") 
+legend("bottomleft", legend = c("Knee (12000)", "Inflection (2364)"), col = c("darkgreen", "dodgerblue"), lty = 2, cex = 0.8) #SAMPLE 42_1  
+#legend("bottomleft", legend = c("Knee (9000)", "Inflection (615)"), col = c("darkgreen", "dodgerblue"), lty = 2, cex = 0.8) #SAMPLE 42_4  
 
 # In this MTX  each row represents a peak, predicted to represent a region of open chromatin.
 fragpath <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/atac_fragments.tsv.gz"
@@ -128,7 +134,9 @@ load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/0
 #save(rna_counts2, atac_counts2, hippo2, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_4.RData")
 load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_4.RData")
 
-# Merge two seurat objects
+############## Barcode inflection with Seurat functions to compare knee and inflection points ################ 
+
+# Merge the two seurat objects to compare one each other
 hippo.combined <- merge(hippo, y = hippo2, add.cell.ids = c("Sample_42_1", "Sample_42_4"), project = "HIPPO")
 class(hippo.combined)
 show(hippo.combined)
@@ -136,15 +144,46 @@ head(colnames(hippo.combined))
 table(hippo.combined$orig.ident)
 head(hippo.combined, n=3)
 tail(hippo.combined, n=3)
-
-# Create seurat object with the samples 42_1 and 42_4 merged (only rna counts mtx)
-#save(hippo.combined, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_merged_42.RData")
-load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_merged_42.RData")
-
 ######## QA metrics for the 'Gene Expression' assay  ########
 hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
 head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
 tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
+
+# CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
+col_to_use = "nCount_RNA" # Column to use as proxy for barcodes. Options avail.: nCount_RNA, nFeature_RNA, percent.mt
+#col_to_use = "nFeature_RNA"
+#col_to_use = "percent.mt"
+hippo_rank <- CalculateBarcodeInflections(
+    hippo.combined,
+    barcode.column = col_to_use,
+    group.column = "orig.ident",
+    threshold.low = 6,
+#    threshold.high = 300000
+)
+## Plot the calculated inflection points & test several thresholds derived from the barcode-rank distribution. (For the n_Counts )
+hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the inflection points in the two samples   
+# For nCounts
+s42_1 = paste('S 42_1 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nCount_RNA[1]), 
+              ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[1]))
+s42_4 = paste('S 42_4 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nCount_RNA[2]),
+              ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[2]))
+#For nFeatures
+s42_1 = paste('S 42_1 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nFeature_RNA[1]), 
+              ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[1]))
+s42_4 = paste('S 42_4 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nFeature_RNA[2]),
+              ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[2]))
+#For MT
+s42_1 = paste('S 42_1 Inflection point:', as.character(round(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$percent.mt[1],2)), 
+              ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[1]))
+s42_4 = paste('S 42_4 Inflection point:', as.character(round(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$percent.mt[2],2)),
+              ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[2]))
+#Plot
+BarcodeInflectionsPlot(hippo_rank) 
+legend("top", legend = c(s42_1, s42_4), col = c("red", "green"), cex = 0.7) #SAMPLE 42_1  
+
+# Create seurat object with the samples 42_1 and 42_4 merged (only rna counts mtx)
+#save(hippo.combined, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_merged_42.RData")
+load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_merged_42.RData")
 
 # Visualize QC metrics as a violin plot
 head(hippo2)
@@ -161,25 +200,6 @@ Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", fe
 #                    split.by = "sample_id")
 Split_FeatureScatter(seurat_object = hippo.combined, feature1 = "nCount_RNA", feature2 = "percent.mt", 
                      split.by = 'orig.ident')
-
-# CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
-
-col_to_use = "percent.mt" # Column to use as proxy for barcodes. Optiona avail.: nCount_RNA, nFeature_RNA, percent.mt
-hippo_rank <- CalculateBarcodeInflections(
-    hippo.combined,
-    barcode.column = col_to_use,
-    group.column = "orig.ident",
-    threshold.low = 37,
-    threshold.high = NULL
-)
-#  Plot the calculated inflection points derived from the barcode-rank distribution.
-hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the inflection points in the two samples   
-BarcodeInflectionsPlot(hippo_rank)
-# Add arrow
-
-#plt_inflexion + geom_segment(aes(x = 6, y = 0.7, xend = 500, yend = 1),
-#                 arrow = arrow(length = unit(0.3, "cm")))
- 
 
 ######## ATAC assay: peaks in standard chromosomes were used for analysis of both samples ########
 # StringToGRanges(), Convert a genomic coordinate string to a GRanges object
