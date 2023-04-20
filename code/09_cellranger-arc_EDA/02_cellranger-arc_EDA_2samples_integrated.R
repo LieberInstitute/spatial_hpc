@@ -139,19 +139,21 @@ load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/0
 hippo$log10GenesPerUMI <- log10(hippo$nFeature_RNA) / log10(hippo$nCount_RNA)
 hippo2$log10GenesPerUMI <- log10(hippo2$nFeature_RNA) / log10(hippo2$nCount_RNA)
 
-############## Barcode inflection with Seurat functions to compare knee and inflection points ################ 
-
 # Merge the two seurat objects to compare one each other
 hippo.combined <- merge(hippo, y = hippo2, add.cell.ids = c("Sample_42_1", "Sample_42_4"), project = "HIPPO")
-class(hippo.combined)
-show(hippo.combined)
-head(colnames(hippo.combined))
-table(hippo.combined$orig.ident)
-head(hippo.combined, n=3)
-tail(hippo.combined, n=3)
+# class(hippo.combined)
+# show(hippo.combined)
+# head(colnames(hippo.combined))
+# table(hippo.combined$orig.ident)
+# head(hippo.combined, n=3)
+# tail(hippo.combined, n=3)
+hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
+head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
+tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
 
+######## QA metrics for the 'Gene Expression' assay  ########
 
-# Visualize the number UMIs/transcripts per cell
+# Visualize number of cells per sample
 genes_per_cell <- as.data.frame(hippo.combined[[]])
 head(genes_per_cell,n=5)
 genes_per_cell %>% 
@@ -163,6 +165,7 @@ genes_per_cell %>%
     xlab("Sample") +
     ggtitle("Number of Cells Per Sample")
 
+# Visualize the number UMIs/transcripts per cell
 genes_per_cell %>% 
     ggplot(aes(color=orig.ident, x=nCount_RNA, fill=orig.ident)) + 
     geom_density(alpha = 0.2) + 
@@ -174,13 +177,42 @@ genes_per_cell %>%
     ggtitle("Number UMI (transcripts) Per Cell") +
     geom_vline(xintercept = 500)     # should generally be above 500
 
+# # Visualize the distribution of genes detected per cell via histogram
+# genes_per_cell %>% 
+#     ggplot(aes(color=orig.ident, x=nFeature_RNA, fill= orig.ident)) + 
+#     geom_density(alpha = 0.2) + 
+#     theme_classic() +
+#     scale_x_log10() + 
+#     geom_vline(xintercept = 300)
 
+# Visualize the distribution of genes detected per cell via boxplot
+genes_per_cell %>% 
+    ggplot(aes(x=orig.ident, y=log10(nFeature_RNA), fill=orig.ident)) + 
+    geom_boxplot(alpha = 0.7) + 
+    theme_classic() +
+    theme(axis.text.x = element_text(vjust = 1, hjust=1)) +
+    theme(plot.title = element_text(hjust=0.5)) +
+    ylab("Log10(Number Genes)") + 
+    xlab("") +
+    ggtitle("Number Cells vs Number Genes")
 
-
-######## QA metrics for the 'Gene Expression' assay  ########
-hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
-head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
-tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
+# Visualize the correlation between genes detected and number of UMIs and determine whether strong presence of cells with low numbers of genes/UMIs
+colnames(genes_per_cell)
+genes_per_cell %>% 
+    ggplot(aes(x=nCount_RNA, y=nFeature_RNA, color=percent.mt)) + 
+    geom_point() + 
+    scale_colour_gradient(low = "gray90", high = "black") +
+    stat_smooth(method=lm) +
+    scale_x_log10() + 
+    scale_y_log10() + 
+    theme_classic() +
+    geom_vline(xintercept = 500) +
+    geom_hline(yintercept = 250) +
+    facet_wrap(~orig.ident) + 
+    ylab("Log10(Number Genes)") + 
+    xlab("Number Cells") +
+    ggtitle("Cells vs Genes By Fraction of ^MT reads")
+############## Barcode inflection with Seurat functions to compare knee and inflection points ################ 
 
 # CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
 # Calculated inflection points & test several thresholds derived from the barcode-rank distribution for the nCount_RNA 
