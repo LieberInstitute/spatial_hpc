@@ -135,6 +135,10 @@ load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/0
 #save(rna_counts2, atac_counts2, hippo2, file = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_4.RData")
 load("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/09_cellranger-arc_EDA/rna_assay_42_4.RData")
 
+# Add number of genes per UMI for each cell to metadata
+hippo$log10GenesPerUMI <- log10(hippo$nFeature_RNA) / log10(hippo$nCount_RNA)
+hippo2$log10GenesPerUMI <- log10(hippo2$nFeature_RNA) / log10(hippo2$nCount_RNA)
+
 ############## Barcode inflection with Seurat functions to compare knee and inflection points ################ 
 
 # Merge the two seurat objects to compare one each other
@@ -145,6 +149,34 @@ head(colnames(hippo.combined))
 table(hippo.combined$orig.ident)
 head(hippo.combined, n=3)
 tail(hippo.combined, n=3)
+
+
+# Visualize the number UMIs/transcripts per cell
+genes_per_cell <- as.data.frame(hippo.combined[[]])
+head(genes_per_cell,n=5)
+genes_per_cell %>% 
+    ggplot(aes(x=orig.ident, fill=orig.ident)) + 
+    geom_bar(alpha = 0.7) +
+    theme_classic() +
+#    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    theme(plot.title = element_text(hjust=0.5)) +   #, face="bold"
+    xlab("Sample") +
+    ggtitle("Number of Cells Per Sample")
+
+genes_per_cell %>% 
+    ggplot(aes(color=orig.ident, x=nCount_RNA, fill=orig.ident)) + 
+    geom_density(alpha = 0.2) + 
+    scale_x_log10() + 
+    theme_classic() +
+    theme(plot.title = element_text(hjust=0.5)) +   #, face="bold"
+    ylab("Log10 Cell density") + 
+    xlab("UMI/transcripts") +
+    ggtitle("Number UMI (transcripts) Per Cell") +
+    geom_vline(xintercept = 500)     # should generally be above 500
+
+
+
+
 ######## QA metrics for the 'Gene Expression' assay  ########
 hippo.combined[["percent.mt"]] <- PercentageFeatureSet(hippo.combined, pattern = "^MT-")
 head(hippo.combined@meta.data)                 # Access cell-level meta-data / head(hippo[[]])
