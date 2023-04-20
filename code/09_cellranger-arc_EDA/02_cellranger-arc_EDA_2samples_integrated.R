@@ -21,6 +21,7 @@ library(patchwork)
 library(scCustomize)          # split by group the VPlots - Seurat complement
 set.seed(1234)
 
+
 # 1) LOAD TWO RNA & ATAC DATA COMBINED (hippocampus samples 42_1 and 42_4)
 sc_hippo <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_1/outs/filtered_feature_bc_matrix.h5")
 sc_hippo2 <- Read10X_h5("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/rafael_rotation/cellranger_rerun/42_4/outs/filtered_feature_bc_matrix.h5")
@@ -150,34 +151,57 @@ head(hippo.combined@meta.data)                 # Access cell-level meta-data / h
 tail(hippo.combined[["percent.mt"]][])         # Access feature-level meta-data
 
 # CalculateBarcodeInflections(), calculates an adaptive inflection point ("knee") of the barcode distribution for each sample group. This is useful for determining a threshold for removing low-quality samples.
-col_to_use = "nCount_RNA" # Column to use as proxy for barcodes. Options avail.: nCount_RNA, nFeature_RNA, percent.mt
-#col_to_use = "nFeature_RNA"
-#col_to_use = "percent.mt"
+# Calculated inflection points & test several thresholds derived from the barcode-rank distribution for the nCount_RNA 
+col_to_use = "nCount_RNA"
 hippo_rank <- CalculateBarcodeInflections(
     hippo.combined,
     barcode.column = col_to_use,
     group.column = "orig.ident",
     threshold.low = 6,
-#    threshold.high = 300000
+    #    threshold.high = 300000
 )
-## Plot the calculated inflection points & test several thresholds derived from the barcode-rank distribution. (For the n_Counts )
 hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the inflection points in the two samples   
-# For nCounts
-s42_1 = paste('S 42_1 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nCount_RNA[1]), 
+# Lables for nCounts
+s42_1 = paste('S 42_1 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nCount_RNA[1]),
               ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[1]))
 s42_4 = paste('S 42_4 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nCount_RNA[2]),
               ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[2]))
-#For nFeatures
-s42_1 = paste('S 42_1 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nFeature_RNA[1]), 
+############# Here jump to plot the BarcodeInflectionsPlot() below
+
+# Calculated inflection points & test several thresholds derived from the barcode-rank distribution for the nFeature 
+col_to_use = "nFeature_RNA"
+hippo_rank <- CalculateBarcodeInflections(
+    hippo.combined,
+    barcode.column = col_to_use,
+    group.column = "orig.ident",
+#    threshold.low = 6,
+#    threshold.high = 300000
+)
+# Labels for nFeature_RNA
+s42_1 = paste('S 42_1 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nFeature_RNA[1]),
               ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[1]))
 s42_4 = paste('S 42_4 Inflection point:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$nFeature_RNA[2]),
               ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[2]))
-#For MT
-s42_1 = paste('S 42_1 Inflection point:', as.character(round(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$percent.mt[1],2)), 
+############# Here jump to plot the BarcodeInflectionsPlot() below
+
+# Calculated inflection points & test several thresholds derived from the barcode-rank distribution for the ^MT% Content
+col_to_use = "percent.mt"
+hippo_rank <- CalculateBarcodeInflections(
+    hippo.combined,
+    barcode.column = col_to_use,
+    group.column = "orig.ident",
+    threshold.low = 6,
+    #    threshold.high = 300000
+)
+# Labels for percent.mt
+s42_1 = paste('S 42_1 Inflection point:', as.character(round(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$percent.mt[1],2)), '%',
               ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[1]))
-s42_4 = paste('S 42_4 Inflection point:', as.character(round(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$percent.mt[2],2)),
+s42_4 = paste('S 42_4 Inflection point:', as.character(round(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$percent.mt[2],2)), '%',
               ' Rank:', as.character(hippo_rank@tools$CalculateBarcodeInflections$inflection_points$rank[2]))
-#Plot
+
+hippo_rank@tools$CalculateBarcodeInflections$inflection_points   # Get the inflection points in the two samples   
+
+# Plot for any calculation distribution and trace the inflection points for any feature described before
 BarcodeInflectionsPlot(hippo_rank) 
 legend("top", legend = c(s42_1, s42_4), col = c("red", "green"), cex = 0.7) #SAMPLE 42_1  
 
