@@ -64,14 +64,14 @@ Sys.time()
 e.out <- DropletUtils::emptyDrops(
   sce,
   niters = 25000,
- lower = knee_lower
+ lower = knee_lowest
   # ,
   # BPPARAM = BiocParallel::MulticoreParam(4)
 )
 message("Done - saving data")
 Sys.time()
 
-save(e.out, file = here("snRNAseq_hpc","processed-data", "build_sce", "droplet_scores",paste0("droplet_scores_", sample_run, ".Rdata")))
+save(e.out, file = here("snRNAseq_hpc","processed-data", "build_sce", "droplet_scores",paste0("droplet_scores_round2_", sample_run, ".Rdata")))
 
 #### QC Plots ####
 message("QC check")
@@ -121,7 +121,7 @@ droplet_elbow_plot <- as.data.frame(bcRanks) %>%
 # # print(droplet_elbow_plot/droplet_scatter_plot)
 # ggsave(droplet_elbow_plot/droplet_scatter_plot, filename = here("plots","03_build_sce", "droplet_qc_png",paste0("droplet_qc_",sample,".png")))
 
-ggsave(droplet_elbow_plot, filename = here("snRNAseq_hpc","plots", "build_sce", "droplet_qc_png", paste0("droplet_qc_", sample_run, ".png")))
+ggsave(droplet_elbow_plot, filename = here("snRNAseq_hpc","plots", "build_sce", "droplet_qc_png", paste0("droplet_qc_round2_", sample_run, ".png")))
 
 
 # sgejobs::job_single('get_droplet_scores', create_shell = TRUE, queue= 'bluejay', memory = '50G', command = "Rscript get_droplet_scores.R")

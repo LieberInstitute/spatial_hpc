@@ -5,7 +5,7 @@
 #$ -o logs/02_barcode_ranks_empty_drops_qc.$TASK_ID.txt
 #$ -e logs/02_barcode_ranks_empty_drops_qc.$TASK_ID.txt
 #$ -m e
-#$ -t 1-20
+#$ -t 1-26
 #$ -tc 5
 
 echo "**** Job starts ****"
@@ -19,7 +19,7 @@ echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 
 ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
-module load conda_R/devel
+module load conda_R
 
 ## List current modules for reproducibility
 module list

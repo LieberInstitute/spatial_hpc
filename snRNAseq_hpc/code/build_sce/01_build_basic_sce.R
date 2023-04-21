@@ -1,5 +1,5 @@
 # qrsh -l bluejay,mem_free=80G,h_vmem=80G
-# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
+# cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
 
 library("SingleCellExperiment")
 library("DropletUtils")
@@ -67,6 +67,7 @@ sce$key <- paste0(sce$Barcode, "_", sce$sample_ID)
 
 ## Add the study design info
 new_col <- merge(colData(sce), sample_info[, -which(colnames(sample_info) == "sample_path")])
+
 ## Fix order
 new_col <- new_col[match(sce$key, new_col$key), ]
 stopifnot(identical(sce$key, new_col$key))

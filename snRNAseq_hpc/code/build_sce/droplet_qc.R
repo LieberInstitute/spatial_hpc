@@ -245,7 +245,7 @@ e.out.all <- do.call("rbind", e.out)[colnames(sce), ]
 sce <- sce[, which(e.out.all$FDR <= 0.001)]
 
 dim(sce)
-# [1] 36601 113525
+# [1] 36601 141780
 
 #save drops removed sce
 save(sce,file=here("snRNAseq_hpc","processed-data","sce","sce_drops_removed.rda"))
@@ -262,98 +262,117 @@ sce <- scuttle::addPerCellQC(
 ## High mito
 # sce$high.mito.sample ## standard name?
 sce$high_mito <- isOutlier(sce$subsets_Mito_percent, nmads = 3, type = "higher", batch = sce$Sample)
-# FALSE   TRUE
-#102328  11197
+#FALSE   TRUE
+#125821  15959
+
 table(sce$high_mito, sce$Sample)
-#         10c-scp 11c-scp 12c-scp 13c-scp 14c-scp 15c-scp 16c-scp 17c-scp 18c-scp
-# FALSE    5308    4401    4464    3778    3008    4583    6881   11029    5326
-# TRUE      345     651      92     781     250     695     611    1427     724
-# 
-# 1        9c-scp 1c-scp 20c-scp 21c-scp 22c-scp 23c-scp 24c-scp 25c-scp 26c-scp
-# FALSE    4741   4716    4802    5325    5865    5441    3630    4524    6483
-# TRUE      776     16    1328    1227      31      24      58     583     389
-# 
-#         27c-scp 2c-scp
-# FALSE    4794   3229
-# TRUE      303    886
+#        10c-scp 11c-scp 12c-scp 13c-scp 14c-scp 15c-scp 16c-scp 17c-scp 18c-scp
+#  FALSE    5313    4383    4370    3729    2973    4551    6729   10981    5364
+#  TRUE      353     634     106     748     248     659     648    1404     730
+#
+#        19c-scp 1c-scp 20c-scp 21c-scp 22c-scp 23c-scp 24c-scp 25c-scp 26c-scp
+#  FALSE    4760   4742    4768    5287    5847    5462    3548    4289    6326
+#  TRUE      770     14    1302    1204      31      25      54     562     407
+#
+#        27c-scp 2c-scp 32c-scp 33c-scp 36c-scp 37c-scp 38c-scp 39c-scp
+#  FALSE    4780   3235    4259    4090    4082    4302    3673    3978
+#  TRUE      306    888     790     645     860    1010     808     753
+
 
 
 ## low library size
 sce$low_lib <- isOutlier(sce$sum, log = TRUE, type = "lower", batch = sce$Sample)
 table(sce$low_lib)
 # FALSE   TRUE
-#111977   1548
-
+#139660   2120
 
 ## low detected features
 # sce$qc.detected
 sce$low_genes <- isOutlier(sce$detected, log = TRUE, type = "lower", batch = sce$Sample)
 table(sce$low_genes)
 # FALSE   TRUE
-#109929   3596
+#137012   4768
+
 
 
 ## All low sum are also low detected
 table(sce$low_lib, sce$low_genes)
 #         FALSE   TRUE
-#  FALSE 109929   2048
-#  TRUE       0   1548
+#  FALSE 137012   2648
+#  TRUE       0   2120
+
 
 ## Annotate nuc to drop
 sce$discard_auto <- sce$high_mito | sce$low_lib | sce$low_genes
 
 table(sce$discard_auto)
 # FALSE   TRUE
-#100588  12937
+#123421  18359
+
 
 
 qc_t <- addmargins(table(sce$Sample, sce$discard_auto))
-# 10c-scp   5308    345   5653
-# 11c-scp   4007   1045   5052
-# 12c-scp   4464     92   4556
-# 13c-scp   3679    880   4559
-# 14c-scp   3008    250   3258
-# 15c-scp   3944   1334   5278
-# 16c-scp   6881    611   7492
-# 17c-scp  11029   1427  12456
-# 18c-scp   5278    772   6050
-# 19c-scp   4585    932   5517
-# 1c-scp    4716     16   4732
-# 20c-scp   4802   1328   6130
-# 21c-scp   5258   1294   6552
-# 22c-scp   5859     37   5896
-# 23c-scp   5206    259   5465
-# 24c-scp   3630     58   3688
-# 25c-scp   4524    583   5107
-# 26c-scp   6483    389   6872
-# 27c-scp   4794    303   5097
-# 2c-scp    3133    982   4115
-# Sum     100588  12937 113525
+#           FALSE   TRUE    Sum
+#  10c-scp   5313    353   5666
+#  11c-scp   3995   1022   5017
+#  12c-scp   4370    106   4476
+#  13c-scp   3636    841   4477
+#  14c-scp   2973    248   3221
+#  15c-scp   3919   1291   5210
+#  16c-scp   6729    648   7377
+#  17c-scp  10981   1404  12385
+#  18c-scp   5321    773   6094
+#  19c-scp   4618    912   5530
+#  1c-scp    4742     14   4756
+#  20c-scp   4768   1302   6070
+#  21c-scp   5229   1262   6491
+#  22c-scp   5847     31   5878
+#  23c-scp   5213    274   5487
+#  24c-scp   3548     54   3602
+#  25c-scp   4289    562   4851
+#  26c-scp   6326    407   6733
+#  27c-scp   4780    306   5086
+#  2c-scp    3145    978   4123
+#  32c-scp   4259    790   5049
+#  33c-scp   3769    966   4735
+#  36c-scp   4082    860   4942
+#  37c-scp   4300   1012   5312
+#  38c-scp   3673    808   4481
+#  39c-scp   3596   1135   4731
+#  Sum     123421  18359 141780
+
 
 
 round(100 * sweep(qc_t, 1, qc_t[, 3], "/"), 1)
- #         FALSE  TRUE   Sum
- # 10c-scp  93.9   6.1 100.0
- # 11c-scp  79.3  20.7 100.0
- # 12c-scp  98.0   2.0 100.0
- # 13c-scp  80.7  19.3 100.0
- # 14c-scp  92.3   7.7 100.0
- # 15c-scp  74.7  25.3 100.0
- # 16c-scp  91.8   8.2 100.0
- # 17c-scp  88.5  11.5 100.0
- # 18c-scp  87.2  12.8 100.0
- # 19c-scp  83.1  16.9 100.0
- # 1c-scp   99.7   0.3 100.0
- # 20c-scp  78.3  21.7 100.0
- # 21c-scp  80.3  19.7 100.0
- # 22c-scp  99.4   0.6 100.0
- # 23c-scp  95.3   4.7 100.0
- # 24c-scp  98.4   1.6 100.0
- # 25c-scp  88.6  11.4 100.0
- # 26c-scp  94.3   5.7 100.0
- # 27c-scp  94.1   5.9 100.0
- # 2c-scp   76.1  23.9 100.0
- # Sum      88.6  11.4 100.0
+#          FALSE  TRUE   Sum
+#  10c-scp  93.8   6.2 100.0
+#  11c-scp  79.6  20.4 100.0
+#  12c-scp  97.6   2.4 100.0
+#  13c-scp  81.2  18.8 100.0
+#  14c-scp  92.3   7.7 100.0
+#  15c-scp  75.2  24.8 100.0
+#  16c-scp  91.2   8.8 100.0
+#  17c-scp  88.7  11.3 100.0
+#  18c-scp  87.3  12.7 100.0
+#  19c-scp  83.5  16.5 100.0
+#  1c-scp   99.7   0.3 100.0
+#  20c-scp  78.6  21.4 100.0
+#  21c-scp  80.6  19.4 100.0
+#  22c-scp  99.5   0.5 100.0
+#  23c-scp  95.0   5.0 100.0
+#  24c-scp  98.5   1.5 100.0
+#  25c-scp  88.4  11.6 100.0
+#  26c-scp  94.0   6.0 100.0
+#  27c-scp  94.0   6.0 100.0
+#  2c-scp   76.3  23.7 100.0
+#  32c-scp  84.4  15.6 100.0
+#  33c-scp  79.6  20.4 100.0
+#  36c-scp  82.6  17.4 100.0
+#  37c-scp  80.9  19.1 100.0
+#  38c-scp  82.0  18.0 100.0
+#  39c-scp  76.0  24.0 100.0
+#  Sum      87.1  12.9 100.0
+
 
 
 #### QC plots ####
@@ -395,30 +414,23 @@ plotColData(sce,
 dev.off()
 
 ###there's a lot of issues here, especially with mito rate...let's fix that
-##which samples are good?
-#attr(,"thresholds")
-#        10c-scp  11c-scp  12c-scp  13c-scp  14c-scp  15c-scp  16c-scp  17c-scp
-#lower      -Inf     -Inf     -Inf     -Inf     -Inf     -Inf     -Inf     -Inf
-#higher 8.295575 2.127114 8.621616 1.892477 6.235252 1.416785 3.241088 2.345548
-#         18c-scp  19c-scp   1c-scp  20c-scp  21c-scp  22c-scp  23c-scp  24c-scp
-#lower       -Inf     -Inf     -Inf     -Inf     -Inf     -Inf     -Inf     -Inf
-#higher 0.9312562 1.028316 10.35669 2.001247 1.585939 10.46092 9.795177 21.76943
-#        25c-scp  26c-scp  27c-scp  2c-scp
-#lower      -Inf     -Inf     -Inf    -Inf
-#higher 27.22605 10.69679 11.93429 2.44956
-
-##looks like 11, 13, 15-19, 20, 21, 2
-##take the mean of the thresholds for these samples and set the rest equal to that
-good_samples<-colnames(attributes(sce$high_mito)$thresholds[,attributes(sce$high_mito)$thresholds[2,] < 9])
+##Use samples with reasonable QC metric thresholds to compute those that failed. For mito rate, we will do this without differentiating between NeuN and PI sorted guys
+good_samples<-colnames(attributes(sce$high_mito)$thresholds[,attributes(sce$high_mito)$thresholds[2,] < 5])
 
 
 discard_mito <- isOutlier(sce$subsets_Mito_percent,
     type="higher", batch=sce$Sample,
     subset=sce$Sample %in% good_samples)
     
-discard.detected <- isOutlier(sce$detected,
-    type="higher", batch=sce$Sample,
-    subset=sce$Sample %in% c("D17", "D2", "D7"))
+#for detected and sum, we'll do NeuN and PI sorted separately due to differences in distributions for different sort strategies
+x<-c('11c-scp','13c-scp','15c-scp','18c-scp','19c-scp','21c-scp','23c-scp','2c-scp','33c-scp','39c-scp')
+y<-c('11c-scp','15c-scp','19c-scp','23c-scp','33c-scp','39c-scp')
+
+sce$low_genes <- ifelse(sce$Sample %in% x, sce$low_genes,
+                    ifelse(sce$detected <=1000,T,F))
+                    
+sce$low_lib <- ifelse(sce$Sample %in% y, sce$low_lib,
+                    ifelse(sce$sum <=1000,T,F))
 
 sce$high_mito<-discard_mito
 
@@ -428,59 +440,74 @@ sce$discard_semiauto <- sce$high_mito | sce$low_lib | sce$low_genes
 
 table(sce$discard_semiauto)
 #FALSE  TRUE
-#77251 36274
+#87095 54685
+
 
 
 
 
 
 qc_t <- addmargins(table(sce$Sample, sce$discard_semiauto))
-# FALSE   TRUE    Sum
-# 10c-scp   5308    345   5653
-# 11c-scp   4007   1045   5052
-# 12c-scp   4464     92   4556
-# 13c-scp   3679    880   4559
-# 14c-scp   3008    250   3258
-# 15c-scp   3944   1334   5278
-# 16c-scp   6881    611   7492
-# 17c-scp  11029   1427  12456
-# 18c-scp   5278    772   6050
-# 19c-scp   4585    932   5517
-# 1c-scp    2405   2327   4732
-# 20c-scp   4802   1328   6130
-# 21c-scp   5258   1294   6552
-# 22c-scp   1326   4570   5896
-# 23c-scp   1050   4415   5465
-# 24c-scp   1084   2604   3688
-# 25c-scp    299   4808   5107
-# 26c-scp   3258   3614   6872
-# 27c-scp   2453   2644   5097
-# 2c-scp    3133    982   4115
-# Sum      77251  36274 113525
+#           FALSE   TRUE    Sum
+#  10c-scp   2600   3066   5666
+#  11c-scp   3995   1022   5017
+#  12c-scp   2072   2404   4476
+#  13c-scp   3636    841   4477
+#  14c-scp   1600   1621   3221
+#  15c-scp   3919   1291   5210
+#  16c-scp   5685   1692   7377
+#  17c-scp   8473   3912  12385
+#  18c-scp   5321    773   6094
+#  19c-scp   4618    912   5530
+#  1c-scp    1991   2765   4756
+#  20c-scp   4324   1746   6070
+#  21c-scp   5229   1262   6491
+#  22c-scp   1204   4674   5878
+#  23c-scp    982   4505   5487
+#  24c-scp    921   2681   3602
+#  25c-scp    250   4601   4851
+#  26c-scp   2320   4413   6733
+#  27c-scp   2042   3044   5086
+#  2c-scp    3145    978   4123
+#  32c-scp   3721   1328   5049
+#  33c-scp   3769    966   4735
+#  36c-scp   4001    941   4942
+#  37c-scp   4227   1085   5312
+#  38c-scp   3454   1027   4481
+#  39c-scp   3596   1135   4731
+#  Sum      87095  54685 141780
+
 
 round(100 * sweep(qc_t, 1, qc_t[, 3], "/"), 1)
-# FALSE  TRUE   Sum
-# 10c-scp  93.9   6.1 100.0
-# 11c-scp  79.3  20.7 100.0
-# 12c-scp  98.0   2.0 100.0
-# 13c-scp  80.7  19.3 100.0
-# 14c-scp  92.3   7.7 100.0
-# 15c-scp  74.7  25.3 100.0
-# 16c-scp  91.8   8.2 100.0
-# 17c-scp  88.5  11.5 100.0
-# 18c-scp  87.2  12.8 100.0
-# 19c-scp  83.1  16.9 100.0
-# 1c-scp   50.8  49.2 100.0
-# 20c-scp  78.3  21.7 100.0
-# 21c-scp  80.3  19.7 100.0
-# 22c-scp  22.5  77.5 100.0
-# 23c-scp  19.2  80.8 100.0
-# 24c-scp  29.4  70.6 100.0
-# 25c-scp   5.9  94.1 100.0
-# 26c-scp  47.4  52.6 100.0
-# 27c-scp  48.1  51.9 100.0
-# 2c-scp   76.1  23.9 100.0
-# Sum      68.0  32.0 100.0
+#          FALSE  TRUE   Sum
+#  10c-scp  45.9  54.1 100.0
+#  11c-scp  79.6  20.4 100.0
+#  12c-scp  46.3  53.7 100.0
+#  13c-scp  81.2  18.8 100.0
+#  14c-scp  49.7  50.3 100.0
+#  15c-scp  75.2  24.8 100.0
+#  16c-scp  77.1  22.9 100.0
+#  17c-scp  68.4  31.6 100.0
+#  18c-scp  87.3  12.7 100.0
+#  19c-scp  83.5  16.5 100.0
+#  1c-scp   41.9  58.1 100.0
+#  20c-scp  71.2  28.8 100.0
+#  21c-scp  80.6  19.4 100.0
+#  22c-scp  20.5  79.5 100.0
+#  23c-scp  17.9  82.1 100.0
+#  24c-scp  25.6  74.4 100.0
+#  25c-scp   5.2  94.8 100.0
+#  26c-scp  34.5  65.5 100.0
+#  27c-scp  40.1  59.9 100.0
+#  2c-scp   76.3  23.7 100.0
+#  32c-scp  73.7  26.3 100.0
+#  33c-scp  79.6  20.4 100.0
+#  36c-scp  81.0  19.0 100.0
+#  37c-scp  79.6  20.4 100.0
+#  38c-scp  77.1  22.9 100.0
+#  39c-scp  76.0  24.0 100.0
+#  Sum      61.4  38.6 100.0
+
 
 #
 pdf(here("snRNAseq_hpc","plots", "QC_semiauto.pdf"), width = 21)
