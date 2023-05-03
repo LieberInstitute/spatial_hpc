@@ -9,7 +9,10 @@ library("BiocSingular")
 
 
 ## Load sce
-load(here("snRNAseq_hpc","processed-data", "sce", "sce_post_qc.rda"))
+load(here("snRNAseq_hpc","processed-data", "sce", "sce_clustered.rda"))
+reducedDim(sce,'PCA')<-NULL
+reducedDim(sce,'UMAP')<-NULL
+reducedDim(sce,'HARMONY')<-NULL
 dim(sce)
 
 ##feature selection using deviance
@@ -35,21 +38,17 @@ dim(sce)
 #abline(v = 5000, lty = 2, col = "black")
 #dev.off()
 #
-hdg<-rownames(counts(sce))[1:5000]
+hdg<-rownames(counts(sce))[1:2500]
 set.seed(913)
 message("running nullResiduals - ", Sys.time())
-res<-counts(sce)[rownames(counts(sce)) %in% hdg,]
-resids <- nullResiduals(res,
+sce <- nullResiduals(sce,
                      fam = "binomial", 
                      type = "deviance"
 )
 
 set.seed(915)
 message("running PCA - ", Sys.time())
-reducedDim(sce,"PCA") <- runPCA(resids, 
-                          ncomponents = 100,
-                          BSPARAM = BiocSingular::IrlbaParam()
-)
+sce <- runPCA(sce, ncomponents = 100)
 
 ## Why multi match as well?
 # sce <- multiBatchNorm(sce, batch=sce$sample_short)
@@ -89,7 +88,7 @@ dev.off()
 
 message("Done UMAP - Saving data...", Sys.time())
 
-save(sce, file = here("snRNAseq_hpc","processed-data", "sce", "sce_harmony.rda"))
+save(sce, file = here("snRNAseq_hpc","processed-data", "sce", "sce_unclustered.rda"))
 
 
 ## Reproducibility information

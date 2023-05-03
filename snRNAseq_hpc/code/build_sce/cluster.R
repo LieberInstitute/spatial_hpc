@@ -8,7 +8,7 @@ library("sessioninfo")
 load(here("snRNAseq_hpc","processed-data", "sce", "sce_harmony.rda"), verbose = TRUE)
 
 message("running buildSNNGraph - ", Sys.time())
-snn.gr <- buildSNNGraph(sce, k = 20, use.dimred = "HARMONY")
+snn.gr <- buildSNNGraph(sce, k = 25, use.dimred = "HARMONY")
 snn.gr2 <- buildSNNGraph(sce, k = 50, use.dimred = "HARMONY")
 
 message("running walktrap - ", Sys.time())
@@ -19,12 +19,12 @@ table(clust)
 table(clust50)
 
 ##add to sce
-sce$k_20_label<-clust
+sce$k_25_label<-clust
 sce$k_50_label<-clust50
 
 ##make some prelim plots
-pdf(here("snRNAseq_hpc","plots","UMAP_k20.pdf"))
-plotUMAP(sce,colour_by='k_20_label',text_by='k_20_label')
+pdf(here("snRNAseq_hpc","plots","UMAP_k25.pdf"))
+plotUMAP(sce,colour_by='k_25_label',text_by='k_25_label')
 dev.off()
 
 pdf(here("snRNAseq_hpc","plots","UMAP_k50.pdf"))
