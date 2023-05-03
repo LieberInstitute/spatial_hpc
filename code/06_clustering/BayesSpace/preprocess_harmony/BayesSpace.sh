@@ -5,8 +5,8 @@
 #$ -o logs/bayesSpace_captureArea_k.$TASK_ID.txt
 #$ -e logs/bayesSpace_captureArea_k.$TASK_ID.txt
 #$ -m e
-#$ -t 29-30
-#$ -tc 4
+#$ -t 10-14
+#$ -tc 2
 
 
 USAGE_CUTOFF=10
