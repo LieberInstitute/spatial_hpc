@@ -354,3 +354,317 @@ Error: cannot allocate vector of size 22.9 Gb
 Execution halted
 **** Job ends ****
 Wed May  3 18:26:54 EDT 2023
+**** Job starts ****
+Wed May  3 19:06:53 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3134566
+Job name: run_liana_prelim
+Hostname: compute-100.cm.cluster
+Task id: undefined
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:GenomicRanges’:
+
+    intersect, setdiff, union
+
+The following object is masked from ‘package:GenomeInfoDb’:
+
+    intersect
+
+The following objects are masked from ‘package:IRanges’:
+
+    collapse, desc, intersect, setdiff, slice, union
+
+The following objects are masked from ‘package:S4Vectors’:
+
+    first, intersect, rename, setdiff, setequal, union
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following object is masked from ‘package:matrixStats’:
+
+    count
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘magrittr’
+
+The following object is masked from ‘package:GenomicRanges’:
+
+    subtract
+
+Running LIANA with `k_50_label` as labels!
+LIANA: LR summary stats calculated!
+Now Running: Natmi
+Now Running: Connectome
+Now Running: Logfc
+Now Running: Sca
+Now Running: Cellphonedb
+Error: ℹ In index: 1.
+ℹ With name: Consensus.
+Caused by error in `purrr::map()`:
+ℹ In index: 372.
+Caused by error:
+! cannot allocate vector of size 19.9 Mb
+Warning messages:
+1: `invoke()` is deprecated as of rlang 0.4.0.
+Please use `exec()` or `inject()` instead.
+This warning is displayed once every 8 hours. 
+2: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.2 GiB
+3: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.2 GiB
+4: `progress_estimated()` was deprecated in dplyr 1.0.0.
+ℹ The deprecated feature was likely used in the liana package.
+  Please report the issue at <https://github.com/saezlab/liana/issues>. 
+Error in liana_res %>% map(function(res) nrow(res)) %>% as.numeric() : 
+  'list' object cannot be coerced to type 'double'
+Calls: liana_aggregate -> %<>% -> %||% -> .select_cap -> %>%
+Execution halted
+**** Job ends ****
+Wed May  3 22:55:02 EDT 2023
+**** Job starts ****
+Wed May  3 23:33:25 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3134742
+Job name: run_liana_prelim
+Hostname: compute-100.cm.cluster
+Task id: undefined
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:GenomicRanges’:
+
+    intersect, setdiff, union
+
+The following object is masked from ‘package:GenomeInfoDb’:
+
+    intersect
+
+The following objects are masked from ‘package:IRanges’:
+
+    collapse, desc, intersect, setdiff, slice, union
+
+The following objects are masked from ‘package:S4Vectors’:
+
+    first, intersect, rename, setdiff, setequal, union
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following object is masked from ‘package:matrixStats’:
+
+    count
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘magrittr’
+
+The following object is masked from ‘package:GenomicRanges’:
+
+    subtract
+
+Error in liana_res %>% map(function(res) nrow(res)) %>% as.numeric() : 
+  'list' object cannot be coerced to type 'double'
+Calls: liana_aggregate -> %<>% -> %||% -> .select_cap -> %>%
+Execution halted
+**** Job ends ****
+Wed May  3 23:33:59 EDT 2023

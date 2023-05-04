@@ -746,3 +746,428 @@ In asMethod(object) :
 Execution halted
 **** Job ends ****
 Wed May  3 18:28:24 EDT 2023
+**** Job starts ****
+/cm/local/apps/sge/sge-8.1.9/default/spool/compute-100/job_scripts/3134565: line 9: $'date\r': command not found
+**** JHPCE info ****
+User: enelson
+Job id: 3134565
+Job name: feature_selection_dimred
+Hostname: compute-100.cm.cluster
+Task id: undefined
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+Loading required package: Rcpp
+[1] 35312 86905
+running nullResiduals - 2023-05-03 19:07:44
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'x' in selecting a method for function 't': cannot allocate vector of size 22.9 Gb
+Calls: nullResiduals ... .binomial_deviance_residuals -> t -> - -> - -> .m2dense -> .handleSimpleError -> h
+In addition: Warning message:
+In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+Execution halted
+**** Job ends ****
+Wed May  3 19:08:46 EDT 2023
+**** Job starts ****
+/cm/local/apps/sge/sge-8.1.9/default/spool/compute-099/job_scripts/3134568: line 9: $'date\r': command not found
+**** JHPCE info ****
+User: enelson
+Job id: 3134568
+Job name: feature_selection_dimred
+Hostname: compute-099.cm.cluster
+Task id: undefined
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+Loading required package: Rcpp
+[1] 35312 86905
+running nullResiduals - 2023-05-03 19:14:46
+Error: cannot allocate vector of size 22.9 Gb
+In addition: Warning message:
+In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+Execution halted
+**** Job ends ****
+Wed May  3 19:23:53 EDT 2023
+**** Job starts ****
+/cm/local/apps/sge/sge-8.1.9/default/spool/compute-096/job_scripts/3134625: line 9: $'date\r': command not found
+**** JHPCE info ****
+User: enelson
+Job id: 3134625
+Job name: feature_selection_dimred
+Hostname: compute-096.cm.cluster
+Task id: undefined
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+Loading required package: Rcpp
+[1] 35312 86905
+running nullResiduals - 2023-05-03 21:20:32
+Error: cannot allocate vector of size 22.9 Gb
+In addition: Warning message:
+In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+Execution halted
+**** Job ends ****
+Wed May  3 21:23:06 EDT 2023
+**** Job starts ****
+/cm/local/apps/sge/sge-8.1.9/default/spool/compute-096/job_scripts/3134688: line 9: $'date\r': command not found
+**** JHPCE info ****
+User: enelson
+Job id: 3134688
+Job name: feature_selection_dimred
+Hostname: compute-096.cm.cluster
+Task id: undefined
+Loading conda_R/4.2.x
+
+Currently Loaded Modules:
+  1) matlab/R2019a     6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  2) stata/17          7) JHPCE_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   8) conda/3-4.11.0
+  4) sge/8.1.9         9) conda_R/4.2.x
+  5) gcc/4.4.7
+
+ 
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+Loading required package: Rcpp
+[1] 35312 86905
+running nullResiduals - 2023-05-04 05:32:58
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'i' in selecting a method for function '[<-': cannot allocate vector of size 19.5 Gb
+Calls: nullResiduals ... [<- -> [<- -> which -> which -> .handleSimpleError -> h
+In addition: Warning messages:
+1: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+2: In .local(x, ...) : NaNs produced
+3: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+4: In .sparse2dense(x) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+5: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 22.9 GiB
+Execution halted
+Warning message:
+system call failed: Cannot allocate memory 
+**** Job ends ****
+Thu May  4 05:54:23 EDT 2023

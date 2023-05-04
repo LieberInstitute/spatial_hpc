@@ -9,10 +9,7 @@ library("BiocSingular")
 
 
 ## Load sce
-load(here("snRNAseq_hpc","processed-data", "sce", "sce_clustered.rda"))
-reducedDim(sce,'PCA')<-NULL
-reducedDim(sce,'UMAP')<-NULL
-reducedDim(sce,'HARMONY')<-NULL
+load(here("snRNAseq_hpc","processed-data", "sce", "sce_liana.rda"))
 dim(sce)
 
 ##feature selection using deviance

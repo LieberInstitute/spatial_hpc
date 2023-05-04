@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#$ -l bluejay,mem_free=75G,h_vmem=75G,h_fsize=100G
+#$ -l bluejay,mem_free=150G,h_vmem=150G,h_fsize=150G
 #$ -N feature_selection_dimred
 #$ -o logs/feature_selection_dimred.txt
 #$ -e logs/feature_selection_dimred.txt

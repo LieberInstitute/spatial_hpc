@@ -5,14 +5,11 @@ library(liana)
 library(here)
 library(dplyr)
 library(magrittr)
-load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_clustered.rda'))
-reducedDim(sce,'PCA')<-NULL
-reducedDim(sce,'UMAP')<-NULL
-reducedDim(sce,'HARMONY')<-NULL
+#load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_liana.rda'))
 
 ##run liana
-liana_test <- liana_wrap(sce,idents_col = 'k_50_label')
-save(liana_test,file=here::here('snRNAseq_hpc','processed-data',
+#liana_test <- liana_wrap(sce,idents_col = 'k_50_label')
+load(file=here::here('snRNAseq_hpc','processed-data',
                                 'cell_cell_communication','liana_test.rda'))
 liana_ag <- liana_aggregate(liana_test)
 save(liana_ag,file=here::here('snRNAseq_hpc','processed-data',
