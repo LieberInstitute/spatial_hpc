@@ -23,17 +23,23 @@ table(sce$neuron)
 
 
 ##ok now let's make a "broad" category with excit, inhib, and glial/non-neuron subtypes
-broadTab<-data.frame('cluster'=seq(1,39,1),'broad_type'=rep(NA,39))
-broadTab$broad_type[broadTab$cluster %in% c(38,10,9,29,18,35,26,31,37)]<-'Inhib'
-broadTab$broad_type[broadTab$cluster %in% c(19,13,27,8,6,30,2,20,
-                                            23,33,16,32,25,39,36,
-                                            3,24,7,21,34)]<-'Excit'
-broadTab$broad_type[broadTab$cluster %in% c(5,22,28)]<-'CP'
-broadTab$broad_type[broadTab$cluster %in% c(4,12)]<-'Astro'
-broadTab$broad_type[broadTab$cluster %in% c(14,17)]<-'Oligo'
-broadTab$broad_type[broadTab$cluster %in% c(1)]<-'Vascular/Immune'
-broadTab$broad_type[broadTab$cluster %in% c(15)]<-'OPC'
-broadTab$broad_type[broadTab$cluster %in% c(11)]<-'Micro'
+broadTab<-data.frame('cluster'=seq(1,38,1),'broadType'=rep(NA,38))
+broadTab$broadType[broadTab$cluster %in%c(37,17,31,27,1,22,10,34)]<-paste0('Inhib_',c(1:8))
+broadTab$broadType[broadTab$cluster %in%38]<-'CR'
+broadTab$broadType[broadTab$cluster %in%c(9,13,21,25,28,33,6,16,32,35,19,24,8,26,36,7,23)]<-paste0('Excit_',c(1:17))
+broadTab$broadType[broadTab$cluster %in% c(15,5,30)]<-paste0('CP_',c(1:3))
+broadTab$broadType[broadTab$cluster %in% c(2,14,20)]<-paste0('Astro_',c(1:3))
+broadTab$broadType[broadTab$cluster %in% c(11,18)]<-paste0('Oligo_',c(1:2))
+broadTab$broadType[broadTab$cluster %in% c(3)]<-'Endo'
+broadTab$broadType[broadTab$cluster %in% c(29)]<-'PC'
+broadTab$broadType[broadTab$cluster %in% c(12)]<-'OPC'
+broadTab$broadType[broadTab$cluster %in% c(4)]<-'Micro'
+
+c(paste0('Inhib_',c(1:8)),'CR', paste0('Excit_',c(1:17)),paste0('CP_',c(1:3)),paste0('Astro_',c(1:3)),paste0('Oligo_',c(1:2)),'Endo','PC','OPC','Micro')
+
+levels(broadTab$broadType)[c(37,17,31,27,1,22,10,34,38,9,13,21,25,28,33,6,16,32,35,19,24,8,26,36,7,23,15,5,30,2,14,20,11,18,3,29,12,4)]
+
+
 
 table(sce$broadType)
 #          Astro              CP           Excit           Inhib           Micro
