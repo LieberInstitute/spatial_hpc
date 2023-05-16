@@ -4,13 +4,14 @@ library(RcppML)
 library(ggspavis)
 library(here)
 print('Loading spe!')
-load(file=here("processed-data","02_build_spe,"spe_bayes_clus.Rdata")
-
-##run NMF
-x<-nmf(
-counts,
-30,
-tol = 1e-05,
+load(file=here("processed-data","02_build_spe","spe_bayes_clus.Rdata"))
+counts<-assay(spe,'logcounts')
+library(Matrix)
+counts_sparse <- as(counts, "dgCMatrix")
+print('Running NMF!')
+x<-nmf(counts,
+50,
+tol = 1e-06,
 maxit = 1000,
 verbose = TRUE,
 seed = 1512,
@@ -20,16 +21,16 @@ diag = TRUE,
 nonneg = TRUE
 )
 
+save(x,file=here("processed-data","NMF","RcppML_nmf_firstTry.rda"))
+
 ##bind patterns
 pats<-t(x$h)
-colnames(pats)<-paste("Pattern", 1:30, sep = "_")
+colnames(pats)<-paste("Pattern", 1:50, sep = "_")
 colData(spe)<-cbind(colData(spe),pats)
 
-##plot patterns using 2 brains: Br3942 and Br2720
+patterns <- colnames(colData(spe))[75:124]
 
-patterns <- colnames(colData(spe))[77:106]
-
-brains <- c('Br3942','Br2720')
+brains <- unique(spe$brnum)
 
 p<-list()
 for (i in seq_along(patterns)) {
@@ -65,7 +66,7 @@ for (i in seq_along(patterns)) {
     
 for (i in seq_along(patterns)) {
     pdf(
-        file = here::here("plots", "06_clustering", "NMF",
+        file = here::here("plots", "NMF",
                           paste0(patterns[i], ".pdf")))
     print("printing next one")
 
@@ -76,5 +77,4 @@ for (i in seq_along(patterns)) {
     dev.off()
 }
 
-save(x,file=here("processed-data","NMF","RcppML_nmf_firstTry.rda"))
 save(spe,file=here("processed-data","02_build_spe,"spe_nmf.Rdata")
