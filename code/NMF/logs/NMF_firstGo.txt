@@ -1,0 +1,1822 @@
+**** Job starts ****
+Fri May  5 13:34:48 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136280
+Job name: NMF_firstGo
+Hostname: compute-120.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+Error: unexpected symbol in "load(file=here("processed-data","02_build_spe,"spe_bayes_clus.Rdata"
+Execution halted
+**** Job starts ****
+Fri May  5 13:38:32 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136283
+Job name: NMF_firstGo
+Hostname: compute-143.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+Error: unexpected symbol in:
+"##run NMF
+x"
+Execution halted
+**** Job starts ****
+Fri May  5 13:39:47 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136285
+Job name: NMF_firstGo
+Hostname: compute-120.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+Error: unexpected symbol in:
+"##run NMF
+x"
+Execution halted
+**** Job starts ****
+Fri May  5 13:41:17 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136289
+Job name: NMF_firstGo
+Hostname: compute-127.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+Error: unexpected symbol in:
+"
+x"
+Execution halted
+**** Job starts ****
+Fri May  5 13:42:44 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136297
+Job name: NMF_firstGo
+Hostname: compute-127.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+Error: unexpected symbol in:
+"
+x"
+Execution halted
+**** Job starts ****
+Fri May  5 13:43:59 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136298
+Job name: NMF_firstGo
+Hostname: compute-120.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+Error: unexpected symbol in:
+"load(file=here("processed-data","02_build_spe","spe_bayes_clus.Rdata")
+print"
+Execution halted
+**** Job starts ****
+Fri May  5 13:44:51 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136301
+Job name: NMF_firstGo
+Hostname: compute-124.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+[1] "Running NMF!"
+Error in as.vector(x, mode) : 
+  cannot coerce type 'closure' to vector of type 'any'
+Calls: nmf ... as.matrix -> as.matrix.default -> array -> as.vector
+Execution halted
+**** Job starts ****
+Fri May  5 13:50:10 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136306
+Job name: NMF_firstGo
+Hostname: compute-068.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+[1] "Running NMF!"
+
+iter |      tol 
+---------------
+Error in Rcpp_nmf_sparse(A, k, tol, maxit, verbose, nonneg, L1, seed,  : 
+  Cannot convert object to an environment: [type=character; target=ENVSXP].
+Calls: nmf -> Rcpp_nmf_sparse
+Execution halted
+**** Job starts ****
+Fri May  5 14:01:29 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136323
+Job name: NMF_firstGo
+Hostname: compute-124.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+ unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+
+Attaching package: ‘Matrix’
+
+The following object is masked from ‘package:S4Vectors’:
+
+    expand
+
+[1] "Running NMF!"
+
+iter |      tol 
+---------------
+   1 | 8.82e-01
+   2 | 5.56e-02
+   3 | 2.04e-02
+   4 | 1.21e-02
+   5 | 8.31e-03
+   6 | 5.56e-03
+   7 | 3.90e-03
+   8 | 2.97e-03
+   9 | 2.45e-03
+  10 | 2.11e-03
+  11 | 1.83e-03
+  12 | 1.61e-03
+  13 | 1.45e-03
+  14 | 1.31e-03
+  15 | 1.21e-03
+  16 | 1.12e-03
+  17 | 1.04e-03
+  18 | 9.52e-04
+  19 | 8.92e-04
+  20 | 8.53e-04
+  21 | 8.00e-04
+  22 | 7.52e-04
+  23 | 7.35e-04
+  24 | 7.15e-04
+  25 | 7.01e-04
+  26 | 6.82e-04
+  27 | 6.38e-04
+  28 | 6.11e-04
+  29 | 6.01e-04
+  30 | 5.79e-04
+  31 | 5.54e-04
+  32 | 5.27e-04
+  33 | 5.20e-04
+  34 | 5.18e-04
+  35 | 4.94e-04
+  36 | 4.89e-04
+  37 | 4.93e-04
+  38 | 4.90e-04
+  39 | 4.66e-04
+  40 | 4.51e-04
+  41 | 4.21e-04
+  42 | 4.04e-04
+  43 | 3.95e-04
+  44 | 3.72e-04
+  45 | 3.53e-04
+  46 | 3.35e-04
+  47 | 3.09e-04
+  48 | 2.42e-04
+  49 | 2.19e-04
+  50 | 2.08e-04
+  51 | 1.95e-04
+  52 | 1.94e-04
+  53 | 1.95e-04
+  54 | 1.92e-04
+  55 | 1.68e-04
+  56 | 1.64e-04
+  57 | 1.58e-04
+  58 | 1.55e-04
+  59 | 1.54e-04
+  60 | 1.55e-04
+  61 | 1.59e-04
+  62 | 1.60e-04
+  63 | 1.60e-04
+  64 | 1.63e-04
+  65 | 1.70e-04
+  66 | 1.61e-04
+  67 | 1.50e-04
+  68 | 1.17e-04
+  69 | 1.08e-04
+  70 | 1.02e-04
+  71 | 9.94e-05
+  72 | 9.32e-05
+  73 | 8.41e-05
+  74 | 7.75e-05
+  75 | 7.58e-05
+  76 | 7.53e-05
+  77 | 7.58e-05
+  78 | 7.62e-05
+  79 | 7.52e-05
+  80 | 7.19e-05
+  81 | 7.01e-05
+  82 | 6.83e-05
+  83 | 6.72e-05
+  84 | 6.75e-05
+  85 | 6.79e-05
+  86 | 6.82e-05
+  87 | 6.60e-05
+  88 | 6.33e-05
+  89 | 6.21e-05
+  90 | 6.15e-05
+  91 | 6.07e-05
+  92 | 5.84e-05
+  93 | 5.73e-05
+  94 | 5.56e-05
+  95 | 5.38e-05
+  96 | 5.19e-05
+  97 | 4.99e-05
+  98 | 4.90e-05
+  99 | 4.91e-05
+ 100 | 5.00e-05
+ 101 | 5.13e-05
+ 102 | 5.35e-05
+ 103 | 5.56e-05
+ 104 | 5.74e-05
+ 105 | 5.91e-05
+ 106 | 6.15e-05
+ 107 | 6.20e-05
+ 108 | 6.37e-05
+ 109 | 6.51e-05
+ 110 | 6.22e-05
+ 111 | 5.96e-05
+ 112 | 5.58e-05
+ 113 | 5.34e-05
+ 114 | 5.04e-05
+ 115 | 4.73e-05
+ 116 | 4.40e-05
+ 117 | 4.03e-05
+ 118 | 3.68e-05
+ 119 | 3.32e-05
+ 120 | 3.04e-05
+ 121 | 2.81e-05
+ 122 | 2.60e-05
+ 123 | 2.46e-05
+ 124 | 2.37e-05
+ 125 | 2.31e-05
+ 126 | 2.28e-05
+ 127 | 2.25e-05
+ 128 | 2.24e-05
+ 129 | 2.22e-05
+ 130 | 2.16e-05
+ 131 | 2.12e-05
+ 132 | 2.08e-05
+ 133 | 2.03e-05
+ 134 | 1.94e-05
+ 135 | 1.78e-05
+ 136 | 1.70e-05
+ 137 | 1.59e-05
+ 138 | 1.50e-05
+ 139 | 1.39e-05
+ 140 | 1.31e-05
+ 141 | 1.25e-05
+ 142 | 1.18e-05
+ 143 | 1.12e-05
+ 144 | 1.07e-05
+ 145 | 1.02e-05
+ 146 | 9.82e-06
+ 147 | 9.46e-06
+ 148 | 9.11e-06
+ 149 | 8.82e-06
+ 150 | 8.52e-06
+ 151 | 8.30e-06
+ 152 | 8.09e-06
+ 153 | 7.93e-06
+ 154 | 7.83e-06
+ 155 | 7.73e-06
+ 156 | 7.55e-06
+ 157 | 7.34e-06
+ 158 | 7.33e-06
+ 159 | 7.30e-06
+ 160 | 7.26e-06
+ 161 | 7.26e-06
+ 162 | 7.29e-06
+ 163 | 7.32e-06
+ 164 | 7.38e-06
+ 165 | 7.41e-06
+ 166 | 7.20e-06
+ 167 | 6.88e-06
+ 168 | 6.87e-06
+ 169 | 6.84e-06
+ 170 | 6.56e-06
+ 171 | 6.54e-06
+ 172 | 6.40e-06
+ 173 | 6.29e-06
+ 174 | 6.31e-06
+ 175 | 6.32e-06
+ 176 | 6.43e-06
+ 177 | 6.49e-06
+ 178 | 6.58e-06
+ 179 | 6.65e-06
+ 180 | 6.70e-06
+ 181 | 6.07e-06
+ 182 | 6.00e-06
+ 183 | 6.00e-06
+ 184 | 6.00e-06
+ 185 | 6.08e-06
+ 186 | 6.19e-06
+ 187 | 6.31e-06
+ 188 | 6.46e-06
+ 189 | 6.64e-06
+ 190 | 6.75e-06
+ 191 | 6.92e-06
+ 192 | 7.04e-06
+ 193 | 7.16e-06
+ 194 | 7.09e-06
+ 195 | 7.17e-06
+ 196 | 7.44e-06
+ 197 | 7.75e-06
+ 198 | 7.97e-06
+ 199 | 8.31e-06
+ 200 | 8.79e-06
+ 201 | 9.03e-06
+ 202 | 9.25e-06
+ 203 | 9.22e-06
+ 204 | 9.95e-06
+ 205 | 1.06e-05
+ 206 | 1.14e-05
+ 207 | 1.23e-05
+ 208 | 1.31e-05
+ 209 | 1.37e-05
+ 210 | 1.50e-05
+ 211 | 1.38e-05
+ 212 | 1.43e-05
+ 213 | 1.41e-05
+ 214 | 1.41e-05
+ 215 | 1.51e-05
+ 216 | 1.51e-05
+ 217 | 1.34e-05
+ 218 | 1.29e-05
+ 219 | 1.35e-05
+ 220 | 1.41e-05
+ 221 | 1.37e-05
+ 222 | 1.33e-05
+ 223 | 1.32e-05
+ 224 | 1.33e-05
+ 225 | 1.35e-05
+ 226 | 1.31e-05
+ 227 | 1.27e-05
+ 228 | 9.44e-06
+ 229 | 9.15e-06
+ 230 | 8.84e-06
+ 231 | 7.51e-06
+ 232 | 6.74e-06
+ 233 | 6.19e-06
+ 234 | 5.99e-06
+ 235 | 5.83e-06
+ 236 | 5.69e-06
+ 237 | 5.25e-06
+ 238 | 5.22e-06
+ 239 | 5.28e-06
+ 240 | 5.38e-06
+ 241 | 5.45e-06
+ 242 | 5.49e-06
+ 243 | 5.64e-06
+ 244 | 5.97e-06
+ 245 | 6.35e-06
+ 246 | 6.81e-06
+ 247 | 7.32e-06
+ 248 | 7.96e-06
+ 249 | 8.47e-06
+ 250 | 9.19e-06
+ 251 | 1.00e-05
+ 252 | 1.08e-05
+ 253 | 1.10e-05
+ 254 | 1.17e-05
+ 255 | 1.25e-05
+ 256 | 1.32e-05
+ 257 | 1.38e-05
+ 258 | 1.43e-05
+ 259 | 1.43e-05
+ 260 | 1.43e-05
+ 261 | 1.41e-05
+ 262 | 1.37e-05
+ 263 | 1.30e-05
+ 264 | 1.22e-05
+ 265 | 1.13e-05
+ 266 | 1.02e-05
+ 267 | 9.14e-06
+ 268 | 7.99e-06
+ 269 | 6.89e-06
+ 270 | 5.86e-06
+ 271 | 4.94e-06
+ 272 | 4.13e-06
+ 273 | 3.44e-06
+ 274 | 2.86e-06
+ 275 | 2.33e-06
+ 276 | 1.93e-06
+ 277 | 1.59e-06
+ 278 | 1.34e-06
+ 279 | 1.13e-06
+ 280 | 9.74e-07
+[1] "printing plot1_1"
+[1] "printing plot1_2"
+[1] "printing plot2_1"
+[1] "printing plot2_2"
+[1] "printing plot3_1"
+[1] "printing plot3_2"
+[1] "printing plot4_1"
+[1] "printing plot4_2"
+[1] "printing plot5_1"
+[1] "printing plot5_2"
+[1] "printing plot6_1"
+[1] "printing plot6_2"
+[1] "printing plot7_1"
+[1] "printing plot7_2"
+[1] "printing plot8_1"
+[1] "printing plot8_2"
+[1] "printing plot9_1"
+[1] "printing plot9_2"
+[1] "printing plot10_1"
+[1] "printing plot10_2"
+[1] "printing plot11_1"
+[1] "printing plot11_2"
+[1] "printing plot12_1"
+[1] "printing plot12_2"
+[1] "printing plot13_1"
+[1] "printing plot13_2"
+[1] "printing plot14_1"
+[1] "printing plot14_2"
+[1] "printing plot15_1"
+[1] "printing plot15_2"
+[1] "printing plot16_1"
+[1] "printing plot16_2"
+[1] "printing plot17_1"
+[1] "printing plot17_2"
+[1] "printing plot18_1"
+[1] "printing plot18_2"
+[1] "printing plot19_1"
+[1] "printing plot19_2"
+[1] "printing plot20_1"
+[1] "printing plot20_2"
+[1] "printing plot21_1"
+[1] "printing plot21_2"
+[1] "printing plot22_1"
+[1] "printing plot22_2"
+[1] "printing plot23_1"
+[1] "printing plot23_2"
+[1] "printing plot24_1"
+[1] "printing plot24_2"
+[1] "printing plot25_1"
+[1] "printing plot25_2"
+[1] "printing plot26_1"
+[1] "printing plot26_2"
+[1] "printing plot27_1"
+[1] "printing plot27_2"
+[1] "printing plot28_1"
+[1] "printing plot28_2"
+[1] "printing plot29_1"
+[1] "printing plot29_2"
+[1] "printing plot30_1"
+[1] "printing plot30_2"
+[1] "printing plot31_1"
+[1] "printing plot31_2"
+[1] "printing plot32_1"
+[1] "printing plot32_2"
+[1] "printing plot33_1"
+[1] "printing plot33_2"
+[1] "printing plot34_1"
+[1] "printing plot34_2"
+[1] "printing plot35_1"
+[1] "printing plot35_2"
+[1] "printing plot36_1"
+[1] "printing plot36_2"
+[1] "printing plot37_1"
+[1] "printing plot37_2"
+[1] "printing plot38_1"
+[1] "printing plot38_2"
+[1] "printing plot39_1"
+[1] "printing plot39_2"
+[1] "printing plot40_1"
+[1] "printing plot40_2"
+[1] "printing plot41_1"
+[1] "printing plot41_2"
+[1] "printing plot42_1"
+[1] "printing plot42_2"
+[1] "printing plot43_1"
+[1] "printing plot43_2"
+[1] "printing plot44_1"
+[1] "printing plot44_2"
+[1] "printing plot45_1"
+[1] "printing plot45_2"
+[1] "printing plot46_1"
+[1] "printing plot46_2"
+[1] "printing plot47_1"
+[1] "printing plot47_2"
+[1] "printing plot48_1"
+[1] "printing plot48_2"
+[1] "printing plot49_1"
+Error in plotVisium(speb, spots = TRUE, fill = patterns[i], highlight = NULL,  : 
+  'fill' should be in rownames(spe) or names(colData(spe))
+Execution halted
+**** Job starts ****
+Fri May  5 17:03:22 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3136467
+Job name: NMF_firstGo
+Hostname: compute-127.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: scuttle
+Loading required package: ggplot2
+Registered S3 method overwritten by 'ggside':
+  method from   
+  +.gg   ggplot2
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+[1] "Loading spe!"
+
+Attaching package: ‘Matrix’
+
+The following object is masked from ‘package:S4Vectors’:
+
+    expand
+
+[1] "Running NMF!"
+
+iter |      tol 
+---------------
+   1 | 8.82e-01
+   2 | 5.56e-02
+   3 | 2.04e-02
+   4 | 1.21e-02
+   5 | 8.31e-03
+   6 | 5.56e-03
+   7 | 3.90e-03
+   8 | 2.97e-03
+   9 | 2.45e-03
+  10 | 2.11e-03
+  11 | 1.83e-03
+  12 | 1.61e-03
+  13 | 1.45e-03
+  14 | 1.31e-03
+  15 | 1.21e-03
+  16 | 1.12e-03
+  17 | 1.04e-03
+  18 | 9.52e-04
+  19 | 8.92e-04
+  20 | 8.53e-04
+  21 | 8.00e-04
+  22 | 7.52e-04
+  23 | 7.35e-04
+  24 | 7.15e-04
+  25 | 7.01e-04
+  26 | 6.82e-04
+  27 | 6.38e-04
+  28 | 6.11e-04
+  29 | 6.01e-04
+  30 | 5.79e-04
+  31 | 5.54e-04
+  32 | 5.27e-04
+  33 | 5.20e-04
+  34 | 5.18e-04
+  35 | 4.94e-04
+  36 | 4.89e-04
+  37 | 4.93e-04
+  38 | 4.90e-04
+  39 | 4.66e-04
+  40 | 4.51e-04
+  41 | 4.21e-04
+  42 | 4.04e-04
+  43 | 3.95e-04
+  44 | 3.72e-04
+  45 | 3.53e-04
+  46 | 3.35e-04
+  47 | 3.09e-04
+  48 | 2.42e-04
+  49 | 2.19e-04
+  50 | 2.08e-04
+  51 | 1.95e-04
+  52 | 1.94e-04
+  53 | 1.95e-04
+  54 | 1.92e-04
+  55 | 1.68e-04
+  56 | 1.64e-04
+  57 | 1.58e-04
+  58 | 1.55e-04
+  59 | 1.54e-04
+  60 | 1.55e-04
+  61 | 1.59e-04
+  62 | 1.60e-04
+  63 | 1.60e-04
+  64 | 1.63e-04
+  65 | 1.70e-04
+  66 | 1.61e-04
+  67 | 1.50e-04
+  68 | 1.17e-04
+  69 | 1.08e-04
+  70 | 1.02e-04
+  71 | 9.94e-05
+  72 | 9.32e-05
+  73 | 8.41e-05
+  74 | 7.75e-05
+  75 | 7.58e-05
+  76 | 7.53e-05
+  77 | 7.58e-05
+  78 | 7.62e-05
+  79 | 7.52e-05
+  80 | 7.19e-05
+  81 | 7.01e-05
+  82 | 6.83e-05
+  83 | 6.72e-05
+  84 | 6.75e-05
+  85 | 6.79e-05
+  86 | 6.82e-05
+  87 | 6.60e-05
+  88 | 6.33e-05
+  89 | 6.21e-05
+  90 | 6.15e-05
+  91 | 6.07e-05
+  92 | 5.84e-05
+  93 | 5.73e-05
+  94 | 5.56e-05
+  95 | 5.38e-05
+  96 | 5.19e-05
+  97 | 4.99e-05
+  98 | 4.90e-05
+  99 | 4.91e-05
+ 100 | 5.00e-05
+ 101 | 5.13e-05
+ 102 | 5.35e-05
+ 103 | 5.56e-05
+ 104 | 5.74e-05
+ 105 | 5.91e-05
+ 106 | 6.15e-05
+ 107 | 6.20e-05
+ 108 | 6.37e-05
+ 109 | 6.51e-05
+ 110 | 6.22e-05
+ 111 | 5.96e-05
+ 112 | 5.58e-05
+ 113 | 5.34e-05
+ 114 | 5.04e-05
+ 115 | 4.73e-05
+ 116 | 4.40e-05
+ 117 | 4.03e-05
+ 118 | 3.68e-05
+ 119 | 3.32e-05
+ 120 | 3.04e-05
+ 121 | 2.81e-05
+ 122 | 2.60e-05
+ 123 | 2.46e-05
+ 124 | 2.37e-05
+ 125 | 2.31e-05
+ 126 | 2.28e-05
+ 127 | 2.25e-05
+ 128 | 2.24e-05
+ 129 | 2.22e-05
+ 130 | 2.16e-05
+ 131 | 2.12e-05
+ 132 | 2.08e-05
+ 133 | 2.03e-05
+ 134 | 1.94e-05
+ 135 | 1.78e-05
+ 136 | 1.70e-05
+ 137 | 1.59e-05
+ 138 | 1.50e-05
+ 139 | 1.39e-05
+ 140 | 1.31e-05
+ 141 | 1.25e-05
+ 142 | 1.18e-05
+ 143 | 1.12e-05
+ 144 | 1.07e-05
+ 145 | 1.02e-05
+ 146 | 9.82e-06
+ 147 | 9.46e-06
+ 148 | 9.11e-06
+ 149 | 8.82e-06
+ 150 | 8.52e-06
+ 151 | 8.30e-06
+ 152 | 8.09e-06
+ 153 | 7.93e-06
+ 154 | 7.83e-06
+ 155 | 7.73e-06
+ 156 | 7.55e-06
+ 157 | 7.34e-06
+ 158 | 7.33e-06
+ 159 | 7.30e-06
+ 160 | 7.26e-06
+ 161 | 7.26e-06
+ 162 | 7.29e-06
+ 163 | 7.32e-06
+ 164 | 7.38e-06
+ 165 | 7.41e-06
+ 166 | 7.20e-06
+ 167 | 6.88e-06
+ 168 | 6.87e-06
+ 169 | 6.84e-06
+ 170 | 6.56e-06
+ 171 | 6.54e-06
+ 172 | 6.40e-06
+ 173 | 6.29e-06
+ 174 | 6.31e-06
+ 175 | 6.32e-06
+ 176 | 6.43e-06
+ 177 | 6.49e-06
+ 178 | 6.58e-06
+ 179 | 6.65e-06
+ 180 | 6.70e-06
+ 181 | 6.07e-06
+ 182 | 6.00e-06
+ 183 | 6.00e-06
+ 184 | 6.00e-06
+ 185 | 6.08e-06
+ 186 | 6.19e-06
+ 187 | 6.31e-06
+ 188 | 6.46e-06
+ 189 | 6.64e-06
+ 190 | 6.75e-06
+ 191 | 6.92e-06
+ 192 | 7.04e-06
+ 193 | 7.16e-06
+ 194 | 7.09e-06
+ 195 | 7.17e-06
+ 196 | 7.44e-06
+ 197 | 7.75e-06
+ 198 | 7.97e-06
+ 199 | 8.31e-06
+ 200 | 8.79e-06
+ 201 | 9.03e-06
+ 202 | 9.25e-06
+ 203 | 9.22e-06
+ 204 | 9.95e-06
+ 205 | 1.06e-05
+ 206 | 1.14e-05
+ 207 | 1.23e-05
+ 208 | 1.31e-05
+ 209 | 1.37e-05
+ 210 | 1.50e-05
+ 211 | 1.38e-05
+ 212 | 1.43e-05
+ 213 | 1.41e-05
+ 214 | 1.41e-05
+ 215 | 1.51e-05
+ 216 | 1.51e-05
+ 217 | 1.34e-05
+ 218 | 1.29e-05
+ 219 | 1.35e-05
+ 220 | 1.41e-05
+ 221 | 1.37e-05
+ 222 | 1.33e-05
+ 223 | 1.32e-05
+ 224 | 1.33e-05
+ 225 | 1.35e-05
+ 226 | 1.31e-05
+ 227 | 1.27e-05
+ 228 | 9.44e-06
+ 229 | 9.15e-06
+ 230 | 8.84e-06
+ 231 | 7.51e-06
+ 232 | 6.74e-06
+ 233 | 6.19e-06
+ 234 | 5.99e-06
+ 235 | 5.83e-06
+ 236 | 5.69e-06
+ 237 | 5.25e-06
+ 238 | 5.22e-06
+ 239 | 5.28e-06
+ 240 | 5.38e-06
+ 241 | 5.45e-06
+ 242 | 5.49e-06
+ 243 | 5.64e-06
+ 244 | 5.97e-06
+ 245 | 6.35e-06
+ 246 | 6.81e-06
+ 247 | 7.32e-06
+ 248 | 7.96e-06
+ 249 | 8.47e-06
+ 250 | 9.19e-06
+ 251 | 1.00e-05
+ 252 | 1.08e-05
+ 253 | 1.10e-05
+ 254 | 1.17e-05
+ 255 | 1.25e-05
+ 256 | 1.32e-05
+ 257 | 1.38e-05
+ 258 | 1.43e-05
+ 259 | 1.43e-05
+ 260 | 1.43e-05
+ 261 | 1.41e-05
+ 262 | 1.37e-05
+ 263 | 1.30e-05
+ 264 | 1.22e-05
+ 265 | 1.13e-05
+ 266 | 1.02e-05
+ 267 | 9.14e-06
+ 268 | 7.99e-06
+ 269 | 6.89e-06
+ 270 | 5.86e-06
+ 271 | 4.94e-06
+ 272 | 4.13e-06
+ 273 | 3.44e-06
+ 274 | 2.86e-06
+ 275 | 2.33e-06
+ 276 | 1.93e-06
+ 277 | 1.59e-06
+ 278 | 1.34e-06
+ 279 | 1.13e-06
+ 280 | 9.74e-07
+[1] "printing plot1_1"
+[1] "printing plot1_2"
+[1] "printing plot1_3"
+[1] "printing plot1_4"
+[1] "printing plot1_5"
+[1] "printing plot1_6"
+[1] "printing plot1_7"
+[1] "printing plot1_8"
+[1] "printing plot1_9"
+[1] "printing plot1_10"
+[1] "printing plot2_1"
+[1] "printing plot2_2"
+[1] "printing plot2_3"
+[1] "printing plot2_4"
+[1] "printing plot2_5"
+[1] "printing plot2_6"
+[1] "printing plot2_7"
+[1] "printing plot2_8"
+[1] "printing plot2_9"
+[1] "printing plot2_10"
+[1] "printing plot3_1"
+[1] "printing plot3_2"
+[1] "printing plot3_3"
+[1] "printing plot3_4"
+[1] "printing plot3_5"
+[1] "printing plot3_6"
+[1] "printing plot3_7"
+[1] "printing plot3_8"
+[1] "printing plot3_9"
+[1] "printing plot3_10"
+[1] "printing plot4_1"
+[1] "printing plot4_2"
+[1] "printing plot4_3"
+[1] "printing plot4_4"
+[1] "printing plot4_5"
+[1] "printing plot4_6"
+[1] "printing plot4_7"
+[1] "printing plot4_8"
+[1] "printing plot4_9"
+[1] "printing plot4_10"
+[1] "printing plot5_1"
+[1] "printing plot5_2"
+[1] "printing plot5_3"
+[1] "printing plot5_4"
+[1] "printing plot5_5"
+[1] "printing plot5_6"
+[1] "printing plot5_7"
+[1] "printing plot5_8"
+[1] "printing plot5_9"
+[1] "printing plot5_10"
+[1] "printing plot6_1"
+[1] "printing plot6_2"
+[1] "printing plot6_3"
+[1] "printing plot6_4"
+[1] "printing plot6_5"
+[1] "printing plot6_6"
+[1] "printing plot6_7"
+[1] "printing plot6_8"
+[1] "printing plot6_9"
+[1] "printing plot6_10"
+[1] "printing plot7_1"
+[1] "printing plot7_2"
+[1] "printing plot7_3"
+[1] "printing plot7_4"
+[1] "printing plot7_5"
+[1] "printing plot7_6"
+[1] "printing plot7_7"
+[1] "printing plot7_8"
+[1] "printing plot7_9"
+[1] "printing plot7_10"
+[1] "printing plot8_1"
+[1] "printing plot8_2"
+[1] "printing plot8_3"
+[1] "printing plot8_4"
+[1] "printing plot8_5"
+[1] "printing plot8_6"
+[1] "printing plot8_7"
+[1] "printing plot8_8"
+[1] "printing plot8_9"
+[1] "printing plot8_10"
+[1] "printing plot9_1"
+[1] "printing plot9_2"
+[1] "printing plot9_3"
+[1] "printing plot9_4"
+[1] "printing plot9_5"
+[1] "printing plot9_6"
+[1] "printing plot9_7"
+[1] "printing plot9_8"
+[1] "printing plot9_9"
+[1] "printing plot9_10"
+[1] "printing plot10_1"
+[1] "printing plot10_2"
+[1] "printing plot10_3"
+[1] "printing plot10_4"
+[1] "printing plot10_5"
+[1] "printing plot10_6"
+[1] "printing plot10_7"
+[1] "printing plot10_8"
+[1] "printing plot10_9"
+[1] "printing plot10_10"
+[1] "printing plot11_1"
+[1] "printing plot11_2"
+[1] "printing plot11_3"
+[1] "printing plot11_4"
+[1] "printing plot11_5"
+[1] "printing plot11_6"
+[1] "printing plot11_7"
+[1] "printing plot11_8"
+[1] "printing plot11_9"
+[1] "printing plot11_10"
+[1] "printing plot12_1"
+[1] "printing plot12_2"
+[1] "printing plot12_3"
+[1] "printing plot12_4"
+[1] "printing plot12_5"
+[1] "printing plot12_6"
+[1] "printing plot12_7"
+[1] "printing plot12_8"
+[1] "printing plot12_9"
+[1] "printing plot12_10"
+[1] "printing plot13_1"
+Error: cannot allocate vector of size 121.4 Mb
+Execution halted
