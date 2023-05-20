@@ -6,7 +6,7 @@
 #$ -e logs/VNS.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 1
+#$ -t 2-40
 #$ -tc 10
 
 
