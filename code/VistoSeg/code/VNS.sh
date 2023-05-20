@@ -21,13 +21,13 @@ echo "Job name: ${JOB_NAME}"
 echo "Hostname: ${HOSTNAME}"
 echo "Task id: ${SGE_TASK_ID}"
 echo "****"
-echo "Sample id: $(cat ALLsamples.txt | awk "NR==${SGE_TASK_ID}") "
+echo "Sample id: $(cat ALLSAMPLES.txt | awk "NR==${SGE_TASK_ID}") "
 echo "****"
 
 module load matlab/R2019a
 
 toolbox='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code'
-fname=$(cat ALLsamples.txt | awk "NR==${SGE_TASK_ID}")
+fname=$(cat ALLSAMPLES.txt | awk "NR==${SGE_TASK_ID}")
 
 matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), VNS('$fname',5)"
 echo "**** Job ends ****"
