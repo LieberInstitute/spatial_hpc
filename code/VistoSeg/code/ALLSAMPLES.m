@@ -1,0 +1,2 @@
+myfiles = dir(fullfile('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas', '*.tif'));
+writetable(fullfile({myfiles.folder}',{myfiles.name}'),'/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLSAMPLES.txt') 
