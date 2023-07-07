@@ -27,4 +27,4 @@ tic()
 PRECASTObj <- PRECAST(PRECASTObj, K = K)
 toc()
 
-save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("allSamples_PRECASTObj_nnSVG_4000_",K,".Rdata")))
+save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("allSamples_PRECASTObj_nnSVG_2000_",K,".Rdata")))

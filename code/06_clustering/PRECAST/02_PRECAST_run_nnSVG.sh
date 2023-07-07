@@ -2,12 +2,12 @@
 #$ -cwd
 #$ -l mem_free=10G,h_vmem=10G,h_fsize=80G
 #$ -pe local 8
-#$ -N nnSVG_PRECAST_k19-25
+#$ -N nnSVG_PRECAST_k10-17
 #$ -o logs/nnsvg_PRECAST_k.$TASK_ID.txt
 #$ -e logs/nnsvg_PRECAST_k.$TASK_ID.txt
 #$ -m e
-#$ -t 16-20
-#$ -tc 2
+#$ -t 10-17
+#$ -tc 1
 
 echo "**** Job starts ****"
 date
