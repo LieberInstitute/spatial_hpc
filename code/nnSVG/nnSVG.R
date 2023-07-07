@@ -60,7 +60,7 @@ for (s in seq_along(sample_ids)) {
 
     # run nnSVG
     set.seed(123)
-    spe_sub <- nnSVG(spe_sub,n_threads=12,verbose=T)
+    spe_sub <- nnSVG(spe_sub,n_threads=12,verbose=F)
 
     # store results for this sample
     res_list[[s]] <- rowData(spe_sub)
@@ -135,7 +135,7 @@ head(df_summaryReplicated)
 # top "replicated" SVGs
 topSVGsReplicated <- df_summaryReplicated$gene_name
 
-save(topSVGsReplicated,df_summaryReplicated,df_summary,top1000genes,
+save(res_ranks,topSVGsReplicated,df_summaryReplicated,df_summary,top1000genes,
      file=here::here('processed-data','nnSVG','nnSVG_outs.rda'))
 
 
