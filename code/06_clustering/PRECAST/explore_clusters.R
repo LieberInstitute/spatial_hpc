@@ -23,11 +23,12 @@ speb$sample_id <- factor(speb$sample_id, levels = samples)
 samples
 speb$brnum <- droplevels(speb$brnum)
 
+
 #pdf(here::here('plots','figure_1','visium_FIBCD1.pdf'),h=6,w=6)
 plotVisium(
     speb,
     spots = TRUE,
-    fill = 'EPHA1',
+    fill = 'SLC1A3',
     highlight = NULL,
     facets = "sample_id",
     assay = "logcounts",
@@ -37,9 +38,9 @@ plotVisium(
     y_reverse = TRUE,
     sample_ids = NULL,
     image_ids = NULL,
-    #palette = as.vector(alphabet.colors()),
-    image=T
-)+scale_fill_viridis(option='inferno')
+    #palette = as.vector(palette36.colors())[1:18],
+    image=F
+)+scale_fill_viridis(option='magma')
 
 
 pdf(here::here('plots','figure_1','visium_histology.pdf'),h=4,w=4)
@@ -94,8 +95,8 @@ spe$cluster<-factor(spe$cluster,levels=c('CP','Vasc','Olig.1','Olig.2','Olig.3',
                                          'GABA','GCL','CA4/CA3','CA3','CA2/CA1','CA1','Sub','EC'))
 features=c('PRLR','TAGLN','MOBP','OLIG1','APOC1','ETNPPL','SYT1','SST','GAD1',
            'PPFIA2','CARTPT','KCNQ5','FIBCD1','COL5A2','ETV1','MEF2C')
-plotDots(spe,group='cluster',
-         features=rev(features),
+plotDots(spe,group='cluster_collapsed',
+         features=rownames(marks[[11]][1:25,]),
          colour=c('white','black'))+theme(axis.text.x=element_text(angle=45))
 
 plotDots(spe,group='PRECAST_k17_nnSVG_rep',
@@ -183,30 +184,30 @@ cols<-cols[-c(50,73,24,26,40)]
 
 tab<-data.frame('cluster'=1:18,'annotation2'=rep(NA,18),'annotation'=rep(NA,18))
 tab$annotation[tab$cluster %in% c(4)]<-'GCL'
-tab$annotation[tab$cluster %in% c(1)]<-'SUB.RHP.2'
-tab$annotation[tab$cluster %in% c(2)]<-'DG.ML'
+tab$annotation[tab$cluster %in% c(1)]<-'SUB.RHP'
+tab$annotation[tab$cluster %in% c(2)]<-'ML'
 tab$annotation[tab$cluster %in% c(3)]<-'CA1.1'
 tab$annotation[tab$cluster %in% c(5)]<-'SR.SLM'
 tab$annotation[tab$cluster %in% c(6)]<-'WM.1'
 tab$annotation[tab$cluster %in% c(7)]<-'CA2.4.1'
-tab$annotation[tab$cluster %in% c(8)]<-'RHP.1'
+tab$annotation[tab$cluster %in% c(8)]<-'RHP'
 tab$annotation[tab$cluster %in% c(9)]<-'CA1.2'
 tab$annotation[tab$cluster %in% c(10)]<-'GABA'
 tab$annotation[tab$cluster %in% c(11)]<-'Vascular'
 tab$annotation[tab$cluster %in% c(12)]<-'Choroid'
 tab$annotation[tab$cluster %in% c(13)]<-'SL.SR'
-tab$annotation[tab$cluster %in% c(14)]<-'SUB.RHP.1'
-tab$annotation[tab$cluster %in% c(15)]<-'WM.2'
-tab$annotation[tab$cluster %in% c(16)]<-'WM.3'
+tab$annotation[tab$cluster %in% c(14)]<-'SUB'
+tab$annotation[tab$cluster %in% c(15)]<-'SLM.WM'
+tab$annotation[tab$cluster %in% c(16)]<-'WM.2'
 tab$annotation[tab$cluster %in% c(17)]<-'CA2.4.2'
-tab$annotation[tab$cluster %in% c(18)]<-'WM.4'
+tab$annotation[tab$cluster %in% c(18)]<-'WM.3'
 
 
 tab$annotation2[tab$cluster %in% c(4)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(1)]<-'Neuron'
-tab$annotation2[tab$cluster %in% c(2)]<-'Neuropil'
+tab$annotation2[tab$cluster %in% c(2)]<-'ML.SL.SR'
 tab$annotation2[tab$cluster %in% c(3)]<-'Neuron'
-tab$annotation2[tab$cluster %in% c(5)]<-'Neuropil'
+tab$annotation2[tab$cluster %in% c(5)]<-'SR.SLM.WM'
 tab$annotation2[tab$cluster %in% c(6)]<-'WM'
 tab$annotation2[tab$cluster %in% c(7)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(8)]<-'Neuron'
@@ -214,21 +215,21 @@ tab$annotation2[tab$cluster %in% c(9)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(10)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(11)]<-'Vascular'
 tab$annotation2[tab$cluster %in% c(12)]<-'Vascular'
-tab$annotation2[tab$cluster %in% c(13)]<-'Neuropil'
+tab$annotation2[tab$cluster %in% c(13)]<-'ML.SL.SR'
 tab$annotation2[tab$cluster %in% c(14)]<-'Neuron'
-tab$annotation2[tab$cluster %in% c(15)]<-'WM'
+tab$annotation2[tab$cluster %in% c(15)]<-'SR.SLM.WM'
 tab$annotation2[tab$cluster %in% c(16)]<-'WM'
 tab$annotation2[tab$cluster %in% c(17)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(18)]<-'WM'
 
-spe$cluster<-tab$annotation[match(spe$nnSVG_PRECAST_k18,tab$cluster)]
-spe$broad<-factor(tab$annotation2[match(spe$nnSVG_PRECAST_k18,tab$cluster)])
+spe$cluster<-tab$annotation[match(spe$PRECAST_k18,tab$cluster)]
+spe$broad<-factor(tab$annotation2[match(spe$PRECAST_k18,tab$cluster)])
 
-
-spe$cluster2<-factor(spe$cluster,levels=c("GCL","CA2.4.1", "CA2.4.2",
-                                          "CA1.1", "CA1.2","SUB.RHP.1", "SUB.RHP.2",
-                                          "RHP.1","GABA","SL.SR","DG.ML", "SR.SLM",
-                                          paste0("WM.",c(2,1,3,4)),"Vascular","Choroid"))
+spe_pseudo$cluster<-tab$annotation[match(spe_pseudo$cluster,tab$annotation)]
+spe_pseudo$cluster<-factor(spe_pseudo$cluster,levels=c("GCL","CA2.4.1", "CA2.4.2",
+                                          "CA1.1", "CA1.2","SUB", "SUB.RHP",
+                                          "RHP","GABA","SL.SR","ML", "SR.SLM","SLM.WM",
+                                          paste0("WM.",c(1,2,3)),"Vascular","Choroid"))
 
 
 brains <- unique(spe$brnum)
@@ -242,11 +243,11 @@ speb$sample_id <- factor(speb$sample_id, levels = samples)
 samples
 speb$brnum <- droplevels(speb$brnum)
 
-pdf(here::here('plots','figures','figure_2','visium_clusters.pdf'),h=8,w=8)
+#pdf(here::here('plots','figures','figure_2','visium_clusters.pdf'),h=6,w=6)
 plotVisium(
     speb,
     spots = TRUE,
-    fill = 'S1PR1',
+    fill = 'cluster',
     highlight = NULL,
     facets = "sample_id",
     assay = "logcounts",
@@ -256,8 +257,8 @@ plotVisium(
     y_reverse = TRUE,
     sample_ids = NULL,
     image_ids = NULL,
-    #palette = as.vector(palette36.colors(18)),
-    image=T
+    palette = as.vector(palette36.colors(18)),
+    image=F
 )
 dev.off()
 
@@ -366,22 +367,44 @@ plotExpression(spe,features=c('SYT1','PLP1','AQP4','VIM'),
         axis.text=element_text(size=9))+theme(strip.text = element_blank())
 
     #scale_color_viridis_d()+
-    labs(y='log2 normalized counts',x='Cluster')
+    labs(y='log2 normalized counts',x='Cluster'))
 #dev.off()
 
-plotColData(spe,x='cluster',y='subsets_Mito_percent',colour_by='cluster',point_size=0.5,add_legend=F)+
+plotColData(spe,x='cluster',y='detected',colour_by='cluster',point_size=0.5,add_legend=F)+
     stat_summary(fun = median, fun.min = median, fun.max = median, geom = "crossbar",
                  width = 0.3)+
     theme(axis.text.x = element_text(angle = 90),
           text=element_text(size = 13))
 
-ggcells(spe, mapping=aes(x=cluster, y=VIM,fill=broad)) +
+ggcells(spe_pseudo, mapping=aes(x=cluster_collapsed, y=ATP1B2,fill=broad)) +
     geom_boxplot()+theme(axis.text.x = element_text(angle = 90),
                          text=element_text(size = 13,colour='black'))+
     theme(legend.position='bottom',
           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(),
           axis.line = element_line(colour = "black"))
+[1] "ATP1B2"    "MT-ND5"    "ETNPPL"    "GLUD1"     "MT-ND4L"   "MT-ND1"    "ADGRG1"    "SLC1A3"   
+[9] "MT-CO1"    "MT-ND2"    "ACBD7"     "FGFR3"     "MT-ND4"    "MT-ATP8"   "MT-ATP6"   "MTRNR2L12"
+[17] "APOE"      "ATP1A2"    "SFXN5"     "NTRK2"     "MT-CYB"    "CST3"      "MT3"       "ALDH2"    
+[25] "MT-ND3"    "BCAN"      "C1orf61"   "CLU"       "GPR37L1"   "ALDH6A1"   "MT-CO2"    "SLC25A18" 
+[33] "MT-ND6"    "MT-CO3"    "MTRNR2L10" "ENHO"      "EMX2OS"    "MT1E"      "MT2A"      "MT1M"     
+[41] "MAN1A2"    "LRIG1"     "MTRNR2L8"  "SNTA1"     "NKAIN4"    "F3"        "PON2"      "TUBB2B"   
+[49] "MT1G"      "SPARCL1"  
+
+[1] "GLUD1"     "ATP1B2"    "ETNPPL"    "SLC1A3"    "MT-ND5"    "MT-ND4L"   "MT-ND4"    "MT-ND1"   
+[9] "ADGRG1"    "MT3"       "CST3"      "SFXN5"     "MT-ATP6"   "MT-CYB"    "APOE"      "MT-CO1"   
+[17] "ATP1A2"    "NTRK2"     "ACBD7"     "MT-ND2"    "FGFR3"     "C1orf61"   "MT-ND3"    "ALDH2"    
+[25] "MT1E"      "PTPRZ1"    "ENHO"      "MT1G"      "MT-ATP8"   "MT-CO3"    "MT-CO2"    "MTRNR2L12"
+[33] "MT1M"      "BCAN"      "SLC1A2"    "EDNRB"     "TUBB2B"    "CLDN10"    "APOC1"     "SNTA1"    
+[41] "S1PR1"     "MT-ND6"    "PON2"      "ALDH6A1"   "MT2A"      "SLC25A18"  "GPR37L1"   "SRI"      
+[49] "OAF"       "RIDA"     
+
+[1] "NDUFS5"     "COX6C"      "NDUFB6"     "SUMO2"      "PARK7"      "TMSB10"     "MIF"       
+[8] "APOC1"      "SLIRP"      "SNRPD2"     "UBB"        "NDUFB4"     "UBL5"       "MYL6B"     
+[15] "WIF1"       "NAA38"      "NDUFA4"     "AC010642.2" "SLC25A23"   "GADD45GIP1" "MT-CYB"    
+[22] "CALM1"      "DYNLL1"     "EID1"       "YWHAE"     
+
+
 x2<-ggcells(spe, mapping=aes(x=cluster, y=PLP1,fill=broad)) +
     geom_boxplot()+theme(axis.text.x = element_text(angle = 90),
                          text=element_text(size = 13,colour='black'))+
@@ -711,3 +734,206 @@ plotGroupedHeatmapMod <- function(spe, group, features, assay.type = "logcounts"
     pheatmap::pheatmap(avg_logcounts, color = color, show_colnames = show_colnames, annotation_col = annotation_data)
 }
 
+
+reg2<-registration_wrapper(
+    spe,
+    var_registration='broad',
+    var_sample_id='sample_id',
+    covars = 'sex',
+    gene_ensembl = 'gene_id',
+    gene_name = 'gene_name',
+    min_ncells = 50,
+    pseudobulk_rds_file = NULL
+)
+
+# Ensure the ggforce package is installed and loaded for geom_mark_ellipse
+if (!require(ggforce)) {
+    install.packages("ggforce")
+}
+library(ggforce)
+
+# Define your custom palette
+my_palette <- as.vector(palette36.colors())[1:18]
+
+PCAData <- as.data.frame(reducedDim(spe_pseudo, "PCA"))
+PCAData$broad <- colData(spe_pseudo)$broad
+PCAData$cluster<-spe_pseudo$cluster
+
+# Now create your PCA plot using ggplot directly
+ggplot(PCAData, aes(PC01, PC02)) +
+    geom_point(aes(color = broad),size=0.5) + 
+    scale_color_manual(values = my_palette) + # Use the custom palette for the points
+    labs(x = "PC1", y = "PC2") +
+    theme_bw() +
+    theme( # Modify theme to remove grid lines, ticks, tick labels and set text color to black
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(color = "black"),
+        legend.position='none',
+        axis.ticks = element_blank(),
+        axis.text = element_blank()
+    )
+
+# Add the ellipses
+pdf(file=here::here('plots','figures','figure_2','pca_plot.pdf'),h=3,w=3.2)
+pca_plot + geom_mark_hull(aes(label = broad, group = broad), # ensure that ellipses are created per group
+                             expand = unit(2.5,"mm"),
+                             label.buffer = unit(-5, 'mm'),
+                             color = "darkgrey", # Change ellipse color to grey
+                             show.legend = FALSE, # Do not show ellipse in legend
+                             con.type='none') # Remove the arrow
+dev.off()
+
+##new factor with collapsed clusters for dotplot
+spe$cluster_collapsed<-factor(spe$cluster_collapsed,levels=c("GCL","CA2.4","CA1","SUB", "SUB.RHP",
+                                                       "RHP","GABA","SL.SR","ML", "SR.SLM","SLM.WM",
+                                                       paste0("WM.",c(1,2,3)),"Vascular","Choroid"))
+
+
+features<-c('GRP','KCNQ5','FNDC1','POU3F1','GFRA1','AKAP12','KRT17','MEF2C','SLC32A1',
+            'APOC1','LRIG1','MOBP','BCAS1','SFRP2','ACTA2','PRLR')
+
+'ETNPPL','MOBP','GPR17','PDGFRA','C3','SKAP1','CFAP73','VWF',
+'CEMIP','ACTA2','FOLR1','SLC17A7','TNNT2','ABI3BP','TG',
+'ST18','RGS14','FIBCD1','FN1','LPO','TLE4','CCN2','RORB','PCP4','CUX2','ESR1','NDNF',
+'SHOX2','GAD2','LHX6','SST','CORT','BTBD11','CRABP1','LAMP5','CHST9','KIT','VIP','HTR3A','MEIS2')
+
+features<-c('GRP','KCNQ5','FNDC1','GFRA1','KRT17','MEF2C','SLC32A1','GLUD1','ETNPPL','SLC1A3',
+            'APOC1','SFRP2','SHTN1','BCAS1','ACTA2','PRLR')
+
+x<-plotGroupedHeatmap(spe,group='cluster',features=features,center=T,scale=T,cluster_rows=F,cluster_cols=F)
+#pdf(file=here::here('plots','figures','figure_2','visium_dotplot.pdf'),h=5,w=7)
+plotDots(spe,group='cluster_collapsed',features=features,color=c('white','black'))+
+    #scale_y_discrete(limits=rev(features)) +
+    scale_x_discrete(limits=rev(levels(spe$cluster_collapsed)))+
+    theme(axis.text.x = element_text(angle = 90,vjust=0.75),
+          text = element_text(size = 14))+labs(x= "Cluster", y = "Gene")+coord_flip()
+#dev.off()
+
+speb <- spe[, (colData(spe)$brnum == brains[2])]
+speb$sample_id <- droplevels(speb$sample_id)
+speb$sample_id <- as.character(speb$sample_id)
+samples <- unique(speb$sample_id)
+speb$sample_id <- factor(speb$sample_id, levels = samples)
+samples
+speb$brnum <- droplevels(speb$brnum)
+
+pdf(here::here('plots','figures','figure_2','visium_ppfia2.pdf'),h=5,w=5)
+plotVisium(
+    speb,
+    spots = TRUE,
+    fill = 'PPFIA2',
+    highlight = NULL,
+    facets = "sample_id",
+    assay = "logcounts",
+    trans = "identity",
+    x_coord = NULL,
+    y_coord = NULL,
+    y_reverse = TRUE,
+    sample_ids = NULL,
+    image_ids = NULL,
+    #palette = as.vector(palette36.colors(18)),
+    image=F
+)+scale_fill_viridis(option='magma',limits=c(0,4),alpha=1)
+dev.off()
+
+pdf(here::here('plots','figures','figure_2','visium_PRKCG.pdf'),h=5,w=5)
+plotVisium(
+    speb,
+    spots = TRUE,
+    fill = 'PRKCG',
+    highlight = NULL,
+    facets = "sample_id",
+    assay = "logcounts",
+    trans = "identity",
+    x_coord = NULL,
+    y_coord = NULL,
+    y_reverse = TRUE,
+    sample_ids = NULL,
+    image_ids = NULL,
+    #palette = as.vector(palette36.colors(18)),
+    image=F
+)+scale_fill_viridis(option='magma')
+dev.off()
+
+pdf(here::here('plots','figures','figure_2','visium_APOC1.pdf'),h=5,w=5)
+plotVisium(
+    speb,
+    spots = TRUE,
+    fill = 'APOC1',
+    highlight = NULL,
+    facets = "sample_id",
+    assay = "logcounts",
+    trans = "identity",
+    x_coord = NULL,
+    y_coord = NULL,
+    y_reverse = TRUE,
+    sample_ids = NULL,
+    image_ids = NULL,
+    #palette = as.vector(palette36.colors(18)),
+    image=F
+)+scale_fill_viridis(option='magma')
+dev.off()
+
+pdf(here::here('plots','figures','figure_2','visium_SFRP2.pdf'),h=5,w=5)
+plotVisium(
+    speb,
+    spots = TRUE,
+    fill = 'SFRP2',
+    highlight = NULL,
+    facets = "sample_id",
+    assay = "logcounts",
+    trans = "identity",
+    x_coord = NULL,
+    y_coord = NULL,
+    y_reverse = TRUE,
+    sample_ids = NULL,
+    image_ids = NULL,
+    #palette = as.vector(palette36.colors(18)),
+    image=F
+)+scale_fill_viridis(option='magma',limits=c(0,3.5))
+dev.off()
+
+pdf(file=here::here('plots','figures','figure_2','clstn3.pdf'),w=4.2,h=4)
+ggcells(spe_pseudo, mapping=aes(x=cluster_collapsed, y=CLSTN3,fill=broad)) +
+    geom_boxplot()+theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 13,colour='black'))+
+    theme(legend.position='none',
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"))
+dev.off()
+
+pdf(file=here::here('plots','figures','figure_2','SLC1A3.pdf'),w=4.2,h=4)
+ggcells(spe_pseudo, mapping=aes(x=cluster_collapsed, y=SLC1A3,fill=broad)) +
+    geom_boxplot()+theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 13,colour='black'))+
+    theme(legend.position='none',
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"))+
+    scale_fill_manual(values=broad_cols)
+dev.off()
+
+pdf(file=here::here('plots','figures','figure_2','SHTN1.pdf'),w=4.2,h=4)
+ggcells(spe_pseudo, mapping=aes(x=cluster_collapsed, y=SHTN1,fill=broad)) +
+    geom_boxplot()+theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 13,colour='black'))+
+    theme(legend.position='none',
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"))+
+    scale_fill_manual(values=broad_cols)
+dev.off()
+
+pdf(file=here::here('plots','figures','figure_2','TPM2.pdf'),w=4.2,h=4)
+ggcells(spe_pseudo, mapping=aes(x=cluster_collapsed, y=FABP7,fill=broad)) +
+    geom_boxplot()+theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 13,colour='black'))+
+    theme(legend.position='right',
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"))+
+    scale_fill_manual(values=broad_cols)
+dev.off()
+broad_cols<-c("#F8766D","#7CAE00", "#C77CFF" ,"#00BFC4")

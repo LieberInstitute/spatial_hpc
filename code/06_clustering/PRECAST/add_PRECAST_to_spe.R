@@ -23,7 +23,7 @@ load(file = here("processed-data", "06_clustering", "PRECAST",
 
 # Leaving this bit from Maddy's script, not sure I need it.
 resList <- PRECASTObj@resList
-PRECASTObj <- selectModel(PRECASTObj)
+PRECASTObj <- SelectModel(PRECASTObj)
 
 # Convert to seurat object for easier format to explore
 
@@ -48,25 +48,25 @@ k_tab <- data.frame(
 
 rownames(k_tab) <- rownames(seuInt@meta.data)
 
-indices <- which(rownames(k_tab) %in% setdiff(rownames(k_tab), colnames(spe)))
-k_tab<-k_tab[-indices,]
+#indices <- which(rownames(k_tab) %in% setdiff(rownames(k_tab), colnames(spe)))
+#k_tab<-k_tab[-indices,]
 
 # Create df of NAs to fill missing barcodes & in an reorder barcodes
 
-emptyNaDF <- data.frame(matrix(NA,nrow = length(setdiff(colnames(spe), rownames(seuInt@meta.data))), ncol = 2))
+#emptyNaDF <- data.frame(matrix(NA,nrow = length(setdiff(colnames(spe), rownames(seuInt@meta.data))), ncol = 2))
 
-rownames(emptyNaDF) <- setdiff(colnames(spe), rownames(seuInt@meta.data))
+#rownames(emptyNaDF) <- setdiff(colnames(spe), rownames(seuInt@meta.data))
 
-colnames(emptyNaDF) <- c("cluster", "barcodes")
+#colnames(emptyNaDF) <- c("cluster", "barcodes")
 
-k_tab <- rbind(k_tab, emptyNaDF)
+#k_tab <- rbind(k_tab, emptyNaDF)
 
 print('matching')
 k_tab <- k_tab[order(match(rownames(k_tab),colnames(spe))), ]
 
 stopifnot(rownames(k_tab) == colnames(spe))
 
-k_label<-paste0("PRECAST_k",k)
+k_label<-paste0("PRECAST_2.5_k",k)
 
 print('adding to SPE')
 spe[[k_label]] <- factor(k_tab$cluster)
