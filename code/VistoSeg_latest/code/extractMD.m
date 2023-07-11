@@ -16,5 +16,5 @@ temp = imgInfo(i).ImageDescription;
 
 T=regexp(temp,'<Name>', 'split');
 T2=regexp(T{2},'</Name>', 'split');
-O{i} = strtok(T2{1},' ');
+O{i} = T2{1};
 end
