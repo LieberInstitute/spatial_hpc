@@ -11,17 +11,20 @@ library("BiocSingular")
 ## Load sce
 load(here("snRNAseq_hpc","processed-data", "sce", "sce_post_qc.rda"))
 dim(sce)
-sce$brnum<-factor(tab$Brain[match(sce$Sample,tab$Sample..)])
+sce$brnum<-factor(tab$Brain[match(sce$Sample,tab[,1])])
+sce$round<-factor(tab$round[match(sce$Sample,tab[,1])])
+sce$sort<-factor(tab$PI.NeuN[match(sce$Sample,tab[,1])])
 ##rm problematic 17c-scp nuclei
 assay(sce,'binomial_deviance_residuals')<-NULL
-sce$discard<-ifelse(sce$Sample %in% "17c-scp" & sce$detected < 5000,T,F)
+sce$discard<-ifelse(sce$Sample %in% "17c-scp" & sce$detected < 4000,T,F)
 sce<-sce[,sce$discard==F]
 
 ##feature selection using deviance
 ##let's do a poisson model
 set.seed(800)
 sce <- devianceFeatureSelection(sce,
-                                assay = "counts", fam = "poisson", sorted = T,batch=sce$brnum)
+                                assay = "counts", fam = "poisson",
+                                sorted = T,batch=sce$brnum)
 #sce <- save(sce,file = here("snRNAseq_hpc","processed-data", "sce", "sce_deviance.rda"))
 
 # This temp file just used for getting batch-corrected components (drops a variety of entries)
@@ -41,15 +44,46 @@ abline(v = 4000, lty = 2, col = "green")
 abline(v = 5000, lty = 2, col = "black")
 #dev.off()
 #
+
 hdg<-rownames(counts(sce))[1:3000]
-set.seed(913)
-message("running nullResiduals - ", Sys.time())
 res<-sce[rownames(counts(sce)) %in% hdg,]
-res <- nullResiduals(res,
-                     fam = "poisson",
-                     type = "pearson",
-                     assay='counts'
-)
+set.seed(913)
+# Initialize an empty list to store the results.
+res_list <- list()
+
+# Loop over the subsets defined by brnum.
+for (i in seq_along(splitit(res$brnum))) {
+    # Subset the sce object.
+    res_temp <- res[, splitit(res$brnum)[[i]]]
+
+    message("running nullResiduals - ", Sys.time())
+
+    # Apply the nullResiduals function.
+    res_temp <- nullResiduals(res_temp,
+                              fam = "poisson",
+                              type = "pearson"
+    )
+
+    # Add the result to the list.
+    res_list[[i]] <- res_temp
+}
+
+# Combine the results back into a single sce object.
+res_combined <- do.call(cbind, res_list)
+idx <- match(colnames(res), colnames(res_combined))
+
+# Use the index to order the columns of 'res_combined'
+res_combined <- res_combined[,idx]
+
+# Check that the column names are the same as in the original res object.
+all(colnames(res) == colnames(res_combined))
+
+res<-res_combined
+
+##Running GLMPCA
+set.seed(101)
+res<-GLMPCA(res, 100, assay="counts",minibatch='memoized')
+fit<-metadata(sce2)$glmpca
 # # Initialize an empty list to store results for each batch
 # residuals_list <- list()
 #
@@ -62,10 +96,7 @@ res <- nullResiduals(res,
 #     idx <- which(res$brnum == b)
 #     temp_res <- nullResiduals(res[, idx], fam = fam, type = type, assay='counts')
 #     residuals_list[[b]] <- temp_res
-# }
 
-# Combine the results
-combined_residuals <- do.call(cbind, residuals_list)
 
 
 set.seed(915)
@@ -99,12 +130,13 @@ save(sce, file = here("snRNAseq_hpc","processed-data", "sce", "sce.rda"))
 
 
 # Run harmony
-message("running Harmony - ", Sys.time())
+message("running MNN - ", Sys.time())
 set.seed(1788)
-sce <- harmony::RunHarmony(sce, group.by.vars = "brnum",
-                           verbose = TRUE,max.iter.harmony=30)
+ #sce <- harmony::RunHarmony(sce, group.by.vars = "round",
+  #                          verbose = TRUE,max.iter.harmony=30)
 
-mnn<-batchelor::reducedMNN(reducedDim(sce,'PCA'),batch=sce$brnum,k=50)
+mnn<-batchelor::reducedMNN(reducedDim(sce,'PCA'),batch=sce$round,k=50)
+
 
 #### TSNE & UMAP ####
 #set.seed(602)

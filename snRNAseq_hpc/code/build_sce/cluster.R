@@ -8,17 +8,26 @@ library("sessioninfo")
 load(here("snRNAseq_hpc","processed-data", "sce", "sce_MNN.rda"), verbose = TRUE)
 
 message("running buildSNNGraph - ", Sys.time())
-snn.gr <- buildSNNGraph(sce, k = 10, use.dimred = "MNN",type='jaccard')
+snn.gr <- buildSNNGraph(sce, k = 5, use.dimred = "MNN",type='jaccard')
 
+message("running buildSNNGraph - ", Sys.time())
+snn.gr <- buildSNNGraph(sce, k = 20, use.dimred = "MNN",type='jaccard')
+
+set.seed(100)
+clust_20 <- igraph::cluster_louvain(snn.gr,resolution=1)$membership
+table(clust_20)
+sce$k_20_louvain_initial<-factor(clust_20)
 
 message("running louvain - ", Sys.time())
 set.seed(100)
 clust_5 <- igraph::cluster_louvain(snn.gr,resolution=1.5)$membership
 table(clust_5)
-sce$k_10_louvain<-factor(clust_5)
+sce$k_5_louvain_1.25<-factor(clust_5)
 
-sce$discard<-ifelse(sce$k_10_louvain %in% c(6,7,48),T,F)
+sce$discard<-ifelse(sce$k_5_louvain_initial_2.5 %in% c(6,22,23,35),T,F)
 sce<-sce[,sce$discard==F]
+
+sce$neuron<-ifelse(sce$k_5_louvain_1.25 %in% c)
 
 set.seed(000)
 clust_5 <- igraph::cluster_louvain(snn.gr,resolution=2)$membership
@@ -48,7 +57,9 @@ save(sce, file=here("snRNAseq_hpc","processed-data", "sce", "sce_clustered.rda")
 ##add logcounts for viz
 message("normalizing counts - ", Sys.time())
 set.seed(1000)
-sce <- computeSumFactors(sce, cluster=sce$k_50_label)
+set.seed(100)
+clust <- quickCluster(sce)
+sce <- computeSumFactors(sce, cluster=clust, min.mean=0.1)
 sce <- logNormCounts(sce)
 
 message("saving data - ", Sys.time())
@@ -223,3 +234,15 @@ Sys.time()
 proc.time()
 options(width = 120)
 session_info()
+
+
+
+message("running buildSNNGraph - ", Sys.time())
+snn.gr <- buildSNNGraph(spe, k = 5, use.dimred = "NMF",type='jaccard')
+
+
+message("running louvain - ", Sys.time())
+set.seed(100)
+clust_5 <- igraph::cluster_louvain(snn.gr,resolution=1)$membership
+table(clust_5)
+spe$k_10_louvain<-factor(clust_5)
