@@ -1,0 +1,75 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Tue Jun  6 10:34:27 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3223424
+Job name: VNS.sh
+Hostname: compute-141.cm.cluster
+Task id: 9
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11A20-297_A1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Importing capture area
+Elapsed time is 17.229419 seconds.
+Performing smoothing and contrast adjustment
+Elapsed time is 4.846281 seconds.
+Performing rgb to Lab color space conversion
+Elapsed time is 39.076409 seconds.
+Applying Kmeans
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Fri Jul 14 11:08:37 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3627340
+Job name: VNS.sh
+Hostname: compute-115.cm.cluster
+Task id: 9
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11A20-297_A1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Importing capture area
+Elapsed time is 38.298722 seconds.
+Performing smoothing and contrast adjustment
+Elapsed time is 9.106273 seconds.
+Performing rgb to Lab color space conversion
+Elapsed time is 126.383926 seconds.
+Applying Kmeans
+Elapsed time is 4297.085088 seconds.
+saving outputs
+Elapsed time is 328.437477 seconds.
+>> **** Job ends ****
+Fri Jul 14 12:29:03 EDT 2023

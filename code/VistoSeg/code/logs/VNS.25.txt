@@ -1,0 +1,40 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Fri Jul 14 20:02:23 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3627340
+Job name: VNS.sh
+Hostname: compute-113.cm.cluster
+Task id: 25
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11U08-081_A1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Importing capture area
+Elapsed time is 32.681362 seconds.
+Performing smoothing and contrast adjustment
+Elapsed time is 11.488297 seconds.
+Performing rgb to Lab color space conversion
+Elapsed time is 118.848108 seconds.
+Applying Kmeans
+Elapsed time is 4096.232740 seconds.
+saving outputs
+Elapsed time is 479.029070 seconds.
+>> **** Job ends ****
+Fri Jul 14 21:21:54 EDT 2023
