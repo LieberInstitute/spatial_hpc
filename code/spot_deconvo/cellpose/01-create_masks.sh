@@ -1,10 +1,10 @@
 #!/bin/bash
 #$ -cwd
 #$ -N "create_masks"
-#$ -o ../../../code/spot_deconvo/cellpose/01-create_masks_$TASK_ID.log
-#$ -e ../../../code/spot_deconvo/cellpose/01-create_masks_$TASK_ID.log
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cellpose/1-create_masks_$TASK_ID.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cellpose/1-create_masks_$TASK_ID.log
 #$ -l caracol,mf=200G,h_vmem=200G
-#$ -t 1-4
+#$ -t 1-2
 #$ -tc 1
 
 echo "**** Job starts ****"
@@ -45,7 +45,7 @@ echo "Chose GPU(s): $CUDA_VISIBLE_DEVICES"
 ###############################################################################
 
 module load cellpose/2.0
-python 01-create_masks.py
+python /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cellpose/01-create_masks.py
 
 echo "**** Job ends ****"
 date
