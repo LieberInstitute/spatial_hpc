@@ -26,7 +26,7 @@ Path(mask_dir).mkdir(parents=True, exist_ok=True)
 sample_info = pd.read_excel(sample_info_path)[1:9]
 sample_info = sample_info.iloc[[2,7]]
 sample_ids = sample_info['Slide #'] + '_' + sample_info['Array #']
-sample_id = sample_ids[int(os.environ['SGE_TASK_ID']) - 1]
+sample_id = sample_ids.iloc[int(os.environ['SGE_TASK_ID']) - 1]
 
 print(f'Segmenting DAPI for sample {sample_id}.')
 
