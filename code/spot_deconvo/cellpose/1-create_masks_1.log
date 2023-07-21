@@ -1,0 +1,42 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Jul 20 12:55:48 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3633087
+Job name: create_masks
+Hostname: compute-126.cm.cluster
+Task id: 1
+Chose GPU(s): 0
+Loading LIBD module for cellpose/2.0
+/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
+  warn(msg)
+Traceback (most recent call last):
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3621, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 136, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 163, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 2131, in pandas._libs.hashtable.Int64HashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 2140, in pandas._libs.hashtable.Int64HashTable.get_item
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cellpose/01-create_masks.py", line 29, in <module>
+    sample_id = sample_ids[int(os.environ['SGE_TASK_ID']) - 1]
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/core/series.py", line 958, in __getitem__
+    return self._get_value(key)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/core/series.py", line 1069, in _get_value
+    loc = self.index.get_loc(label)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3623, in get_loc
+    raise KeyError(key) from err
+KeyError: 0
+**** Job ends ****
+Thu Jul 20 12:56:23 EDT 2023
