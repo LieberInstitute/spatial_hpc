@@ -152,45 +152,45 @@ colData(spea)$nuc_bin[colData(spea)$Pmask_dark_blue>0.25] = 2
 colData(spea)$nuc_bin = as.factor(colData(spea)$nuc_bin)
 spea$nuc_bin = factor(spea$nuc_bin, levels = c("1" ,"2"))
 
-pdf(here("plots", "escheR_3bin_emptyspots.pdf"), width = 10, height = 10)
+pdf(here("plots", "VistoSeg", "escheR_3bin_emptyspots.pdf"), width = 10, height = 10)
 speb = spea[, which(spea$sample_id == sample_id[1])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[2])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[3])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[4])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[5])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[6])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[7])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[8])]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 16))
+p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 dev.off()

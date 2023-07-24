@@ -40,3 +40,37 @@ Traceback (most recent call last):
 KeyError: 1
 **** Job ends ****
 Thu Jul 20 12:56:52 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Fri Jul 21 16:14:29 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3639412
+Job name: create_masks
+Hostname: compute-126.cm.cluster
+Task id: 2
+Chose GPU(s): 0
+Loading LIBD module for cellpose/2.0
+/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
+  warn(msg)
+Segmenting DAPI for sample V12D07-335_D1.
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cellpose/01-create_masks.py", line 33, in <module>
+    img = imread(pyhere.here(img_dir, sample_id + '.tif'))[channel, :, :]
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/cellpose/io.py", line 71, in imread
+    with tifffile.TiffFile(filename) as tif:
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 3598, in __init__
+    fh = FileHandle(file, mode=mode, name=name, offset=offset, size=size)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 11829, in __init__
+    self.open()
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 11848, in open
+    self._fh = open(self._file, self._mode)  # type: ignore
+FileNotFoundError: [Errno 2] No such file or directory: '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/VSPG/V12D07-335_D1.tif'
+**** Job ends ****
+Fri Jul 21 16:14:48 EDT 2023
