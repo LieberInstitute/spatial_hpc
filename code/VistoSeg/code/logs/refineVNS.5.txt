@@ -36,3 +36,39 @@ parentheses. Otherwise, check for mismatched delimiters.
 } 
 >> **** Job ends ****
 Wed Jul 26 14:08:04 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Jul 26 14:43:18 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3649525
+Job name: refineVNS.sh
+Hostname: compute-129.cm.cluster
+Task id: 5
+****
+Sample id: /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V10B01-086_A1.tif 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+Elapsed time is 6.860182 seconds.
+refining segmentations
+Elapsed time is 142.550243 seconds.
+saving final segmentations
+Elapsed time is 15.265665 seconds.
+>> **** Job ends ****
+Wed Jul 26 14:46:08 EDT 2023
