@@ -1,0 +1,306 @@
+>> O2{1} = 'DAPI'; O2{2} = 'Alexa_488'; O2{3} = 'Alexa_594'; O2{4} = 'Alexa_647'; O2{5} = 'Autofluorescence';
+>> P =6;
+>> disp('Extracting coordinates')
+Extracting coordinates
+>> tic
+>> loc = cellfun(@(x) strsplit(x,'_'), {myfiles.name}',  'UniformOutput', false);
+>> temp = cellfun(@(x) strsplit(x{P},','), loc,  'UniformOutput', false);
+>> X = cellfun(@(x) str2double(x{1}(2:end)), temp);
+>> %Y = cellfun(@(x) str2double(x{2}(1:end-1)), temp);
+>> X = sort(unique(X));
+>> %Y = sort(unique(Y));
+>> 
+>> toc
+Elapsed time is 0.377929 seconds.
+>> X
+
+X =
+
+        5213
+        6139
+        7065
+        7991
+        8916
+        9842
+       10768
+       11694
+       12620
+       13545
+
+>> C=1
+
+C =
+
+     1
+
+>> Iy = [];
+>> for x1 = 1:numel(X)
+myfilesx = dir(fullfile(myfiles(1).folder,['*',num2str(X(x1)),',*component_data.tif']));
+Ix = [];
+for K = 1:numel(myfilesx)
+fname1 = fullfile(myfilesx(K).folder,myfilesx(K).name);
+temp = imread(fname1,C); 
+Ix = [Ix;temp];
+end
+Iy = [Iy,Ix];
+end
+Error using horzcat
+Dimensions of arrays being concatenated are not consistent.
+ 
+>> x1
+
+x1 =
+
+     2
+
+>> K
+
+K =
+
+    51
+
+>> myfilesx
+
+myfilesx = 
+
+  51x1 struct array with fields:
+
+    name
+    folder
+    date
+    bytes
+    isdir
+    datenum
+
+>> x1=1
+
+x1 =
+
+     1
+
+>> myfilesx = dir(fullfile(myfiles(1).folder,['*',num2str(X(x1)),',*component_data.tif']));
+>> 
+>> myfilesx
+
+myfilesx = 
+
+  9x1 struct array with fields:
+
+    name
+    folder
+    date
+    bytes
+    isdir
+    datenum
+
+>> {myfilesx.name}'
+
+ans =
+
+  9x1 cell array
+
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,29838]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,30532]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,31226]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,31920]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,32614]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,33308]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,34002]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,34696]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[5213,35390]_component_data.tif'}
+
+>> x1=2
+
+x1 =
+
+     2
+
+>> myfilesx = dir(fullfile(myfiles(1).folder,['*',num2str(X(x1)),',*component_data.tif']));
+>> Ix = [];
+>> {myfilesx.name}'
+
+ans =
+
+  51x1 cell array
+
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,29838]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,30532]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,31226]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,31920]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,32614]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,33308]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,34002]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,34696]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,35390]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,36084]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,36779]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,37473]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,38167]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,38861]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,39555]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,40249]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,40943]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,41637]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,42331]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,43026]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,43720]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,44414]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,45108]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,45802]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,46496]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,47190]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,47884]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,48578]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,49272]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,49967]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,50661]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,51355]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,52049]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,52743]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,53437]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,54131]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,54825]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,55519]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,56214]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,56908]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,57602]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,58296]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,58990]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,59684]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,60378]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,61072]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,61766]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,62460]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,63155]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,63849]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[6139,64543]_component_data.tif'}
+
+>> x1=3
+
+x1 =
+
+     3
+
+>> myfilesx = dir(fullfile(myfiles(1).folder,['*',num2str(X(x1)),',*component_data.tif']));
+>> {myfilesx.name}'                                                                        
+
+ans =
+
+  51x1 cell array
+
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,29838]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,30532]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,31226]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,31920]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,32614]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,33308]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,34002]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,34696]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,35390]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,36084]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,36779]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,37473]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,38167]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,38861]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,39555]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,40249]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,40943]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,41637]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,42331]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,43026]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,43720]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,44414]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,45108]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,45802]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,46496]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,47190]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,47884]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,48578]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,49272]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,49967]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,50661]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,51355]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,52049]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,52743]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,53437]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,54131]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,54825]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,55519]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,56214]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,56908]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,57602]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,58296]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,58990]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,59684]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,60378]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,61072]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,61766]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,62460]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,63155]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,63849]_component_data.tif'}
+    {'20230517_VSPG_HPC_Round1_Scan2_[7065,64543]_component_data.tif'}
+>> O2{1} = 'DAPI'; O2{2} = 'Alexa_488'; O2{3} = 'Alexa_594'; O2{4} = 'Alexa_647'; O2{5} = 'Autofluorescence';
+>> path1='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-332_rerun/20230517_VSPG_HPC_Round1_Scan2_*_component_data.tif';
+>> filename = path1;
+>> P = 6;
+
+>> myfiles = dir(filename);
+>> 
+>> disp('Extracting coordinates')
+Extracting coordinates
+>> tic
+>> loc = cellfun(@(x) strsplit(x,'_'), {myfiles.name}',  'UniformOutput', false);
+>> temp = cellfun(@(x) strsplit(x{P},','), loc,  'UniformOutput', false);
+>> X = cellfun(@(x) str2double(x{1}(2:end)), temp);
+>> %Y = cellfun(@(x) str2double(x{2}(1:end-1)), temp);
+>> X = sort(unique(X));
+>> %Y = sort(unique(Y));
+>> 
+>> toc
+
+>> O = O1
+
+O =
+
+  1x5 cell array
+
+    {'DAPI'}    {'Alexa_488'}    {'Alexa_594'}    {'Alexa_647'}    {'Autofluorescence'}
+
+>> for C = 1:numel(O)
+disp(['Stitching ', O{C}])
+tic
+Iy = [];
+for x1 = 2:numel(X)
+myfilesx = dir(fullfile(myfiles(1).folder,['*',num2str(X(x1)),',*component_data.tif']));
+Ix = [];
+for K = 1:numel(myfilesx)
+fname1 = fullfile(myfilesx(K).folder,myfilesx(K).name);
+temp = imread(fname1,C); 
+Ix = [Ix;temp];
+end
+Iy = [Iy,Ix];
+end
+img.(O{C}) = Iy;
+toc
+%disp([O{C},' stitched'])
+end
+Stitching DAPI
+Elapsed time is 361.867622 seconds.
+Stitching Alexa_488
+Elapsed time is 284.688063 seconds.
+Stitching Alexa_594
+Elapsed time is 309.649623 seconds.
+Stitching Alexa_647
+Elapsed time is 231.681672 seconds.
+Stitching Autofluorescence
+Elapsed time is 246.016222 seconds.
+>> if ~exist('fname','var')
+[~,fname,~] = fileparts(filename);
+fname = strsplit(fname,'*');
+fname = fname{1};
+end
+>> 
+>> disp('Saving mat file')
+Saving mat file
+>> save(fullfile(myfiles(1).folder,[fname,'.mat']) , '-struct','img','-v7.3')
+
