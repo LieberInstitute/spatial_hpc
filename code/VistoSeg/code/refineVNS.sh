@@ -1,12 +1,11 @@
 #!/bin/bash
 #$ -cwd
-#$ -l mem_free=20G,h_vmem=20G,h_fsize=100G
-#$ -pe local 5
+#$ -l mem_free=50G,h_vmem=50G,h_fsize=100G
 #$ -o logs/refineVNS.$TASK_ID.txt
 #$ -e logs/refineVNS.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 1-32
+#$ -t 1-40
 #$ -tc 10
 
 echo "**** Job starts ****"
