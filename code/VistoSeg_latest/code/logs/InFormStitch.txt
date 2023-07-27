@@ -60,3 +60,47 @@ Elapsed time is 117.814250 seconds.
 Saving mat file
 >> **** Job ends ****
 Mon Jul 24 18:25:24 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Jul 27 11:09:37 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3650067
+Job name: InFormStitch.sh
+Hostname: compute-068.cm.cluster
+Task id: undefined
+****
+V12D07-335_rerun/20230518_VSPG_HPC_Round2_Scan2_*_component_data.tif
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Extracting coordinates
+Elapsed time is 0.290594 seconds.
+Stitching DAPI
+Elapsed time is 312.912015 seconds.
+Stitching Alexa_488
+Elapsed time is 220.253408 seconds.
+Stitching Alexa_555
+Elapsed time is 246.333314 seconds.
+Stitching Alexa_594
+Elapsed time is 221.903108 seconds.
+Stitching Alexa_647
+Elapsed time is 245.526065 seconds.
+Stitching Autofluorescence
+Elapsed time is 269.623010 seconds.
+Saving mat file
+>> **** Job ends ****
+Thu Jul 27 11:54:55 EDT 2023
