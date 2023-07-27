@@ -96,3 +96,41 @@ Elapsed time is 2.365114 seconds.
 Elapsed time is 2.781602 seconds.
 >> **** Job ends ****
 Wed Jul 26 18:29:56 EDT 2023
+
+#### rerun after updating the channel information in InFormStitch.sh#####
+
+>> fname = '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-332_rerun/V12D07-332.mat';
+>> cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg_latest/code                        9 >> pwd    
+
+ans =
+
+    '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg_latest/code'
+
+>> splitSlide_IF(fname)
+The IF image has 6 channels
+Splitting whole slide into individual capture areas
+Elapsed time is 3.871681 seconds.
+Elapsed time is 3.506731 seconds.
+Elapsed time is 3.943601 seconds.
+Elapsed time is 3.426406 seconds.
+Elapsed time is 3.546530 seconds.
+Elapsed time is 3.150519 seconds.
+>> fname = '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-335_rerun/V12D07->> .mat'; 
+>> 
+>> fname
+
+fname =
+
+    '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-335_rerun/V12D07-335.mat'
+
+>> splitSlide_IF(fname)                                                                                                     
+The IF image has 6 channels
+Splitting whole slide into individual capture areas
+Elapsed time is 3.148503 seconds.
+Elapsed time is 3.518470 seconds.
+Elapsed time is 3.534198 seconds.
+Elapsed time is 3.518140 seconds.
+Elapsed time is 3.215860 seconds.
+Elapsed time is 3.044397 seconds.
+
+
