@@ -304,3 +304,60 @@ end
 Saving mat file
 >> save(fullfile(myfiles(1).folder,[fname,'.mat']) , '-struct','img','-v7.3')
 
+
+####### rerun with correct channels ####### 
+>> filename ='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-332_rerun/20230517_VSPG_HPC_Round1_Scan2_*_component_data.tif'   
+
+filename =
+
+    '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-332_rerun/20230517_VSPG_HPC_Round1_Scan2_*_component_data.tif'
+
+>> O1{1} = 'DAPI'; O1{2} = 'Alexa_488'; O1{3} = 'Alexa_555'; O1{4} = 'Alexa_594'; O1{5} = 'Alexa_647'; O1{6} = 'Autofluorescence';
+>> O = O1;
+>> P =6;
+>> myfiles = dir(filename);
+>> 
+>> disp('Extracting coordinates')
+Extracting coordinates
+>> tic
+>> loc = cellfun(@(x) strsplit(x,'_'), {myfiles.name}',  'UniformOutput', false);
+>> temp = cellfun(@(x) strsplit(x{P},','), loc,  'UniformOutput', false);
+>> X = cellfun(@(x) str2double(x{1}(2:end)), temp);
+>> %Y = cellfun(@(x) str2double(x{2}(1:end-1)), temp);
+>> X = sort(unique(X));
+>> %Y = sort(unique(Y));
+>> 
+>> toc
+Elapsed time is 0.120650 seconds.
+>> for C = 1:numel(O)
+disp(['Stitching ', O{C}])
+tic
+Iy = [];
+for x1 = 2:numel(X)
+myfilesx = dir(fullfile(myfiles(1).folder,['*',num2str(X(x1)),',*component_data.tif']));
+Ix = [];
+for K = 1:numel(myfilesx)
+fname1 = fullfile(myfilesx(K).folder,myfilesx(K).name);
+temp = imread(fname1,C); 
+Ix = [Ix;temp];
+end
+Iy = [Iy,Ix];
+end
+img.(O{C}) = Iy;
+toc
+%disp([O{C},' stitched'])
+end
+Stitching DAPI
+Elapsed time is 222.163884 seconds.
+Stitching Alexa_488
+Elapsed time is 114.868927 seconds.
+Stitching Alexa_555
+Elapsed time is 120.241756 seconds.
+Stitching Alexa_594
+Elapsed time is 110.323130 seconds.
+Stitching Alexa_647
+Elapsed time is 110.501429 seconds.
+Stitching Autofluorescence
+Elapsed time is 117.922499 seconds.
+>> save(fullfile(myfiles(1).folder,'V12D07-332.mat') , '-struct','img','-v7.3')  
+
