@@ -24,9 +24,9 @@ fname1='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Image
 fname2='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/raw-data/Images/VSPG/V12D07-335_rerun/V12D07-335.mat'
 
 echo "splitting V12D07-332"
-matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), spliSlide_IF('$fname1')"
+matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), splitSlide_IF('$fname1')"
 echo "splitting V12D07-335"
-matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), spliSlide_IF('$fname2')"
+matlab -nodesktop -nosplash -nojvm -r "addpath(genpath('$toolbox')), splitSlide_IF('$fname2')"
 
 echo "**** Job ends ****"
 date
