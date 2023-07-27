@@ -1,4 +1,4 @@
-function randomFields(fname)
+function randomFields(fname,M)
 he = imread(fname);
 
 %load([fname(1:end-4),'_nuclei_WS_final.mat'])
@@ -8,8 +8,8 @@ load([fname(1:end-4),'_mask.mat'])
 mask_dark_blue = mask{M};
 
 [x,y,~] = size(he);
-xn = randi([round(x/3) round(x/3)*3],3,1);
-yn = randi([round(y/3) round(y/3)*3],3,1);
+xn = randi([500 x-1000],3,1);
+yn = randi([500 y-1000],3,1);
 
 A = he(xn(1):xn(1)+499, yn(1):yn(1)+499, :);
 B = he(xn(2):xn(2)+499, yn(2):yn(2)+499, :);
