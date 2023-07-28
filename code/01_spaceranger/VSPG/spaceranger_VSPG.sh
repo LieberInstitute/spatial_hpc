@@ -26,12 +26,12 @@ module load spaceranger/2.0.0
 module list
 
 ## Read parameters
-BRAIN=$(awk 'BEGIN {FS="\t"} {print $1}' spaceranger_parameters.txt | awk "NR==${SGE_TASK_ID}")
-SLIDE=$(awk 'BEGIN {FS="\t"} {print $2}' spaceranger_parameters.txt | awk "NR==${SGE_TASK_ID}")
-CAPTUREAREA=$(awk 'BEGIN {FS="\t"} {print $3}' spaceranger_parameters.txt | awk "NR==${SGE_TASK_ID}")
-IMAGEPATH=$(awk 'BEGIN {FS="\t"} {print $4}' spaceranger_parameters.txt | awk "NR==${SGE_TASK_ID}")
-LOUPEPATH=$(awk 'BEGIN {FS="\t"} {print $5}' spaceranger_parameters.txt | awk "NR==${SGE_TASK_ID}")
-FASTQPATH=$(awk 'BEGIN {FS="\t"} {print $6}' spaceranger_parameters.txt | awk "NR==${SGE_TASK_ID}")
+BRAIN=$(awk 'BEGIN {FS="\t"} {print $1}' parameters.txt | awk "NR==${SGE_TASK_ID}")
+SLIDE=$(awk 'BEGIN {FS="\t"} {print $2}' parameters.txt | awk "NR==${SGE_TASK_ID}")
+CAPTUREAREA=$(awk 'BEGIN {FS="\t"} {print $3}' parameters.txt | awk "NR==${SGE_TASK_ID}")
+IMAGEPATH=$(awk 'BEGIN {FS="\t"} {print $4}' parameters.txt | awk "NR==${SGE_TASK_ID}")
+LOUPEPATH=$(awk 'BEGIN {FS="\t"} {print $5}' parameters.txt | awk "NR==${SGE_TASK_ID}")
+FASTQPATH=$(awk 'BEGIN {FS="\t"} {print $6}' parameters.txt | awk "NR==${SGE_TASK_ID}")
 SAMPLE=$(paste <(echo ${SLIDE}) <(echo "_") <(echo ${CAPTUREAREA}) <(echo "_") <(echo ${BRAIN})  -d '')
 
 echo "Processing sample ${BRAIN} from slide ${SLIDE} and capture area ${CAPTUREAREA} with image ${IMAGEPATH} and aligned with ${LOUPEPATH} with FASTQs: ${FASTQPATH}"
