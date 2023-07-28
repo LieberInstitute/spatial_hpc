@@ -40,3 +40,30 @@ date
 ## For keeping track of dates of the input files
 ls -lh ${IMAGEPATH}
 ls -lh ${LOUPEPATH}
+
+
+## Hank from 10x Genomics recommended setting this environment
+export NUMBA_NUM_THREADS=1
+
+## Run SpaceRanger
+spaceranger count \
+    --id=${SAMPLE} \
+    --transcriptome=/dcs04/lieber/lcolladotor/annotationFiles_LIBD001/10x/refdata-gex-GRCh38-2020-A \
+    --fastqs=${FASTQPATH} \
+    --darkimage=${IMAGEPATH} \
+    --slide=${SLIDE} \
+    --area=${CAPTUREAREA} \
+    --loupe-alignment=${LOUPEPATH} \
+    --jobmode=local \
+    --localcores=8 \
+    --localmem=64
+
+## Move output
+echo "Moving results to new location"
+date
+mkdir -p /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger_VSPG
+mv ${SAMPLE} /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger_VSPG
+
+echo "**** Job ends ****"
+date
+
