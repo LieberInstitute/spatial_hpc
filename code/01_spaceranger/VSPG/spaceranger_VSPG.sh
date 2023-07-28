@@ -58,6 +58,7 @@ spaceranger count \
     --localcores=8 \
     --localmem=64
 
+
 ## Move output
 echo "Moving results to new location"
 date
@@ -67,3 +68,5 @@ mv ${SAMPLE} /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed
 echo "**** Job ends ****"
 date
 
+## This script was made using sgejobs version 0.99.1
+## available from http://research.libd.org/sgejobs/
