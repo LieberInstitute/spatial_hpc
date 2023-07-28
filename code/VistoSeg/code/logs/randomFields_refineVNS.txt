@@ -1,3 +1,4 @@
+cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/
 opts = detectImportOptions('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLSAMPLES.txt','Delimiter','\t', 'ReadVariableNames', false);
 opts.VariableNames= {'filepath','M'};
 t = readtable('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/ALLSAMPLES.txt',opts);
