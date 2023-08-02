@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#$ -l mem_free=10G,h_vmem=10G,h_fsize=80G
+#$ -l shared,mem_free=10G,h_vmem=10G,h_fsize=80G
 #$ -pe local 8
 #$ -N pseudobulk_sce
 #$ -o logs/pseudobulk_sce.txt
