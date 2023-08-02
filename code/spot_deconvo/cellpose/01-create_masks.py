@@ -12,7 +12,7 @@ model_path = pyhere.here(
     'CP_20220415_152031'
 )
 cell_diameter = None
-channel = 2 # DAPI
+channel = 1 # DAPI
 
 #   Path to excel sheet containing sample info; directory containing .tif
 #   Visium-IF images
