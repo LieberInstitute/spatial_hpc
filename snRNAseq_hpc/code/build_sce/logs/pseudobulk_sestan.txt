@@ -136,3 +136,14 @@ The following objects are masked from ‘package:base’:
 Loading required package: SpatialExperiment
 here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
 2023-07-20 11:42:51.1161 make pseudobulk object
+2023-07-20 18:38:51.053077 dropping 36 pseudo-bulked samples that are below 'min_ncells'.
+2023-07-20 18:38:51.288114 drop lowly expressed genes
+2023-07-20 18:38:51.914572 normalize expression
+2023-07-20 18:39:03.349383 create model matrix
+2023-07-20 18:39:03.397597 run duplicateCorrelation()
+2023-07-20 18:40:14.896862 The estimated correlation is: 0.0902340360201676
+2023-07-20 18:40:14.90942 computing enrichment statistics
+2023-07-20 18:41:53.008366 extract and reformat enrichment results
+2023-07-20 18:41:53.545452 computing F-statistics
+**** Job ends ****
+Thu Jul 20 18:42:16 EDT 2023
