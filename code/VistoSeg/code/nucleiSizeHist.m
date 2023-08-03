@@ -37,4 +37,20 @@ for i=1:40
     hold off	  
 end
 		   
+
+ for i=1:40
+		   fname = t.filepath{i};	
+		   he = imread(fname);
+		   he = he(12501:13000,12501:13000,:);
+		   fname = [fname(1:end-4),'_nuclei.mat'];
+		   load(fname)
 		   
+		   s = 50;
+		   mask_dark_blue = bwareaopen(mask_dark_blue, s, 8);
+		   BW = 250*(double(mask_dark_blue(12501:13000,12501:13000)));
+		   BW = cat(3, BW, BW, BW);
+		   
+		   img = [he; ones(50,500,3); BW];
+		   imwrite(img, [fname(1:end-4),'_sizeThresh.png'])
+		   save([fname(1:end-4),'_sizeThresh.mat'], 'mask_dark_blue','-v7.3')	
+ end		   
