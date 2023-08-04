@@ -24,22 +24,22 @@ import json
 #   Variable definitions
 ################################################################################
 
-cell_group = "layer" # "broad" or "layer"
+cell_group = "broad" # "broad" or "layer"
 
 
 sc_path = pyhere.here(
-    "processed-data", "spot_deconvo", "05-shared_utilities",
+    "processed-data", "spot_deconvo", "shared_utilities",
     "sce_" + cell_group + ".h5ad"
 )
 sp_path = pyhere.here(
-    "processed-data", "spot_deconvo", "05-shared_utilities", "nonIF", "spe.h5ad"
+    "processed-data", "spot_deconvo", "shared_utilities", "HE", "spe.h5ad"
 )
 
 processed_dir = pyhere.here(
-    "processed-data", "spot_deconvo", "03-cell2location", "nonIF", cell_group
+    "processed-data", "spot_deconvo", "cell2location", "HE", cell_group
 )
 plot_dir = pyhere.here(
-    "plots", "spot_deconvo", "03-cell2location", "nonIF", cell_group
+    "plots", "spot_deconvo", "cell2location", "HE", cell_group
 )
 Path(plot_dir).mkdir(parents=True, exist_ok=True)
 Path(processed_dir).mkdir(parents=True, exist_ok=True)
@@ -48,16 +48,16 @@ Path(processed_dir).mkdir(parents=True, exist_ok=True)
 #   spot size for a given sample. Here '{}' will be replaced by a single
 #   sample name
 spaceranger_dir = pyhere.here(
-    'processed-data', 'rerun_spaceranger', '{}', 'outs', 'spatial'
+    'processed-data', '01_spaceranger', '{}','{}', 'outs', 'spatial'
 )
 
 marker_path = pyhere.here(
-    "processed-data", "spot_deconvo", "05-shared_utilities",
+    "processed-data", "spot_deconvo", "shared_utilities",
     "markers_" + cell_group + ".txt"
 )
 
 sample_info_path = pyhere.here(
-    "processed-data", "spot_deconvo", "nonIF_ID_table.csv"
+    "processed-data", "spot_deconvo", "HE_ID_table.csv"
 )
 
 #   In single-cell only
