@@ -19,11 +19,11 @@ import pyhere
 from pathlib import Path
 from PIL import Image
 import json
-
+import pandas as pd
 ################################################################################
 #   Variable definitions
 ################################################################################
-
+#os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 cell_group = "broad" # "broad" or "layer"
 
 
@@ -37,9 +37,11 @@ Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
 #   Directory containing hires image and a JSON containing scale factors and
 #   spot size for a given sample. Here '{}' will be replaced by a single
-#   sample name
-spaceranger_dir = pyhere.here('processed-data', '01_spaceranger', '{}','{}', 'outs', 'spatial')
-marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","markers_" + cell_group + ".txt")
+#   sample def name(self, 
+spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
+spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial')
+
+marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + ".txt")
 sample_info_path = pyhere.here("processed-data", "spot_deconvo", "HE_ID_table.csv")
 
 #   In single-cell only
@@ -65,21 +67,13 @@ print('Loading AnnDatas...')
 adata_vis = sc.read_h5ad(sp_path)
 adata_ref = sc.read_h5ad(sc_path)
 
-adata_vis.obs['sample'] = adata_vis.obs[sample_id_var]
-
-#   Different naming conventions are used between sample IDs in adata_vis vs. in
-#   file paths for spaceranger files. Compute the corresponding spaceranger IDs
-sample_info = pd.read_csv(sample_info_path)
-
 # rename genes to ENSEMBL
 adata_vis.var['SYMBOL'] = adata_vis.var[gene_symbol_var]
 adata_vis.var_names = adata_vis.var[ensembl_id_var]
 adata_vis.var_names.name = None
 
 # find mitochondria-encoded (MT) genes
-adata_vis.var['MT_gene'] = [
-    gene.startswith('MT-') for gene in adata_vis.var['SYMBOL']
-]
+adata_vis.var['MT_gene'] = [gene.startswith('MT-') for gene in adata_vis.var['SYMBOL']]
 
 # remove MT genes for spatial mapping (keeping their counts in the object).
 adata_vis.obsm['MT'] = adata_vis[:, adata_vis.var['MT_gene'].values].X.toarray()
@@ -108,27 +102,18 @@ adata_ref = adata_ref[:, selected].copy()
 
 adata_vis.uns['spatial'] = {}
 
-for sample_id in adata_vis.obs['sample'].cat.categories:
-    spaceranger_id = sample_info[
-        sample_info['short_id'] == sample_id
-    ]['long_id'].values[0]
+for sample_id in adata_vis.obs['sample_id'].cat.categories:
+    spaceranger_dir = spaceranger_dirs.SPpath[spaceranger_dirs.sample_id == sample_id]
     
     #   Path to JSON from spaceranger including spot size for this sample
-    json_path = pyhere.here(
-        str(spaceranger_dir).format(spaceranger_id), 'scalefactors_json.json'
-    )
+    json_path = pyhere.here(spaceranger_dir, 'scalefactors_json.json')
     
     with open(json_path) as f: 
         json_data = json.load(f)
     
     #   Read in high-res image as numpy array with values in [0, 1] rather than
     #   [0, 255], then attach to AnnData object
-    img_path = str(
-        pyhere.here(
-            str(spaceranger_dir).format(spaceranger_id),
-            'tissue_hires_image.png'
-        )
-    )
+    img_path = pyhere.here(spaceranger_dir,'tissue_hires_image.png')
     img_arr = np.array(Image.open(img_path), dtype = np.float32) / 256
     
     #   Store image and scalefactors in AnnData as squidpy expects
@@ -144,9 +129,7 @@ for sample_id in adata_vis.obs['sample'].cat.categories:
 #   Correct how spatialCoords are stored. Currently, they are a pandas
 #   DataFrame, with the columns potentially in the wrong order (depending on the
 #   version of SpatialExperiment used in R). We need them as a numpy array.
-adata_vis.obsm['spatial'] = np.array(
-    adata_vis.obsm['spatial'][spatial_coords_names]
-)
+adata_vis.obsm['spatial'] = np.array(adata_vis.obsm['spatial'][spatial_coords_names])
 
 #-------------------------------------------------------------------------------
 #   Replace special characters in some layer groups
