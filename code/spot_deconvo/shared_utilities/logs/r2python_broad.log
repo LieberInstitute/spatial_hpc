@@ -1,0 +1,23 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug  9 12:46:12 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3671718
+Job name: r2python
+Hostname: compute-065.cm.cluster
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Fatal error: cannot open file 'r2python.R': No such file or directory
+**** Job ends ****
+Wed Aug  9 12:46:16 EDT 2023
