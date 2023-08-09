@@ -28,7 +28,7 @@ echo "Job name: ${job_name}"
 echo "Hostname: ${HOSTNAME}" 
 
 module load conda_R/devel
-Rscript r2python.R
+Rscript /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/shared_utilities/r2python.R
 
 echo "**** Job ends ****"
 date
