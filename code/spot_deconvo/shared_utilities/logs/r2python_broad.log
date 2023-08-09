@@ -21,3 +21,78 @@ The following have been reloaded with a version change:
 Fatal error: cannot open file 'r2python.R': No such file or directory
 **** Job ends ****
 Wed Aug  9 12:46:16 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug  9 12:58:24 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3671734
+Job name: r2python
+Hostname: compute-127.cm.cluster
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Loading objects:
+  sce
+Loading objects:
+  spe
+             used    (Mb) gc trigger    (Mb)   max used    (Mb)
+Ncells    9131708   487.7   15558421   831.0   10074744   538.1
+Vcells 2414048183 18417.8 3010930277 22971.6 2414049333 18417.8
+[1] "Running script at broad-resolution."
+[1] "Converting objects to AnnDatas..."
+ℹ Using the 'counts' assay as the X matrix
+ℹ Using the 'counts' assay as the X matrix
+Error in py_call_impl(callable, dots$args, dots$keywords) : 
+  TypeError: Can't implicitly convert non-string objects to strings
+
+Above error raised while writing key 'dateImg' of <class 'h5py._hl.group.Group'> to /
+Calls: write_anndata -> basiliskRun -> fun -> <Anonymous> -> py_call_impl
+Execution halted
+**** Job ends ****
+Wed Aug  9 13:14:43 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug  9 13:34:03 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3671833
+Job name: r2python
+Hostname: compute-068.cm.cluster
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Loading objects:
+  sce
+Loading objects:
+  spe
+             used    (Mb) gc trigger    (Mb)   max used    (Mb)
+Ncells    9131708   487.7   15558421   831.0   10074744   538.1
+Vcells 2414048183 18417.8 3010930277 22971.6 2414049333 18417.8
+[1] "Running script at broad-resolution."
+[1] "Converting objects to AnnDatas..."
+ℹ Using the 'counts' assay as the X matrix
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'x' in selecting a method for function 'colData': object 'spe' not found
+Calls: colData -> .handleSimpleError -> h
+Execution halted
+**** Job ends ****
+Wed Aug  9 14:15:29 EDT 2023
