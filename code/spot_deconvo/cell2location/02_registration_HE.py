@@ -61,25 +61,17 @@ def post_training(mod, adata, adata_name, max_epochs, sample_kwargs, plot_name):
     # the plot
     mod.plot_history(int(max_epochs / 10))
     f = plt.gcf()
-    f.savefig(
-        os.path.join(plot_dir, f'{plot_name}.{plot_file_type}'),
-        bbox_inches='tight'
-    )
+    f.savefig(os.path.join(plot_dir, f'{plot_name}.{plot_file_type}'),bbox_inches='tight')
     plt.close(f)
 
-    # In this section, we export the estimated cell abundance (summary of the
-    # posterior distribution).
-    adata = mod.export_posterior(
-        adata, sample_kwargs=sample_kwargs
-    )
+    # In this section, we export the estimated cell abundance (summary of the posterior distribution).
+    adata = mod.export_posterior(adata, sample_kwargs=sample_kwargs)
 
     # Save model
     mod.save(f'{processed_dir}/{adata_name}', overwrite=True)
 
     # Save anndata object with results
-    adata.write_h5ad(
-        os.path.join(processed_dir, f'{adata_name}_after.h5ad')
-    )
+    adata.write_h5ad(os.path.join(processed_dir, f'{adata_name}_after.h5ad'))
 
     # Examine reconstruction accuracy to assess if there are any issues with
     # mapping the plot should be roughly diagonal, strong deviations will signal
