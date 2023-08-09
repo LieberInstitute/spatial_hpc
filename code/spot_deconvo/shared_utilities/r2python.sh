@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --mem=100G
 #SBATCH --job-name=r2python
-#SBATCH -o logs/01-r2python_broad.log
-#SBATCH -e logs/01-r2python_broad.log
+#SBATCH -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/shared_utilities/logs/r2python_broad.log
+#SBATCH -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/shared_utilities/logs/r2python_broad.log
 
 #$ -l mem_free=100G,h_vmem=100G,h_fsize=100G
 #$ -N "r2python"
-#$ -o logs/01-r2python_broad.log
-#$ -e logs/01-r2python_broad.log
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/shared_utilities/logs/r2python_broad.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/shared_utilities/logs/r2python_broad.log
 
 USE_SLURM=2
 
