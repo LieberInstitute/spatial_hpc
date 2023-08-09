@@ -27,38 +27,20 @@ import json
 cell_group = "broad" # "broad" or "layer"
 
 
-sc_path = pyhere.here(
-    "processed-data", "spot_deconvo", "shared_utilities",
-    "sce_" + cell_group + ".h5ad"
-)
-sp_path = pyhere.here(
-    "processed-data", "spot_deconvo", "shared_utilities", "HE", "spe.h5ad"
-)
+sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_" + cell_group + ".h5ad")
+sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "HE", "spe.h5ad")
 
-processed_dir = pyhere.here(
-    "processed-data", "spot_deconvo", "cell2location", "HE", cell_group
-)
-plot_dir = pyhere.here(
-    "plots", "spot_deconvo", "cell2location", "HE", cell_group
-)
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group)
 Path(plot_dir).mkdir(parents=True, exist_ok=True)
 Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
 #   Directory containing hires image and a JSON containing scale factors and
 #   spot size for a given sample. Here '{}' will be replaced by a single
 #   sample name
-spaceranger_dir = pyhere.here(
-    'processed-data', '01_spaceranger', '{}','{}', 'outs', 'spatial'
-)
-
-marker_path = pyhere.here(
-    "processed-data", "spot_deconvo", "shared_utilities",
-    "markers_" + cell_group + ".txt"
-)
-
-sample_info_path = pyhere.here(
-    "processed-data", "spot_deconvo", "HE_ID_table.csv"
-)
+spaceranger_dir = pyhere.here('processed-data', '01_spaceranger', '{}','{}', 'outs', 'spatial')
+marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","markers_" + cell_group + ".txt")
+sample_info_path = pyhere.here("processed-data", "spot_deconvo", "HE_ID_table.csv")
 
 #   In single-cell only
 if cell_group == 'broad':
