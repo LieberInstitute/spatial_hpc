@@ -74,3 +74,27 @@ Traceback (most recent call last):
 FileNotFoundError: [Errno 2] No such file or directory: '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/VSPG/V12D07-332_C1.tif'
 **** Job ends ****
 Fri Jul 21 16:14:06 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug  9 02:03:56 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3662498
+Job name: create_masks
+Hostname: compute-126.cm.cluster
+Task id: 1
+Chose GPU(s): 0
+Loading LIBD module for cellpose/2.0
+/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
+  warn(msg)
+/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/torch/nn/functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  /pytorch/c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+Segmenting DAPI for sample V12D07-332_C1.
+**** Job ends ****
+Wed Aug  9 03:38:17 EDT 2023
