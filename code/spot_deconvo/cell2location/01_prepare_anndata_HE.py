@@ -1,6 +1,6 @@
 import sys
 import os
-
+#os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 import scanpy as sc
 import anndata
 import pandas as pd
@@ -20,10 +20,11 @@ from pathlib import Path
 from PIL import Image
 import json
 import pandas as pd
+import pprint
 ################################################################################
 #   Variable definitions
 ################################################################################
-#os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
+
 cell_group = "broad" # "broad" or "layer"
 
 
@@ -46,9 +47,9 @@ sample_info_path = pyhere.here("processed-data", "spot_deconvo", "HE_ID_table.cs
 
 #   In single-cell only
 if cell_group == 'broad':
-    cell_type_var = 'cellType_broad_hc'
+    cell_type_var = 'broad.type'
 else:
-    cell_type_var = 'layer_level'
+    cell_type_var = 'cell.type'
 
 #   Naming conventions used for different columns in the spatial AnnData
 sample_id_var = 'sample_id'          # in spatial object only
@@ -61,11 +62,14 @@ plot_file_type = 'pdf'
 ################################################################################
 #   Preprocessing
 ################################################################################
+#adata_ref.obs.iloc[:,27].categories
+#adata_ref.obs.iloc[:,27].cat.categories
 
 #  Load AnnDatas
 print('Loading AnnDatas...')
 adata_vis = sc.read_h5ad(sp_path)
 adata_ref = sc.read_h5ad(sc_path)
+# adata_vis.obs['sample'] = adata_vis.obs[sample_id_var]
 
 # rename genes to ENSEMBL
 adata_vis.var['SYMBOL'] = adata_vis.var[gene_symbol_var]
@@ -103,17 +107,18 @@ adata_ref = adata_ref[:, selected].copy()
 adata_vis.uns['spatial'] = {}
 
 for sample_id in adata_vis.obs['sample_id'].cat.categories:
-    spaceranger_dir = spaceranger_dirs.SPpath[spaceranger_dirs.sample_id == sample_id]
-    
+    spaceranger_dir = spaceranger_dirs[spaceranger_dirs.sample_id == sample_id].SPpath.values[0]
+    # print(spaceranger_dirs.SPpath.values[0])
     #   Path to JSON from spaceranger including spot size for this sample
-    json_path = pyhere.here(spaceranger_dir, 'scalefactors_json.json')
+    json_path = pyhere.here(str(spaceranger_dir), 'scalefactors_json.json')
+    print(json_path)
     
     with open(json_path) as f: 
         json_data = json.load(f)
     
     #   Read in high-res image as numpy array with values in [0, 1] rather than
     #   [0, 255], then attach to AnnData object
-    img_path = pyhere.here(spaceranger_dir,'tissue_hires_image.png')
+    img_path = pyhere.here(str(spaceranger_dir),'tissue_hires_image.png')
     img_arr = np.array(Image.open(img_path), dtype = np.float32) / 256
     
     #   Store image and scalefactors in AnnData as squidpy expects
