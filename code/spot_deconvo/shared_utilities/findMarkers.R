@@ -1,5 +1,5 @@
 #   Find marker genes that will be shared for both the IF and non-IF analyses.
-
+setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
 suppressPackageStartupMessages(library("SingleCellExperiment"))
 suppressPackageStartupMessages(library("DeconvoBuddies"))
 suppressPackageStartupMessages(library("tidyverse"))
@@ -11,67 +11,37 @@ suppressPackageStartupMessages(library("cowplot"))
 
 #   Adds the 'spot_plot' function, a wrapper for 'vis_gene' or 'vis_clus' with
 #   consistent manuscript-appropriate settings
-source(
-  here("code", "spot_deconvo", "05-shared_utilities", "shared_functions.R")
-)
-
-cell_group <- "layer" # "broad" or "layer"
+source(here("code", "spot_deconvo", "shared_utilities", "shared_function.R"))
+cell_group <- "broad" # "broad" or "layer"
 
 #   Number of marker genes to use per cell type
 n_markers_per_type <- 25
 
 #  Paths
-sce_in <- here(
-  "processed-data", "spot_deconvo", "05-shared_utilities",
-  paste0("sce_", cell_group, ".rds")
-)
-spe_IF_in <- here(
-  "processed-data", "rdata", "spe_IF", "01_build_spe_IF", "spe.rds"
-)
-spe_nonIF_in <- here(
-  "processed-data", "rdata", "spe", "01_build_spe",
-  "spe_filtered_final_with_clusters.Rdata"
-)
-marker_object_in <- here(
-  "processed-data", "spot_deconvo", "05-shared_utilities",
-  paste0("marker_stats_", cell_group, ".rds")
-)
+sce_in <- here("processed-data", "spot_deconvo", "shared_utilities",paste0("sce_", cell_group, ".rds"))
+#spe_IF_in <- here("processed-data", "rdata", "spe_IF", "01_build_spe_IF", "spe.rds")
+spe_HE_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
+marker_object_in <- here("processed-data", "spot_deconvo", "shared_utilities",paste0("marker_stats_", cell_group, ".rds"))
 
-marker_out <- here(
-  "processed-data", "spot_deconvo", "05-shared_utilities",
-  paste0("markers_", cell_group, ".txt")
-)
+marker_out <- here("processed-data", "spot_deconvo", "shared_utilities",paste0("markers_", cell_group, ".txt"))
+plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)
 
-plot_dir <- here(
-  "plots", "spot_deconvo", "05-shared_utilities", cell_group
-)
-
-#   Symbols for markers of Layer 1-6, GM, and WM, respectively, for reference in
-#   some plots
-classical_markers <- c(
-  "AQP4", "HPCAL1", "CUX2", "RORB", "PCP4", "KRT17", "SNAP25", "MOBP"
-)
-
+#   Symbols for markers of Layer 1-6, GM, and WM, respectively, for reference in some plots
+classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
 dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
 
 #   Define variables related to cell_group
 if (cell_group == "broad") {
-  cell_types <- c(
-    "Astro", "EndoMural", "Micro", "Oligo", "OPC", "Excit", "Inhib"
-  )
-  
+  cell_types <- c('ExcN', 'InhN', 'Glia', 'Immune', 'CSF', 'Vascular')
   colors_col <- "cell_type_colors_broad"
-  cell_column <- "cellType_broad_hc"
+  cell_column <- "broad.type"
   cell_type_nrow <- 2
 } else {
-  cell_types <- c(
-    "Astro", "EndoMural", "Micro", "Oligo", "OPC", "Excit_L2_3", "Excit_L3",
-    "Excit_L3_4_5", "Excit_L4", "Excit_L5", "Excit_L5_6", "Excit_L6",
-    "Inhib"
-  )
-  
+  cell_types <- c('GC', 'CA2-4', 'CA1', 'ProS/Sub', 'L2/3', 'L5', 'L6/6b', 'HATA/AHi',
+                  'Thal', 'Cajal', 'GABA', 'Oligo', 'Astro', 'OPC', 'Micro/Macro/T',
+                  'Ependy', 'Choroid', 'Vascular')
   colors_col <- "cell_type_colors_layer"
-  cell_column <- "layer_level"
+  cell_column <- "cell.type"
   cell_type_nrow <- 3
 }
 
@@ -86,14 +56,11 @@ gc()
 print(paste0("Running script at ", cell_group, "-resolution."))
 
 #-------------------------------------------------------------------------------
-#   Filter out mitochondrial genes and re-rank 'rank_ratio' values. Add gene
-#   symbols to 'marker_stats' object
+#   Filter out mitochondrial genes and re-rank 'rank_ratio' values. Add gene symbols to 'marker_stats' object
 #-------------------------------------------------------------------------------
 
 #   Add gene symbol
-marker_stats$symbol <- rowData(sce)$gene_name[
-  match(marker_stats$gene, rownames(sce))
-]
+marker_stats$symbol <- rowData(sce)$gene_name[match(marker_stats$gene, rownames(sce))]
 
 #   Filter out mitochondrial genes
 marker_stats <- marker_stats[!grepl("^MT-", marker_stats$symbol), ]
@@ -177,9 +144,7 @@ my_plotExpression <- function(sce, genes, assay = "logcounts", ct = "cellType", 
   text_df$ratio <- paste0("Mean ratio: ", round(text_df$ratio, 2))
   text_df$Var1 <- factor(text_df$gene, levels = levels(expression_long$Var1))
   
-  expression_violin <- ggplot(
-    data = expression_long, aes(x = cat, y = value, fill = cat)
-  ) +
+  expression_violin <- ggplot(data = expression_long, aes(x = cat, y = value, fill = cat)) +
     geom_violin(scale = "width") +
     geom_text(
       data = text_df,
@@ -243,7 +208,7 @@ boxplot_mean_ratio <- function(n_markers, plot_name) {
 ###############################################################################
 
 print("Writing markers...")
-# write_markers(n_markers_per_type, marker_out)
+write_markers(n_markers_per_type, marker_out)
 
 ###############################################################################
 #  Visually check quality of markers
