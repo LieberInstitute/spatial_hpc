@@ -163,6 +163,7 @@ write_anndata(sce, sce_out)
 
 #   Spatial objects are the same between broad and layer-level resolutions, and
 #   need only be saved once
+colData(spe_HE)$dateImg = as.character(colData(spe_HE)$dateImg)
 if (cell_group == "broad") {
   # write_anndata(spe_IF, spe_IF_out)
   write_anndata(spe_HE, spe_HE_out)
