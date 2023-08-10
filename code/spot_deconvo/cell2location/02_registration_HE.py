@@ -26,7 +26,7 @@ from pathlib import Path
 #   Variable definitions
 ################################################################################
 
-cell_group = "layer" # "broad" or "layer"
+cell_group = "broad" # "broad" or "layer"
 
 
 processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group)
@@ -63,16 +63,12 @@ def post_training(mod, adata, adata_name, max_epochs, sample_kwargs, plot_name):
     f = plt.gcf()
     f.savefig(os.path.join(plot_dir, f'{plot_name}.{plot_file_type}'),bbox_inches='tight')
     plt.close(f)
-
     # In this section, we export the estimated cell abundance (summary of the posterior distribution).
     adata = mod.export_posterior(adata, sample_kwargs=sample_kwargs)
-
     # Save model
     mod.save(f'{processed_dir}/{adata_name}', overwrite=True)
-
     # Save anndata object with results
     adata.write_h5ad(os.path.join(processed_dir, f'{adata_name}_after.h5ad'))
-
     # Examine reconstruction accuracy to assess if there are any issues with
     # mapping the plot should be roughly diagonal, strong deviations will signal
     # problems
@@ -84,7 +80,6 @@ def post_training(mod, adata, adata_name, max_epochs, sample_kwargs, plot_name):
         bbox_inches='tight'
     )
     plt.close('all')
-
     return (adata, mod)
 
 ################################################################################
@@ -167,7 +162,8 @@ mod = cell2location.models.Cell2location(
     adata_vis, cell_state_df=inf_aver,
     # the expected average cell abundance: tissue-dependent
     # hyper-prior which can be estimated from paired histology:
-    N_cells_per_location = float(np.mean(adata_vis.obs[cell_count_var])), # N_CELLS_PER_SPOT,
+    # N_cells_per_location = float(np.mean(adata_vis.obs[cell_count_var])), # N_CELLS_PER_SPOT,
+    N_cells_per_location = 4,
     # hyperparameter controlling normalisation of
     # within-experiment variation in RNA detection:
     detection_alpha=detection_alpha
