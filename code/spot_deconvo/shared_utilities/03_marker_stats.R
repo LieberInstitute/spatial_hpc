@@ -42,8 +42,8 @@ if (cell_group == "broad") {
   cell_column <- "broad.type"
   cell_type_nrow <- 2
 } else {
-  cell_types <- c('GC', 'CA2-4', 'CA1', 'ProS/Sub', 'L2/3', 'L5', 'L6/6b', 'HATA/AHi',
-                  'Thal', 'Cajal', 'GABA', 'Oligo', 'Astro', 'OPC', 'Micro/Macro/T',
+  cell_types <- c('GC', 'CA2-4', 'CA1', 'ProS_Sub', 'L2_3', 'L5', 'L6_6b', 'HATA_AHi',
+                  'Thal', 'Cajal', 'GABA', 'Oligo', 'Astro', 'OPC', 'Micro_Macro_T',
                   'Ependy', 'Choroid', 'Vascular')
   colors_col <- "cell_type_colors_layer"
   cell_column <- "cell.type"
