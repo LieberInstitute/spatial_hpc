@@ -1,0 +1,23 @@
+[1] "Dropped 16.9% of potential marker genes that were not present in all the spatial data"
+> print("Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers...")
+[1] "Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers..."
+> marker_stats <- get_mean_ratio2(
++   sce,
++   cellType_col = cell_type_var, assay_name = "logcounts"
++ )
+Warning message:
+In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 17.1 GiB
+> marker_stats_1vall <- findMarkers_1vAll(
++   sce,
++   cellType_col = cell_type_var, assay_name = "logcounts",
++   mod = "~brnum"
++ )
+Glia - '2023-08-10 20:47:01.48031
+Immune - '2023-08-10 20:51:26.549552
+InhN - '2023-08-10 20:55:42.8497
+ExcN - '2023-08-10 20:59:57.572941
+Vascular - '2023-08-10 21:04:27.063893
+CSF - '2023-08-10 21:08:56.866741
+Building Table - 2023-08-10 21:13:18.123731
+** Done! **
