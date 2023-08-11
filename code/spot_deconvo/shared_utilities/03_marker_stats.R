@@ -21,9 +21,9 @@ reducedDims(spe)$spatial <- spatialCoords(spe)
 #reducedDims(spg)$spatial <- spatialCoords(spg)
 
 #cell_group = "broad" 
- cell_group = "layer" 
+cell_group = "layer" 
  
-out = here("processed-data","spot_deconvo","shared_utilities",paste0("marker_stats_",cell_group,".rds"))
+out = here("processed-data","spot_deconvo","shared_utilities")
 
 n_markers_per_type <- 25
 
@@ -128,6 +128,6 @@ for (ct in cell_types) {
 ###############################################################################
 source(here("code","spot_deconvo","shared_utilities","plottingfunctions.R"))
 print("Writing markers...")
-write_markers(n_markers_per_type, marker_out)
+write_markers(n_markers_per_type, here(out,paste0("markers_",cell_group,".txt")))
 
-saveRDS(marker_stats, out)
+saveRDS(marker_stats, here(out,paste0("marker_stats_",cell_group,".rds")))
