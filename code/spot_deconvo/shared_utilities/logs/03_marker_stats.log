@@ -21,3 +21,39 @@ Vascular - '2023-08-10 21:04:27.063893
 CSF - '2023-08-10 21:08:56.866741
 Building Table - 2023-08-10 21:13:18.123731
 ** Done! **
+
+## layer level ##
+> print("Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers...")
+[1] "Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers..."
+> marker_stats <- get_mean_ratio2(
++   sce,
++   cellType_col = cell_type_var, assay_name = "logcounts"
++ )
+Warning message:
+In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 17.1 GiB
+> marker_stats_1vall <- findMarkers_1vAll(
++   sce,
++   cellType_col = cell_type_var, assay_name = "logcounts",
++   mod = "~brnum"
++ )
+Oligo - '2023-08-10 22:46:53.409896
+Micro/Macro/T - '2023-08-10 22:51:41.378722
+GABA - '2023-08-10 22:56:30.486857
+Thal - '2023-08-10 23:01:16.329568
+L5 - '2023-08-10 23:06:07.220546
+Astro - '2023-08-10 23:10:53.01295
+CA2-4 - '2023-08-10 23:15:45.059632
+GC - '2023-08-10 23:20:31.34886
+L2/3 - '2023-08-10 23:25:23.086488
+ProS/Sub - '2023-08-10 23:30:10.810249
+L6/6b - '2023-08-10 23:34:58.998618
+Vascular - '2023-08-10 23:39:45.425766
+OPC - '2023-08-10 23:44:35.013806
+CA1 - '2023-08-10 23:49:19.953339
+Choroid - '2023-08-10 23:54:04.723305
+HATA/AHi - '2023-08-10 23:58:47.224208
+Ependy - '2023-08-11 00:03:30.143065
+Cajal - '2023-08-11 00:08:11.344309
+Building Table - 2023-08-11 00:12:59.607009
+** Done! **
