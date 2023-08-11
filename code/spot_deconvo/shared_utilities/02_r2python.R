@@ -17,8 +17,8 @@ suppressPackageStartupMessages(library("tidyverse"))
 
 #  Paths
 sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
-spe_HE_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
-#spe_IF_in <- here("processed-data", "02_build_spe", "spe_nmf_final.rda")
+spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
+#spg_in <- here("processed-data", "02_build_spe", "spe_nmf_final.rda")
 
 out <- here("processed-data", "spot_deconvo", "shared_utilities")
 #  Make sure output directories exist
@@ -31,9 +31,7 @@ dir.create(dirname(out), recursive = TRUE, showWarnings = FALSE)
 #   Load objects
 load(sce_in, verbose = TRUE)
 # spg <- readRDS(spe_IF_in)
-load(spe_HE_in, verbose = TRUE)
-
-print(paste0("Running script at ", cell_group, "-resolution."))
+load(spe_in, verbose = TRUE)
 
 #-------------------------------------------------------------------------------
 #   Convert snRNA-seq and spatial R objects to AnnData python objects
@@ -53,10 +51,9 @@ rownames(sce) <- rowData(sce)$gene_id
 source(here("code", "spot_deconvo", "shared_utilities","write_anndata.R"))
 
 print("Converting objects to AnnDatas...")
-write_anndata(sce, sce_out)
-colData(spe_HE)$dateImg = as.character(colData(spe_HE)$dateImg)
-write_anndata(spe_IF, spe_IF_out)
-write_anndata(spe_HE, spe_HE_out)
-gc()
+write_anndata(sce, paste0(out,"/sce.h5ad"))
+colData(spe)$dateImg = as.character(colData(spe)$dateImg)
+write_anndata(spe, paste0(out,"/spe.h5ad"))
+#write_anndata(spg, paste0(out,"/spg.h5ad"))
 
 session_info()
