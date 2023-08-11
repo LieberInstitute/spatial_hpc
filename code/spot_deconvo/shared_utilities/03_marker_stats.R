@@ -23,8 +23,8 @@ load(sce_in, verbose = TRUE)
 # spg <- readRDS(spe_IF_in)
 load(spe_HE_in, verbose = TRUE)
 
-cell_group = "broad" 
-# cell_group = "layer" 
+#cell_group = "broad" 
+ cell_group = "layer" 
 
 out = here("processed-data","spot_deconvo","shared_utilities",paste0("marker_stats_",cell_group,".rds"))
 
