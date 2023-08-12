@@ -1,0 +1,39 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Sat Aug 12 16:48:26 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3677662
+Job name: countSpots.sh
+Hostname: compute-093.cm.cluster
+Task id: 1
+****
+Sample id: V11A20-297_A1 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+{Error using load
+Unable to read file
+'/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/V11A20-297_A1_nuclei_WS_final.mat'.
+No such file or directory.
+
+Error in countNuclei (line 9)
+ BW = load(mask);
+} 
+>> **** Job ends ****
+Sat Aug 12 16:48:47 EDT 2023
