@@ -1,4 +1,6 @@
+### layer level ####
 [1] "Dropped 16.9% of potential marker genes that were not present in all the spatial data"
+> 
 > print("Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers...")
 [1] "Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers..."
 > marker_stats <- get_mean_ratio2(
@@ -13,16 +15,31 @@ In asMethod(object) :
 +   cellType_col = cell_type_var, assay_name = "logcounts",
 +   mod = "~brnum"
 + )
-Glia - '2023-08-10 20:47:01.48031
-Immune - '2023-08-10 20:51:26.549552
-InhN - '2023-08-10 20:55:42.8497
-ExcN - '2023-08-10 20:59:57.572941
-Vascular - '2023-08-10 21:04:27.063893
-CSF - '2023-08-10 21:08:56.866741
-Building Table - 2023-08-10 21:13:18.123731
+Oligo - '2023-08-11 17:54:49.904499
+Micro/Macro/T - '2023-08-11 17:58:12.964196
+GABA - '2023-08-11 18:01:27.950122
+Thal - '2023-08-11 18:04:48.465827
+L5 - '2023-08-11 18:08:01.731604
+Astro - '2023-08-11 18:11:22.627592
+CA2-4 - '2023-08-11 18:14:43.579991
+GC - '2023-08-11 18:18:10.799977
+L2/3 - '2023-08-11 18:21:26.276748
+ProS/Sub - '2023-08-11 18:24:44.54899
+L6/6b - '2023-08-11 18:28:08.982293
+Vascular - '2023-08-11 18:31:29.12549
+OPC - '2023-08-11 18:34:50.029743
+CA1 - '2023-08-11 18:38:11.580079
+Choroid - '2023-08-11 18:41:29.765389
+HATA/AHi - '2023-08-11 18:44:51.323925
+Ependy - '2023-08-11 18:48:14.252831
+Cajal - '2023-08-11 18:51:29.312178
+Building Table - 2023-08-11 18:54:49.493774
 ** Done! **
+[1] "Writing markers..."
 
-## layer level ##
+### broad level ####
+[1] "Dropped 16.9% of potential marker genes that were not present in all the spatial data"
+> 
 > print("Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers...")
 [1] "Running getMeanRatio2 and findMarkers_1vAll to rank genes as markers..."
 > marker_stats <- get_mean_ratio2(
@@ -37,23 +54,11 @@ In asMethod(object) :
 +   cellType_col = cell_type_var, assay_name = "logcounts",
 +   mod = "~brnum"
 + )
-Oligo - '2023-08-10 22:46:53.409896
-Micro/Macro/T - '2023-08-10 22:51:41.378722
-GABA - '2023-08-10 22:56:30.486857
-Thal - '2023-08-10 23:01:16.329568
-L5 - '2023-08-10 23:06:07.220546
-Astro - '2023-08-10 23:10:53.01295
-CA2-4 - '2023-08-10 23:15:45.059632
-GC - '2023-08-10 23:20:31.34886
-L2/3 - '2023-08-10 23:25:23.086488
-ProS/Sub - '2023-08-10 23:30:10.810249
-L6/6b - '2023-08-10 23:34:58.998618
-Vascular - '2023-08-10 23:39:45.425766
-OPC - '2023-08-10 23:44:35.013806
-CA1 - '2023-08-10 23:49:19.953339
-Choroid - '2023-08-10 23:54:04.723305
-HATA/AHi - '2023-08-10 23:58:47.224208
-Ependy - '2023-08-11 00:03:30.143065
-Cajal - '2023-08-11 00:08:11.344309
-Building Table - 2023-08-11 00:12:59.607009
+Glia - '2023-08-11 18:39:34.069656
+Immune - '2023-08-11 18:57:12.568477
+InhN - '2023-08-11 19:14:31.228937
+ExcN - '2023-08-11 19:31:42.615067
+Vascular - '2023-08-11 19:48:46.476265
+CSF - '2023-08-11 20:05:44.790819
+Building Table - 2023-08-11 20:22:46.44565
 ** Done! **
