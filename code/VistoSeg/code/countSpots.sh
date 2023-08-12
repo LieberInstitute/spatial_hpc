@@ -27,7 +27,7 @@ module load matlab/R2019a
 toolbox='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code'
 path='/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/Images/VistoSeg/Capture_areas/'
 sample=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/samples.txt | awk '{print $2}' | awk "NR==${SGE_TASK_ID}")
-add="_nuclei_WS_final.mat"
+add="_nuclei_WS.mat"
 maskname=$path$sample$add
 
 path1=$(cat /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/samples.txt |  awk '{print $1}' | awk "NR==${SGE_TASK_ID}")
