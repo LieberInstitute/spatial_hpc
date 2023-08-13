@@ -5,7 +5,7 @@
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VistoSeg/code/logs/countSpots.$TASK_ID.txt
 #$ -m e
 #$ -M madhavitippani28@gmail.com
-#$ -t 1
+#$ -t 2-36
 #$ -tc 10
 
 echo "**** Job starts ****"
