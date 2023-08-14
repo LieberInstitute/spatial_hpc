@@ -5,7 +5,7 @@ library(dplyr)
 library(scater)
 library(scran)
 
-load(file=here::here("processed-data","02_build_spe","spe_bayes_precast.rda"))
+load(file=here::here("processed-data","05_preprocess_batchCorrection","spe_norm.rda"))
 
 ##filter genes for lowly expressed guys
 n_umis <- 100
