@@ -23,9 +23,9 @@ Dr <- here("processed-data","spot_decpnvo","shared_utilities")
 ###############################################################################
 
 #   Load objects
-readRDS(here(Dr,"sce.rds"), verbose = TRUE)
-readRDS(here(Dr,"spe.rds"), verbose = TRUE)
-# readRDS(here(Dr,"spg.rds"), verbose = TRUE)
+sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+spe = readRDS(here(Dr,"spe.rds"), verbose = TRUE)
+#spg = readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
 #-------------------------------------------------------------------------------
 #   Convert snRNA-seq and spatial R objects to AnnData python objects

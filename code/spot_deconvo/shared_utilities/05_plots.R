@@ -14,22 +14,35 @@ suppressPackageStartupMessages(library("cowplot"))
 source(here("code","spot_deconvo","shared_utilities","plottingfunctions.R"))
 source(here("code", "spot_deconvo", "shared_utilities", "shared_function.R"))
 
-Dr <- here("processed-data","spot_decpnvo","shared_utilities")
+Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 #cell_group = "broad" 
 cell_group = "layer" 
 n_markers_per_type <- 25
 
-plot_dir <- here("plots", "splot_deconvo", "shared_utilities", cell_group)
+plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)
 dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
 classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
 
 #   Load objects
-readRDS(here(Dr,"sce.rds"), verbose = TRUE)
-readRDS(here(Dr,"spe.rds"), verbose = TRUE)
-readRDs(here(Dr,paste0("marker_stats_",cell_group,".rds")))
-# readRDS(here(Dr,"spg.rds"), verbose = TRUE)
+sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+spe = readRDS(here(Dr,"spe.rds"), verbose = TRUE)
+#spg = readRDS(here(Dr,"spg.rds"), verbose = TRUE)
+marker_stats = readRDS(here(Dr,paste0("marker_stats_",cell_group,".rds")))
 
+if (cell_group == "broad") {
+  cell_types <- c('ExcN', 'InhN', 'Glia', 'Immune', 'CSF', 'Vascular')
+  colors_col <- "cell_type_colors_broad"
+  cell_column <- "broad.type"
+  cell_type_nrow <- 2
+} else {
+  cell_types <- c('GC', 'CA2-4', 'CA1', 'ProS_Sub', 'L2_3', 'L5', 'L6_6b', 'HATA_AHi',
+                  'Thal', 'Cajal', 'GABA', 'Oligo', 'Astro', 'OPC', 'Micro_Macro_T',
+                  'Ependy', 'Choroid', 'Vascular')
+  colors_col <- "cell_type_colors_layer"
+  cell_column <- "cell.type"
+  cell_type_nrow <- 3
+}
 
 #   Visually show how markers look for each cell type
 plot_list <- lapply(
@@ -92,12 +105,11 @@ dev.off()
 boxplot_mean_ratio(n_markers_per_type, "mean_ratio_boxplot")
 
 #   Get Ensembl ID for classical markers
-spe <- readRDS(spe_IF_in)
+# spT <- spg
+spT <- spe[, which(spe$brain == "Br3942")] #use this temporarily until we get SPG data
 stopifnot(all(classical_markers %in% rowData(sce)$gene_name))
-classical_markers_ens <- rownames(sce)[
-  match(classical_markers, rowData(sce)$gene_name)
-]
-stopifnot(all(classical_markers_ens %in% rownames(spe)))
+classical_markers_ens <- rownames(sce)[match(classical_markers, rowData(sce)$gene_name)]
+stopifnot(all(classical_markers_ens %in% rownames(spT)))
 
 #-------------------------------------------------------------------------------
 #   First, plot the spatial expression of classical markers as reference
@@ -107,26 +119,12 @@ plot_list <- list()
 i <- 1
 
 for (j in 1:length(classical_markers)) {
-  for (sample_id in unique(spe$sample_id)) {
+  for (sample_id in unique(spT$sample_id)) {
     #   Determine the title for this subplot
-    if (j <= 6) {
-      title <- paste0(
-        classical_markers[j], ": marker for layer ", j, "\n(",
-        sample_id, ")"
-      )
-    } else if (classical_markers[j] == "SNAP25") {
-      title <- paste0(
-        "SNAP25: marker for gray matter\n(", sample_id, ")"
-      )
-    } else if (classical_markers[j] == "MOBP") {
-      title <- paste0(
-        "MOBP: marker for white matter\n(", sample_id, ")"
-      )
-    }
-    
+      title <- paste0(classical_markers[j], ": marker for layer ", j, "\n(", sample_id, ")")
     #   Produce the ggplot object (grid version)
     plot_list[[i]] <- spot_plot(
-      spe,
+      spT,
       sample_id = sample_id, var_name = classical_markers_ens[j],
       include_legend = TRUE, is_discrete = FALSE, title = title,
       assayname = "counts", minCount = 0
@@ -163,17 +161,14 @@ for (n_markers in c(15, 25, 50)) {
       ) |>
       pull(gene)
     
-    for (sample_id in unique(spe$sample_id)) {
-      spe_small <- spe[markers, spe$sample_id == sample_id]
+    for (sample_id in unique(spT$sample_id)) {
+      spT_small <- spT[markers, spT$sample_id == sample_id]
       
-      #   For each spot, compute proportion of marker genes with nonzero
-      #   expression
-      spe_small$prop_nonzero_marker <- colMeans(
-        assays(spe_small)$counts > 0
-      )
+      #   For each spot, compute proportion of marker genes with nonzero expression
+      spT_small$prop_nonzero_marker <- colMeans(assays(spe_small)$counts > 0)
       
       plot_list[[i]] <- spot_plot(
-        spe_small,
+        spT_small,
         sample_id = sample_id,
         var_name = "prop_nonzero_marker", include_legend = TRUE,
         is_discrete = FALSE, minCount = 0,
@@ -185,7 +180,7 @@ for (n_markers in c(15, 25, 50)) {
       i <- i + 1
     }
   }
-  n_sample <- length(unique(spe$sample_id))
+  n_sample <- length(unique(spT$sample_id))
   n_rows <- length(unique(marker_stats$cellType.target))
   
   write_spot_plots(

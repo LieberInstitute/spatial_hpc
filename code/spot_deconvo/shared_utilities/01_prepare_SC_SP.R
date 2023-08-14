@@ -50,8 +50,6 @@ reducedDims(spe)$spatial <- spatialCoords(spe)
 load(sce_in, verbose = TRUE)
 rownames(sce) <- rowData(sce)$gene_id
 
-
-
 ## EDA on counts ## 
 getmode <- function(v) {
   uniqv <- unique(na.omit(v))
