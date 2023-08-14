@@ -36,8 +36,9 @@ segmentation_info <-
   )]
 colData(spe) <- cbind(colData(spe), segmentation_info)
 colData(spe)$sample_id = as.character(colData(spe)$sample_id)
-reducedDims(spe)$spatial <- spatialCoords(spe)
+spe$count <- spe$CNmask_dark_blue
 
+reducedDims(spe)$spatial <- spatialCoords(spe)
 
 load(sce_in, verbose = TRUE)
 rownames(sce) <- rowData(sce)$gene_id
