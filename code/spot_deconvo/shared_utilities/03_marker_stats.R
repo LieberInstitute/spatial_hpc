@@ -8,23 +8,16 @@ suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("tidyverse"))
 suppressPackageStartupMessages(library("HDF5Array"))
 
-sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
-spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
-#spg_in <- here("processed-data", "02_build_spe", "spe_nmf_final.rda")
+#  Paths
+Dr <- here("processed-data","spot_decpnvo","shared_utilities")
 
-load(sce_in, verbose = TRUE)
-rownames(sce) <- rowData(sce)$gene_id
-
-# spg <- readRDS(spe_IF_in)
-load(spe_in, verbose = TRUE)
-reducedDims(spe)$spatial <- spatialCoords(spe)
-#reducedDims(spg)$spatial <- spatialCoords(spg)
+#   Load objects
+readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+readRDS(here(Dr,"spe.rds"), verbose = TRUE)
+# readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
 #cell_group = "broad" 
 cell_group = "layer" 
- 
-out = here("processed-data","spot_deconvo","shared_utilities")
-
 n_markers_per_type <- 25
 
 #   Define variables related to cell_group
@@ -128,6 +121,5 @@ for (ct in cell_types) {
 ###############################################################################
 source(here("code","spot_deconvo","shared_utilities","plottingfunctions.R"))
 print("Writing markers...")
-write_markers(n_markers_per_type, here(out,paste0("markers_",cell_group,".txt")))
-
-saveRDS(marker_stats, here(out,paste0("marker_stats_",cell_group,".rds")))
+write_markers(n_markers_per_type, here(Dr,paste0("markers_",cell_group,".txt")))
+saveRDS(marker_stats, here(Dr,paste0("marker_stats_",cell_group,".rds")))

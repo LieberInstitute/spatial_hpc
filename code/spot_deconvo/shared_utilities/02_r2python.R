@@ -16,44 +16,28 @@ suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("tidyverse"))
 
 #  Paths
-sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
-spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
-#spg_in <- here("processed-data", "02_build_spe", "spe_nmf_final.rda")
-
-out <- here("processed-data", "spot_deconvo", "shared_utilities")
-#  Make sure output directories exist
-dir.create(dirname(out), recursive = TRUE, showWarnings = FALSE)
+Dr <- here("processed-data","spot_decpnvo","shared_utilities")
 
 ###############################################################################
 #   Main
 ###############################################################################
 
 #   Load objects
-load(sce_in, verbose = TRUE)
-# spg <- readRDS(spe_IF_in)
-load(spe_in, verbose = TRUE)
+readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+readRDS(here(Dr,"spe.rds"), verbose = TRUE)
+# readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
 #-------------------------------------------------------------------------------
 #   Convert snRNA-seq and spatial R objects to AnnData python objects
 #-------------------------------------------------------------------------------
 
-#   zellkonverter doesn't know how to convert the 'spatialCoords' slot. We'd
-#   ultimately like the spatialCoords in the .obsm['spatial'] slot of the
-#   resulting AnnDatas, which corresponds to reducedDims(spe)$spatial in R
-
-reducedDims(spe)$spatial <- spatialCoords(spe)
-#reducedDims(spg)$spatial <- spatialCoords(spg)
-
-#   Use Ensembl gene IDs for rownames (not gene symbol)
-rownames(sce) <- rowData(sce)$gene_id
-
 #  convert all objects to Anndatas
 source(here("code", "spot_deconvo", "shared_utilities","write_anndata.R"))
 
 print("Converting objects to AnnDatas...")
-write_anndata(sce, paste0(out,"/sce.h5ad"))
+write_anndata(sce, here(Dr,"sce.h5ad"))
 colData(spe)$dateImg = as.character(colData(spe)$dateImg)
-write_anndata(spe, paste0(out,"/spe.h5ad"))
-#write_anndata(spg, paste0(out,"/spg.h5ad"))
+write_anndata(spe, here(Dr,"spe.h5ad"))
+#write_anndata(spg, paste0(Dr,"spg.h5ad"))
 
 session_info()

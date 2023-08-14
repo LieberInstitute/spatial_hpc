@@ -4,6 +4,8 @@
 
 spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
 sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
+#spg_in <- 
+  
 out <- here("processed-data", "spot_deconvo", "shared_utilities")
   
 load(spe_in)
@@ -38,10 +40,17 @@ colData(spe) <- cbind(colData(spe), segmentation_info)
 colData(spe)$sample_id = as.character(colData(spe)$sample_id)
 spe$count <- spe$CNmask_dark_blue
 
+#   zellkonverter doesn't know how to convert the 'spatialCoords' slot. We'd
+#   ultimately like the spatialCoords in the .obsm['spatial'] slot of the
+#   resulting AnnDatas, which corresponds to reducedDims(spe)$spatial in R
+
 reducedDims(spe)$spatial <- spatialCoords(spe)
+#reducedDims(spg)$spatial <- spatialCoords(spg)
 
 load(sce_in, verbose = TRUE)
 rownames(sce) <- rowData(sce)$gene_id
+
+
 
 ## EDA on counts ## 
 getmode <- function(v) {

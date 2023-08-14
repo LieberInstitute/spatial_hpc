@@ -11,6 +11,25 @@ suppressPackageStartupMessages(library("cowplot"))
 ###############################################################################
 #  Visually check quality of markers
 ###############################################################################
+source(here("code","spot_deconvo","shared_utilities","plottingfunctions.R"))
+source(here("code", "spot_deconvo", "shared_utilities", "shared_function.R"))
+
+Dr <- here("processed-data","spot_decpnvo","shared_utilities")
+
+#cell_group = "broad" 
+cell_group = "layer" 
+n_markers_per_type <- 25
+
+plot_dir <- here("plots", "splot_deconvo", "shared_utilities", cell_group)
+dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
+classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
+
+#   Load objects
+readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+readRDS(here(Dr,"spe.rds"), verbose = TRUE)
+readRDs(here(Dr,paste0("marker_stats_",cell_group,".rds")))
+# readRDS(here(Dr,"spg.rds"), verbose = TRUE)
+
 
 #   Visually show how markers look for each cell type
 plot_list <- lapply(
@@ -40,10 +59,7 @@ plot_list <- lapply(
 
 #   Write a multi-page PDF with violin plots for each cell group and all
 #   markers
-pdf(
-  file.path(plot_dir, paste0("marker_gene_violin.pdf")),
-  width = 35, height = 35
-)
+pdf(file.path(plot_dir, paste0("marker_gene_violin.pdf")),width = 35, height = 35)
 print(plot_list)
 dev.off()
 
