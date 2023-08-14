@@ -1,0 +1,93 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Sat Aug 12 21:54:37 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3677764
+Job name: countSpots.sh
+Hostname: compute-127.cm.cluster
+Task id: 2
+****
+Sample id: V11A20-297_B1 
+****
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+loading data
+4992 Visium spots detected
+Building spot grid
+90429 mask_dark_blue ROIS detected
+counting dots per Visium spot
+100 spots finished in time 387.8718s
+200 spots finished in time 764.8628s
+300 spots finished in time 1142.8043s
+400 spots finished in time 1519.1162s
+500 spots finished in time 1895.836s
+600 spots finished in time 2272.7814s
+700 spots finished in time 2650.0052s
+800 spots finished in time 3025.9129s
+900 spots finished in time 3402.9409s
+1000 spots finished in time 3780.1832s
+1100 spots finished in time 4098.1302s
+1200 spots finished in time 4413.101s
+1300 spots finished in time 4727.6358s
+1400 spots finished in time 5044.7393s
+1500 spots finished in time 5360.7295s
+1600 spots finished in time 5676.8615s
+1700 spots finished in time 5992.5885s
+1800 spots finished in time 6308.4076s
+1900 spots finished in time 6624.4988s
+2000 spots finished in time 6940.9044s
+2100 spots finished in time 7258.3101s
+2200 spots finished in time 7577.2826s
+2300 spots finished in time 7895.3377s
+2400 spots finished in time 8213.8963s
+2500 spots finished in time 8531.8194s
+2600 spots finished in time 8851.6893s
+2700 spots finished in time 9171.4161s
+2800 spots finished in time 9491.6078s
+2900 spots finished in time 9812.07s
+3000 spots finished in time 10131.5293s
+3100 spots finished in time 10452.9318s
+3200 spots finished in time 10773.4617s
+3300 spots finished in time 11093.3706s
+3400 spots finished in time 11414.0065s
+3500 spots finished in time 11733.3471s
+3600 spots finished in time 12053.3188s
+3700 spots finished in time 12373.7744s
+3800 spots finished in time 12694.3394s
+3900 spots finished in time 13014.2299s
+4000 spots finished in time 13334.3753s
+4100 spots finished in time 13654.6852s
+4200 spots finished in time 13974.8441s
+4300 spots finished in time 14295.2256s
+4400 spots finished in time 14615.8631s
+4500 spots finished in time 14935.3856s
+4600 spots finished in time 15255.5274s
+4700 spots finished in time 15575.2618s
+4800 spots finished in time 15894.4395s
+4900 spots finished in time 16214.0934s
+1Channel done16508.3648s
+writing table
+
+ans = 
+
+  struct with fields:
+
+    mask_dark_blue: [4992x1 double]
+
+>> **** Job ends ****
+Sun Aug 13 02:30:18 EDT 2023
