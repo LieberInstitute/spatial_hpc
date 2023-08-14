@@ -1,41 +1,46 @@
 #-------------------------------------------------------------------------------
 #   Add cell counts to HE spatial object
 #-------------------------------------------------------------------------------
-# HE_id_path <- here("processed-data", "spot_deconvo", "HE_ID_table.csv")
-# HE_counts_path <- here("processed-data", "rerun_spaceranger", "{sample_id}", "outs", "spatial", "tissue_spot_counts.csv")
 
-# id_table <- read.csv(HE_id_path)
-# 
-# spe_HE$count <- NA
-# for (sample_id in unique(spe_HE$sample_id)) {
-#   #   Correctly determine the path for the cell counts for this sample, then
-#   #   read in
-#   long_id <- id_table[match(sample_id, id_table$short_id), "long_id"]
-#   this_path <- sub("{sample_id}", long_id, HE_counts_path, fixed = TRUE)
-#   cell_counts <- read.csv(this_path)
-#   
-#   #   All spots in the object should have counts
-#   stopifnot(
-#     all(
-#       colnames(spe_nonIF[, spe_nonIF$sample_id == sample_id]) %in%
-#         cell_counts$barcode
-#     )
-#   )
-#   
-#   #   Line up the rows of 'cell_counts' with the sample-subsetted SPE object
-#   cell_counts <- cell_counts[
-#     match(
-#       colnames(spe_nonIF[, spe_nonIF$sample_id == sample_id]),
-#       cell_counts$barcode
-#     ),
-#   ]
-#   
-#   #   Add this sample's counts to the SPE object
-#   spe_nonIF$count[spe_nonIF$sample_id == sample_id] <- cell_counts$Nmask_dark_blue
-# }
-# 
-# #   Ensure counts were read in for all spots in the object
-# if (any(is.na(spe_nonIF$count))) {
-#   stop("Did not find cell counts for all non-IF spots.")
-# }
+spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
+sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
+out <- here("processed-data", "spot_deconvo", "shared_utilities")
+  
+load(spe_in)
 
+spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
+spaceranger_dirs$SPpath = paste0(spaceranger_dirs$SPpath,"outs/spatial/tissue_spot_counts.csv")
+
+segmentations_list <-
+  lapply(spaceranger_dirs$sample_id, function(sampleid) {
+    file <-spaceranger_dirs$SPpath[spaceranger_dirs$sample_id == sampleid]
+    if (!file.exists(file)) {
+      return(NULL)
+    }
+    x <- read.csv(file)
+    x$key <- paste0(x$barcode, "_", sampleid)
+    return(x)
+  })
+
+## Merge them (once the these files are done, this could be replaced by an rbind)
+segmentations <-
+  Reduce(function(...) {
+    merge(..., all = TRUE)
+  }, segmentations_list[lengths(segmentations_list) > 0])
+
+## Add the information
+segmentation_match <- match(spe$key, segmentations$key)
+segmentation_info <-
+  segmentations[segmentation_match, -which(
+    colnames(segmentations) %in% c("barcode", "tissue", "row", "col", "imagerow", "imagecol", "key")
+  )]
+colData(spe) <- cbind(colData(spe), segmentation_info)
+colData(spe)$sample_id = as.character(colData(spe)$sample_id)
+reducedDims(spe)$spatial <- spatialCoords(spe)
+
+
+load(sce_in, verbose = TRUE)
+rownames(sce) <- rowData(sce)$gene_id
+
+saveRDS(sce, here(out,sce.rds))
+saveRDS(spe, here(out,spe.rds))
