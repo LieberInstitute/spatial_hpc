@@ -8,23 +8,15 @@ suppressPackageStartupMessages({
   library("sessioninfo")
   library("escheR")
 })
-load('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/02_build_spe/spe_bayes_precast.rda')
 
-sample_id = c("V11A20-297_A1", "V11A20-297_B1", "V11A20-297_C1", "V11A20-297_D1", "V11L05-333_A1", "V11L05-333_B1", "V11L05-333_C1", "V11L05-333_D1") 
-spea <- spe[, spe$sample_id %in% sample_id]
+load(here("processed-data","02_build_spe","spe_nmf_final.rda"))
+
+spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
+spaceranger_dirs$SPpath = paste0(spaceranger_dirs$SPpath,"outs/spatial/tissue_spot_counts.csv")
 
 segmentations_list <-
-  lapply(sample_id, function(sampleid) {
-    file <-
-      here(
-        "processed-data",
-        "01_spaceranger",
-        "spaceranger_2022-04-12_SPag033122",
-        sampleid,
-        "outs",
-        "spatial",
-        "tissue_spot_counts.csv"
-      )
+  lapply(spaceranger_dirs$sample_id, function(sampleid) {
+    file <-spaceranger_dirs$SPpath[spaceranger_dirs$sample_id == sampleid]
     if (!file.exists(file)) {
       return(NULL)
     }
@@ -40,109 +32,110 @@ segmentations <-
   }, segmentations_list[lengths(segmentations_list) > 0])
 
 ## Add the information
-segmentation_match <- match(spea$key, segmentations$key)
+segmentation_match <- match(spe$key, segmentations$key)
 segmentation_info <-
   segmentations[segmentation_match, -which(
     colnames(segmentations) %in% c("barcode", "tissue", "row", "col", "imagerow", "imagecol", "key")
   )]
-colData(spea) <- cbind(colData(spea), segmentation_info)
-colData(spea)$sample_id = as.character(colData(spea)$sample_id)
+colData(spe) <- cbind(colData(spe), segmentation_info)
+colData(spe)$sample_id = as.character(colData(spe)$sample_id)
 
-pdf(here("plots", "escheR.pdf"), width = 10, height = 10)
-speb = spea[, which(spea$sample_id == sample_id[1])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[2])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[3])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[4])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[5])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[6])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[7])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[8])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
-p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
-
-dev.off()
-
-##
-pdf(here("plots", "escheR_swap.pdf"), width = 10, height = 10)
-speb = spea[, which(spea$sample_id == sample_id[1])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")+scale_fill_viridis_d(option = "H")
-
-speb = spea[, which(spea$sample_id == sample_id[2])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")
-
-speb = spea[, which(spea$sample_id == sample_id[3])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")
-
-speb = spea[, which(spea$sample_id == sample_id[4])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "Pmask_dark_blue")
-
-speb = spea[, which(spea$sample_id == sample_id[5])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")
-
-speb = spea[, which(spea$sample_id == sample_id[6])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")
-
-speb = spea[, which(spea$sample_id == sample_id[7])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")
-
-speb = spea[, which(spea$sample_id == sample_id[8])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "Pmask_dark_blue")
-p1 |> add_fill(var = "PRECAST_k16_nnSVG")
-
-dev.off()
-
-
+# pdf(here("plots", "escheR.pdf"), width = 10, height = 10)
+# speb = spea[, which(spea$sample_id == sample_id[1])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[2])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[3])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[4])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[5])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[6])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[7])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[8])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")
+# p1 |> add_fill(var = "Pmask_dark_blue")+scale_fill_viridis_c(option = "H")
+# 
+# dev.off()
+# 
+# ##
+# pdf(here("plots", "escheR_swap.pdf"), width = 10, height = 10)
+# speb = spea[, which(spea$sample_id == sample_id[1])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")+scale_fill_viridis_d(option = "H")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[2])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[3])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[4])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "Pmask_dark_blue")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[5])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[6])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[7])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")
+# 
+# speb = spea[, which(spea$sample_id == sample_id[8])]
+# p <- make_escheR(speb)
+# p1 <- p |> add_ground(var = "Pmask_dark_blue")
+# p1 |> add_fill(var = "PRECAST_k16_nnSVG")
+# 
+# dev.off()
+# 
+# 
 
 ## 
-pdf(here("plots", "nuclei density plots.pdf"), width = 10, height = 10)
-for (i in seq_along(sample_id)){
- speb = spea[, which(spea$sample_id == sample_id[i])]
+pdf(here("plots", "VistoSeg", "nuclei density plots.pdf"), width = 10, height = 10)
+sample_ids = spaceranger_dirs$sample_id[1:36]
+for (i in seq_along(sample_ids)){
+ speb = spe[, which(spe$sample_id == sample_ids[i])]
  den <- density(speb$Pmask_dark_blue)
- plot(den, frame = FALSE, col = "blue",main = sample_id[i])
+ plot(den, frame = FALSE, col = "blue",main = sample_ids[i])
 }
 dev.off()
 
@@ -152,45 +145,45 @@ colData(spea)$nuc_bin[colData(spea)$Pmask_dark_blue>0.25] = 2
 colData(spea)$nuc_bin = as.factor(colData(spea)$nuc_bin)
 spea$nuc_bin = factor(spea$nuc_bin, levels = c("1" ,"2"))
 
-pdf(here("plots", "VistoSeg", "escheR_3bin_emptyspots.pdf"), width = 10, height = 10)
+pdf(here("plots", "VistoSeg", "escheR_3bin_emptyneuropilspots.pdf"), width = 10, height = 10)
 speb = spea[, which(spea$sample_id == sample_id[1])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[2])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[3])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[4])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[5])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[6])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[7])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 speb = spea[, which(spea$sample_id == sample_id[8])]
 p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k16_nnSVG")+scale_colour_viridis_d(option = "H")
+p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
 dev.off()
