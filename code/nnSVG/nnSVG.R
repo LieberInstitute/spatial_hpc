@@ -23,6 +23,7 @@ if (sum(ix_zero_genes) > 0) {
 }
 
 dim(spe)
+colData(spe)$sample_id<-factor(colData(spe)$sample_id)
 
 sample_ids <- levels(colData(spe)$sample_id)
 
