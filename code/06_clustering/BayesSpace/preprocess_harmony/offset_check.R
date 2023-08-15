@@ -340,6 +340,71 @@ colData(x)$col <- col
 
 spe = cbind(spe,x)
 
+#vspg Br3942
+x = speo[,colData(speo)$brnum == brains[11]]
+samples = unique(x$sample_id)
+samples
+
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 998
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 97
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 998
+
+ix = colData(x)$sample_id == samples[3]
+col[ix] <- col[ix] + 900 
+
+ix = colData(x)$sample_id == samples[4]
+row[ix] <- row[ix] + 82 
+ix = colData(x)$sample_id == samples[4]
+col[ix] <- col[ix] + 920 
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
+#vspg Br8325
+x = speo[,colData(speo)$brnum == brains[12]]
+samples = unique(x$sample_id)
+samples
+
+
+row <- x$array_row
+col <- x$array_col
+
+ix = colData(x)$sample_id == samples[1]
+row[ix] <- row[ix] + 250
+ix = colData(x)$sample_id == samples[1]
+col[ix] <- col[ix] + 998
+
+ix = colData(x)$sample_id == samples[2]
+row[ix] <- row[ix] + 340
+ix = colData(x)$sample_id == samples[2]
+col[ix] <- col[ix] + 975
+
+ix = colData(x)$sample_id == samples[3]
+row[ix] <- row[ix] + 252
+ix = colData(x)$sample_id == samples[3]
+col[ix] <- col[ix] + 890 
+
+ix = colData(x)$sample_id == samples[4]
+row[ix] <- row[ix] + 330
+ix = colData(x)$sample_id == samples[4]
+col[ix] <- col[ix] + 920 
+
+colData(x)$row <- row
+colData(x)$col <- col
+
+spe = cbind(spe,x)
+
+
 # df <- cbind.data.frame(colData(x), spatialCoords(x))
 # ggplot(df, aes(x = row, y = col, color = sample_id)) + 
 #   geom_point(size = 1) + 
