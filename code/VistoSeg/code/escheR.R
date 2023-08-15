@@ -10,8 +10,12 @@ suppressPackageStartupMessages({
 })
 
 load(here("processed-data","02_build_spe","spe_nmf_final.rda"))
+t = colData(spe)[colData(spe)$slide=="V12F14-051",]
+temp = paste0(sapply(strsplit(t$key,"Br"),'[',1),t$sample_id)
+colData(spe)$key[spe$slide=="V12F14-051"]=temp
 
 spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
+spaceranger_dirs = spaceranger_dirs[1:36,]
 spaceranger_dirs$SPpath = paste0(spaceranger_dirs$SPpath,"outs/spatial/tissue_spot_counts.csv")
 
 segmentations_list <-
@@ -133,9 +137,9 @@ colData(spe)$sample_id = as.character(colData(spe)$sample_id)
 pdf(here("plots", "VistoSeg", "nuclei density plots.pdf"), width = 10, height = 10)
 sample_ids = spaceranger_dirs$sample_id[1:36]
 for (i in seq_along(sample_ids)){
- speb = spe[, which(spe$sample_id == sample_ids[i])]
- den <- density(speb$Pmask_dark_blue)
- plot(den, frame = FALSE, col = "blue",main = sample_ids[i])
+  speb = spe[, which(spe$sample_id == sample_ids[i])]
+  den <- density(speb$Pmask_dark_blue)
+  plot(den, frame = FALSE, col = "blue",main = sample_ids[i])
 }
 dev.off()
 
