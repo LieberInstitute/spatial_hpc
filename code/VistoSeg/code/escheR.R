@@ -7,6 +7,8 @@ suppressPackageStartupMessages({
   library("lobstr")
   library("sessioninfo")
   library("escheR")
+  library("ggplot2")
+  library("gridExtra")
 })
 
 load(here("processed-data","02_build_spe","spe_nmf_final.rda"))
@@ -135,59 +137,108 @@ colData(spe)$sample_id = as.character(colData(spe)$sample_id)
 
 ## 
 pdf(here("plots", "VistoSeg", "nuclei density plots.pdf"), width = 10, height = 10)
-sample_ids = spaceranger_dirs$sample_id[1:36]
-for (i in seq_along(sample_ids)){
-  speb = spe[, which(spe$sample_id == sample_ids[i])]
+for (sample_id in unique(colData(spe)$sample_id)){
+  speb = spe[, which(spe$sample_id == sample_id)]
   den <- density(speb$Pmask_dark_blue)
-  plot(den, frame = FALSE, col = "blue",main = sample_ids[i])
+  plot(den, frame = FALSE, col = "blue",main = sample_id)
 }
 dev.off()
 
-colData(spea)$nuc_bin = 0
-colData(spea)$nuc_bin[colData(spea)$Pmask_dark_blue>0.05] = 1
-colData(spea)$nuc_bin[colData(spea)$Pmask_dark_blue>0.25] = 2
-colData(spea)$nuc_bin = as.factor(colData(spea)$nuc_bin)
-spea$nuc_bin = factor(spea$nuc_bin, levels = c("1" ,"2"))
+colData(spe)$nuc_bin = 0
+colData(spe)$nuc_bin[colData(spe)$Pmask_dark_blue>0.05] = 1
+colData(spe)$nuc_bin[colData(spe)$Pmask_dark_blue>0.25] = 2
+colData(spe)$nuc_bin = as.factor(colData(spe)$nuc_bin)
+spe$nuc_bin = factor(spe$nuc_bin, levels = c("1" ,"2"))
 
 pdf(here("plots", "VistoSeg", "escheR_3bin_emptyneuropilspots.pdf"), width = 10, height = 10)
-speb = spea[, which(spea$sample_id == sample_id[1])]
+for (sample_id in unique(colData(spe)$sample_id)){
+speb = spe[, which(spe$sample_id == sample_id)]
 p <- make_escheR(speb)
 p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
 p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+print(p1)
+}
+dev.off()
 
-speb = spea[, which(spea$sample_id == sample_id[2])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+pdf(here("plots", "VistoSeg", "escheR_3bin_emptyneuropilspots.pdf"), width = 15, height = 15)
 
-speb = spea[, which(spea$sample_id == sample_id[3])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+# for (sample_id in unique(spe$sample_id)){
+# speb = spe[, which(spe$sample_id == sample_id)]; 
+# p <- make_escheR(speb)
+# p = p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+theme(legend.position = "none")
+# p = p |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+# print(p)
+# }
+# dev.off()
 
-speb = spea[, which(spea$sample_id == sample_id[4])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+for (brain in unique(spe$brnum)){
+  speb <- spe[, which(spe$brnum == brain)]
+  samples <- unique(speb$sample_id)
+  samples
+  
+   if (length(samples) == 2){
+    spea = speb[, which(speb$sample_id == samples[1])]; p1 = make_escheR(spea)
+    p1 = p1 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+theme(legend.position = "none")
+    p1 = p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+   
+    spea = speb[, which(speb$sample_id == samples[2])]; p2 = make_escheR(spea)
+    p2 = p2 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p2 = p2 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    grid.arrange(p1, p2, nrow = 2)
+    } else if (length(samples) == 3){
+    spea = speb[, which(speb$sample_id == samples[1])]; p1 = make_escheR(spea)
+    p1 = p1 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p1 = p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[2])]; p2 = make_escheR(spea)
+    p2 = p2 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p2 = p2 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[3])]; p3 = make_escheR(spea)
+    p3 = p3 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p3 = p3 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    grid.arrange(p1, p2, p3, nrow = 2)
+    } else if (length(samples) == 4){
+    spea = speb[, which(speb$sample_id == samples[1])]; p1 = make_escheR(spea)
+    p1 = p1 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p1 = p1|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[2])]; p2 = make_escheR(spea)
+    p2 = p2 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p2 = p2|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[3])]; p3 = make_escheR(spea)
+    p3 = p3 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p3 = p3|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
 
-speb = spea[, which(spea$sample_id == sample_id[5])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
-
-speb = spea[, which(spea$sample_id == sample_id[6])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
-
-speb = spea[, which(spea$sample_id == sample_id[7])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
-
-speb = spea[, which(spea$sample_id == sample_id[8])]
-p <- make_escheR(speb)
-p1 <- p |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")
-p1 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
-
+    spea = speb[, which(speb$sample_id == samples[4])]; p4 = make_escheR(spea)
+    p4 = p4 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p4 = p4|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    grid.arrange(p1, p2, p3, p4, nrow = 2)
+    } else if (length(samples) == 5){
+    spea = speb[, which(speb$sample_id == samples[1])]; p1 = make_escheR(spea)
+    p1 = p1 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p1 = p1|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[2])]; p2 = make_escheR(spea)
+    p2 = p2 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p2 = p2 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[3])]; p3 = make_escheR(spea)
+    p3 = p3 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p3 = p3|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[4])]; p4 = make_escheR(spea)
+    p4 = p4 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p4 = p4 |> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    spea = speb[, which(speb$sample_id == samples[4])]; p5 = make_escheR(spea)
+    p5 = p5 |> add_ground(var = "PRECAST_k18_nnSVG")+scale_colour_viridis_d(option = "H")+ theme(legend.position = "none")
+    p5 = p5|> add_symbol(var = "nuc_bin", size = 0.4)+scale_shape_manual(values=c(20, 19))
+    
+    grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
+}
 dev.off()
