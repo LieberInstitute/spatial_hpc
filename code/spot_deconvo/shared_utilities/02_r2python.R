@@ -16,7 +16,7 @@ suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("tidyverse"))
 
 #  Paths
-Dr <- here("processed-data","spot_decpnvo","shared_utilities")
+Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 ###############################################################################
 #   Main

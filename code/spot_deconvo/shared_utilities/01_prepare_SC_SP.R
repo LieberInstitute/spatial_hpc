@@ -1,3 +1,11 @@
+setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
+suppressPackageStartupMessages({
+  library("here")
+  library("SpatialExperiment")
+  library("rtracklayer")
+  library("lobstr")
+  library("sessioninfo")
+})
 #-------------------------------------------------------------------------------
 #   Add cell counts to HE spatial object
 #-------------------------------------------------------------------------------
@@ -9,6 +17,9 @@ sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hp
 out <- here("processed-data", "spot_deconvo", "shared_utilities")
   
 load(spe_in)
+t = colData(spe)[colData(spe)$slide=="V12F14-051",]
+temp = paste0(sapply(strsplit(t$key,"Br"),'[',1),t$sample_id)
+colData(spe)$key[spe$slide=="V12F14-051"]=temp
 
 spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
 spaceranger_dirs$SPpath = paste0(spaceranger_dirs$SPpath,"outs/spatial/tissue_spot_counts.csv")
@@ -49,6 +60,7 @@ reducedDims(spe)$spatial <- spatialCoords(spe)
 
 load(sce_in, verbose = TRUE)
 rownames(sce) <- rowData(sce)$gene_id
+rownames(spe) <- rowData(spe)$gene_id
 
 ## EDA on counts ## 
 getmode <- function(v) {
@@ -102,5 +114,5 @@ getmode <- function(v) {
 # [1,]     1     3     1     1
 
 ##
-saveRDS(sce, here(out,sce.rds))
-saveRDS(spe, here(out,spe.rds))
+saveRDS(sce, here(out,'sce.rds'))
+saveRDS(spe, here(out,'spe.rds'))
