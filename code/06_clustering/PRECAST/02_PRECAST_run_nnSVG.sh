@@ -1,23 +1,21 @@
 #!/bin/bash
-#$ -cwd
-#$ -l mem_free=10G,h_vmem=10G,h_fsize=80G
-#$ -pe local 8
-#$ -N nnSVG_PRECAST_k10-17
-#$ -o logs/nnsvg_PRECAST_k.$TASK_ID.txt
-#$ -e logs/nnsvg_PRECAST_k.$TASK_ID.txt
-#$ -m e
-#$ -t 10-17
-#$ -tc 1
-
+#SBATCH --job-name=nnSVG_PRECAST_brnum_k15-25
+#SBATCH --output=logs/nnsvg_PRECAST_brnum_k.%a.txt
+#SBATCH --error=logs/nnsvg_PRECAST_brnum_k.%a.txt
+#SBATCH --mail-type=END
+#SBATCH --array=15-25%5
+#SBATCH --cpus-per-task=8
+#SBATCH --mem-per-cpu=8G
+#SBATCH --mail-user=enelso40@jhmi.edu # Please replace with the appropriate email address
 echo "**** Job starts ****"
 date
 
-echo "**** JHPCE info ****"
+echo "**** SLURM info ****"
 echo "User: ${USER}"
-echo "Job id: ${JOB_ID}"
-echo "Job name: ${JOB_NAME}"
+echo "Job id: ${SLURM_JOB_ID}"
+echo "Job name: ${SLURM_JOB_NAME}"
 echo "Hostname: ${HOSTNAME}"
-echo "Task id: ${SGE_TASK_ID}"
+echo "Task id: ${SLURM_ARRAY_TASK_ID}"
 
 ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
 module load conda_R
