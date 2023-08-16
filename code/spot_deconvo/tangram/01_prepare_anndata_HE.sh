@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --mem=120G
 #SBATCH --job-name=prepare_anndatas_HE
-#SBATCH -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_HE_broad_$TASK_ID.log
-#SBATCH -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_HE_broad_$TASK_ID.log
-#SBATCH --array=0-36%4
+#SBATCH -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_HE_broad_$SLURM_ARRAY_TASK_ID.log
+#SBATCH -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_HE_broad_$SLURM_ARRAY_TASK_ID.log
+#SBATCH --array=1-36%4
 
 #$ -cwd
 #$ -N "prepare_anndatas_HE"
@@ -13,7 +13,7 @@
 #$ -t 1-36
 #$ -tc 4
 
-USE_SLURM=1
+USE_SLURM=2
 
 if [[ $USE_SLURM -eq 1 ]]; then
     job_id=$SLURM_JOB_ID
