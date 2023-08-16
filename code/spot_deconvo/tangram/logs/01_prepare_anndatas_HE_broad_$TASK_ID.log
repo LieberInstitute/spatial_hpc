@@ -1,0 +1,15 @@
+**** Job starts ****
+Wed Aug 16 12:19:24 PM EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 22861
+Job name: prepare_anndatas_HE
+Hostname: compute-153
+Task id: 36
+Loading LIBD module for tangram/1.0.2
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/01_prepare_anndata_HE.py", line 8, in <module>
+    import pyhere
+ModuleNotFoundError: No module named 'pyhere'
+**** Job ends ****
+Wed Aug 16 12:19:24 PM EDT 2023
