@@ -26,8 +26,8 @@ from pathlib import Path
 #   Variable definitions
 ################################################################################
 
-cell_group = "broad" # "broad" or "layer"
-
+#cell_group = "broad" 
+cell_group = "layer"
 
 processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group)
 plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group)
