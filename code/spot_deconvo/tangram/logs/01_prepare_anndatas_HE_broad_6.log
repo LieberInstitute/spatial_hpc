@@ -1,0 +1,66 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug 16 12:41:26 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3684723
+Job name: prepare_anndatas_HE
+Hostname: compute-127.cm.cluster
+Task id: 6
+Loading LIBD module for tangram/1.0.2
+Loading AnnDatas...
+Traceback (most recent call last):
+  File "01_prepare_anndata_HE.py", line 82, in <module>
+    sample_name = ad_sp.obs[sample_id_var].unique()[int(os.environ['task_id']) - 1]
+  File "/jhpce/shared/jhpce/libd/tangram/1.0.2/tangram_env/lib/python3.8/os.py", line 675, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'task_id'
+**** Job ends ****
+Wed Aug 16 12:41:40 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug 16 13:29:29 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3684861
+Job name: prepare_anndatas_HE
+Hostname: compute-129.cm.cluster
+Task id: 6
+Loading LIBD module for tangram/1.0.2
+INFO:root:138 training genes are saved in `uns``training_genes` of both single cell and spatial Anndatas.
+INFO:root:23622 overlapped genes are saved in `uns``overlap_genes` of both single cell and spatial Anndatas.
+INFO:root:uniform based density prior is calculated and saved in `obs``uniform_density` of the spatial Anndata.
+INFO:root:rna count based density prior is calculated and saved in `obs``rna_count_based_density` of the spatial Anndata.
+Loading AnnDatas...
+Subsetting to just sample V11L05-333_B1.
+Gene ENSG00000198162 (PPFIA2) is in the test set.
+Gene ENSG00000168314 (AMPH) is in the training set.
+Gene ENSG00000145423 (FNDC1) is in the test set.
+Gene ENSG00000164241 (GFRA1) is in the test set.
+Gene ENSG00000164434 (KRT17) is in the test set.
+Gene ENSG00000164694 (C5orf63) is in the test set.
+Gene ENSG00000180354 (GAD2) is in the test set.
+Gene ENSG00000078053 (MIF) is in the test set.
+Gene ENSG00000136750 (FABP7) is in the training set.
+Gene ENSG00000107796 (MAN1A2) is in the test set.
+Gene ENSG00000151892 (SFRP2) is in the test set.
+Gene ENSG00000019144 (MOBP) is in the test set.
+Gene ENSG00000139220 (MAG) is in the test set.
+Gene ENSG00000128422 (MTURN) is in the test set.
+Gene ENSG00000118271 (PHLDB1) is in the test set.
+Gene ENSG00000105695 (ACTA2) is in the test set.
+Gene ENSG00000240972 (TTR) is in the test set.
+**** Job ends ****
+Wed Aug 16 13:30:13 EDT 2023
