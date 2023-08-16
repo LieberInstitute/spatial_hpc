@@ -79,7 +79,7 @@ print('Loading AnnDatas...')
 ad_sp = sc.read_h5ad(sp_path_in)
 ad_sp.obs[sample_id_var] = ad_sp.obs[sample_id_var].astype('category')
 
-sample_name = ad_sp.obs[sample_id_var].unique()[int(os.environ['SGE_TASK_ID']) - 1]
+sample_name = ad_sp.obs[sample_id_var].unique()[int(os.environ['task_id']) - 1]
 
 #   Different naming conventions are used between sample IDs in ad_sp vs. in
 #   file paths for spaceranger files. Grab the spaceranger ID for this sample
