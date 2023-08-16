@@ -1,9 +1,9 @@
 #!/bin/bash
 #$ -cwd
 #$ -N "align_tangram_HE"
-#$ -o ../../../processed-data/spot_deconvo/tangram/logs/02_align_tangram_HE_layer_$TASK_ID.log
-#$ -e ../../../processed-data/spot_deconvo/tangram/logs/02_align_tangram_HE_layer_$TASK_ID.log
-#$ -l caracol,mf=128G,h_vmem=128G
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_broad_$TASK_ID.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_broad_$TASK_ID.log
+#$ -l gpu,mf=128G,h_vmem=128G
 #$ -t 1-36
 #$ -tc 2
 
