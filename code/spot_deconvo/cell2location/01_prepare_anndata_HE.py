@@ -1,6 +1,6 @@
 import sys
 import os
-#os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
+os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 import scanpy as sc
 import anndata
 import pandas as pd
@@ -25,25 +25,23 @@ import pprint
 #   Variable definitions
 ################################################################################
 
-cell_group = "broad" # "broad" or "layer"
+#cell_group = "broad" 
+cell_group = "layer" 
 
-
-sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_" + cell_group + ".h5ad")
-sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "HE", "spe.h5ad")
+sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce.h5ad")
+sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
+#spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
 
 processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group)
 plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group)
 Path(plot_dir).mkdir(parents=True, exist_ok=True)
 Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
-#   Directory containing hires image and a JSON containing scale factors and
-#   spot size for a given sample. Here '{}' will be replaced by a single
-#   sample def name(self, 
+#   Directory containing hires image and a JSON containing scale factors and spot size for a given sample. 
 spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial')
 
 marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + ".txt")
-sample_info_path = pyhere.here("processed-data", "spot_deconvo", "HE_ID_table.csv")
 
 #   In single-cell only
 if cell_group == 'broad':
@@ -69,8 +67,9 @@ plot_file_type = 'pdf'
 print('Loading AnnDatas...')
 adata_vis = sc.read_h5ad(sp_path)
 adata_ref = sc.read_h5ad(sc_path)
-# adata_vis.obs['sample'] = adata_vis.obs[sample_id_var]
 
+# update Visium AnnData object to match structure in cell2location tutorial
+adata_vis.obs['sample'] = adata_vis.obs[sample_id_var]
 # rename genes to ENSEMBL
 adata_vis.var['SYMBOL'] = adata_vis.var[gene_symbol_var]
 adata_vis.var_names = adata_vis.var[ensembl_id_var]
@@ -83,8 +82,7 @@ adata_vis.var['MT_gene'] = [gene.startswith('MT-') for gene in adata_vis.var['SY
 adata_vis.obsm['MT'] = adata_vis[:, adata_vis.var['MT_gene'].values].X.toarray()
 adata_vis = adata_vis[:, ~adata_vis.var['MT_gene'].values]
 
-#   Spatial AnnData needs unique indices. Rather than using barcode (repeated
-#   for every sample), use "key" (barcode + sample ID)
+# Spatial AnnData needs unique indices. Rather than using barcode (repeated for every sample), use "key" (barcode + sample ID)
 adata_vis.obs_names = adata_vis.obs['key']
 adata_vis.obs_names.name = None
 
@@ -116,8 +114,7 @@ for sample_id in adata_vis.obs['sample_id'].cat.categories:
     with open(json_path) as f: 
         json_data = json.load(f)
     
-    #   Read in high-res image as numpy array with values in [0, 1] rather than
-    #   [0, 255], then attach to AnnData object
+    #   Read in high-res image as numpy array with values in [0, 1] rather than [0, 255], then attach to AnnData object
     img_path = pyhere.here(str(spaceranger_dir),'tissue_hires_image.png')
     img_arr = np.array(Image.open(img_path), dtype = np.float32) / 256
     
