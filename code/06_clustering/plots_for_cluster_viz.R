@@ -1,8 +1,8 @@
-bayesSpace_name <- colnames(colData(spe))[20]
+bayesSpace_name <- colnames(colData(spe))[69]
 
 brains <- unique(spe$brnum)
 
-k<-15
+k<-18
 p<-list()
 for (i in seq_along(bayesSpace_name)) {
     p[[i]]<-list()
@@ -39,8 +39,7 @@ for (i in seq_along(bayesSpace_name)) {
 
 for (i in seq_along(bayesSpace_name)) {
     pdf(
-        file = here::here("plots", "06_clustering", "BayesSpace",
-                          "preprocess_harmony",
+        file = here::here("plots", "06_clustering", "PRECAST",
                           paste0(bayesSpace_name[i], ".pdf")))
     print("printing next one")
 
@@ -51,7 +50,7 @@ for (i in seq_along(bayesSpace_name)) {
     dev.off()
 }
 
-2,11,12
+
 
 clus<-as.list(colData(spe)[,c(20,50:74)])
 heat<-compareClusterings(clus,T)
