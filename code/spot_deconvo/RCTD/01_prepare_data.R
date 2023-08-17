@@ -44,3 +44,8 @@ nUMI <- colSums(counts) # In this case, total counts per pixel is nUMI
 ### Create SpatialRNA object
 puck <- SpatialRNA(coords, counts, nUMI)
 
+### plotting
+barcodes <- colnames(puck@counts) # 
+plot_puck_continuous(puck, barcodes, puck@nUMI, ylimit = c(0,round(quantile(puck@nUMI,0.9))), title ='plot of nUMI') 
+
+myRCTD <- create.RCTD(puck, reference, max_cores = 1)
