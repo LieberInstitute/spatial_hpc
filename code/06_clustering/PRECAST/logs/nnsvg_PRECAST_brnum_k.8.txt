@@ -1,11 +1,11 @@
 **** Job starts ****
-Thu Aug 17 10:26:44 AM EDT 2023
+Thu Aug 17 11:20:22 AM EDT 2023
 **** SLURM info ****
 User: enelson
-Job id: 22993
-Job name: nnSVG_PRECAST_brnum_k31-40
-Hostname: compute-153
-Task id: 35
+Job id: 23005
+Job name: nnSVG_PRECAST_brnum_k2-9
+Hostname: compute-152
+Task id: 8
 Loading conda_R/4.3
 
 Currently Loaded Modules:
@@ -16,10 +16,10 @@ Currently Loaded Modules:
 Filter spots and features from Raw count data...
  
  
-2023-08-17 10:28:04.993047 : ***** Filtering step for raw count data finished!, 0.312 mins elapsed.
+2023-08-17 11:21:21.558799 : ***** Filtering step for raw count data finished!, 0.179 mins elapsed.
 Select the variable genes for each data batch...
 CreatePRECASTObject: remove genes:ENSG00000110195  ENSG00000164707  ENSG00000260440  ENSG00000164825  ENSG00000170323  ENSG00000105641  ENSG00000106341  ENSG00000115474  ENSG00000107165  ENSG00000130957  ENSG00000064205  ENSG00000113494  ENSG00000172724  ENSG00000168542  ENSG00000163017  ENSG00000165376  ENSG00000198734  ENSG00000149452  ENSG00000277639  ENSG00000183644  ENSG00000286722  ENSG00000258752  ENSG00000165588  ENSG00000118194  ENSG00000240045  ENSG00000165215  ENSG00000168779  ENSG00000120057  ENSG00000198691  ENSG00000184601  ENSG00000167757  ENSG00000130513  ENSG00000126545  ENSG00000120903  ENSG00000158104  ENSG00000077327  ENSG00000188396  ENSG00000153347  ENSG00000180638  ENSG00000152779  ENSG00000233392  ENSG00000111319  ENSG00000111199  ENSG00000174576  ENSG00000152611  ENSG00000135426  ENSG00000160401  ENSG00000287364  ENSG00000286269  ENSG00000111863  ENSG00000012223  ENSG00000198848  ENSG00000173110  ENSG00000205863  ENSG00000183671  ENSG00000147003  ENSG00000099715  ENSG00000272196  ENSG00000180071  ENSG00000070729  ENSG00000229807  ENSG00000155657  ENSG00000170959  ENSG00000116014  ENSG00000140795  with low count reads in seuList.
-2023-08-17 10:28:05.049982 : ***** Gene selection finished!, 0.001 mins elapsed.
+2023-08-17 11:21:21.591261 : ***** Gene selection finished!, 0.001 mins elapsed.
 Filter spots and features from SVGs(HVGs) count data...
 Performing log-normalization
 0%   10   20   30   40   50   60   70   80   90   100%
@@ -69,7 +69,7 @@ Performing log-normalization
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-2023-08-17 10:28:31.047438 : ***** Filtering step for count data with variable genes finished!, 0.174 mins elapsed.
+2023-08-17 11:21:35.216349 : ***** Filtering step for count data with variable genes finished!, 0.097 mins elapsed.
 [[1]]
 An object of class Seurat 
 1935 features across 14087 samples within 1 assay 
@@ -146,5 +146,3 @@ Neighbors were identified for 19023 out of 19026 spots.
 -----PRECAST model setting: error_heter=TRUE, Sigma_equal=FALSE, Sigma_diag=TRUE, mix_prop_heter=TRUE
 Start computing intial values... 
 
-fitting ...
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%

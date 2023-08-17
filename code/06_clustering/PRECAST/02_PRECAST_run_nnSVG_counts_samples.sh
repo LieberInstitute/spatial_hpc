@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=nnSVG_PRECAST_k15-25
+#SBATCH --job-name=nnSVG_PRECAST_k26-30
 #SBATCH --output=logs/nnsvg_PRECAST_k.%a.txt
 #SBATCH --error=logs/nnsvg_PRECAST_k.%a.txt
 #SBATCH --mail-type=END
-#SBATCH --array=15-25%3
+#SBATCH --array=26-30%5
 #SBATCH --cpus-per-task=8
 #SBATCH --mem-per-cpu=8G
 #SBATCH --mail-user=enelso40@jhmi.edu # Please replace with the appropriate email address
