@@ -55,3 +55,23 @@ Task id: 4
 Loading LIBD module for tangram/1.0.2
 INFO:root:Allocate tensors for mapping.
 INFO:root:Begin training with 141 genes and customized density_prior in constrained mode...
+INFO:root:Saving results..
+INFO:root:spatial prediction dataframe is saved in `obsm` `tangram_ct_pred` of the spatial AnnData.
+Using tangram version: 1.0.2
+Only using spatial sample V11A20-297_D1.
+Re-aligning in "deconvolution mode"...
+Score: 0.165, KL reg: 0.701, Count reg: 22639.145, Lambda f reg: 15597.057
+Score: 0.729, KL reg: 0.034, Count reg: 7.270, Lambda f reg: 2710.162
+Score: 0.750, KL reg: 0.024, Count reg: 2.750, Lambda f reg: 997.934
+Score: 0.754, KL reg: 0.024, Count reg: 2.508, Lambda f reg: 716.440
+Score: 0.756, KL reg: 0.024, Count reg: 3.492, Lambda f reg: 590.864
+Score: 0.757, KL reg: 0.024, Count reg: 0.809, Lambda f reg: 520.268
+Score: 0.757, KL reg: 0.024, Count reg: 3.216, Lambda f reg: 460.396
+Score: 0.758, KL reg: 0.024, Count reg: 5.428, Lambda f reg: 411.747
+Score: 0.758, KL reg: 0.024, Count reg: 4.789, Lambda f reg: 365.510
+Score: 0.758, KL reg: 0.024, Count reg: 0.949, Lambda f reg: 337.684
+Projecting annotation and plotting AUC...
+Saving AnnDatas...
+Done all tasks.
+**** Job ends ****
+Thu Aug 17 10:33:53 EDT 2023
