@@ -1,0 +1,62 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug 16 15:53:44 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3685085
+Job name: align_tangram_HE
+Hostname: compute-123.cm.cluster
+Task id: 24
+Chose GPU(s): 3
+Loading LIBD module for tangram/1.0.2
+Traceback (most recent call last):
+  File "02_align_HE.py", line 18, in <module>
+    import custom_tg_code as ctg
+ModuleNotFoundError: No module named 'custom_tg_code'
+**** Job ends ****
+Wed Aug 16 15:53:52 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Aug 16 19:08:03 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3685189
+Job name: align_tangram_HE
+Hostname: compute-123.cm.cluster
+Task id: 24
+Chose GPU(s): 3
+Loading LIBD module for tangram/1.0.2
+INFO:root:Allocate tensors for mapping.
+INFO:root:Begin training with 146 genes and customized density_prior in constrained mode...
+INFO:root:Saving results..
+INFO:root:spatial prediction dataframe is saved in `obsm` `tangram_ct_pred` of the spatial AnnData.
+Using tangram version: 1.0.2
+Only using spatial sample V11U08-084_D1.
+Re-aligning in "deconvolution mode"...
+Score: 0.150, KL reg: 0.806, Count reg: 10350.996, Lambda f reg: 15576.752
+Score: 0.734, KL reg: 0.038, Count reg: 15.932, Lambda f reg: 2367.692
+Score: 0.759, KL reg: 0.024, Count reg: 0.141, Lambda f reg: 632.585
+Score: 0.763, KL reg: 0.023, Count reg: 1.602, Lambda f reg: 371.201
+Score: 0.764, KL reg: 0.023, Count reg: 0.029, Lambda f reg: 290.442
+Score: 0.765, KL reg: 0.023, Count reg: 1.449, Lambda f reg: 250.381
+Score: 0.765, KL reg: 0.023, Count reg: 0.449, Lambda f reg: 230.096
+Score: 0.766, KL reg: 0.023, Count reg: 0.465, Lambda f reg: 213.841
+Score: 0.766, KL reg: 0.023, Count reg: 1.348, Lambda f reg: 200.212
+Score: 0.766, KL reg: 0.023, Count reg: 2.291, Lambda f reg: 192.379
+Projecting annotation and plotting AUC...
+Saving AnnDatas...
+Done all tasks.
+**** Job ends ****
+Wed Aug 16 19:24:21 EDT 2023
