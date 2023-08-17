@@ -4,8 +4,8 @@
 #$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_broad_$TASK_ID.log
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_broad_$TASK_ID.log
 #$ -l gpu,mf=128G,h_vmem=128G
-#$ -t 1-36
-#$ -tc 2
+#$ -t 4-6
+#$ -tc 3
 
 echo "**** Job starts ****"
 date
@@ -20,25 +20,25 @@ echo "Task id: ${SGE_TASK_ID}"
 #   Dynamically select a GPU based on availability
 ###############################################################################
 
-USAGE_CUTOFF=10
-NUM_GPUS=1
+#USAGE_CUTOFF=10
+#NUM_GPUS=1
 
-avail_gpus=$(
-    nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader |
-    cut -d " " -f 1 | awk -v usage="$USAGE_CUTOFF" '$1 < usage {print NR - 1}'
-)
+#avail_gpus=$(
+#    nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader |
+#    cut -d " " -f 1 | awk -v usage="$USAGE_CUTOFF" '$1 < usage {print NR - 1}'
+#)
 
 #  Simply exit with an error if there are no GPUs left
-if [[ -z $avail_gpus ]]; then
-    echo "No GPUs are available."
-    exit 1
-fi
+#if [[ -z $avail_gpus ]]; then
+#    echo "No GPUs are available."
+#    exit 1
+#fi
 
-export CUDA_VISIBLE_DEVICES=$(
-    echo "$avail_gpus" | head -n $NUM_GPUS | paste -sd ","
-)
+#export CUDA_VISIBLE_DEVICES=$(
+#    echo "$avail_gpus" | head -n $NUM_GPUS | paste -sd ","
+#)
 
-echo "Chose GPU(s): $CUDA_VISIBLE_DEVICES"
+#echo "Chose GPU(s): $CUDA_VISIBLE_DEVICES"
 
 ###############################################################################
 #   Submit the python script

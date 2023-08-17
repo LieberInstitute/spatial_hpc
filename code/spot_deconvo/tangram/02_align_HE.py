@@ -60,7 +60,7 @@ print('Using tangram version:', tg.__version__)
 #-------------------------------------------------------------------------------
 
 #  Grab the full list of sample names we will subset from
-spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
+spaceranger_dirs = pd.read_csv("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/shared_utilities/samples.txt", sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial')
 sample_names = spaceranger_dirs.sample_id
 
