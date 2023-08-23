@@ -30,3 +30,23 @@ spaceranger_dirs = pd.read_csv(here("code","spot_deconvo","shared_utilities","sa
 spaceranger_dirs =spaceranger_dirs[36:].reset_index(drop=True)
 JSON_path = here(spaceranger_dirs.SPpath, 'outs', 'spatial','scalefactors_json.json')
 OUT_dir = here('processed-data', 'spot_deconvo', 'samui', '{}')
+
+################################################################################
+#   Read in sample info and clean
+################################################################################
+# os.environ['SGE_TASK_ID'] = '1'
+
+#   Subset all types of IDs to this sample only
+sample_id = spaceranger_dirs.sample_id.iloc[int(os.environ['SGE_TASK_ID']) - 1]
+
+#   Update paths for this sample ID
+out_dir = Path(str(OUT_dir).format(sample_id))
+json_path = JSON_path.iloc[int(os.environ['SGE_TASK_ID']) - 1]
+img_path = Path(str(IMG_path).format(sample_id))
+coord_path = Path(str(coord_path).format(sample_id))
+
+out_dir.mkdir(exist_ok = True)
+
+#   All paths should exist
+assert all([x.exists() for x in [out_dir, json_path, img_path]])
+
