@@ -50,3 +50,13 @@ out_dir.mkdir(exist_ok = True)
 #   All paths should exist
 assert all([x.exists() for x in [out_dir, json_path, img_path]])
 
+################################################################################
+#   Read in scale-factors info
+################################################################################
+
+#   Read in the spaceranger JSON to calculate meters per pixel for
+#   the full-resolution image
+with open(json_path, 'r') as f:
+    spaceranger_json = json.load(f)
+
+m_per_px = spot_diameter_m / spaceranger_json['spot_diameter_fullres']
