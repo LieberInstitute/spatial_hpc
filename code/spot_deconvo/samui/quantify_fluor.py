@@ -92,3 +92,22 @@ raw = raw.iloc[raw.included[raw.included == 1].index].reset_index().drop(columns
 imgs = tifffile.imread(img_path)
 dat = np.load(mask_path,allow_pickle=True).item()
 masks = dat['masks']
+
+#   Quantify the mean image fluorescence intensity at each nucleus
+#   identified by segmenting the DAPI channel. This is done for each
+#   (non-lipofuscin, non-DAPI) channel
+its = {
+    names[i]: regionprops_table(
+        masks, intensity_image=imgs[i], properties=["intensity_mean"]
+    )["intensity_mean"]
+    for i in range(2, 6)
+}
+
+#   Create a table containing the centroids and areas of each mask
+#   (nucleus), and add this info to the intensities table
+general = regionprops_table(masks, properties=["centroid", "area"])
+its["area"] = general["area"]
+its["x"] = general["centroid-0"]
+its["y"] = general["centroid-1"]
+
+df = pd.DataFrame(its)
