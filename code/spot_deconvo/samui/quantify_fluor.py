@@ -137,3 +137,4 @@ df.rename(
     },
     axis = 1, inplace = True
 )
+df.to_csv(out_df_path)
