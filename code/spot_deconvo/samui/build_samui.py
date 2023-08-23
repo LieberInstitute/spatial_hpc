@@ -73,7 +73,7 @@ coords=pd.read_csv(coord_path)
 
 this_sample = Sample(name = sample_id, path = out_dir)
 
-this_sample.add_coords(coords[['x', 'y']],name = "coords", mPerPx = m_per_px, size = spot_diameter_m)
+this_sample.add_coords(coords[['x', 'y']],name = "coords", mPerPx = m_per_px, size = size = 5e-10)
 
 #   Add the IF image for this sample
 this_sample.add_image( tiff = img_path, channels = img_channels, scale = m_per_px, defaultChannels = default_channels)
