@@ -21,3 +21,12 @@ default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555',
 #   Names of continuous features expected to be columns in the observation data (colData) of the AnnData
 # spe_cont_features = ['NDAPI', 'CNDAPI', 'PDAPI']
 inten_features = ['TMEM119', 'GFAP', 'OLIG2', 'LIP', 'area']
+
+spe_path = here('processed-data', 'spot_deconvo', 'shared_utilities', 'spe.h5ad')
+IMG_path = here('processed-data', 'spot_deconvo', 'samui', '{}.tif')
+coord_path =  here('processed-data', 'spot_deconvo', 'samui', '{}_df.csv')
+
+spaceranger_dirs = pd.read_csv(here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
+spaceranger_dirs =spaceranger_dirs[36:].reset_index(drop=True)
+JSON_path = here(spaceranger_dirs.SPpath, 'outs', 'spatial','scalefactors_json.json')
+OUT_dir = here('processed-data', 'spot_deconvo', 'samui', '{}')
