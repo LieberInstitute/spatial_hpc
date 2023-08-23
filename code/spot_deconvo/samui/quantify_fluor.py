@@ -111,3 +111,29 @@ its["x"] = general["centroid-0"]
 its["y"] = general["centroid-1"]
 
 df = pd.DataFrame(its)
+#-------------------------------------------------------------------------------
+#   Exploratory plot: show the distribution of masks over spots
+#-------------------------------------------------------------------------------
+
+#   Plot mask spatial distribution vs. spot distribution; there should be
+#   quite a bit of overlap
+plt.clf()
+plt.scatter(raw["x"], raw["y"], 2)
+plt.scatter(df["x"], df["y"], 2)
+plt.savefig(
+    os.path.join(
+        plot_dir, f'mask_spot_overlap_{sample_id_img}.{plot_file_type}'
+    )
+)
+
+#-------------------------------------------------------------------------------
+#   Save relevant data
+#-------------------------------------------------------------------------------
+df.rename(
+    {
+        'x': 'y',
+        'y': 'x',
+        'Unnamed: 0': 'id'
+    },
+    axis = 1, inplace = True
+)
