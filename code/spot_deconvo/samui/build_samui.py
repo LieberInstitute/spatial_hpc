@@ -66,5 +66,21 @@ m_per_px = spot_diameter_m / spaceranger_json['spot_diameter_fullres']
 ################################################################################
 
 coords=pd.read_csv(coord_path)
-coords.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
-coords.index = coords.index.astype(str)
+
+################################################################################
+#   Use the Samui API to create the importable directory for this sample
+################################################################################
+
+this_sample = Sample(name = sample_id, path = out_dir)
+
+this_sample.add_coords(coords[['x', 'y']],name = "coords", mPerPx = m_per_px, size = spot_diameter_m)
+
+#   Add the IF image for this sample
+this_sample.add_image( tiff = img_path, channels = img_channels, scale = m_per_px, defaultChannels = default_channels)
+
+#   Add gene expression results (multiple columns) as a feature
+this_sample.add_csv_feature(coords[inten_features], name = "meanIntensities", coordName = "coords", dataType = "quantitative")
+
+this_sample.set_default_feature(group = "Genes", feature = default_gene)
+
+this_sample.write()
