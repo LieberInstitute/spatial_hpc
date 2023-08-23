@@ -19,3 +19,5 @@ default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555',
 #default_gene = 'PPFIA2'
 
 #   Names of continuous features expected to be columns in the observation data (colData) of the AnnData
+# spe_cont_features = ['NDAPI', 'CNDAPI', 'PDAPI']
+inten_features = ['TMEM119', 'GFAP', 'OLIG2', 'LIP', 'area']
