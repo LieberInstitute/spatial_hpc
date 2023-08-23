@@ -60,3 +60,11 @@ with open(json_path, 'r') as f:
     spaceranger_json = json.load(f)
 
 m_per_px = spot_diameter_m / spaceranger_json['spot_diameter_fullres']
+
+################################################################################
+#   extract coords for cells
+################################################################################
+
+coords=pd.read_csv(coord_path)
+coords.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
+coords.index = coords.index.astype(str)
