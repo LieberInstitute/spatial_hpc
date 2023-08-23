@@ -88,3 +88,7 @@ raw = raw.iloc[raw.included[raw.included == 1].index].reset_index().drop(columns
 #   Quantify mean fluorescence for each channel at each nucleus
 #-------------------------------------------------------------------------------
 
+#   Load multi-channel image and masks from segmenting DAPI channel
+imgs = tifffile.imread(img_path)
+dat = np.load(mask_path,allow_pickle=True).item()
+masks = dat['masks']
