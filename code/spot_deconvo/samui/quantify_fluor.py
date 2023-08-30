@@ -50,7 +50,7 @@ plot_file_type = 'png' # 'pdf' is also supported for higher-quality plots
 #   Analysis
 ################################################################################
 
-# os.environ['SGE_TASK_ID'] = '1'
+os.environ['SGE_TASK_ID'] = '5'
 
 #-------------------------------------------------------------------------------
 #   Read in sample info and adjust paths for this particular sample ID
@@ -100,7 +100,7 @@ its = {
     names[i]: regionprops_table(
         masks, intensity_image=imgs[i], properties=["intensity_mean"]
     )["intensity_mean"]
-    for i in range(2, 6)
+    for i in range(1, 5)
 }
 
 #   Create a table containing the centroids and areas of each mask
