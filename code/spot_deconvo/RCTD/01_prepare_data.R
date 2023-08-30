@@ -11,8 +11,8 @@ suppressPackageStartupMessages(library("spacexr"))
 Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 #   Load objects
-sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
-spe = readRDS(here(Dr,"spe.rds"), verbose = TRUE)
+sce = readRDS(here(Dr,"sce.rds"))
+spe = readRDS(here(Dr,"spe.rds"))
 
 # reference data
 counts = assays(sce)$counts
@@ -49,6 +49,14 @@ barcodes <- colnames(puck@counts) #
 plot_puck_continuous(puck, barcodes, puck@nUMI, ylimit = c(0,round(quantile(puck@nUMI,0.9))), title ='plot of nUMI') 
 
 myRCTD <- create.RCTD(puck, reference, max_cores = 1)
-myRCTD <- run.RCTD(myRCTD, doublet_mode = 'doublet')
+myRCTD <- run.RCTD(myRCTD, doublet_mode = 'multi')
 
 results <- myRCTD@results
+norm_weights = normalize_weights(results$weights) 
+cell_type_names <- myRCTD@cell_type_info$info[[2]] #list of cell type names
+spatialRNA <- myRCTD@spatialRNA
+resultsdir <- 'RCTD_Plots' ## you may change this to a more accessible directory on your computer.
+dir.create(resultsdir)
+
+plot_all_cell_types(results$results_df, spatialRNA@coords, cell_type_names, resultsdir) 
+
