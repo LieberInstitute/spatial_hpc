@@ -24,12 +24,12 @@ inten_features = ['NeuN', 'TMEM119', 'GFAP', 'OLIG2', 'area']
 
 spe_path = here('processed-data', 'spot_deconvo', 'shared_utilities', 'spe.h5ad')
 IMG_path = here('processed-data', 'Images', 'VistoSeg', 'VSPG', '{}.tif')
-coord_path =  here('processed-data', 'spot_deconvo', 'samui', '{}_df.csv')
+coord_path =  here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', '{}_df.csv')
 
 spaceranger_dirs = pd.read_csv(here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs =spaceranger_dirs[36:].reset_index(drop=True)
 JSON_path = here(spaceranger_dirs.SPpath, 'outs', 'spatial','scalefactors_json.json')
-OUT_dir = here('processed-data', 'spot_deconvo', 'samui', '{}')
+OUT_dir = here('processed-data', 'spot_deconvo','groundTruth', '02_samui_manual_annotation', '{}')
 
 ################################################################################
 #   Read in sample info and clean

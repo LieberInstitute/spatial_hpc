@@ -7,10 +7,8 @@ import pandas as pd
 from pathlib import Path
 
 #   Pretrained model based on 'cyto' and iteratively refined in the GUI
-model_path = pyhere.here(
-    'processed-data', 'spot_deconvo', 'cellpose', 'richard', 'models',
-    'CP_20220415_152031'
-)
+model_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '01_cellpose', 'maddy_models','CP_20230819_163525')
+# model_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', 'cellpose', 'richard', 'models','CP_20220415_152031')
 cell_diameter = None
 channel = 1 # DAPI
 
@@ -18,7 +16,8 @@ channel = 1 # DAPI
 #   Visium-IF images
 sample_info_path = pyhere.here('raw-data', 'sample_info', 'VSPG_HPC_20230626.xlsx')
 img_dir = pyhere.here('processed-data', 'Images', 'VistoSeg', 'VSPG')
-mask_dir = pyhere.here('processed-data', 'spot_deconvo', 'cellpose', 'masks')
+# mask_dir = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth','01_cellpose', 'masks') #if using richard models
+mask_dir = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth','01_cellpose', 'final_masks') #if using maddy models
 
 Path(mask_dir).mkdir(parents=True, exist_ok=True)
 
