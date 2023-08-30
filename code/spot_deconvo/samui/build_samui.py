@@ -13,17 +13,17 @@ from rasterio import Affine
 from loopy.sample import Sample
 from loopy.utils.utils import remove_dupes, Url
 
-spot_diameter_m = 55e-6 # 55-micrometer diameter for Visium spot
-img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Autofluorescence', 'segmented_DAPI']
-default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'magenta': 'Alexa647', 'cyan': 'Autofluorescence', 'white': 'segmented_DAPI'}
+spot_diameter_m = 55e-6 # 5-micrometer diameter for Visium spot
+img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Autofluorescence']
+default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'magenta': 'Alexa647', 'cyan': 'Autofluorescence'}
 #default_gene = 'PPFIA2'
 
 #   Names of continuous features expected to be columns in the observation data (colData) of the AnnData
 # spe_cont_features = ['NDAPI', 'CNDAPI', 'PDAPI']
-inten_features = ['TMEM119', 'GFAP', 'OLIG2', 'LIP', 'area']
+inten_features = ['NeuN', 'TMEM119', 'GFAP', 'OLIG2', 'area']
 
 spe_path = here('processed-data', 'spot_deconvo', 'shared_utilities', 'spe.h5ad')
-IMG_path = here('processed-data', 'spot_deconvo', 'samui', '{}.tif')
+IMG_path = here('processed-data', 'Images', 'VistoSeg', 'VSPG', '{}.tif')
 coord_path =  here('processed-data', 'spot_deconvo', 'samui', '{}_df.csv')
 
 spaceranger_dirs = pd.read_csv(here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
@@ -34,7 +34,7 @@ OUT_dir = here('processed-data', 'spot_deconvo', 'samui', '{}')
 ################################################################################
 #   Read in sample info and clean
 ################################################################################
-# os.environ['SGE_TASK_ID'] = '1'
+os.environ['SGE_TASK_ID'] = '4'
 
 #   Subset all types of IDs to this sample only
 sample_id = spaceranger_dirs.sample_id.iloc[int(os.environ['SGE_TASK_ID']) - 1]
@@ -66,14 +66,14 @@ m_per_px = spot_diameter_m / spaceranger_json['spot_diameter_fullres']
 ################################################################################
 
 coords=pd.read_csv(coord_path)
-
+coords.index = coords.index.astype(str)
 ################################################################################
 #   Use the Samui API to create the importable directory for this sample
 ################################################################################
 
 this_sample = Sample(name = sample_id, path = out_dir)
 
-this_sample.add_coords(coords[['x', 'y']],name = "coords", mPerPx = m_per_px, size = size = 5e-10)
+this_sample.add_coords(coords[['x', 'y']],name = "coords", mPerPx = m_per_px, size = 5e-6)
 
 #   Add the IF image for this sample
 this_sample.add_image( tiff = img_path, channels = img_channels, scale = m_per_px, defaultChannels = default_channels)
@@ -81,6 +81,6 @@ this_sample.add_image( tiff = img_path, channels = img_channels, scale = m_per_p
 #   Add gene expression results (multiple columns) as a feature
 this_sample.add_csv_feature(coords[inten_features], name = "meanIntensities", coordName = "coords", dataType = "quantitative")
 
-this_sample.set_default_feature(group = "Genes", feature = default_gene)
+this_sample.set_default_feature(group = "meanIntensities", feature = "GFAP")
 
 this_sample.write()
