@@ -1,0 +1,29 @@
+**** Job starts ****
+Sun Aug 20 08:04:32 PM EDT 2023
+**** SLURM info ****
+User: enelson
+Job id: 23216
+Job name: nnSVG_PRECAST_batch_k15-25
+Hostname: compute-098
+Task id: 25
+Lmod has detected the following error: The following module(s) are unknown:
+"conda_R"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "conda_R"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+
+Currently Loaded Modules:
+  1) JHPCE_tools/3.0
+
+ 
+
+/var/spool/slurm/d/job23216/slurm_script: line 27: Rscript: command not found
+**** Job ends ****
+Sun Aug 20 08:04:32 PM EDT 2023
