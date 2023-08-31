@@ -553,6 +553,9 @@ count_df <- df %>%
     mutate(proportion = n / sum(n)) %>%
     ungroup()
 # Set the factor levels of sample_id based on the order in neuron_order
+neuron_order<-c("Br2720", "Br6522", "Br8492", "Br8325", "Br3942",
+                "Br8667", "Br6471", "Br6432", "Br6423", "Br2743")
+
 count_df$brnum <- factor(count_df$brnum, levels = neuron_order)
 
 palette<-c("#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
@@ -561,8 +564,6 @@ palette<-c("#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C",
            "#C7C7C7", "#BCBD22", "#DBDB8D")
 
 
-neuron_order<-c("Br2720", "Br6522", "Br8492", "Br8325", "Br3942",
-                "Br8667", "Br6471", "Br6432", "Br6423", "Br2743")
 
 
 # Aggregate data by broad
