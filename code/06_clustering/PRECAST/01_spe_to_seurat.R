@@ -9,16 +9,16 @@ library("SeuratData")
 load(file = here::here("processed-data", "05_preprocess_batchCorrection", "spe_norm.rda"))
 source(file = here::here("code", "06_clustering", "BayesSpace", "preprocess_harmony", "offset_check.R"))
 x<-spe
-#x = offset_check(spe)
+x = offset_check(spe)
 #
 ### check
-# df <- cbind.data.frame(colData(x), spatialCoords(x))
-# ggplot(df, aes(x = row, y = col, color = sample_id)) +
-# geom_point(size = 1) +
-# coord_fixed() +
-# guides(color = guide_legend(override.aes = list(size = 3))) +
-# theme_bw()
-#  
+ df <- cbind.data.frame(colData(x), spatialCoords(x))
+ ggplot(df, aes(x = row, y = col, color = sample_id)) +
+ geom_point(size = 1) +
+ coord_fixed() +
+ guides(color = guide_legend(override.aes = list(size = 3))) +
+ theme_bw()
+ #  
 #x$spot_id = x$key
 #colData(x)$row<-colData(x)$array_row
 #colData(x)$col<-colData(x)$array_col

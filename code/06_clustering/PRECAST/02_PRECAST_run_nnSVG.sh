@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=nnSVG_PRECAST_brnum_k31-40
-#SBATCH --output=logs/nnsvg_PRECAST_brnum_k.%a.txt
-#SBATCH --error=logs/nnsvg_PRECAST_brnum_k.%a.txt
+#SBATCH --job-name=nnSVG_PRECAST_batch_k15-25
+#SBATCH --output=logs/nnsvg_PRECAST_batch_k.%a.txt
+#SBATCH --error=logs/nnsvg_PRECAST_batch_k.%a.txt
 #SBATCH --mail-type=END
-#SBATCH --array=31-40%5
+#SBATCH --array=15-25%6
 #SBATCH --cpus-per-task=8
 #SBATCH --mem-per-cpu=8G
 #SBATCH --mail-user=enelso40@jhmi.edu # Please replace with the appropriate email address
@@ -24,7 +24,7 @@ module load conda_R
 module list
 
 ## Edit with your job command
-Rscript 02_PRECAST_run_nnSVG.R
+Rscript 02_PRECAST_run_nnSVG_batch.R
 
 echo "**** Job ends ****"
 date
