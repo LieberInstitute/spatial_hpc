@@ -107,7 +107,7 @@ spe_pseudo <- aggregateAcrossCells(
 
 spe_pseudo$cluster <- factor(spe_pseudo$cluster)
 spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 50]
-colData(spe_pseudo)<-colData(spe_pseudo)[,c(1,21,24,31:33,109,110:115)]
+colData(spe_pseudo)<-colData(spe_pseudo)[,c(1,21,24,31:33,57,81:84)]
 
 dim(spe_pseudo)
 # 30432   409
@@ -141,25 +141,29 @@ spe_pseudo <- spe_pseudo[rowData(spe_pseudo)$high_expr_group_sample_id, ]
 dim(spe_pseudo)
 #15576   409
 
-# Store the log normalized counts on the spe object
-x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
-
-# Verify that the gene order hasn't changed
-stopifnot(identical(rownames(x), rownames(spe_pseudo)))
-
-# Fix the column names. DGEList will have samples name as Sample1 Sample2 etc
+#run voom
+x<-voom(counts(spe_pseudo), design = 'mod', lib.size = NULL, 
+     block = spe_pseudo$batch, correlation = NULL, weights = NULL,
+     span = 0.5, plot = FALSE, save.plot = FALSE)
+## Store the log normalized counts on the spe object
+#x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
+#
+## Verify that the gene order hasn't changed
+stopifnot(identical(rownames(x$E), rownames(spe_pseudo)))
+#
+## Fix the column names. DGEList will have samples name as Sample1 Sample2 etc
 dimnames(x) <- dimnames(spe_pseudo)
-
-# Store the log normalized counts on the SingleCellExperiment object
-logcounts(spe_pseudo) <- x
-dim(spe_pseudo)
-#12360   281
-
-rm(x)
+#
+## Store the log normalized counts on the SingleCellExperiment object
+#logcounts(spe_pseudo) <- x
+#dim(spe_pseudo)
+##12360   281
+#
+#rm(x)
 
 #run PCA
 set.seed(12141)
-runPCA(spe_pseudo)
+#runPCA(spe_pseudo)
 pca <- prcomp(t(assays(spe_pseudo)$logcounts))
 
 message(Sys.time(), " % of variance explained for the top 20 PCs:")
@@ -183,7 +187,7 @@ jaffelab::getPcaVars(pca)[seq_len(50)]
 
 # Plot PCA
 pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_PCA_PRECAST16_2comp.pdf"), width = 14, height = 14)
-plotPCA(spe_pseudo, colour_by = "cluster", ncomponents = 6, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "broad", ncomponents = 5, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 plotPCA(spe_pseudo, colour_by = "broad2", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
@@ -346,22 +350,22 @@ session_info()
 
 mod<-registration_model(
     spe_pseudo,
-    covars = 'sex',
-    var_registration = "cluster"
+    covars = c('sex','age_scaled'),
+    var_registration = "broad2"
 )
 
 cors<-registration_block_cor(
     spe_pseudo,
     mod,
-    var_sample_id = "sample_id"
+    var_sample_id = "batch"
 )
 
 reg<-registration_stats_enrichment(
     spe_pseudo,
     block_cor=cors,
-    covars = 'sex',
-    var_registration = "cluster",
-    var_sample_id = "sample_id",
+    covars = c('sex','age_scaled'),
+    var_registration = "broad2",
+    var_sample_id = "batch",
     gene_ensembl = 'gene_id',
     gene_name = 'gene_name'
 )
@@ -369,9 +373,9 @@ reg<-registration_stats_enrichment(
 rega<-registration_stats_anova(
     spe_pseudo,
     block_cor=cors,
-    covars = 'sex',
-    var_registration = "cluster",
-    var_sample_id = "sample_id",
+    covars = c('sex','age_scaled'),
+    var_registration = "broad2",
+    var_sample_id = "batch",
     gene_ensembl = 'gene_id',
     gene_name = 'gene_name'
 )
