@@ -1,8 +1,8 @@
-bayesSpace_name <- colnames(colData(spe))[69]
+bayesSpace_name <- colnames(colData(spe))[72]
 
 brains <- unique(spe$brnum)
 
-k<-18
+k<-12
 p<-list()
 for (i in seq_along(bayesSpace_name)) {
     p[[i]]<-list()
@@ -24,7 +24,7 @@ for (i in seq_along(bayesSpace_name)) {
             fill = bayesSpace_name[i],
             highlight = NULL,
             facets = "sample_id",
-            image = TRUE,
+            image = FALSE,
             assay = "logcounts",
             trans = "identity",
             x_coord = NULL,

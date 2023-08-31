@@ -350,20 +350,20 @@ row <- x$array_row
 col <- x$array_col
 
 ix = colData(x)$sample_id == samples[1]
-col[ix] <- col[ix] + 998
+col[ix] <- col[ix] + 1007
 
 ix = colData(x)$sample_id == samples[2]
-row[ix] <- row[ix] + 97
+row[ix] <- row[ix] + 85
 ix = colData(x)$sample_id == samples[2]
-col[ix] <- col[ix] + 998
+col[ix] <- col[ix] + 1001
 
 ix = colData(x)$sample_id == samples[3]
-col[ix] <- col[ix] + 900 
+col[ix] <- col[ix] + 887 
 
 ix = colData(x)$sample_id == samples[4]
-row[ix] <- row[ix] + 82 
+row[ix] <- row[ix] + 83
 ix = colData(x)$sample_id == samples[4]
-col[ix] <- col[ix] + 920 
+col[ix] <- col[ix] + 870 
 
 colData(x)$row <- row
 colData(x)$col <- col
@@ -382,17 +382,17 @@ col <- x$array_col
 ix = colData(x)$sample_id == samples[1]
 row[ix] <- row[ix] + 250
 ix = colData(x)$sample_id == samples[1]
-col[ix] <- col[ix] + 998
+col[ix] <- col[ix] + 1055
 
 ix = colData(x)$sample_id == samples[2]
-row[ix] <- row[ix] + 340
+row[ix] <- row[ix] + 338
 ix = colData(x)$sample_id == samples[2]
-col[ix] <- col[ix] + 975
+col[ix] <- col[ix] + 1048
 
 ix = colData(x)$sample_id == samples[3]
 row[ix] <- row[ix] + 252
 ix = colData(x)$sample_id == samples[3]
-col[ix] <- col[ix] + 890 
+col[ix] <- col[ix] + 920 
 
 ix = colData(x)$sample_id == samples[4]
 row[ix] <- row[ix] + 330
