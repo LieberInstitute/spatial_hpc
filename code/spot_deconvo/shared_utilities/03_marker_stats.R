@@ -6,42 +6,25 @@ suppressPackageStartupMessages(library("DeconvoBuddies"))
 suppressPackageStartupMessages(library("sessioninfo"))
 suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("tidyverse"))
-suppressPackageStartupMessages(library("HDF5Array"))
 
 #  Paths
-Dr <- here("processed-data","spot_decpnvo","shared_utilities")
+Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 #   Load objects
-readRDS(here(Dr,"sce.rds"), verbose = TRUE)
-readRDS(here(Dr,"spe.rds"), verbose = TRUE)
-# readRDS(here(Dr,"spg.rds"), verbose = TRUE)
+# sce = readRDS(here(Dr,"sce.rds"))
+sce = readRDS(here(Dr,"sce_class.rds"))
+spe = readRDS(here(Dr,"spe.rds"))
+#spg =  readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
 #cell_group = "broad" 
+#cell_type_var = "broad.class"
+#name = "_broadtype"
+
 cell_group = "layer" 
+cell_type_var = "cell.class2"
+name = "_celltype_class2"
+
 n_markers_per_type <- 25
-
-#   Define variables related to cell_group
-
-if (cell_group == "broad") {
-  cell_type_var <- "broad.type"
-} else {
-  cell_type_var <- "cell.type"
-}
-
-
-if (cell_group == "broad") {
-  cell_types <- c('ExcN', 'InhN', 'Glia', 'Immune', 'CSF', 'Vascular')
-  colors_col <- "cell_type_colors_broad"
-  cell_column <- "broad.type"
-  cell_type_nrow <- 2
-} else {
-  cell_types <- c('GC', 'CA2-4', 'CA1', 'ProS_Sub', 'L2_3', 'L5', 'L6_6b', 'HATA_AHi',
-                  'Thal', 'Cajal', 'GABA', 'Oligo', 'Astro', 'OPC', 'Micro_Macro_T',
-                  'Ependy', 'Choroid', 'Vascular')
-  colors_col <- "cell_type_colors_layer"
-  cell_column <- "cell.type"
-  cell_type_nrow <- 3
-}
 
 print(paste0("Running script at ", cell_group, "-resolution."))
 
@@ -89,17 +72,8 @@ marker_stats$symbol <- rowData(sce)$gene_name[match(marker_stats$gene, rownames(
 #   Filter out mitochondrial genes
 marker_stats <- marker_stats[!grepl("^MT-", marker_stats$symbol), ]
 
-#   Change "/" to "_" for layer-level cell types
-marker_stats <- marker_stats |>
-  mutate(
-    cellType.target = gsub("/", "_", cellType.target),
-    cellType = gsub("/", "_", cellType)
-  )
-stopifnot(
-  identical(sort(unique(marker_stats$cellType.target)), sort(cell_types))
-)
-
 #   "Re-rank" rank_ratio, since there may be missing ranks now
+cell_types = unique(marker_stats$cellType.target)
 for (ct in cell_types) {
   old_ranks <- marker_stats |>
     filter(cellType.target == ct) |>
@@ -121,5 +95,6 @@ for (ct in cell_types) {
 ###############################################################################
 source(here("code","spot_deconvo","shared_utilities","plottingfunctions.R"))
 print("Writing markers...")
-write_markers(n_markers_per_type, here(Dr,paste0("markers_",cell_group,".txt")))
-saveRDS(marker_stats, here(Dr,paste0("marker_stats_",cell_group,".rds")))
+
+write_markers(n_markers_per_type, here(Dr,paste0("markers_",cell_group,name,".txt")))
+saveRDS(marker_stats, here(Dr,paste0("marker_stats_",cell_group,name,".rds")))
