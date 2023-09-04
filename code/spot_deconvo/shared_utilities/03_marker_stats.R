@@ -21,8 +21,8 @@ spe = readRDS(here(Dr,"spe.rds"))
 #name = "_class"
 
 cell_group = "layer" 
-cell_type_var = "cell.class3"
-name = "_celltype_class3"
+cell_type_var = "cell.class4"
+name = "_celltype_class4"
 
 n_markers_per_type <- 25
 
