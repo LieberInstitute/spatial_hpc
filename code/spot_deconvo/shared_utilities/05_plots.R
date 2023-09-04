@@ -18,31 +18,23 @@ Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 #cell_group = "broad" 
 cell_group = "layer" 
-n_markers_per_type <- 25
+cell_type_var = "cell.class2"
+name = "_celltype_class2"
 
+n_markers_per_type <- 25
+cell_type_nrow <- 2
 plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)
 dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
 classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
 
 #   Load objects
-sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+#sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
+sce = readRDS(here(Dr,"sce_class.rds"), verbose = TRUE)
 spe = readRDS(here(Dr,"spe.rds"), verbose = TRUE)
 #spg = readRDS(here(Dr,"spg.rds"), verbose = TRUE)
-marker_stats = readRDS(here(Dr,paste0("marker_stats_",cell_group,".rds")))
+marker_stats = readRDS(here(Dr,paste0("markers_",cell_group,name,".rds")))
 
-if (cell_group == "broad") {
-  cell_types <- c('ExcN', 'InhN', 'Glia', 'Immune', 'CSF', 'Vascular')
-  colors_col <- "cell_type_colors_broad"
-  cell_column <- "broad.type"
-  cell_type_nrow <- 2
-} else {
-  cell_types <- c('GC', 'CA2-4', 'CA1', 'ProS_Sub', 'L2_3', 'L5', 'L6_6b', 'HATA_AHi',
-                  'Thal', 'Cajal', 'GABA', 'Oligo', 'Astro', 'OPC', 'Micro_Macro_T',
-                  'Ependy', 'Choroid', 'Vascular')
-  colors_col <- "cell_type_colors_layer"
-  cell_column <- "cell.type"
-  cell_type_nrow <- 3
-}
+cell_types = unique(marker_stats$cellType.target)
 
 #   Visually show how markers look for each cell type
 plot_list <- lapply(
@@ -70,9 +62,8 @@ plot_list <- lapply(
   }
 )
 
-#   Write a multi-page PDF with violin plots for each cell group and all
-#   markers
-pdf(file.path(plot_dir, paste0("marker_gene_violin.pdf")),width = 35, height = 35)
+#   Write a multi-page PDF with violin plots for each cell group and all markers
+pdf(file.path(plot_dir, paste0("marker_gene_violin",name,".pdf")),width = 35, height = 35)
 print(plot_list)
 dev.off()
 
@@ -97,7 +88,7 @@ p <- marker_stats |>
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   guides(col = guide_legend(override.aes = list(size = 2)))
 
-pdf(file.path(plot_dir, paste0("mean_ratio_vs_1vall.pdf")), width = 10)
+pdf(file.path(plot_dir, paste0("mean_ratio_vs_1vall",name,".pdf")), width = 10)
 print(p)
 dev.off()
 
@@ -106,7 +97,8 @@ boxplot_mean_ratio(n_markers_per_type, "mean_ratio_boxplot")
 
 #   Get Ensembl ID for classical markers
 # spT <- spg
-spT <- spe[, which(spe$brain == "Br3942")] #use this temporarily until we get SPG data
+rownames(sce) <- rowData(sce)$gene_name
+spT <- spe[, which(spe$brnum == "Br3942")] #use this temporarily until we get SPG data
 stopifnot(all(classical_markers %in% rowData(sce)$gene_name))
 classical_markers_ens <- rownames(sce)[match(classical_markers, rowData(sce)$gene_name)]
 stopifnot(all(classical_markers_ens %in% rownames(spT)))
@@ -135,7 +127,7 @@ for (j in 1:length(classical_markers)) {
 }
 
 write_spot_plots(
-  plot_list = plot_list, n_col = length(unique(spe$sample_id)),
+  plot_list = plot_list, n_col = length(unique(spT$sample_id)),
   plot_dir = plot_dir, file_prefix = "marker_spatial_sparsity_reference",
   include_individual = FALSE
 )
@@ -145,8 +137,10 @@ write_spot_plots(
 #   for each cell type are expressed spatially. Repeat these plots for different
 #   numbers of markers per cell type: 15, 25, 50
 #-------------------------------------------------------------------------------
+#rownames(spT)=rowData(spT)$gene_name
+rownames(spT)=rowData(spT)$gene_id # for deconvobuddies
 
-for (n_markers in c(15, 25, 50)) {
+for (n_markers in c(15, 25)) {
   plot_list <- list()
   i <- 1
   
@@ -154,34 +148,32 @@ for (n_markers in c(15, 25, 50)) {
   for (ct in cell_types) {
     #   Get markers for this cell type
     markers <- marker_stats |>
-      filter(
-        cellType.target == ct,
+      filter(cellType.target == ct,
         rank_ratio <= n_markers,
-        ratio > 1
-      ) |>
+        ratio > 1) |>
       pull(gene)
-    
+    # markers = rownames(marksList[[ct]])
+    # keep = (markers %in% rowData(spT)$gene_name)
+    # markers = (markers[keep])[1:n_markers]
     for (sample_id in unique(spT$sample_id)) {
-      spT_small <- spT[markers, spT$sample_id == sample_id]
+        spT_small <- spT[markers, spT$sample_id == sample_id]
       
       #   For each spot, compute proportion of marker genes with nonzero expression
-      spT_small$prop_nonzero_marker <- colMeans(assays(spe_small)$counts > 0)
+      spT_small$prop_nonzero_marker <- colMeans(assays(spT_small)$counts > 0)
       
       plot_list[[i]] <- spot_plot(
         spT_small,
         sample_id = sample_id,
         var_name = "prop_nonzero_marker", include_legend = TRUE,
         is_discrete = FALSE, minCount = 0,
-        title = paste0(
-          "Prop. markers w/ nonzero exp:\n", ct, " (", sample_id, ")"
-        )
+        title = paste0("Prop. markers w/ nonzero exp:\n", ct, " (", sample_id, ")")
       )
       
       i <- i + 1
     }
   }
   n_sample <- length(unique(spT$sample_id))
-  n_rows <- length(unique(marker_stats$cellType.target))
+  #n_rows <- length(unique(marker_stats$cellType.target))
   
   write_spot_plots(
     plot_list = plot_list, n_col = n_sample, plot_dir = plot_dir,
