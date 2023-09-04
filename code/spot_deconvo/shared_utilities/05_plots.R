@@ -16,7 +16,10 @@ source(here("code", "spot_deconvo", "shared_utilities", "shared_function.R"))
 
 Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
-#cell_group = "broad" 
+# cell_group = "broad"
+# cell_type_var = "broad.class"
+# name = "_broadtype"
+
 cell_group = "layer" 
 cell_type_var = "cell.class2"
 name = "_celltype_class2"
