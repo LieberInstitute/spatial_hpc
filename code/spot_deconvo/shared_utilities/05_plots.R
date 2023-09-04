@@ -16,9 +16,9 @@ source(here("code", "spot_deconvo", "shared_utilities", "shared_function.R"))
 
 Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
-# cell_group = "broad"
-# cell_type_var = "broad.class"
-# name = "_broadtype"
+cell_group = "broad"
+cell_type_var = "broad.class"
+name = "_class"
 
 cell_group = "layer" 
 cell_type_var = "cell.class2"
@@ -26,17 +26,17 @@ name = "_celltype_class2"
 
 n_markers_per_type <- 25
 cell_type_nrow <- 2
+
 plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)
 dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
 classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
 
 #   Load objects
-#sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
-sce = readRDS(here(Dr,"sce_class.rds"), verbose = TRUE)
-spe = readRDS(here(Dr,"spe.rds"), verbose = TRUE)
-#spg = readRDS(here(Dr,"spg.rds"), verbose = TRUE)
-marker_stats = readRDS(here(Dr,paste0("markers_",cell_group,name,".rds")))
-
+#sce = readRDS(here(Dr,"sce.rds"))
+sce = readRDS(here(Dr,"sce_class.rds"))
+spe = readRDS(here(Dr,"spe.rds"))
+#spg = readRDS(here(Dr,"spg.rds"))
+marker_stats = readRDS(here(Dr,paste0("marker_stats_",cell_group,name,".rds")))
 cell_types = unique(marker_stats$cellType.target)
 
 #   Visually show how markers look for each cell type
@@ -52,8 +52,8 @@ plot_list <- lapply(
       pull(gene)
     my_plotExpression(
       sce, genes,
-      ct = cell_column,
-      fill_colors = metadata(sce)[[colors_col]],
+      ct = cell_type_var,
+      #fill_colors = metadata(sce)[[colors_col]],
       title = paste("Top", length(genes), "for", ct),
       marker_stats = marker_stats |>
         filter(
@@ -66,7 +66,7 @@ plot_list <- lapply(
 )
 
 #   Write a multi-page PDF with violin plots for each cell group and all markers
-pdf(file.path(plot_dir, paste0("marker_gene_violin",name,".pdf")),width = 35, height = 35)
+pdf(file.path(plot_dir, paste0("marker_gene_violin",cell_group,name,".pdf")),width = 35, height = 35)
 print(plot_list)
 dev.off()
 
@@ -91,7 +91,7 @@ p <- marker_stats |>
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   guides(col = guide_legend(override.aes = list(size = 2)))
 
-pdf(file.path(plot_dir, paste0("mean_ratio_vs_1vall",name,".pdf")), width = 10)
+pdf(file.path(plot_dir, paste0("mean_ratio_vs_1vall",cell_group,name,".pdf")), width = 10)
 print(p)
 dev.off()
 
