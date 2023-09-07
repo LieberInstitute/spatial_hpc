@@ -163,7 +163,7 @@ mod = cell2location.models.Cell2location(
     # the expected average cell abundance: tissue-dependent
     # hyper-prior which can be estimated from paired histology:
     # N_cells_per_location = float(np.mean(adata_vis.obs[cell_count_var])), # N_CELLS_PER_SPOT,
-    N_cells_per_location = 4,
+    N_cells_per_location = 5,
     # hyperparameter controlling normalisation of
     # within-experiment variation in RNA detection:
     detection_alpha=detection_alpha
