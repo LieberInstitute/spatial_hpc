@@ -21,11 +21,11 @@ cell_type_var = "broad.class"
 name = "_class"
 
 cell_group = "layer" 
-cell_type_var = "cell.class3"
-name = "_celltype_class3"
+cell_type_var = "cell.class"
+name = "_celltype_class1_noHATA"
 
 n_markers_per_type <- 25
-cell_type_nrow <- 3
+cell_type_nrow <- 4
 
 plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)
 dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
