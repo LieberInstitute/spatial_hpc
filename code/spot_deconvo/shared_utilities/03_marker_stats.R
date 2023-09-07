@@ -14,6 +14,7 @@ Dr <- here("processed-data","spot_deconvo","shared_utilities")
 # sce = readRDS(here(Dr,"sce.rds"))
 sce = readRDS(here(Dr,"sce_class.rds"))
 spe = readRDS(here(Dr,"spe.rds"))
+sce = sce[,sce$cell.class!="HATA_Amy"]
 #spg =  readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
 #cell_group = "broad" 
