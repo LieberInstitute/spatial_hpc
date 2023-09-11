@@ -11,8 +11,8 @@ suppressPackageStartupMessages({
 #-------------------------------------------------------------------------------
 
 spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
-sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
-sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
+# sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
+sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_class_final.rda"
 #spg_in <- 
   
 out <- here("processed-data", "spot_deconvo", "shared_utilities")
@@ -61,7 +61,8 @@ reducedDims(spe)$spatial <- spatialCoords(spe)
 
 load(sce_in, verbose = TRUE)
 rownames(sce) <- rowData(sce)$gene_id
-colData(sce)$layer.type = gsub("/", "_", colData(sce)$layer.type)
+#colData(sce)$layer.type = gsub("/", "_", colData(sce)$layer.type)
+colData(sce)$broad.class = gsub("/", "_", colData(sce)$broad.class)
 colData(sce)$cell.class = gsub("/", "_", colData(sce)$cell.class)
 colData(sce)$cell.class2 = gsub("/", "_", colData(sce)$cell.class2)
 colData(sce)$cell.class3 = gsub("/", "_", colData(sce)$cell.class3)
@@ -121,5 +122,5 @@ getmode <- function(v) {
 # [1,]     1     3     1     1
 
 ##
-saveRDS(sce, here(out,'sce.rds'))
+saveRDS(sce, here(out,'sce_class.rds'))
 saveRDS(spe, here(out,'spe.rds'))
