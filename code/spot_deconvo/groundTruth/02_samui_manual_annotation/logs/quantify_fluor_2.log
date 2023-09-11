@@ -16,3 +16,55 @@ Task id: 2
 Loading LIBD module for cellpose/2.0
 **** Job ends ****
 Wed Aug 23 12:46:00 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Mon Sep 11 17:40:10 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3707342
+Job name: quantify_fluor
+Hostname: compute-126.cm.cluster
+Task id: 2
+Loading LIBD module for cellpose/2.0
+Traceback (most recent call last):
+  File "quantify_fluor.py", line 82, in <module>
+    raw = pd.read_csv(spot_path,header=None,names=["barcode", "included", "row", "col", "x", "y"],)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/util/_decorators.py", line 311, in wrapper
+    return func(*args, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 680, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 575, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 933, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 1217, in _make_engine
+    self.handles = get_handle(  # type: ignore[call-overload]
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/pandas/io/common.py", line 789, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger_VSPG/V12D07-335_A1_Br8325/outs/spatial/tissue_positions.csv'
+**** Job ends ****
+Mon Sep 11 17:40:14 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Mon Sep 11 17:41:55 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3707343
+Job name: quantify_fluor
+Hostname: compute-126.cm.cluster
+Task id: 2
+Loading LIBD module for cellpose/2.0
+**** Job ends ****
+Mon Sep 11 17:43:00 EDT 2023
