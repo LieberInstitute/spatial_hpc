@@ -29,9 +29,9 @@ import json
 spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs = spaceranger_dirs.iloc[36:].reset_index(drop=True)
 
-img_path = pyhere.here('processed-data', 'Images', 'VistoSeg', 'VSPG', '{}.tif')
+img_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth/', '02_samui_manual_annotation', '{}.tif')
 mask_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '01_cellpose', 'final_masks', '{}_DAPI_seg.npy')
-spot_path = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial', 'tissue_positions.csv')
+spot_path = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial', 'tissue_positions_list.csv')
 scale_path = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial','scalefactors_json.json')
 
 out_df_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', )
