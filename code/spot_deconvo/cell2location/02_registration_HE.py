@@ -247,27 +247,27 @@ for sample_id in adata_vis.obs['sample'].cat.categories:
         plt.close(f)
 
     #   Plot all cell types on the same spatial grid for this sample
-    with mpl.rc_context({'figure.figsize': (15, 15)}):
-        fig = plot_spatial(
-            adata=slide,
-            # labels to show on a plot
-            color=cell_types_multi, labels=cell_types_multi,
-            show_img=True,
+  #  with mpl.rc_context({'figure.figsize': (15, 15)}):
+  #      fig = plot_spatial(
+  #          adata=slide,
+  #          # labels to show on a plot
+  #          color=cell_types_multi, labels=cell_types_multi,
+  #          show_img=True,
             # 'fast' (white background) or 'dark_background'
-            style='fast',
-            # limit color scale at 99.2% quantile of cell abundance
-            max_color_quantile=0.992,
-            # size of locations (adjust depending on figure size)
-            circle_diameter=6,
-            colorbar_position='right'
-        )
-        fig.savefig(
-            os.path.join(
-                plot_dir, f'multi_cell_types_{sample_id}.{plot_file_type}'
-            ),
-            bbox_inches='tight'
-        )
-        plt.close(fig)
+  #          style='fast',
+  #          # limit color scale at 99.2% quantile of cell abundance
+  #          max_color_quantile=0.992,
+  #          # size of locations (adjust depending on figure size)
+  #          circle_diameter=6,
+  #          colorbar_position='right'
+  #      )
+  #      fig.savefig(
+  #          os.path.join(
+  #              plot_dir, f'multi_cell_types_{sample_id}.{plot_file_type}'
+  #          ),
+  #          bbox_inches='tight'
+  #      )
+  #      plt.close(fig)
 
 ################################################################################
 #   Export deconvo results
