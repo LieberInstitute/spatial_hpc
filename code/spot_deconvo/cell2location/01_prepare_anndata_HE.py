@@ -25,15 +25,16 @@ import pprint
 #   Variable definitions
 ################################################################################
 
-#cell_group = "broad" 
-cell_group = "layer" 
+cell_group = "broad" 
+#cell_group = "layer" 
+subtype = "_class"
 
-sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce.h5ad")
+sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class.h5ad")
 sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
 #spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
 
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group)
-plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group)
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
 Path(plot_dir).mkdir(parents=True, exist_ok=True)
 Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
@@ -41,13 +42,8 @@ Path(processed_dir).mkdir(parents=True, exist_ok=True)
 spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial')
 
-marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + ".txt")
-
-#   In single-cell only
-if cell_group == 'broad':
-    cell_type_var = 'broad.type'
-else:
-    cell_type_var = 'cell.type'
+marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
+cell_type_var = 'broad.class'
 
 #   Naming conventions used for different columns in the spatial AnnData
 sample_id_var = 'sample_id'          # in spatial object only

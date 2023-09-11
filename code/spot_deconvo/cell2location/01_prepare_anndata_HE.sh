@@ -3,7 +3,7 @@
 #$ -N "prepare_anndata_nonIF"
 #$ -o ../../../processed-data/spot_deconvo/cell2location/01-prepare_anndata_HE_broad.log
 #$ -e ../../../processed-data/spot_deconvo/cell2location/01-prepare_anndata_HE_broad.log
-#$ -l mf=80G,h_vmem=80G,h_fsize=50G
+#$ -l caracol,mf=80G,h_vmem=80G,h_fsize=50G
 
 echo "**** Job starts ****"
 date
