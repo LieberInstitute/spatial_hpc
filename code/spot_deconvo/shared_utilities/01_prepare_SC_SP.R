@@ -67,6 +67,8 @@ colData(sce)$cell.class = gsub("/", "_", colData(sce)$cell.class)
 colData(sce)$cell.class2 = gsub("/", "_", colData(sce)$cell.class2)
 colData(sce)$cell.class3 = gsub("/", "_", colData(sce)$cell.class3)
 colData(sce)$cell.class4 = gsub("/", "_", colData(sce)$cell.class4)
+sce = sce[,sce$cell.class!="HATA_Amy"]
+sce = sce[,sce$cell.class!="GABA_Amy"]
 
 rownames(spe) <- rowData(spe)$gene_id
 
@@ -122,5 +124,5 @@ getmode <- function(v) {
 # [1,]     1     3     1     1
 
 ##
-saveRDS(sce, here(out,'sce_class.rds'))
+saveRDS(sce, here(out,'sce_class_noHATAGABA.rds'))
 saveRDS(spe, here(out,'spe.rds'))
