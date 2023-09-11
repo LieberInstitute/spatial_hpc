@@ -10,11 +10,11 @@ for i = 1:numel(myfiles)
     Alexa_555 = Alexa_555-Autofluorescence;
     fname1=fullfile('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spot_deconvo/groundTruth/02_samui_manual_annotation/', myfiles(i).name);
     imwrite(mat2gray(DAPI),[fname1(1:end-4),'.tif'])
-    imwrite(mat2gray(Alexa_488),[fname1(1:end-4),'.tif'])
-    imwrite(mat2gray(Alexa_555),[fname1(1:end-4),'.tif'])
-    imwrite(mat2gray(Alexa_594),[fname1(1:end-4),'.tif'])
-    imwrite(mat2gray(Alexa_647),[fname1(1:end-4),'.tif'])
-    imwrite(mat2gray(Autofluorescence),[fname1(1:end-4),'.tif'])
+    imwrite(mat2gray(Alexa_488),[fname1(1:end-4),'.tif'],'writemode', 'append')
+    imwrite(mat2gray(Alexa_555),[fname1(1:end-4),'.tif'],'writemode', 'append')
+    imwrite(mat2gray(Alexa_594),[fname1(1:end-4),'.tif'],'writemode', 'append')
+    imwrite(mat2gray(Alexa_647),[fname1(1:end-4),'.tif'],'writemode', 'append')
+    imwrite(mat2gray(Autofluorescence),[fname1(1:end-4),'.tif'],'writemode', 'append')
 end
 
 %% attach segmented image to raw image
