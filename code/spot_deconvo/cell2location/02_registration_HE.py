@@ -1,6 +1,7 @@
-import sys
-import os
 
+import os
+os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
+import sys
 import scanpy as sc
 import anndata
 import pandas as pd
@@ -26,21 +27,23 @@ from pathlib import Path
 #   Variable definitions
 ################################################################################
 
-#cell_group = "broad" 
-cell_group = "layer"
+cell_group = "broad" 
+#cell_group = "layer"
 
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group)
-plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group)
+
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
 
 sp_path = os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad')
 sc_path = os.path.join(processed_dir, 'adata_ref_orig.h5ad')
 
 #   Naming conventions used for different columns in the single-cell AnnData
 batch_key = 'brnum'
-if cell_group == 'broad':
-    cell_type_var = 'broad.type'
-else:
-    cell_type_var = 'cell.type'
+#if cell_group == 'broad':
+#    cell_type_var = 'broad.type'
+#else:
+#    cell_type_var = 'cell.type'
+cell_type_var = 'broad.class'
 
 cell_count_var = 'count'               # in spatial only
 plot_file_type = 'pdf'
