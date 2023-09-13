@@ -27,8 +27,8 @@ from pathlib import Path
 #   Variable definitions
 ################################################################################
 
-cell_group = "broad" 
-#cell_group = "layer"
+#cell_group = "broad" 
+cell_group = "layer"
 
 
 processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
@@ -43,7 +43,8 @@ batch_key = 'brnum'
 #    cell_type_var = 'broad.type'
 #else:
 #    cell_type_var = 'cell.type'
-cell_type_var = 'broad.class'
+#cell_type_var = 'broad.class'
+cell_type_var = 'cell.class'
 
 cell_count_var = 'count'               # in spatial only
 plot_file_type = 'pdf'
@@ -213,13 +214,13 @@ cell_types = adata_ref.obs[cell_type_var].cat.categories
 
 #   There are too many cell types to plot in one spatial plot. For layer
 #   resolution, combine all excitatory cells types for the multi-type plot
-if cell_group == "layer":
-    adata_vis.obs['Excit'] = adata_vis.obs[
-        [x for x in cell_types if 'Excit' in x]
-    ].sum(axis = 1)
-    cell_types_multi = np.unique(np.array([x.split('_')[0] for x in cell_types]))
-else:
-    cell_types_multi = cell_types
+#if cell_group == "layer":
+#    adata_vis.obs['Excit'] = adata_vis.obs[
+#        [x for x in cell_types if 'Excit' in x]
+#    ].sum(axis = 1)
+#    cell_types_multi = np.unique(np.array([x.split('_')[0] for x in cell_types]))
+#else:
+cell_types_multi = cell_types
 
 #   Loop through each sample and produce plots for each
 for sample_id in adata_vis.obs['sample'].cat.categories:
