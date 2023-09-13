@@ -1,0 +1,52 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 13 10:52:03 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3720185
+Job name: registrationHE
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cell2location/0.8a0
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE.py", line 223
+    cell_types_multi = cell_types
+IndentationError: unexpected indent
+**** Job ends ****
+Wed Sep 13 10:52:04 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 13 10:53:03 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3720186
+Job name: registrationHE
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cell2location/0.8a0
+Global seed set to 0
+Loading AnnDatas...
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE.py", line 95, in <module>
+    adata_vis = sc.read_h5ad(sp_path)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/anndata/_io/h5ad.py", line 224, in read_h5ad
+    with h5py.File(filename, "r") as f:
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/h5py/_hl/files.py", line 507, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/h5py/_hl/files.py", line 220, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 106, in h5py.h5f.open
+FileNotFoundError: [Errno 2] Unable to open file (unable to open file: name = '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spot_deconvo/cell2location/HE/layer/adata_vis_orig.h5ad', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)
+**** Job ends ****
+Wed Sep 13 10:53:16 EDT 2023
