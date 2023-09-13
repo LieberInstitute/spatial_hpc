@@ -16,9 +16,9 @@ sce = readRDS(here(Dr,"sce_class.rds"))
 spe = readRDS(here(Dr,"spe.rds"))
 #spg =  readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
-#cell_group = "broad" 
-#cell_type_var = "broad.class"
-#name = "_class"
+cell_group = "broad"
+cell_type_var = "broad.class"
+name = "_class"
 
 cell_group = "layer" 
 cell_type_var = "cell.class"

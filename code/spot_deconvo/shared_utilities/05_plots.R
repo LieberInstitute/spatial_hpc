@@ -29,11 +29,11 @@ cell_type_nrow <- 4
 
 plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)
 dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
-classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
 
 #   Load objects
 #sce = readRDS(here(Dr,"sce.rds"))
-sce = readRDS(here(Dr,"sce_class.rds"))
+#sce = readRDS(here(Dr,"sce_class.rds"))
+sce = readRDS(here(Dr,"sce_class_noHATAGABA.rds"))
 spe = readRDS(here(Dr,"spe.rds"))
 #spg = readRDS(here(Dr,"spg.rds"))
 marker_stats = readRDS(here(Dr,paste0("marker_stats_",cell_group,name,".rds")))
@@ -100,12 +100,15 @@ boxplot_mean_ratio(n_markers_per_type, "mean_ratio_boxplot")
 
 #   Get Ensembl ID for classical markers
 # spT <- spg
+classical_markers <- c("PPFIA2", "AMPH", "FNDC1", "GFRA1", "KRT17", "C5orf63", "GAD2", "MIF", "FABP7", "MAN1A2", "SFRP2", "MOBP", "MAG", "MTURN", "PHLDB1", "ACTA2", "TTR")
+clusters <-c("GCL", "CA2-4", "CA1", "SUB", "SUB.RHP", "RHP", "GABA", "SL_SR", "ML", "SR_SLM", "SLM_WM", "WM", "WM1", "WM2", "WM3", "Vascular", "Choroid")
+
 rownames(sce) <- rowData(sce)$gene_name
 spT <- spe[, which(spe$brnum == "Br3942")] #use this temporarily until we get SPG data
 stopifnot(all(classical_markers %in% rowData(sce)$gene_name))
 classical_markers_ens <- rownames(sce)[match(classical_markers, rowData(sce)$gene_name)]
-stopifnot(all(classical_markers_ens %in% rownames(spT)))
-
+stopifnot(all(classical_markers_ens %in% rowData(spT)$gene_name))
+rownames(spT) <- rowData(spT)$gene_name
 #-------------------------------------------------------------------------------
 #   First, plot the spatial expression of classical markers as reference
 #-------------------------------------------------------------------------------
@@ -116,7 +119,7 @@ i <- 1
 for (j in 1:length(classical_markers)) {
   for (sample_id in unique(spT$sample_id)) {
     #   Determine the title for this subplot
-      title <- paste0(classical_markers[j], ": marker for layer ", j, "\n(", sample_id, ")")
+      title <- paste0(classical_markers[j], ": marker for cluster ", clusters[j], "\n(", sample_id, ")")
     #   Produce the ggplot object (grid version)
     plot_list[[i]] <- spot_plot(
       spT,
@@ -190,20 +193,20 @@ for (n_markers in c(15, 25)) {
 #   by 4 rows: expression of PCP4 then that of 'Excit_L5' for different numbers
 #   of markers: 15,25,50
 #-------------------------------------------------------------------------------
-
+rownames(spT)=rowData(spT)$gene_name
 if (cell_group == "layer") {
   plot_list <- list()
   max_list <- list()
   i <- 1
   
   #   Plot expression of PCP4 for every sample
-  for (sample_id in unique(spe$sample_id)) {
+  for (sample_id in unique(spT$sample_id)) {
     #   Produce the ggplot object
     plot_list[[i]] <- spot_plot(
-      spe,
+      spT,
       sample_id = sample_id,
-      var_name = classical_markers_ens[classical_markers == "PCP4"],
-      include_legend = TRUE, is_discrete = FALSE, title = "PCP4 Counts",
+      var_name = classical_markers_ens[classical_markers == "PPFIA2"],
+      include_legend = TRUE, is_discrete = FALSE, title = "PPFIA2 Counts",
       assayname = "counts", minCount = 0
     )
     
@@ -216,14 +219,14 @@ if (cell_group == "layer") {
     #   Get markers for this cell type
     markers <- marker_stats |>
       filter(
-        cellType.target == "Excit_L5",
+        cellType.target == "GC",
         rank_ratio <= n_markers,
         ratio > 1
       ) |>
       pull(gene)
     
-    for (sample_id in unique(spe$sample_id)) {
-      spe_small <- spe[markers, spe$sample_id == sample_id]
+    for (sample_id in unique(spT$sample_id)) {
+      spe_small <- spT[markers, spT$sample_id == sample_id]
       
       #   For each spot, compute proportion of marker genes with nonzero
       #   expression
@@ -239,7 +242,7 @@ if (cell_group == "layer") {
         var_name = "prop_nonzero_marker", include_legend = TRUE,
         is_discrete = FALSE, minCount = 0,
         title = paste0(
-          "Prop. Excit_L5 markers w/ >0 counts (n = ", n_markers, ")"
+          "Prop. GC markers w/ >0 counts (n = ", n_markers, ")"
         )
       )
       
