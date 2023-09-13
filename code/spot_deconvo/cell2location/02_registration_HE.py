@@ -31,8 +31,8 @@ from pathlib import Path
 cell_group = "layer"
 
 
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
-plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass",  cell_group)
 
 sp_path = os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad')
 sc_path = os.path.join(processed_dir, 'adata_ref_orig.h5ad')

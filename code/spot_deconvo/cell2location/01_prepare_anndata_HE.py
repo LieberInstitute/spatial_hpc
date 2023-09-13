@@ -36,8 +36,8 @@ sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_
 sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
 #spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
 
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
-plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", cell_group, "newclass")
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
 Path(plot_dir).mkdir(parents=True, exist_ok=True)
 Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
