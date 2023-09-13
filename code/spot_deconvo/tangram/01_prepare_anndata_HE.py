@@ -56,11 +56,7 @@ spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial'
 cluster_var_plots = 'PRECAST_k18_nnSVG'
 
 #   Variable name in ad_sc.obs representing cell type
-if cell_group == 'broad':
-    cell_type_var = 'broad.type'
-else:
-    cell_type_var = 'cell.type'
-
+cell_type_var = 'broad.class'
 #   Variable name in both ad_sc.var and ad_sp.var containing Ensembl gene ID and
 #   variable name in ad_sp.var containing gene symbol
 ensembl_id_var = 'gene_id'
