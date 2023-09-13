@@ -28,8 +28,8 @@ cell_group = "broad"
 #   Paths
 #-------------------------------------------------------------------------------
 
-plot_dir = pyhere.here("plots", "spot_deconvo", "tangram", "HE", cell_group)
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
 sc_path_in = pyhere.here(processed_dir, '{}', 'ad_sc.h5ad')
 sp_path_in = pyhere.here(processed_dir, '{}', 'ad_sp_orig.h5ad')
 id_path = pyhere.here("code","spot_deconvo","shared_utilities","samples.txt")
@@ -42,10 +42,7 @@ id_path = pyhere.here("code","spot_deconvo","shared_utilities","samples.txt")
 cell_count_var = 'count'
 
 #   Variable name in ad_sc.obs representing cell type
-if cell_group == 'broad':
-    cell_type_var = 'broad.type'
-else:
-    cell_type_var = 'cell.type'
+cell_type_var = 'broad.class'
 
 plot_file_type = 'pdf'
 
