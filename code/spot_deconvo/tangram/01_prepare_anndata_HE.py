@@ -3,7 +3,7 @@
 #   to adjust.
 
 import os, sys
-#os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
+os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 
 import pyhere
 from pathlib import Path
@@ -24,18 +24,22 @@ import pandas as pd
 ################################################################################
 
 cell_group = "broad" 
-#cell_group = "layer" 
+subtype = "_class"
 
+#cell_group = "layer" 
+#subtype = "_celltype_noHATAGABAAmy"
 #-------------------------------------------------------------------------------
 #   Paths
 #-------------------------------------------------------------------------------
 
-plot_dir = pyhere.here("plots", "spot_deconvo", "tangram", "HE", cell_group)
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
 
-sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce.h5ad")
+sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_class.h5ad")
+#sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_noHATAGABAAmy.h5ad")
+#sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce.h5ad")
 sp_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", 'spe.h5ad')
-marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + ".txt")
+marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
 
 sc_path_out = pyhere.here(processed_dir, '{}', 'ad_sc.h5ad')
 sp_path_out = pyhere.here(processed_dir, '{}', 'ad_sp_orig.h5ad')
