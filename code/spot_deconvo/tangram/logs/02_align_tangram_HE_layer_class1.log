@@ -1,0 +1,47 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 14 15:59:56 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3721569
+Job name: align_tangram_HE
+Hostname: compute-126.cm.cluster
+Task id: 1
+Loading LIBD module for tangram/1.0.2
+INFO:root:Allocate tensors for mapping.
+INFO:root:Begin training with 458 genes and customized density_prior in constrained mode...
+Using tangram version: 1.0.2
+Only using spatial sample V11A20-297_A1.
+Re-aligning in "deconvolution mode"...
+Traceback (most recent call last):
+  File "02_align_HE.py", line 79, in <module>
+    ad_map = tg.map_cells_to_space(
+  File "/jhpce/shared/jhpce/libd/tangram/1.0.2/tangram_env/lib/python3.8/site-packages/tangram/mapping_utils.py", line 337, in map_cells_to_space
+    mapper = mo.MapperConstrained(
+  File "/jhpce/shared/jhpce/libd/tangram/1.0.2/tangram_env/lib/python3.8/site-packages/tangram/mapping_optimizer.py", line 240, in __init__
+    self.S = torch.tensor(S, device=device, dtype=torch.float32)
+RuntimeError: CUDA out of memory. Tried to allocate 124.00 MiB (GPU 0; 79.10 GiB total capacity; 0 bytes already allocated; 78.28 GiB free; 0 bytes reserved in total by PyTorch)
+**** Job ends ****
+Thu Sep 14 16:17:01 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 14 16:23:36 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3721591
+Job name: align_tangram_HE
+Hostname: compute-126.cm.cluster
+Task id: 1
+Loading LIBD module for tangram/1.0.2
