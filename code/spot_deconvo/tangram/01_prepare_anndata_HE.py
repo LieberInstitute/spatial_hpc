@@ -23,11 +23,11 @@ import pandas as pd
 #   Variable definitions
 ################################################################################
 
-cell_group = "broad" 
-subtype = "_class"
+#cell_group = "broad" 
+#subtype = "_class"
 
-#cell_group = "layer" 
-#subtype = "_celltype_noHATAGABAAmy"
+cell_group = "layer" 
+subtype = "_celltype_class1_noHATAGABAAmy"
 #-------------------------------------------------------------------------------
 #   Paths
 #-------------------------------------------------------------------------------
@@ -35,8 +35,8 @@ subtype = "_class"
 plot_dir = pyhere.here("plots", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
 processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
 
-sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_class.h5ad")
-#sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_noHATAGABAAmy.h5ad")
+#sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_class.h5ad")
+sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_class_noHATAGABA.h5ad")
 #sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce.h5ad")
 sp_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", 'spe.h5ad')
 marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
@@ -56,7 +56,8 @@ spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial'
 cluster_var_plots = 'PRECAST_k18_nnSVG'
 
 #   Variable name in ad_sc.obs representing cell type
-cell_type_var = 'broad.class'
+cell_type_var = 'cell.class'
+#cell_type_var = 'broad.class'
 #   Variable name in both ad_sc.var and ad_sp.var containing Ensembl gene ID and
 #   variable name in ad_sp.var containing gene symbol
 ensembl_id_var = 'gene_id'
