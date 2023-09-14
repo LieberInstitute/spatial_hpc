@@ -21,8 +21,8 @@ import custom_tg_code as ctg
 #   Variable definitions
 ################################################################################
 
-#cell_group = "layer" 
-cell_group = "broad"
+cell_group = "layer" 
+#cell_group = "broad"
 
 #-------------------------------------------------------------------------------
 #   Paths
@@ -42,7 +42,8 @@ id_path = pyhere.here("code","spot_deconvo","shared_utilities","samples.txt")
 cell_count_var = 'count'
 
 #   Variable name in ad_sc.obs representing cell type
-cell_type_var = 'broad.class'
+#cell_type_var = 'broad.class'
+cell_type_var = 'cell.class'
 
 plot_file_type = 'pdf'
 
