@@ -12,7 +12,9 @@ Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 #   Load objects
 # sce = readRDS(here(Dr,"sce.rds"))
-sce = readRDS(here(Dr,"sce_class.rds"))
+#sce = readRDS(here(Dr,"sce_class.rds"))
+
+sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
 spe = readRDS(here(Dr,"spe.rds"))
 #spg =  readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
@@ -22,7 +24,7 @@ name = "_class"
 
 cell_group = "layer" 
 cell_type_var = "cell.class"
-name = "_celltype_class"
+name = "_class1_noHATAGABAAmy"
 
 n_markers_per_type <- 25
 

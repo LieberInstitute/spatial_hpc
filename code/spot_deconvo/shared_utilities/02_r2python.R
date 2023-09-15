@@ -25,7 +25,7 @@ Dr <- here("processed-data","spot_deconvo","shared_utilities")
 #   Load objects
 #sce = readRDS(here(Dr,"sce.rds"), verbose = TRUE)
 
-sce = readRDS(here(Dr,"sce_class_noHATAGABA.rds"))
+sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
 spe = readRDS(here(Dr,"spe.rds"))
 #spg = readRDS(here(Dr,"spg.rds"), verbose = TRUE)
 
@@ -38,7 +38,7 @@ source(here("code", "spot_deconvo", "shared_utilities","write_anndata.R"))
 
 print("Converting objects to AnnDatas...")
 #write_anndata(sce, here(Dr,"sce.h5ad"))
-write_anndata(sce, here(Dr,"sce_class_noHATAGABA.h5ad"))
+write_anndata(sce, here(Dr,"sce_class1_noHATAGABAAmy.h5ad"))
 colData(spe)$dateImg = as.character(colData(spe)$dateImg)
 write_anndata(spe, here(Dr,"spe.h5ad"))
 #write_anndata(spg, paste0(Dr,"spg.h5ad"))
