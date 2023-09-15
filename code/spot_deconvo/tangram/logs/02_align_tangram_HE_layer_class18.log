@@ -1,0 +1,38 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Fri Sep 15 00:00:07 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3721591
+Job name: align_tangram_HE
+Hostname: compute-126.cm.cluster
+Task id: 18
+Loading LIBD module for tangram/1.0.2
+INFO:root:Allocate tensors for mapping.
+INFO:root:Begin training with 428 genes and customized density_prior in constrained mode...
+INFO:root:Saving results..
+INFO:root:spatial prediction dataframe is saved in `obsm` `tangram_ct_pred` of the spatial AnnData.
+Using tangram version: 1.0.2
+Only using spatial sample V11U08-081_B1.
+Re-aligning in "deconvolution mode"...
+Score: 0.142, KL reg: 0.426, Count reg: 21732.023, Lambda f reg: 14439.838
+Score: 0.627, KL reg: 0.015, Count reg: 13.016, Lambda f reg: 2555.097
+Score: 0.647, KL reg: 0.010, Count reg: 8.909, Lambda f reg: 952.389
+Score: 0.650, KL reg: 0.010, Count reg: 1.062, Lambda f reg: 692.484
+Score: 0.652, KL reg: 0.010, Count reg: 6.035, Lambda f reg: 568.375
+Score: 0.652, KL reg: 0.010, Count reg: 3.725, Lambda f reg: 498.570
+Score: 0.653, KL reg: 0.010, Count reg: 2.806, Lambda f reg: 437.378
+Score: 0.653, KL reg: 0.010, Count reg: 1.377, Lambda f reg: 385.346
+Score: 0.653, KL reg: 0.010, Count reg: 2.893, Lambda f reg: 341.752
+Score: 0.654, KL reg: 0.010, Count reg: 6.324, Lambda f reg: 311.320
+Projecting annotation and plotting AUC...
+Saving AnnDatas...
+Done all tasks.
+**** Job ends ****
+Fri Sep 15 00:44:52 EDT 2023

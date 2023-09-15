@@ -45,3 +45,25 @@ Job name: align_tangram_HE
 Hostname: compute-126.cm.cluster
 Task id: 1
 Loading LIBD module for tangram/1.0.2
+INFO:root:Allocate tensors for mapping.
+INFO:root:Begin training with 458 genes and customized density_prior in constrained mode...
+INFO:root:Saving results..
+INFO:root:spatial prediction dataframe is saved in `obsm` `tangram_ct_pred` of the spatial AnnData.
+Using tangram version: 1.0.2
+Only using spatial sample V11A20-297_A1.
+Re-aligning in "deconvolution mode"...
+Score: 0.156, KL reg: 0.471, Count reg: 18974.617, Lambda f reg: 14444.993
+Score: 0.611, KL reg: 0.022, Count reg: 21.464, Lambda f reg: 2411.695
+Score: 0.632, KL reg: 0.015, Count reg: 4.521, Lambda f reg: 833.589
+Score: 0.636, KL reg: 0.015, Count reg: 0.131, Lambda f reg: 589.969
+Score: 0.637, KL reg: 0.015, Count reg: 0.375, Lambda f reg: 482.877
+Score: 0.638, KL reg: 0.015, Count reg: 2.209, Lambda f reg: 414.909
+Score: 0.639, KL reg: 0.015, Count reg: 3.527, Lambda f reg: 373.415
+Score: 0.639, KL reg: 0.015, Count reg: 3.719, Lambda f reg: 340.672
+Score: 0.640, KL reg: 0.015, Count reg: 0.865, Lambda f reg: 311.702
+Score: 0.640, KL reg: 0.015, Count reg: 3.628, Lambda f reg: 279.815
+Projecting annotation and plotting AUC...
+Saving AnnDatas...
+Done all tasks.
+**** Job ends ****
+Thu Sep 14 17:19:56 EDT 2023
