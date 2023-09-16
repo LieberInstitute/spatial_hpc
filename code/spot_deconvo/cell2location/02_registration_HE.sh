@@ -1,9 +1,9 @@
 #!/bin/bash
 #$ -cwd
 #$ -N "registrationHE"
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE_layer_class.log
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE_layer_class.log
-#$ -l gpu,mf=400G,h_vmem=400G
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE_layer_class_v3.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE_layer_class_v3.log
+#$ -l caracol,mf=300G,h_vmem=300G
 
 echo "**** Job starts ****"
 date
