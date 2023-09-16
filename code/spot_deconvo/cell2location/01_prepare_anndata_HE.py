@@ -29,10 +29,10 @@ import pprint
 #subtype = "_class"
 
 cell_group = "layer" 
-subtype = "_celltype_class1_noHATAGABAAmy."
+subtype = "_celltype_class1_noHATAGABAAmy"
 
 #sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class.h5ad")
-sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class_noHATAGABA.h5ad")
+sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class1_noHATAGABAAmy.h5ad")
 sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
 #spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
 
