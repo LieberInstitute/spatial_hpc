@@ -36,7 +36,7 @@ plot_dir = pyhere.here("plots", "spot_deconvo", "tangram", "HE", "2ndRun_newClas
 processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", "2ndRun_newClass", cell_group)
 
 #sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_class.h5ad")
-sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce_class_noHATAGABA.h5ad")
+sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce"+ subtype +".h5ad")
 #sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce.h5ad")
 sp_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", 'spe.h5ad')
 marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
