@@ -61,3 +61,32 @@ plot_list <- lapply(celltypes, function(i) {
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
 ggsave(here(plots,sample_id,"multi_allWeight.pdf"), plot = gridplot, width = 18, height = 8)
 
+print('Examining multi mode sub weights results')
+results = myRCTD1@results
+weights = lapply(results, function(x) x$sub_weights)
+
+df = weights[[1]]
+missing_columns <- setdiff(celltypes, names(df))
+if (length(missing_columns) > 0) {for (col_name in missing_columns) {df[[col_name]] <- 0 }}
+df <- as.data.frame(t(df))
+
+for (i in 2:length(weights)) {
+  # Extract the list
+  current_list <- weights[[i]]
+  missing_columns <- setdiff(celltypes, names(current_list))
+  if (length(missing_columns) > 0) {for (col_name in missing_columns) {current_list[[col_name]] <- 0 }}
+  current_list = as.data.frame(t(current_list))[colnames(df)]
+  # Combine the current list with the combined dataframe by column names
+  df <- rbind(df, current_list)
+}
+
+
+plot_list <- lapply(celltypes, function(i) {
+  ggplot(coords, aes(x = coords$x, y=coords$y , color = df[,i])) + labs(color = i, x="", y="") + 
+    geom_point(size = 0.5)+scale_color_gradientn(colours = viridis(10, option = "magma"), limits = c(0,1)) +
+    scale_y_reverse()+ theme(legend.key.width = unit(0.5, "cm"))
+})
+
+gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
+ggsave(here(plots,sample_id,"multi_subWeight.pdf"), plot = gridplot, width = 18, height = 8)
+
