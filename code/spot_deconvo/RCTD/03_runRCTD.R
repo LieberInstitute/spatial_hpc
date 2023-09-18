@@ -5,7 +5,8 @@ suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("tidyverse"))
 suppressPackageStartupMessages(library("spacexr"))
 suppressPackageStartupMessages(library("spatialLIBD"))
-library(gridExtra)
+library('gridExtra')
+library('viridis')
 
 #  Paths
 cell_group = "broad"
@@ -19,8 +20,8 @@ cell_type_var = 'broad.class'
 # cell_types = colData(sce)$cell.class
 Ncol = 4
 
-Dr <- here("processed-data","spot_deconvo","RCTD","2ndRun_newClass",cell_group)
-plots = here("plots","spot_deconvo","RCTD","2ndRun_newClass",cell_group)
+Dr <- here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers", cell_group)
+plots = here("plots","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers", cell_group)
 #   Load objects
 spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
 spaceranger_dirs = spaceranger_dirs[1:36,]
@@ -93,4 +94,18 @@ ggsave(here(plots,sample_id,"multi_subWeight.pdf"), plot = gridplot, width = 18,
 ## full mode
 myRCTD2 <- run.RCTD(myRCTD, doublet_mode = 'full')
 saveRDS(myRCTD2, here(Dr,sample_id,paste0(sample_id,"_full.rds")))
+
+barcodes <- colnames(myRCTD2@spatialRNA@counts)
+weights <- myRCTD2@results$weights
+norm_weights <- normalize_weights(weights)
+
+plot_list <- lapply(celltypes, function(i) {
+  ggplot(coords, aes(x = coords$x, y=coords$y , color = norm_weights[,i])) + labs(color = i, x="", y="") + 
+    geom_point(size = 0.5)+scale_color_gradientn(colours = viridis(10, option = "magma"), limits = c(0,1)) +
+    scale_y_reverse()+ theme(legend.key.width = unit(0.1, "cm"))
+})
+
+gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
+ggsave(here(plots,sample_id,"full_weight.pdf"), plot = gridplot, width = 18, height = 8)
+
 
