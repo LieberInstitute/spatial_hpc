@@ -9,9 +9,10 @@ suppressPackageStartupMessages(library("spacexr"))
 
 #  Paths
 Dr <- here("processed-data","spot_deconvo","shared_utilities")
-processed_out = here("processed-data","spot_deconvo","RCTD","2ndRun_newClass")
-plots_out = here("plots","spot_deconvo","RCTD","2ndRun_newClass")
+processed_out = here("processed-data","spot_deconvo","RCTD","3rdRun_newClass_deconvoMarkers")
+plots_out = here("plots","spot_deconvo","RCTD","3rdRun_newClass_deconvoMarkers")
 cell_group = "broad"
+cell_group = "layer"
 
 spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
 spaceranger_dirs = spaceranger_dirs[1:36,]
@@ -21,7 +22,10 @@ sample_id = sample_ids[as.numeric(Sys.getenv("SGE_TASK_ID"))]
 print(sample_id)
 
 spe = readRDS(here(Dr,"spe.rds"))
-speb = spe[,which(spe$sample_id==sample_id)]
+markers = readLines(here(Dr,"markers_broad_class.txt"))
+speb = spe[rowData(spe)$gene_id %in% markers,spe$sample_id==sample_id]
+
+#speb = spe[,which(spe$sample_id==sample_id)]
 
 counts = assays(speb)$counts
 rownames(counts) = rowData(speb)$gene_id
@@ -38,7 +42,8 @@ dir.create(here(plots_out, cell_group, sample_id))
 pdf(here(plots_out, cell_group, sample_id, "UMIcount.pdf"), width = 10, height = 10)
 plot_puck_continuous(puck, barcodes, puck@nUMI, ylimit = c(0,round(quantile(puck@nUMI,0.9))), title ='plot of nUMI')
 reference = readRDS(here(processed_out,'SCRef.rds'))
-myRCTD <- create.RCTD(puck, reference, max_cores = 1, MAX_MULTI_TYPES = 5)
+myRCTD <- create.RCTD(puck, reference, max_cores = 1, MAX_MULTI_TYPES = 5, UMI_min = 2)
+#myRCTD <- create.RCTD(puck, reference, max_cores = 1, MAX_MULTI_TYPES = 5)
 
 dir.create(here(processed_out,cell_group,sample_id))
 saveRDS(myRCTD, here(processed_out,cell_group,sample_id,'myRCTD.rds'))
