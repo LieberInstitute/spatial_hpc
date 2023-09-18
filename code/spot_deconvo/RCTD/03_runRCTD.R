@@ -61,6 +61,9 @@ plot_list <- lapply(celltypes, function(i) {
 
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
 ggsave(here(plots,sample_id,"multi_allWeight.pdf"), plot = gridplot, width = 18, height = 8)
+weights_df = as.data.frame(weights_df)
+rownames(weights_df) = rownames(myRCTD1@spatialRNA@coords)
+write.csv(weights_df, here(Dr, sample_id, "clusters_allWeights.csv"))
 
 print('Examining multi mode sub weights results')
 results = myRCTD1@results
@@ -90,6 +93,8 @@ plot_list <- lapply(celltypes, function(i) {
 
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
 ggsave(here(plots,sample_id,"multi_subWeight.pdf"), plot = gridplot, width = 18, height = 8)
+rownames(df) = rownames(myRCTD1@spatialRNA@coords)
+write.csv(df, here(Dr, sample_id, "clusters_subWeights.csv"))
 
 ## full mode
 myRCTD2 <- run.RCTD(myRCTD, doublet_mode = 'full')
@@ -108,4 +113,5 @@ plot_list <- lapply(celltypes, function(i) {
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
 ggsave(here(plots,sample_id,"full_weight.pdf"), plot = gridplot, width = 18, height = 8)
 
+write.csv(as.data.frame(as.matrix(weights)), here(Dr, sample_id, "clusters.csv"))
 
