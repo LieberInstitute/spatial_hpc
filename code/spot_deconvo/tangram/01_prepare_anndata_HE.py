@@ -27,7 +27,7 @@ import pandas as pd
 #subtype = "_class"
 
 cell_group = "layer" 
-subtype = "_celltype_class1_noHATAGABAAmy"
+subtype = "_class1_noHATAGABAAmy"
 #-------------------------------------------------------------------------------
 #   Paths
 #-------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ processed_dir = pyhere.here("processed-data", "spot_deconvo", "tangram", "HE", "
 sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce"+ subtype +".h5ad")
 #sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce.h5ad")
 sp_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", 'spe.h5ad')
-marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
+marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + "_celltype"+ subtype + ".txt")
 
 sc_path_out = pyhere.here(processed_dir, '{}', 'ad_sc.h5ad')
 sp_path_out = pyhere.here(processed_dir, '{}', 'ad_sp_orig.h5ad')
