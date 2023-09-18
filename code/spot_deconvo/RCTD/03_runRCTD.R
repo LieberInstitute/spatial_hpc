@@ -43,3 +43,21 @@ celltypes = levels(myRCTD@reference@cell_types)
 myRCTD1 <- run.RCTD(myRCTD, doublet_mode = 'multi')
 saveRDS(myRCTD1, here(Dr,sample_id,paste0(sample_id,"_multi.rds")))
 
+## multi mode ## 
+print('Examining multi mode all weights results')
+
+results = myRCTD1@results
+weights = lapply(results, function(x) x$all_weights)
+weights_df <- data.frame(do.call(rbind, weights))
+norm_weights <- normalize_weights(weights_df)
+coords = myRCTD1@spatialRNA@coords
+
+plot_list <- lapply(celltypes, function(i) {
+  ggplot(coords, aes(x = coords$x, y=coords$y , color = weights_df[,i])) + labs(color = i, x="", y="") + 
+    geom_point(size = 0.5)+scale_color_gradientn(colours = viridis(10, option = "magma"), limits = c(0,1)) +
+    scale_y_reverse()+ theme(legend.key.width = unit(0.5, "cm"))
+})
+
+gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
+ggsave(here(plots,sample_id,"multi_allWeight.pdf"), plot = gridplot, width = 18, height = 8)
+
