@@ -90,3 +90,7 @@ plot_list <- lapply(celltypes, function(i) {
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
 ggsave(here(plots,sample_id,"multi_subWeight.pdf"), plot = gridplot, width = 18, height = 8)
 
+## full mode
+myRCTD2 <- run.RCTD(myRCTD, doublet_mode = 'full')
+saveRDS(myRCTD2, here(Dr,sample_id,paste0(sample_id,"_full.rds")))
+
