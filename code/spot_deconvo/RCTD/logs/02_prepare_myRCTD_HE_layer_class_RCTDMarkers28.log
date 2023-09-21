@@ -1,0 +1,104 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 21 09:55:33 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3729341
+Job name: RCTDprepare_data_HE
+Hostname: compute-107.cm.cluster
+Task id: 28
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+[1] "V12F14-051_D1"
+Begin: process_cell_type_info
+process_cell_type_info: number of cells in reference: 68528
+process_cell_type_info: number of genes in reference: 36601
+
+        Astro      CA1_ProS         CA2-4         Cajal       Choroid 
+         4298          4493          5319            40          3166 
+       Ependy      GABA.CGE    GABA.LAMP5      GABA.MGE            GC 
+          421          2573          3547          3776         10000 
+ L2_3.Prs.Ent  L2_3.PrS.PaS            L5         L6_6b Micro_Macro_T 
+         4899          2729          2059          3756          3940 
+        Oligo           OPC         Sub.1         Sub.2          Thal 
+         6787          1662           994           897            35 
+     Vascular 
+         3137 
+End: process_cell_type_info
+create.RCTD: getting regression differentially expressed genes: 
+get_de_genes: Astro found DE genes: 351
+get_de_genes: CA1_ProS found DE genes: 123
+get_de_genes: CA2-4 found DE genes: 124
+get_de_genes: Cajal found DE genes: 213
+get_de_genes: Choroid found DE genes: 409
+get_de_genes: Ependy found DE genes: 439
+get_de_genes: GABA.CGE found DE genes: 99
+get_de_genes: GABA.LAMP5 found DE genes: 143
+get_de_genes: GABA.MGE found DE genes: 105
+get_de_genes: GC found DE genes: 162
+get_de_genes: L2_3.Prs.Ent found DE genes: 70
+get_de_genes: L2_3.PrS.PaS found DE genes: 99
+get_de_genes: L5 found DE genes: 72
+get_de_genes: L6_6b found DE genes: 115
+get_de_genes: Micro_Macro_T found DE genes: 519
+get_de_genes: Oligo found DE genes: 467
+get_de_genes: OPC found DE genes: 242
+get_de_genes: Sub.1 found DE genes: 134
+get_de_genes: Sub.2 found DE genes: 148
+get_de_genes: Thal found DE genes: 229
+get_de_genes: Vascular found DE genes: 447
+get_de_genes: total DE genes: 2835
+create.RCTD: getting platform effect normalization differentially expressed genes: 
+get_de_genes: Astro found DE genes: 636
+get_de_genes: CA1_ProS found DE genes: 324
+get_de_genes: CA2-4 found DE genes: 296
+get_de_genes: Cajal found DE genes: 469
+get_de_genes: Choroid found DE genes: 760
+get_de_genes: Ependy found DE genes: 823
+get_de_genes: GABA.CGE found DE genes: 245
+get_de_genes: GABA.LAMP5 found DE genes: 284
+get_de_genes: GABA.MGE found DE genes: 251
+get_de_genes: GC found DE genes: 349
+get_de_genes: L2_3.Prs.Ent found DE genes: 238
+get_de_genes: L2_3.PrS.PaS found DE genes: 329
+get_de_genes: L5 found DE genes: 235
+get_de_genes: L6_6b found DE genes: 285
+get_de_genes: Micro_Macro_T found DE genes: 1022
+get_de_genes: Oligo found DE genes: 795
+get_de_genes: OPC found DE genes: 499
+get_de_genes: Sub.1 found DE genes: 331
+get_de_genes: Sub.2 found DE genes: 377
+get_de_genes: Thal found DE genes: 536
+get_de_genes: Vascular found DE genes: 899
+get_de_genes: total DE genes: 4626
+Warning messages:
+1: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.2 GiB
+2: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.2 GiB
+3: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.5 GiB
+4: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.0 GiB
+5: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 2.7 GiB
+6: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.3 GiB
+7: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.0 GiB
+8: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.1 GiB
+9: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.9 GiB
+**** Job ends ****
+Thu Sep 21 10:04:40 EDT 2023
