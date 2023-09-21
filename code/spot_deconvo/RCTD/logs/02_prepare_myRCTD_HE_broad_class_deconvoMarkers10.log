@@ -1,0 +1,64 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 20 16:50:33 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3728002
+Job name: RCTDprepare_data_HE
+Hostname: compute-063.cm.cluster
+Task id: 10
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+[1] "V11L05-335_B1"
+Begin: process_cell_type_info
+process_cell_type_info: number of cells in reference: 43411
+process_cell_type_info: number of genes in reference: 36601
+
+        Astro           CSF          ExcN          InhN Micro_Macro_T 
+         4298          3587         10000         10000          3940 
+        Oligo           OPC      Vascular 
+         6787          1662          3137 
+End: process_cell_type_info
+create.RCTD: getting regression differentially expressed genes: 
+get_de_genes: Astro found DE genes: 20
+get_de_genes: CSF found DE genes: 6
+get_de_genes: ExcN found DE genes: 4
+get_de_genes: InhN found DE genes: 5
+get_de_genes: Micro_Macro_T found DE genes: 24
+get_de_genes: Oligo found DE genes: 21
+get_de_genes: OPC found DE genes: 15
+get_de_genes: Vascular found DE genes: 25
+get_de_genes: total DE genes: 120
+create.RCTD: getting platform effect normalization differentially expressed genes: 
+get_de_genes: Astro found DE genes: 23
+get_de_genes: CSF found DE genes: 7
+get_de_genes: ExcN found DE genes: 7
+get_de_genes: InhN found DE genes: 10
+get_de_genes: Micro_Macro_T found DE genes: 24
+get_de_genes: Oligo found DE genes: 21
+get_de_genes: OPC found DE genes: 18
+get_de_genes: Vascular found DE genes: 25
+get_de_genes: total DE genes: 135
+Warning messages:
+1: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.2 GiB
+2: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 2.7 GiB
+3: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 2.7 GiB
+4: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.1 GiB
+5: In asMethod(object) :
+  sparse->dense coercion: allocating vector of size 1.9 GiB
+**** Job ends ****
+Wed Sep 20 17:02:03 EDT 2023
