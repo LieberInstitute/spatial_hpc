@@ -8,22 +8,22 @@ suppressPackageStartupMessages(library("tidyverse"))
 suppressPackageStartupMessages(library("spacexr"))
 
 #  Paths
-Dr <- here("processed-data","spot_deconvo","shared_utilities")
-cell_group = "broad"
-subtype = "_class"
-cell_type_var = 'broad.class'
+ Dr <- here("processed-data","spot_deconvo","shared_utilities")
+# cell_group = "broad"
+# subtype = "_class"
+# cell_type_var = 'broad.class'
 
-# cell_group = "layer"
-# subtype = "_celltype_class1_noHATAGABAAmy"
-# cell_type_var = 'cell.class'
+cell_group = "layer"
+subtype = "_celltype_class1_noHATAGABAAmy"
+cell_type_var = 'cell.class'
 
-processed_out = here("processed-data","spot_deconvo","RCTD","2ndRun_newClass")
+processed_out = here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers",cell_group)
 #   Load objects
-sce = readRDS(here(Dr,"sce_class.rds"))
-# sce = readRDS(here(Dr,"sce_class_noHATAGABA.rds"))
+# sce = readRDS(here(Dr,"sce_class.rds"))
+ sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
 
-cell_types = colData(sce)$broad.class
-# cell_types = colData(sce)$cell.class
+# cell_types = colData(sce)$broad.class
+ cell_types = colData(sce)$cell.class
 
 # reference data
 counts = assays(sce)$counts
@@ -44,6 +44,9 @@ reference <- Reference(counts, cell_types, nUMI)
 print(dim(reference@counts)) #observe Digital Gene Expression matrix
 #[1] 36601 40664
 #[1] 36601 43411
+
+#layer
+#[1] 36601 68528
 table(reference@cell_types) #number of occurences for each cell type
 # ExcN     InhN     Glia   Immune      CSF Vascular 
 # 10000    10000    10000     3940     3587     3137 
@@ -52,6 +55,18 @@ table(reference@cell_types) #number of occurences for each cell type
 # 4298          3587         10000         10000          3940 
 # Oligo           OPC      Vascular 
 # 6787          1662          3137 
+
+# layer
+# Astro      CA1_ProS         CA2-4         Cajal       Choroid 
+# 4298          4493          5319            40          3166 
+# Ependy      GABA.CGE    GABA.LAMP5      GABA.MGE            GC 
+# 421          2573          3547          3776         10000 
+# L2_3.Prs.Ent  L2_3.PrS.PaS            L5         L6_6b Micro_Macro_T 
+# 4899          2729          2059          3756          3940 
+# Oligo           OPC         Sub.1         Sub.2          Thal 
+# 6787          1662           994           897            35 
+# Vascular 
+# 3137 
 
 ## Save RDS object (optional)
 saveRDS(reference, here(processed_out,'SCRef.rds'))

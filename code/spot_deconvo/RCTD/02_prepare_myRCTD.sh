@@ -7,10 +7,10 @@
 
 #$ -cwd
 #$ -N "RCTDprepare_data_HE"
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/02_prepare_myRCTD_HE_broad_class_deconvoMarkers$TASK_ID.log
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/02_prepare_myRCTD_HE_broad_class_deconvoMarkers$TASK_ID.log
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/02_prepare_myRCTD_HE_layer_class_RCTDMarkers$TASK_ID.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/02_prepare_myRCTD_HE_layer_class_RCTDMarkers$TASK_ID.log
 #$ -l mf=50G,h_vmem=50G,h_fsize=50G
-#$ -t 1
+#$ -t 1-36
 #$ -tc 8
 
 USE_SLURM=2
