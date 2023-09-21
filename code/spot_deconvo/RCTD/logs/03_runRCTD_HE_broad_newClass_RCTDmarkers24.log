@@ -1,0 +1,63 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 20 18:57:11 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3728001
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 24
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 798085.529835726
+Sigma value:  0.84
+Likelihood value: 789932.209766079
+Sigma value:  0.69
+Likelihood value: 785080.332151431
+Sigma value:  0.61
+Likelihood value: 783944.721852163
+Sigma value:  0.59
+Likelihood value: 783853.162417613
+Sigma value:  0.58
+Likelihood value: 783833.194315707
+Sigma value:  0.58
+[1] "Examining multi mode all weights results"
+[1] "Examining multi mode sub weights results"
+Error in `[.data.frame`(as.data.frame(t(current_list)), colnames(df)) : 
+  undefined columns selected
+Calls: [ -> [.data.frame
+Execution halted
+**** Job ends ****
+Wed Sep 20 19:30:39 EDT 2023

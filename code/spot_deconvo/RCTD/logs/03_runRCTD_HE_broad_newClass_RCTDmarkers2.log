@@ -1,0 +1,73 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Sep 20 14:28:02 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3728001
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 2
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 1082258.41788533
+Sigma value:  0.84
+Likelihood value: 1069732.50942735
+Sigma value:  0.69
+Likelihood value: 1061509.49721715
+Sigma value:  0.61
+Likelihood value: 1058932.36001754
+Sigma value:  0.55
+Likelihood value: 1057997.38869611
+Sigma value:  0.53
+Likelihood value: 1057896.60015221
+Sigma value:  0.53
+[1] "Examining multi mode all weights results"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 1086623.80556495
+Sigma value:  0.84
+Likelihood value: 1074228.59370822
+Sigma value:  0.69
+Likelihood value: 1066164.74635236
+Sigma value:  0.61
+Likelihood value: 1063686.0383147
+Sigma value:  0.55
+Likelihood value: 1062829.52029064
+Sigma value:  0.53
+Likelihood value: 1062754.73371923
+Sigma value:  0.53
+**** Job ends ****
+Wed Sep 20 15:18:55 EDT 2023
