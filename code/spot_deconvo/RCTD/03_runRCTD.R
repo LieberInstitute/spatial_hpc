@@ -9,15 +9,15 @@ library('gridExtra')
 library('viridis')
 
 #  Paths
-cell_group = "broad"
-subtype = "_class"
-cell_type_var = 'broad.class'
+# cell_group = "broad"
+# subtype = "_class"
+# cell_type_var = 'broad.class'
 #cell_types = unique(colData(sce)$broad.class)
 
-# cell_group = "layer"
-# subtype = "_celltype_class1_noHATAGABAAmy"
-# cell_type_var = 'cell.class'
-# cell_types = colData(sce)$cell.class
+cell_group = "layer"
+subtype = "_celltype_class1_noHATAGABAAmy"
+cell_type_var = 'cell.class'
+#cell_types = colData(sce)$cell.class
 Ncol = 4
 
 Dr <- here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers", cell_group)
@@ -50,13 +50,15 @@ print('Examining multi mode all weights results')
 results = myRCTD1@results
 weights = lapply(results, function(x) x$all_weights)
 weights_df <- data.frame(do.call(rbind, weights))
+colnames(weights_df)[colnames(weights_df) == "CA2.4"] = "CA2-4"
 norm_weights <- normalize_weights(weights_df)
 coords = myRCTD1@spatialRNA@coords
 
 plot_list <- lapply(celltypes, function(i) {
-  ggplot(coords, aes(x = coords$x, y=coords$y , color = weights_df[,i])) + labs(color = i, x="", y="") + 
+  print(i)  
+  ggplot(coords, aes(x = coords$x, y=coords$y, color = weights_df[,i])) + labs(title = i, x="", y="") + 
     geom_point(size = 0.5)+scale_color_gradientn(colours = viridis(10, option = "magma"), limits = c(0,1)) +
-    scale_y_reverse()+ theme(legend.key.width = unit(0.5, "cm"))
+    scale_y_reverse()+ theme(legend.key.width = unit(0.1, "cm"))+labs(color = "")
 })
 
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
@@ -86,9 +88,9 @@ for (i in 2:length(weights)) {
 
 
 plot_list <- lapply(celltypes, function(i) {
-  ggplot(coords, aes(x = coords$x, y=coords$y , color = df[,i])) + labs(color = i, x="", y="") + 
+  ggplot(coords, aes(x = coords$x, y=coords$y , color = df[,i])) + labs(title = i, x="", y="") + 
     geom_point(size = 0.5)+scale_color_gradientn(colours = viridis(10, option = "magma"), limits = c(0,1)) +
-    scale_y_reverse()+ theme(legend.key.width = unit(0.5, "cm"))
+    scale_y_reverse()+ theme(legend.key.width = unit(0.1, "cm"))+labs(color = "")
 })
 
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
@@ -105,9 +107,9 @@ weights <- myRCTD2@results$weights
 norm_weights <- normalize_weights(weights)
 
 plot_list <- lapply(celltypes, function(i) {
-  ggplot(coords, aes(x = coords$x, y=coords$y , color = norm_weights[,i])) + labs(color = i, x="", y="") + 
+  ggplot(coords, aes(x = coords$x, y=coords$y , color = norm_weights[,i])) + labs(title = i, x="", y="") + 
     geom_point(size = 0.5)+scale_color_gradientn(colours = viridis(10, option = "magma"), limits = c(0,1)) +
-    scale_y_reverse()+ theme(legend.key.width = unit(0.1, "cm"))
+    scale_y_reverse()+ theme(legend.key.width = unit(0.1, "cm"))+labs(color = "")
 })
 
 gridplot = grid.arrange(grobs = plot_list, ncol = Ncol)
