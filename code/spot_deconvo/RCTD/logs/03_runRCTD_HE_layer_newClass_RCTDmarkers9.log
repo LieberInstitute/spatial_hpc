@@ -1,0 +1,196 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 21 10:19:24 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3729413
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 9
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'x' in selecting a method for function 'colData': object 'sce' not found
+Calls: colData -> .handleSimpleError -> h
+Execution halted
+**** Job ends ****
+Thu Sep 21 10:19:46 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 21 14:47:47 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3736699
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 9
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'x' in selecting a method for function 'colData': object 'sce' not found
+Calls: colData -> .handleSimpleError -> h
+Execution halted
+**** Job ends ****
+Thu Sep 21 14:48:06 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Fri Sep 22 01:43:28 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3736893
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 9
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 953445.625401262
+Sigma value:  0.84
+Likelihood value: 940605.032340735
+Sigma value:  0.69
+Likelihood value: 930891.229886963
+Sigma value:  0.61
+Likelihood value: 926885.801185684
+Sigma value:  0.53
+Likelihood value: 923871.950265981
+Sigma value:  0.45
+Likelihood value: 922006.56282472
+Sigma value:  0.4
+Likelihood value: 921497.71532657
+Sigma value:  0.39
+Likelihood value: 921460.924710129
+Sigma value:  0.38
+[1] "Examining multi mode all weights results"
+[1] "Astro"
+[1] "CA1_ProS"
+[1] "CA2-4"
+[1] "Cajal"
+[1] "Choroid"
+[1] "Ependy"
+[1] "GABA.CGE"
+[1] "GABA.LAMP5"
+[1] "GABA.MGE"
+[1] "GC"
+[1] "L2_3.Prs.Ent"
+[1] "L2_3.PrS.PaS"
+[1] "L5"
+[1] "L6_6b"
+[1] "Micro_Macro_T"
+[1] "Oligo"
+[1] "OPC"
+[1] "Sub.1"
+[1] "Sub.2"
+[1] "Thal"
+[1] "Vascular"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 975302.118502047
+Sigma value:  0.84
+Likelihood value: 961975.394444452
+Sigma value:  0.69
+Likelihood value: 951887.597152784
+Sigma value:  0.61
+Likelihood value: 947729.022271815
+Sigma value:  0.53
+Likelihood value: 944604.651192082
+Sigma value:  0.45
+Likelihood value: 942677.771213576
+Sigma value:  0.41
+Likelihood value: 942216.50772511
+Sigma value:  0.38
+Likelihood value: 942106.179074408
+Sigma value:  0.38
+**** Job ends ****
+Fri Sep 22 03:26:47 EDT 2023
