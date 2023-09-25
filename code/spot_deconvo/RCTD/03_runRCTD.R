@@ -75,13 +75,16 @@ df = weights[[1]]
 missing_columns <- setdiff(celltypes, names(df))
 if (length(missing_columns) > 0) {for (col_name in missing_columns) {df[[col_name]] <- 0 }}
 df <- as.data.frame(t(df))
+if (length(missing_columns) == length(celltypes)) {df = select(df, -c(setdiff(colnames(df), celltypes)))}
 
 for (i in 2:length(weights)) {
   # Extract the list
   current_list <- weights[[i]]
   missing_columns <- setdiff(celltypes, names(current_list))
   if (length(missing_columns) > 0) {for (col_name in missing_columns) {current_list[[col_name]] <- 0 }}
-  current_list = as.data.frame(t(current_list))[colnames(df)]
+  current_list = as.data.frame(t(current_list))
+  if (length(missing_columns) == length(celltypes)) {current_list = select(current_list, -c(setdiff(colnames(current_list), celltypes)))}
+  current_list = current_list[,colnames(df)]
   # Combine the current list with the combined dataframe by column names
   df <- rbind(df, current_list)
 }
