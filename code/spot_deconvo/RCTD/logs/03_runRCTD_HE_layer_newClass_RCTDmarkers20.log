@@ -154,3 +154,105 @@ Sigma value:  0.4
 /cm/local/apps/sge/sge-8.1.9/default/spool/compute-126/job_scripts/3736893: line 35:  2698 Segmentation fault      (core dumped) Rscript 03_runRCTD.R
 **** Job ends ****
 Fri Sep 22 06:56:27 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Mon Sep 25 14:46:37 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3742397
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 20
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 1294656.91098457
+Sigma value:  0.84
+Likelihood value: 1276376.3282614
+Sigma value:  0.69
+Likelihood value: 1262616.21249942
+Sigma value:  0.61
+Likelihood value: 1257010.27668165
+Sigma value:  0.53
+Likelihood value: 1252877.89146783
+Sigma value:  0.45
+Likelihood value: 1250458.68336908
+Sigma value:  0.41
+Likelihood value: 1249971.28996873
+Sigma value:  0.4
+Likelihood value: 1249929.99480854
+Sigma value:  0.39
+[1] "Examining multi mode all weights results"
+[1] "Astro"
+[1] "CA1_ProS"
+[1] "CA2-4"
+[1] "Cajal"
+[1] "Choroid"
+[1] "Ependy"
+[1] "GABA.CGE"
+[1] "GABA.LAMP5"
+[1] "GABA.MGE"
+[1] "GC"
+[1] "L2_3.Prs.Ent"
+[1] "L2_3.PrS.PaS"
+[1] "L5"
+[1] "L6_6b"
+[1] "Micro_Macro_T"
+[1] "Oligo"
+[1] "OPC"
+[1] "Sub.1"
+[1] "Sub.2"
+[1] "Thal"
+[1] "Vascular"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 1294218.18613057
+Sigma value:  0.84
+Likelihood value: 1275817.86118151
+Sigma value:  0.69
+Likelihood value: 1261970.35523847
+Sigma value:  0.61
+Likelihood value: 1256333.02056986
+Sigma value:  0.53
+Likelihood value: 1252183.999911
+Sigma value:  0.45
+Likelihood value: 1249770.33802266
+Sigma value:  0.41
+Likelihood value: 1249297.00723571
+Sigma value:  0.4
+Likelihood value: 1249260.50823738
+Sigma value:  0.4
+**** Job ends ****
+Mon Sep 25 16:31:17 EDT 2023
