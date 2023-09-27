@@ -110,10 +110,11 @@ RCTD <- cbind(dat, counts_info)
 
 column_order <- colnames(cell2location)
 RCTD <- RCTD[, column_order]
+which(is.na(RCTD), arr.ind=TRUE)
 
 dat1 = rbind(cell2location, tangram, RCTD)
-rmv = c("V11L05-335_B1", "V11U08-081_A1", "V11U08-081_C1", "V11U08-081_D1", "V11U08-084_D1")
-dat1 = dat1[!dat1$sample_id %in% rmv, ]  
+# rmv = c("V11L05-335_B1", "V11U08-081_A1", "V11U08-081_C1", "V11U08-081_D1", "V11U08-084_D1")
+# dat1 = dat1[!dat1$sample_id %in% rmv, ]  
 which(is.na(dat1), arr.ind=TRUE)
 
 ## for box plots
@@ -137,7 +138,4 @@ for (sample_id in unique(dat1$sample_id)){
   ggsave(here("plots","spot_deconvo","shared_utilities","layer",paste0(sample_id,".pdf")), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
   print(paste0("done ", sample_id))
 }
-scale_y_reverse()+ theme(legend.key.width = unit(0.1, "cm"))+labs(color = "")
-
-ggsave(here("plots","spot_deconvo","temp.pdf"), plot = p, width = 24, height = 8)
 
