@@ -23,7 +23,7 @@ manual_label_path_out = pyhere.here('processed-data', 'spot_deconvo', 'groundTru
 #   in the fluorescence-intensity data frame, and expected number of counts
 #   for each cell-type label
 expected_df_cols = ['id','NeuN', 'TMEM119', 'GFAP', 'OLIG2','area', 'y', 'x']
-expected_label_counts = 30
+#expected_label_counts = 30
 
 
 ################################################################################
@@ -50,22 +50,22 @@ for sample_id in sample_ids:
     this_manual_labels.index = this_manual_labels['id']
     this_df.index = this_df['id']
     
-    this_df['label'] = this_manual_labels_orig['label']
+    this_df['label'] = this_manual_labels['label']
     this_df['label_sample'] = this_df['label'] + '_' + sample_id
     df = pd.concat([df, this_df.dropna()])
     
 #   Verify we have the correct amount of cells
 #    assert(df.shape[0] == len(sample_ids) * expected_num_labels * num_cell_types)
-    label_counts = df['label'].value_counts()
-          
-# neuron       122
-# oligo        119
-# other        100
-# astrocyte     47
-# microglia     28
+label_counts = df['label'].value_counts()
+label_counts        
+# neuron       134
+# oligo        117
+# other         97
+# astrocyte     51
+# microglia     36
 # Name: label, dtype: int64
 
     
     #   Write a clean copy of both sets of manual labels
-    this_manual_labels.to_csv(manual_label_path_out, index = False)
+    df.to_csv(manual_label_path_out, index = False)
     
