@@ -1,3 +1,5 @@
+import os
+os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 
 import pandas as pd
 import numpy as np
@@ -13,14 +15,10 @@ import pyhere
 from pathlib import Path
 import pickle
 
-df_path = pyhere.here('processed-data', 'spot_deconvo', 'gourndTruth', '{}', 'df_unfiltered.csv')
-
-dataset_path = pyhere.here('processed-data', 'spot_deconvo', '02-cellpose', 'annotation_dataset.pkl')
-
-manual_label_orig_path = pyhere.here('processed-data', 'spot_deconvo', '02-cellpose', '{}', 'manual_labels_clean.csv')
-
-manual_label_conf_path = pyhere.here('processed-data', 'spot_deconvo', '02-cellpose', '{}', 'manual_labels_confidence_clean.csv')
-
+df_path = pyhere.here('processed-data', 'spot_deconvo', 'gourndTruth', '02_samui_manual_annotation', {}+'_df.csv')
+dataset_path_out = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '03_CART', 'annotation_dataset.pkl')
+manual_label_orig_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', 'manual_labels_clean.csv')
+manual_label_conf_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', 'manual_labels_confidence_clean.csv')
 sample_info_path = pyhere.here("code","spot_deconvo","shared_utilities","samples.txt")
 
 expected_num_labels = 30
@@ -38,7 +36,7 @@ random_seed = 0
 #   Preprocess and gather fluorescence data + original manual cell-type labels
 #-------------------------------------------------------------------------------
 
-spaceranger_dirs = pd.read_csv(, sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
+spaceranger_dirs = pd.read_csv(sample_info_path, sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs = spaceranger_dirs.iloc[36:].reset_index(drop=True)
 
 sample_ids = spaceranger_dirs.sample_id
