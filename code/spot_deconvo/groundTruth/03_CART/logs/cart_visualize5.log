@@ -1,0 +1,25 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 28 16:40:33 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3747953
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Traceback (most recent call last):
+  File "cart_visualize.py", line 78, in <module>
+    dat = np.load(mask_path,allow_pickle=True).item()
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/numpy/lib/npyio.py", line 440, in load
+    return format.read_array(fid, allow_pickle=allow_pickle,
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/numpy/lib/format.py", line 748, in read_array
+    array = pickle.load(fp, **pickle_kwargs)
+MemoryError
+**** Job ends ****
+Thu Sep 28 16:41:14 EDT 2023

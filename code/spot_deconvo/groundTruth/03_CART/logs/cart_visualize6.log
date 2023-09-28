@@ -1,0 +1,29 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 28 16:40:33 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3747953
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Traceback (most recent call last):
+  File "cart_visualize.py", line 86, in <module>
+    imgs = tifffile.imread(img_path)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 994, in imread
+    return tif.asarray(
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 3853, in asarray
+    result = stack_pages(pages, out=out, maxworkers=maxworkers)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 18927, in stack_pages
+    out = create_output(out, shape, dtype)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/tifffile/tifffile.py", line 19028, in create_output
+    return numpy.zeros(shape, dtype)
+numpy.core._exceptions.MemoryError: Unable to allocate 1.66 GiB for an array with shape (6, 17799, 16740) and data type uint8
+**** Job ends ****
+Thu Sep 28 16:41:35 EDT 2023
