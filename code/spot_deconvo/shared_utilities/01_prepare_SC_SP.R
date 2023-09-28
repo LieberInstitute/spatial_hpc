@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
 spe_in <- here("processed-data","02_build_spe","spe_nmf_final.rda")
 # sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_final.rda"
 sce_in <- "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/snRNAseq_hpc/processed-data/sce/sce_class_final.rda"
-#spg_in <- 
+spg_in <- here("processed-data","06_clustering", "PRECAST" , "spe_precast_final.rda")
   
 out <- here("processed-data", "spot_deconvo", "shared_utilities")
   
@@ -55,6 +55,10 @@ spe$count <- spe$CNmask_dark_blue
 #   zellkonverter doesn't know how to convert the 'spatialCoords' slot. We'd
 #   ultimately like the spatialCoords in the .obsm['spatial'] slot of the
 #   resulting AnnDatas, which corresponds to reducedDims(spe)$spatial in R
+load(spg_in)
+spg = spe[,which(spe$slide == "V12D07-332" | spe$slide == "V12D07-335")]
+reducedDims(spg)$spatial <- spatialCoords(spg)
+rownames(spg) <- rowData(spg)$gene_id
 
 reducedDims(spe)$spatial <- spatialCoords(spe)
 #reducedDims(spg)$spatial <- spatialCoords(spg)
@@ -126,3 +130,4 @@ getmode <- function(v) {
 ##
 saveRDS(sce, here(out,'sce_class1_noHATAGABAAmy.rds'))
 saveRDS(spe, here(out,'spe.rds'))
+saveRDS(spg, here(out,'spg.rds'))
