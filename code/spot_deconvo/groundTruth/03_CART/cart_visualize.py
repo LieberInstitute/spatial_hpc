@@ -69,3 +69,36 @@ def plot_roi(img, props, indices, vmax: int = 128, pad: int = 25):
             j += 1
     #
     return fig
+    
+#####################################################################################
+df_path = str(df_path).format(sample_id)
+df = pd.read_csv(df_path)
+df.rename({'Unnamed: 0': 'id'}, axis = 1, inplace = True)
+df.index = df['id']
+
+mask_path = str(mask_path).format(sample_id)
+dat = np.load(mask_path,allow_pickle=True).item()
+masks = dat['masks']
+
+props = regionprops(masks)
+examples_per_type = 5
+
+rng = default_rng(0)
+img_path = str(img_path).format(sample_id)
+imgs = tifffile.imread(img_path)
+plot_file_type = 'pdf' # 'png'
+cell_types = {"NeuN": "neuron","OLIG2": "oligo","TMEM119": "microglia","GFAP": "astrocyte"}
+
+for cell_type in df['cell_type'].unique():
+    # Randomly pick 5 distinct rows for this cell type
+    indices = rng.choice(df[df['cell_type'] == cell_type].index, examples_per_type, replace=False)
+    # Print numeric intensities for these cells
+    print(f'Intensities for {examples_per_type} random {cell_type} cells:')
+    print(df.loc[indices][list(cell_types.keys())])
+    # Plot intensities
+    #names = {1: "DAPI", 2: "NeuN", 3: "TMEM119", 4: "GFAP", 5: "OLIG2", 6: "LIP"}
+    fig = plot_roi(imgs, props, indices)
+    plt.suptitle(f'Cells classified as {cell_type}')
+    fig.savefig(os.path.join(plot_dir, f'{cell_type}_{sample_id}.{plot_file_type}'))
+    plt.close('all')
+
