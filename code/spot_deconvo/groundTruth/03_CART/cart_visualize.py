@@ -2,28 +2,25 @@ import os
 os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 import pandas as pd
 import numpy as np
-import copy
-
+from numpy.random import default_rng
+import tifffile
 import pyhere
 from pathlib import Path
-
 import matplotlib.pyplot as plt
-import graphviz
-
+from scipy import ndimage
+from skimage.measure import regionprops, regionprops_table
 
 #############
 ## paths
 ############
-
+# os.environ['SGE_TASK_ID'] = '1'
 mask_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '01_cellpose', 'final_masks', '{}' + '_DAPI_seg.npy')
 plot_dir = pyhere.here('plots','spot_deconvo', 'groundTruth', '03_CART')
 img_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', '{}.tif')
-df_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '03_CART', '{}' + 'cell_metrics.csv')
-
+df_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '03_CART', '{}', 'cell_metrics.csv')
 spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs = spaceranger_dirs.iloc[36:].reset_index(drop=True)
-sample_ids = spaceranger_dirs.sample_id
-sample_id = sample_ids[int(os.environ['SGE_TASK_ID']) - 1]
+sample_id = spaceranger_dirs.sample_id[int(os.environ['SGE_TASK_ID']) - 1]
 
 #-------------------------------------------------------------------------------
 #   Visually verify cell-type calls
@@ -71,9 +68,6 @@ def plot_roi(img, props, indices, vmax: int = 128, pad: int = 25):
     return fig
     
 #####################################################################################
-spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
-spaceranger_dirs = spaceranger_dirs.iloc[36:].reset_index(drop=True)
-sample_id = spaceranger_dirs.sample_id[int(os.environ['SGE_TASK_ID']) - 1]
 
 df_path = str(df_path).format(sample_id)
 df = pd.read_csv(df_path)
@@ -92,6 +86,7 @@ img_path = str(img_path).format(sample_id)
 imgs = tifffile.imread(img_path)
 plot_file_type = 'pdf' # 'png'
 cell_types = {"NeuN": "neuron","OLIG2": "oligo","TMEM119": "microglia","GFAP": "astrocyte"}
+names = {1: "DAPI", 2: "NeuN", 3: "TMEM119", 4: "GFAP", 5: "OLIG2", 6: "LIP"}
 
 for cell_type in df['cell_type'].unique():
     # Randomly pick 5 distinct rows for this cell type
@@ -100,7 +95,6 @@ for cell_type in df['cell_type'].unique():
     print(f'Intensities for {examples_per_type} random {cell_type} cells:')
     print(df.loc[indices][list(cell_types.keys())])
     # Plot intensities
-    #names = {1: "DAPI", 2: "NeuN", 3: "TMEM119", 4: "GFAP", 5: "OLIG2", 6: "LIP"}
     fig = plot_roi(imgs, props, indices)
     plt.suptitle(f'Cells classified as {cell_type}')
     fig.savefig(os.path.join(plot_dir, f'{cell_type}_{sample_id}.{plot_file_type}'))
