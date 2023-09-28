@@ -46,3 +46,28 @@ Path(clusters_path).parents[0].mkdir(parents=True, exist_ok=True)
 
 cells_path = str(cells_path).format(sample_id)
 Path(cells_path).parents[0].mkdir(parents=True, exist_ok=True)
+
+################################################################################
+#   Analysis
+################################################################################
+
+
+#-------------------------------------------------------------------------------
+#   Call cell types (classify nuclei)
+#-------------------------------------------------------------------------------
+with open(model_path, 'rb') as f:
+    model = pickle.load(f)
+
+df = pd.read_csv(df_path)
+df.rename({'Unnamed: 0': 'id'}, axis = 1, inplace = True)
+df.index = df['id']
+x = df.drop(['id', 'x', 'y'], axis = 1)
+
+df['cell_type'] = model.predict(x)
+
+#   Ensure cell-type names match with what we expect
+cell_types = {"NeuN": "neuron","OLIG2": "oligo","TMEM119": "microglia","GFAP": "astrocyte", "other":"other"}
+assert set(df['cell_type']) == set(list(cell_types.values()))
+
+#   Save
+df.to_csv(cells_path, float_format="%.3f")
