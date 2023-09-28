@@ -19,9 +19,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import graphviz
 
-sample_id = "V12D07-332_D1"
-df_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', sample_id + '_df.csv')
-predictions_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', '{}' + 'CART_predictions.csv')
+# sample_id = "V12D07-332_D1"
+# df_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', sample_id + '_df.csv')
+# predictions_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '02_samui_manual_annotation', '{}' + 'CART_predictions.csv')
 dataset_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '03_CART', 'annotation_dataset.pkl')
 tree_path = pyhere.here('plots', 'spot_deconvo', 'groundTruth', '03_CART', 'decision_tree.pdf')
 model_out_path = pyhere.here('processed-data', 'spot_deconvo', 'groundTruth', '03_CART', 'decision_tree.pkl')
