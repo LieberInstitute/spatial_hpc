@@ -118,3 +118,14 @@ print(f"Mean number of cells per spot: {round(np.mean(raw['n_cells']), 3)}")
 print(f"Standard deviation (num cells per spot): {round(np.std(raw['n_cells']), 2)}")
 print(f"Max number of cells per spot: {np.max(raw['n_cells'])}")
 
+#-------------------------------------------------------------------------------
+#   Export spot-level table as a 'clusters.csv' file
+#-------------------------------------------------------------------------------
+
+#   Make compatible with spatialLIBD 'clusters.csv' format
+raw.index = raw['barcode'] + '_' + sample_id
+raw.index.name = 'key'
+raw.drop(['row', 'col', 'x', 'y', 'barcode'], axis = 1, inplace = True)
+
+#   Save
+raw.to_csv(clusters_path, float_format="%.3f")
