@@ -27,7 +27,7 @@ Dr <- here("processed-data","spot_deconvo","shared_utilities")
 
 sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
 spe = readRDS(here(Dr,"spe.rds"))
-#spg = readRDS(here(Dr,"spg.rds"), verbose = TRUE)
+spg = readRDS(here(Dr,"spg.rds"))
 
 #-------------------------------------------------------------------------------
 #   Convert snRNA-seq and spatial R objects to AnnData python objects
@@ -41,6 +41,7 @@ print("Converting objects to AnnDatas...")
 write_anndata(sce, here(Dr,"sce_class1_noHATAGABAAmy.h5ad"))
 colData(spe)$dateImg = as.character(colData(spe)$dateImg)
 write_anndata(spe, here(Dr,"spe.h5ad"))
-#write_anndata(spg, paste0(Dr,"spg.h5ad"))
+colData(spg)$dateImg = as.character(colData(spg)$dateImg)
+write_anndata(spg, paste0(Dr,"spg.h5ad"))
 
 session_info()
