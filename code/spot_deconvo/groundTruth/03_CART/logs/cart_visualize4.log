@@ -27,3 +27,60 @@ Traceback (most recent call last):
 numpy.core._exceptions.MemoryError: Unable to allocate 1.66 GiB for an array with shape (6, 17799, 16740) and data type uint8
 **** Job ends ****
 Thu Sep 28 16:41:34 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 28 16:45:19 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3747955
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Intensities for 5 random other cells:
+        NeuN  OLIG2  TMEM119   GFAP
+id                                 
+39055  0.070  3.577    8.944  4.986
+30936  1.925  4.584   15.160  0.395
+16555  3.025  2.225    7.792  3.428
+18646  1.335  2.789    5.903  0.893
+51045  0.260  2.251   11.839  0.373
+Intensities for 5 random microglia cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+45984  1.824   0.636   38.678  21.253
+24374  4.897   2.674   21.558   8.916
+33624  4.398  12.355   51.285   5.957
+52133  4.989   9.375  135.880   3.072
+30129  1.799  19.490   26.431   0.203
+Intensities for 5 random neuron cells:
+         NeuN   OLIG2  TMEM119   GFAP
+id                                   
+28845  15.441   0.520    5.304  1.549
+35266  42.227  10.351   27.092  0.000
+11066  40.421   1.744    7.232  3.728
+48550  22.186  15.582    3.369  0.139
+22468  62.596   6.560   15.030  0.000
+Intensities for 5 random oligo cells:
+        NeuN   OLIG2  TMEM119   GFAP
+id                                  
+43357  1.224  47.593    1.985  2.739
+44925  1.206  25.599    5.180  0.053
+12573  0.027  86.008   14.962  2.411
+48637  1.042  43.042    1.208  7.854
+3320   5.485  31.880   16.398  0.054
+Intensities for 5 random astrocyte cells:
+         NeuN  OLIG2  TMEM119    GFAP
+id                                   
+28877   3.504  4.065    1.864  22.263
+35308  14.374  3.279   14.097  31.529
+33750   1.591  0.679    4.309  17.565
+32957   2.381  0.048   16.326  20.062
+13109   0.714  6.923    1.460  17.466
+**** Job ends ****
+Thu Sep 28 16:45:40 EDT 2023

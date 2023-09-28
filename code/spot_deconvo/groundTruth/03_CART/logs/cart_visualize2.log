@@ -27,3 +27,60 @@ Traceback (most recent call last):
 numpy.core._exceptions.MemoryError: Unable to allocate 1.66 GiB for an array with shape (6, 17799, 16740) and data type uint8
 **** Job ends ****
 Thu Sep 28 16:40:43 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 28 16:45:19 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3747955
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Intensities for 5 random other cells:
+        NeuN  OLIG2  TMEM119   GFAP
+id                                 
+35211  4.951  6.826    6.121  0.138
+28573  3.927  0.770   14.267  5.581
+13913  9.699  0.934   12.240  1.046
+15758  0.596  1.600    1.878  0.541
+48639  0.188  1.111   14.866  1.550
+Intensities for 5 random microglia cells:
+         NeuN   OLIG2  TMEM119    GFAP
+id                                    
+40024   3.421   1.649   25.126  11.979
+24390  10.051  56.460   44.582   0.278
+29819   7.232  39.032   72.236   0.232
+48295   1.670   6.586   21.435  17.336
+28191   2.276   2.640   26.415   2.579
+Intensities for 5 random neuron cells:
+         NeuN  OLIG2  TMEM119   GFAP
+id                                  
+35603  54.566  2.716    3.521  7.709
+39759  64.734  1.246    3.657  2.015
+12568  35.499  1.887    3.265  2.913
+51245  30.771  5.271   19.521  0.000
+27414  41.090  1.622    8.893  0.658
+Intensities for 5 random oligo cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+41987  0.543  26.258    3.725  15.345
+43299  3.576  61.600   13.010  15.433
+11226  7.317  45.934   31.932   0.965
+46143  2.307  56.933    1.805  19.674
+3326   3.867  48.703    1.226   4.376
+Intensities for 5 random astrocyte cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+26040  1.114   3.201    6.099  30.597
+35537  2.127   2.297    2.387  32.566
+32309  3.296   0.801    2.019  19.717
+31465  9.377   0.000   14.058  41.638
+15859  1.723  12.079    2.164  17.043
+**** Job ends ****
+Thu Sep 28 16:45:40 EDT 2023

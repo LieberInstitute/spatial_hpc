@@ -27,3 +27,60 @@ Traceback (most recent call last):
 numpy.core._exceptions.MemoryError: Unable to allocate 1.66 GiB for an array with shape (6, 17799, 16740) and data type uint8
 **** Job ends ****
 Thu Sep 28 16:41:34 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 28 16:45:19 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3747955
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Intensities for 5 random other cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+37961  0.133   2.128    1.485   4.224
+31109  0.872  20.321    3.051   0.000
+17352  1.874   9.744    2.369   4.482
+19960  1.694  15.629    2.616  15.438
+46983  1.949   4.703   15.789   3.310
+Intensities for 5 random oligo cells:
+         NeuN   OLIG2  TMEM119   GFAP
+id                                   
+44417   1.864  32.944    2.613  0.733
+25996   0.836  43.222    2.436  8.222
+35030   5.644  24.129   20.034  0.000
+50562   2.456  34.781    7.453  0.000
+32549  63.463  60.534   40.383  0.000
+Intensities for 5 random neuron cells:
+         NeuN  OLIG2  TMEM119   GFAP
+id                                  
+38598  54.716  7.420    4.531  0.694
+45404  79.232  8.576   21.567  0.018
+16262  27.391  2.853    5.061  3.067
+53027  18.027  5.526   13.857  0.000
+34019  85.092  0.395   24.496  0.000
+Intensities for 5 random microglia cells:
+         NeuN   OLIG2  TMEM119   GFAP
+id                                   
+37505   2.020   5.512   62.971  1.352
+40085  43.626  24.194   80.675  0.000
+8507   46.231  16.251  100.538  0.000
+46399   1.276   1.800   39.259  0.000
+2056   40.239   9.503   80.683  0.000
+Intensities for 5 random astrocyte cells:
+        NeuN  OLIG2  TMEM119    GFAP
+id                                  
+27397  5.711  0.044   11.190  27.663
+33967  4.062  0.966   20.829  29.452
+31694  2.891  0.151    2.798  17.210
+31039  6.220  0.068    8.869  47.482
+7876   2.519  0.335   14.302  24.366
+**** Job ends ****
+Thu Sep 28 16:45:39 EDT 2023

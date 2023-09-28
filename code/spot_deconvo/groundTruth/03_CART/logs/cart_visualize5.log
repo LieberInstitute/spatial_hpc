@@ -23,3 +23,60 @@ Traceback (most recent call last):
 MemoryError
 **** Job ends ****
 Thu Sep 28 16:41:14 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Sep 28 16:45:19 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3747955
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Intensities for 5 random neuron cells:
+         NeuN  OLIG2  TMEM119   GFAP
+id                                  
+22854  83.279  2.769   12.354  0.000
+17444  61.158  5.438   11.757  0.000
+10676  80.835  9.192   11.347  0.002
+11608  37.265  9.077    6.964  0.046
+35227  19.300  3.442    8.041  0.038
+Intensities for 5 random microglia cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+58483  3.285  10.222   23.104   0.011
+41342  4.926  50.757   46.656   0.000
+49604  7.333  12.557   45.349   0.121
+63074  2.738  27.479   36.429  11.933
+47466  6.090   7.913   24.386   0.323
+Intensities for 5 random other cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+47523  2.722   4.129    9.902  13.076
+56269  1.591   1.610    6.330   0.000
+22352  1.137  20.091    9.337   0.000
+64545  0.062   4.272   12.078   0.059
+39938  1.132  12.662   12.467   0.265
+Intensities for 5 random oligo cells:
+        NeuN   OLIG2  TMEM119   GFAP
+id                                  
+49091  3.512  35.740   23.674  1.891
+51044  2.323  84.938   15.289  3.868
+10158  0.610  57.201    3.574  1.428
+55394  0.820  39.039    3.888  8.797
+1149   0.945  47.928    8.947  0.055
+Intensities for 5 random astrocyte cells:
+        NeuN  OLIG2  TMEM119    GFAP
+id                                  
+56293  0.902  1.424    4.887  29.348
+58501  1.314  4.392   16.790  17.787
+58101  4.489  2.562    7.197  20.346
+57983  1.361  0.000   13.119  38.170
+22184  1.243  3.757    9.231  18.595
+**** Job ends ****
+Thu Sep 28 16:46:00 EDT 2023
