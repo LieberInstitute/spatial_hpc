@@ -71,6 +71,10 @@ def plot_roi(img, props, indices, vmax: int = 128, pad: int = 25):
     return fig
     
 #####################################################################################
+spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utilities","samples.txt"), sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
+spaceranger_dirs = spaceranger_dirs.iloc[36:].reset_index(drop=True)
+sample_id = spaceranger_dirs.sample_id[int(os.environ['SGE_TASK_ID']) - 1]
+
 df_path = str(df_path).format(sample_id)
 df = pd.read_csv(df_path)
 df.rename({'Unnamed: 0': 'id'}, axis = 1, inplace = True)
