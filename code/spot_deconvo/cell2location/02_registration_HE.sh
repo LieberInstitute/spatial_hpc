@@ -3,7 +3,7 @@
 #$ -N "registrationHE"
 #$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_IF_layer_class.log
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_IF_layer_class.log
-#$ -l gpu,mf=300G,h_vmem=300G
+#$ -l caracol,mf=300G,h_vmem=300G
 
 echo "**** Job starts ****"
 date
