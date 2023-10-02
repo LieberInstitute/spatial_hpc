@@ -46,7 +46,8 @@ sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "
 #sc_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "sce.h5ad")
 #sp_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", 'spe.h5ad')
 sp_path_in = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", 'spg.h5ad')
-marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + "_celltype"+ subtype + ".txt")
+#marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + "_celltype"+ subtype + ".txt")
+marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
 
 sc_path_out = pyhere.here(processed_dir, '{}', 'ad_sc.h5ad')
 sp_path_out = pyhere.here(processed_dir, '{}', 'ad_sp_orig.h5ad')
