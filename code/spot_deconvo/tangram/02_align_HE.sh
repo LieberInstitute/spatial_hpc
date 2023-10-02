@@ -3,9 +3,9 @@
 #$ -N "align_tangram_HE"
 #$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_layer_class$TASK_ID.log
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_layer_class$TASK_ID.log
-#$ -l caracol,mf=250G,h_vmem=250G
-#$ -t 1-36
-#$ -tc 2
+#$ -l caracol,mf=210G,h_vmem=210G
+#$ -t 1-8
+#$ -tc 1
 
 echo "**** Job starts ****"
 date
