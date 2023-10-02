@@ -31,18 +31,18 @@ from pathlib import Path
 cell_group = "layer"
 
 
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
-plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass",  cell_group)
+# processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
+# plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass",  cell_group)
+
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "IF", "2ndRun_newClass", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "IF", "2ndRun_newClass",  cell_group)
 
 sp_path = os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad')
 sc_path = os.path.join(processed_dir, 'adata_ref_orig.h5ad')
 
 #   Naming conventions used for different columns in the single-cell AnnData
 batch_key = 'brnum'
-#if cell_group == 'broad':
-#    cell_type_var = 'broad.type'
-#else:
-#    cell_type_var = 'cell.type'
+
 #cell_type_var = 'broad.class'
 cell_type_var = 'cell.class'
 
