@@ -1,8 +1,8 @@
 #!/bin/bash
 #$ -cwd
 #$ -N "registrationHE"
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_IF_layer_class.log
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_IF_layer_class.log
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_IF_broad_class.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_IF_broad_class.log
 #$ -l caracol,mf=300G,h_vmem=300G
 
 echo "**** Job starts ****"

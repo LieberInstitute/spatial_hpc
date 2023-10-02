@@ -27,8 +27,8 @@ from pathlib import Path
 #   Variable definitions
 ################################################################################
 
-#cell_group = "broad" 
-cell_group = "layer"
+cell_group = "broad" 
+#cell_group = "layer"
 
 
 # processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
@@ -43,8 +43,8 @@ sc_path = os.path.join(processed_dir, 'adata_ref_orig.h5ad')
 #   Naming conventions used for different columns in the single-cell AnnData
 batch_key = 'brnum'
 
-#cell_type_var = 'broad.class'
-cell_type_var = 'cell.class'
+cell_type_var = 'broad.class'
+#cell_type_var = 'cell.class'
 
 cell_count_var = 'count'               # in spatial only
 plot_file_type = 'pdf'
