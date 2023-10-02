@@ -1,4 +1,5 @@
 import os, sys
+os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 import pyhere
 
 import scanpy as sc
@@ -63,7 +64,7 @@ print('Using tangram version:', tg.__version__)
 #  Grab the full list of sample names we will subset from
 spaceranger_dirs = pd.read_csv(id_path, sep = '\t', header=None, names = ['SPpath', 'sample_id', 'brain'])
 spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial')
-sample_names = spaceranger_dirs.sample_id
+sample_names = spaceranger_dirs.sample_id[36:].reset_index(drop=True).squeeze()
 
 #  Determine this particular sample name
 sample_name = sample_names[int(os.environ['SGE_TASK_ID']) - 1]
