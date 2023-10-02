@@ -1,0 +1,24 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Mon Oct  2 14:07:22 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3748999
+Job name: prepare_anndatas_HE
+Hostname: compute-126.cm.cluster
+Task id: 2
+Loading LIBD module for tangram/1.0.2
+Loading AnnDatas...
+Subsetting to just sample V12D07-332_D1.
+Traceback (most recent call last):
+  File "01_prepare_anndata_HE.py", line 103, in <module>
+    with open(marker_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/spot_deconvo/shared_utilities/markers_broad_celltype_class.txt'
+**** Job ends ****
+Mon Oct  2 14:07:32 EDT 2023
