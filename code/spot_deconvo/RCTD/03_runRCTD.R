@@ -9,14 +9,14 @@ library('gridExtra')
 library('viridis')
 
 #  Paths
-# cell_group = "broad"
-# subtype = "_class"
-# cell_type_var = 'broad.class'
+cell_group = "broad"
+subtype = "_class"
+cell_type_var = 'broad.class'
 #cell_types = unique(colData(sce)$broad.class)
 
-cell_group = "layer"
-subtype = "_celltype_class1_noHATAGABAAmy"
-cell_type_var = 'cell.class'
+# cell_group = "layer"
+# subtype = "_celltype_class1_noHATAGABAAmy"
+# cell_type_var = 'cell.class'
 #cell_types = colData(sce)$cell.class
 Ncol = 4
 
