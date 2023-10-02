@@ -1,0 +1,102 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Mon Oct  2 12:28:05 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3748916
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 7
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 1846293.8562386
+Sigma value:  0.84
+Likelihood value: 1816339.57876841
+Sigma value:  0.69
+Likelihood value: 1792980.0284024
+Sigma value:  0.61
+Likelihood value: 1783022.06860878
+Sigma value:  0.53
+Likelihood value: 1775231.3297213
+Sigma value:  0.45
+Likelihood value: 1769994.8873895
+Sigma value:  0.38
+Likelihood value: 1767844.71604716
+Sigma value:  0.36
+Likelihood value: 1767691.6313042
+Sigma value:  0.36
+[1] "Examining multi mode all weights results"
+[1] "Astro"
+[1] "CA1_ProS"
+[1] "CA2-4"
+[1] "Cajal"
+[1] "Choroid"
+[1] "Ependy"
+[1] "GABA.CGE"
+[1] "GABA.LAMP5"
+[1] "GABA.MGE"
+[1] "GC"
+[1] "L2_3.Prs.Ent"
+[1] "L2_3.PrS.PaS"
+[1] "L5"
+[1] "L6_6b"
+[1] "Micro_Macro_T"
+[1] "Oligo"
+[1] "OPC"
+[1] "Sub.1"
+[1] "Sub.2"
+[1] "Thal"
+[1] "Vascular"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 1845660.33833655
+Sigma value:  0.84
+Likelihood value: 1815768.96514167
+Sigma value:  0.69
+Likelihood value: 1792455.70036048
+Sigma value:  0.61
+Likelihood value: 1782518.37821712
+Sigma value:  0.53
+Likelihood value: 1774749.87039324
+Sigma value:  0.45
+Likelihood value: 1769543.77676561
+Sigma value:  0.38
+Likelihood value: 1767435.06212436
+Sigma value:  0.36
+Likelihood value: 1767297.79057538
+Sigma value:  0.36
+**** Job ends ****
+Mon Oct  2 14:23:53 EDT 2023
