@@ -1,0 +1,141 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Mon Oct  2 12:10:21 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3748980
+Job name: registrationHE
+Hostname: compute-123.cm.cluster
+Loading LIBD module for cell2location/0.8a0
+Global seed set to 0
+/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/scvi/data/_utils.py:102: UserWarning: Training will be faster when sparse matrix is formatted as CSR. It is safe to cast before model initialization.
+Loading AnnDatas...
+Anndata setup with scvi-tools version 0.16.1.
+
+Setup via `RegressionModel.setup_anndata` with arguments:
+{
+│   'layer': None,
+│   'batch_key': 'brnum',
+│   'labels_key': 'cell.class',
+│   'categorical_covariate_keys': None,
+│   'continuous_covariate_keys': None
+}
+
+         Summary Statistics         
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┓
+┃     Summary Stat Key     ┃ Value ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━┩
+│         n_cells          │ 69036 │
+│          n_vars          │  525  │
+│         n_batch          │  10   │
+│         n_labels         │  21   │
+│ n_extra_categorical_covs │   0   │
+│ n_extra_continuous_covs  │   0   │
+└──────────────────────────┴───────┘
+               Data Registry                
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Registry Key ┃    scvi-tools Location    ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│      X       │          adata.X          │
+│    batch     │ adata.obs['_scvi_batch']  │
+│    labels    │ adata.obs['_scvi_labels'] │
+│    ind_x     │   adata.obs['_indices']   │
+└──────────────┴───────────────────────────┘
+                  batch State Registry                   
+┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┓
+┃  Source Location   ┃ Categories ┃ scvi-tools Encoding ┃
+┡━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━┩
+│ adata.obs['brnum'] │   Br2720   │          0          │
+│                    │   Br2743   │          1          │
+│                    │   Br3942   │          2          │
+│                    │   Br6423   │          3          │
+│                    │   Br6432   │          4          │
+│                    │   Br6471   │          5          │
+│                    │   Br6522   │          6          │
+│                    │   Br8325   │          7          │
+│                    │   Br8492   │          8          │
+│                    │   Br8667   │          9          │
+└────────────────────┴────────────┴─────────────────────┘
+                      labels State Registry                      
+┏━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┓
+┃     Source Location     ┃  Categories   ┃ scvi-tools Encoding ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━┩
+│ adata.obs['cell.class'] │     Astro     │          0          │
+│                         │   CA1_ProS    │          1          │
+│                         │     CA2-4     │          2          │
+│                         │     Cajal     │          3          │
+│                         │    Choroid    │          4          │
+│                         │    Ependy     │          5          │
+│                         │   GABA.CGE    │          6          │
+│                         │  GABA.LAMP5   │          7          │
+│                         │   GABA.MGE    │          8          │
+│                         │      GC       │          9          │
+│                         │ L2_3.PrS.PaS  │         10          │
+│                         │ L2_3.Prs.Ent  │         11          │
+│                         │      L5       │         12          │
+│                         │     L6_6b     │         13          │
+│                         │ Micro_Macro_T │         14          │
+│                         │      OPC      │         15          │
+│                         │     Oligo     │         16          │
+│                         │     Sub.1     │         17          │
+│                         │     Sub.2     │         18          │
+│                         │     Thal      │         19          │
+│                         │   Vascular    │         20          │
+└─────────────────────────┴───────────────┴─────────────────────┘
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/trainer/configuration_validator.py:120: UserWarning: You passed in a `val_dataloader` but have no `validation_step`. Skipping val loop.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/cell2location/02_registration_HE.py", line 114, in <module>
+    mod.train(max_epochs=epochs_signature, use_gpu=True)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/cell2location/models/reference/_reference_model.py", line 157, in train
+    super().train(**kwargs)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/scvi/model/base/_pyromixin.py", line 146, in train
+    return runner()
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/scvi/train/_trainrunner.py", line 74, in __call__
+    self.trainer.fit(self.training_plan, self.data_splitter)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/scvi/train/_trainer.py", line 186, in fit
+    super().fit(*args, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 740, in fit
+    self._call_and_handle_interrupt(
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 685, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 777, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 1145, in _run
+    self.accelerator.setup(self)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/accelerators/gpu.py", line 46, in setup
+    return super().setup(trainer)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/accelerators/accelerator.py", line 91, in setup
+    self.setup_training_type_plugin()
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/accelerators/accelerator.py", line 363, in setup_training_type_plugin
+    self.training_type_plugin.setup()
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/plugins/training_type/single_device.py", line 71, in setup
+    self.model_to_device()
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/plugins/training_type/single_device.py", line 68, in model_to_device
+    self._model.to(self.root_device)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/pytorch_lightning/core/mixins/device_dtype_mixin.py", line 111, in to
+    return super().to(*args, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 907, in to
+    return self._apply(convert)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 578, in _apply
+    module._apply(fn)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 578, in _apply
+    module._apply(fn)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 624, in _apply
+    self._buffers[key] = fn(buf)
+  File "/jhpce/shared/jhpce/libd/cell2location/0.8a0/cell2location_env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 905, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+**** Job ends ****
+Mon Oct  2 12:13:12 EDT 2023
