@@ -33,11 +33,14 @@ subtype = "_celltype_class1_noHATAGABAAmy"
 
 #sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class.h5ad")
 sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class1_noHATAGABAAmy.h5ad")
-sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
-#spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
+#sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
+spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
 
-processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
-plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
+# processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
+# plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "HE", "2ndRun_newClass", cell_group)
+processed_dir = pyhere.here("processed-data", "spot_deconvo", "cell2location", "IF", "2ndRun_newClass", cell_group)
+plot_dir = pyhere.here("plots", "spot_deconvo", "cell2location", "IF", "2ndRun_newClass", cell_group)
+
 Path(plot_dir).mkdir(parents=True, exist_ok=True)
 Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
@@ -65,7 +68,7 @@ plot_file_type = 'pdf'
 
 #  Load AnnDatas
 print('Loading AnnDatas...')
-adata_vis = sc.read_h5ad(sp_path)
+adata_vis = sc.read_h5ad(spg_path)
 adata_ref = sc.read_h5ad(sc_path)
 
 # update Visium AnnData object to match structure in cell2location tutorial
@@ -106,7 +109,7 @@ adata_vis.uns['spatial'] = {}
 
 for sample_id in adata_vis.obs['sample_id'].cat.categories:
     spaceranger_dir = spaceranger_dirs[spaceranger_dirs.sample_id == sample_id].SPpath.values[0]
-    # print(spaceranger_dirs.SPpath.values[0])
+    #   print(spaceranger_dirs.SPpath.values[0])
     #   Path to JSON from spaceranger including spot size for this sample
     json_path = pyhere.here(str(spaceranger_dir), 'scalefactors_json.json')
     print(json_path)
@@ -148,10 +151,6 @@ if cell_group == "layer":
 #-------------------------------------------------------------------------------
 
 if cell_group == 'broad':
-    adata_vis.write_h5ad(
-        os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad')
-    )
+    adata_vis.write_h5ad(os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad'))
 
-adata_ref.write_h5ad(
-    os.path.join(processed_dir, 'adata_ref_orig.h5ad')
-)
+adata_ref.write_h5ad(os.path.join(processed_dir, 'adata_ref_orig.h5ad'))
