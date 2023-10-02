@@ -17,13 +17,20 @@ cell_group = "layer"
 subtype = "_celltype_class1_noHATAGABAAmy"
 cell_type_var = 'cell.class'
 
-processed_out = here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers",cell_group)
-#   Load objects
-# sce = readRDS(here(Dr,"sce_class.rds"))
- sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
+# processed_out = here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers",cell_group)
+processed_out = here("processed-data","spot_deconvo","RCTD","3rdRun_newClass_deconvoMarkers",cell_group)
 
-# cell_types = colData(sce)$broad.class
- cell_types = colData(sce)$cell.class
+#   Load objects
+ sce = readRDS(here(Dr,"sce_class.rds"))
+# sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
+
+markers = readLines(here(Dr,"markers_broad_class.txt"))
+#markers = readLines(here(Dr,"markers_sce_class1_noHATAGABAAmy.txt"))
+sceb = sce[rowData(sce)$gene_id %in% markers,]
+sce = sceb
+
+ cell_types = colData(sce)$broad.class
+# cell_types = colData(sce)$cell.class
 
 # reference data
 counts = assays(sce)$counts
