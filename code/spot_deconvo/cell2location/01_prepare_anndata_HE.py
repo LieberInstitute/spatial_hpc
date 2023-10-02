@@ -25,14 +25,14 @@ import pprint
 #   Variable definitions
 ################################################################################
 
-#cell_group = "broad" 
-#subtype = "_class"
+cell_group = "broad" 
+subtype = "_class"
 
-cell_group = "layer" 
-subtype = "_celltype_class1_noHATAGABAAmy"
+#cell_group = "layer" 
+#subtype = "_celltype_class1_noHATAGABAAmy"
 
-#sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class.h5ad")
-sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class1_noHATAGABAAmy.h5ad")
+sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class.h5ad")
+#sc_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","sce_class1_noHATAGABAAmy.h5ad")
 #sp_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spe.h5ad")
 spg_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities","spg.h5ad")
 
@@ -49,8 +49,8 @@ spaceranger_dirs = pd.read_csv(pyhere.here("code","spot_deconvo","shared_utiliti
 spaceranger_dirs.SPpath = pyhere.here(spaceranger_dirs.SPpath, 'outs', 'spatial')
 
 marker_path = pyhere.here("processed-data", "spot_deconvo", "shared_utilities", "markers_" + cell_group + subtype + ".txt")
-#cell_type_var = 'broad.class'
-cell_type_var = 'cell.class'
+cell_type_var = 'broad.class'
+#cell_type_var = 'cell.class'
 
 #   Naming conventions used for different columns in the spatial AnnData
 sample_id_var = 'sample_id'          # in spatial object only
@@ -140,17 +140,14 @@ adata_vis.obsm['spatial'] = np.array(adata_vis.obsm['spatial'][spatial_coords_na
 #   Replace special characters in some layer groups
 #-------------------------------------------------------------------------------
 
-if cell_group == "layer":
-    adata_ref.obs[cell_type_var] = pd.Series(
-        [x.replace('/', '_') for x in adata_ref.obs[cell_type_var]],
-        dtype = 'category', index = adata_ref.obs_names
-    )
+#if cell_group == "layer":
+adata_ref.obs[cell_type_var] = pd.Series([x.replace('/', '_') for x in adata_ref.obs[cell_type_var]], dtype = 'category', index = adata_ref.obs_names)
 
 #-------------------------------------------------------------------------------
 #   Save AnnDatas
 #-------------------------------------------------------------------------------
 
-if cell_group == 'broad':
-    adata_vis.write_h5ad(os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad'))
+#if cell_group == 'broad':
+adata_vis.write_h5ad(os.path.join(os.path.dirname(processed_dir), 'adata_vis_orig.h5ad'))
 
 adata_ref.write_h5ad(os.path.join(processed_dir, 'adata_ref_orig.h5ad'))
