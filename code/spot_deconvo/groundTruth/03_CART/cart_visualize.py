@@ -79,7 +79,7 @@ dat = np.load(mask_path,allow_pickle=True).item()
 masks = dat['masks']
 
 props = regionprops(masks)
-examples_per_type = 5
+examples_per_type = 20
 
 rng = default_rng(0)
 img_path = str(img_path).format(sample_id)

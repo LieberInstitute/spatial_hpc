@@ -3,9 +3,9 @@
 #$ -N "cart_visualize"
 #$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/groundTruth/03_CART/logs/cart_visualize$TASK_ID.log
 #$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/groundTruth/03_CART/logs/cart_visualize$TASK_ID.log
-#$ -l caracol,mf=20G,h_vmem=20G
-#$ -t 1-6
-#$ -tc 6
+#$ -l caracol,mf=50G,h_vmem=50G
+#$ -t 1-8
+#$ -tc 4
 
 echo "**** Job starts ****"
 date
