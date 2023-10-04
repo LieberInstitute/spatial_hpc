@@ -65,3 +65,137 @@ Calls: [ -> [.data.frame
 Execution halted
 **** Job ends ****
 Wed Sep 20 16:58:59 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 15:09:29 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750149
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 10
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+Error: object 'Dr' not found
+Execution halted
+**** Job ends ****
+Wed Oct  4 15:09:48 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 15:21:28 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750153
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 10
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 887536.229427265
+Sigma value:  0.84
+Likelihood value: 875323.191472565
+Sigma value:  0.69
+Likelihood value: 866008.568940073
+Sigma value:  0.61
+Likelihood value: 862110.178643996
+Sigma value:  0.53
+Likelihood value: 859105.618280499
+Sigma value:  0.45
+Likelihood value: 857126.568224979
+Sigma value:  0.38
+Likelihood value: 856344.125575439
+Sigma value:  0.37
+Likelihood value: 856310.131979392
+Sigma value:  0.36
+[1] "Examining multi mode all weights results"
+[1] "Astro"
+[1] "CSF"
+[1] "ExcN"
+[1] "InhN"
+[1] "Micro_Macro_T"
+[1] "Oligo"
+[1] "OPC"
+[1] "Vascular"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 873286.095934861
+Sigma value:  0.84
+Likelihood value: 861311.10685009
+Sigma value:  0.69
+Likelihood value: 852197.067364126
+Sigma value:  0.61
+Likelihood value: 848396.360719016
+Sigma value:  0.53
+Likelihood value: 845482.210956207
+Sigma value:  0.45
+Likelihood value: 843585.8328258
+Sigma value:  0.39
+Likelihood value: 842914.759660654
+Sigma value:  0.37
+Likelihood value: 842845.343037705
+Sigma value:  0.36
+**** Job ends ****
+Wed Oct  4 16:19:57 EDT 2023

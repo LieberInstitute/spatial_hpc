@@ -61,3 +61,107 @@ Calls: [ -> [.data.frame
 Execution halted
 **** Job ends ****
 Wed Sep 20 19:30:39 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 15:19:57 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750151
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 24
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 15:27:44 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750154
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 24
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 779525.989686896
+Sigma value:  0.84
+Likelihood value: 771651.171103185
+Sigma value:  0.69
+Likelihood value: 767021.134202169
+Sigma value:  0.62
+Likelihood value: 766048.72086267
+Sigma value:  0.6
+Likelihood value: 765934.832561383
+Sigma value:  0.59
+Likelihood value: 765905.041792316
+Sigma value:  0.58
+Likelihood value: 765897.232250702
+Sigma value:  0.58
+[1] "Examining multi mode all weights results"
+[1] "Astro"
+[1] "CSF"
+[1] "ExcN"
+[1] "InhN"
+[1] "Micro_Macro_T"
+[1] "Oligo"
+[1] "OPC"
+[1] "Vascular"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 783830.503907421
+Sigma value:  0.84
+Likelihood value: 775820.159858418
+Sigma value:  0.69
+Likelihood value: 771054.080703149
+Sigma value:  0.62
+Likelihood value: 770022.154244283
+Sigma value:  0.59
+Likelihood value: 769852.602563275
+Sigma value:  0.58
+Likelihood value: 769834.81737635
+Sigma value:  0.58
+**** Job ends ****
+Wed Oct  4 16:12:06 EDT 2023
