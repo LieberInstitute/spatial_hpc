@@ -7,11 +7,11 @@
 
 #$ -cwd
 #$ -N "prepare_anndatas_HE"
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_IF_broad_class$TASK_ID.log
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_IF_broad_class$TASK_ID.log
-#$ -l caracol,mf=110G,h_vmem=110G,h_fsize=50G
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_IF_layer_class$TASK_ID.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/01_prepare_anndatas_IF_layer_class$TASK_ID.log
+#$ -l caracol,mf=100G,h_vmem=100G,h_fsize=50G
 #$ -t 1-8
-#$ -tc 1
+#$ -tc 3
 
 USE_SLURM=2
 
