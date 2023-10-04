@@ -1,11 +1,11 @@
 #!/bin/bash
 #$ -cwd
 #$ -N "runRCTD"
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/03_runRCTD_IF_broad_newClass_RCTDmarkers$TASK_ID.log
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/03_runRCTD_IF_broad_newClass_RCTDmarkers$TASK_ID.log
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/03_runRCTD_HE_broad_newClass_RCTDmarkers$TASK_ID.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/RCTD/logs/03_runRCTD_HE_broad_newClass_RCTDmarkers$TASK_ID.log
 #$ -l caracol,mf=100G,h_vmem=100G,h_fsize=100G
-#$ -t 1:8
-#$ -tc 2
+#$ -t 24
+#$ -tc 1
 
 USE_SLURM=2
 

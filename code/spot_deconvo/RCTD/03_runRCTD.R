@@ -22,10 +22,14 @@ Ncol = 4
 
 Dr <- here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers", cell_group)
 plots = here("plots","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers", cell_group)
+
+# Dr <- here("processed-data","spot_deconvo","RCTD","3rdRun_newClass_deconvoMarkers", cell_group)
+# plots = here("plots","spot_deconvo","RCTD","3rdRun_newClass_deconvoMarkers", cell_group)
+
 #   Load objects
 spaceranger_dirs = read.csv(file.path(here::here("code","VistoSeg","code","samples.txt")), header = FALSE, sep = '\t', stringsAsFactors = FALSE, col.names = c('SPpath','sample_id','brain'))
-#spaceranger_dirs = spaceranger_dirs[1:36,]
-spaceranger_dirs = spaceranger_dirs[37:44,]
+spaceranger_dirs = spaceranger_dirs[1:36,]
+#spaceranger_dirs = spaceranger_dirs[37:44,]
 sample_ids = spaceranger_dirs$sample_id
 
 sample_id = sample_ids[as.numeric(Sys.getenv("SGE_TASK_ID"))]

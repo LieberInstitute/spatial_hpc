@@ -9,28 +9,28 @@ suppressPackageStartupMessages(library("spacexr"))
 
 #  Paths
  Dr <- here("processed-data","spot_deconvo","shared_utilities")
-# cell_group = "broad"
-# subtype = "_class"
-# cell_type_var = 'broad.class'
+cell_group = "broad"
+subtype = "_class"
+cell_type_var = 'broad.class'
 
-cell_group = "layer"
-subtype = "_celltype_class1_noHATAGABAAmy"
-cell_type_var = 'cell.class'
+# cell_group = "layer"
+# subtype = "_celltype_class1_noHATAGABAAmy"
+# cell_type_var = 'cell.class'
 
 # processed_out = here("processed-data","spot_deconvo","RCTD","2ndRun_newClass_RCTDmarkers",cell_group)
 processed_out = here("processed-data","spot_deconvo","RCTD","3rdRun_newClass_deconvoMarkers",cell_group)
 
 #   Load objects
- sce = readRDS(here(Dr,"sce_class.rds"))
-# sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
+sce = readRDS(here(Dr,"sce_class.rds"))
+#sce = readRDS(here(Dr,"sce_class1_noHATAGABAAmy.rds"))
 
 markers = readLines(here(Dr,"markers_broad_class.txt"))
-#markers = readLines(here(Dr,"markers_sce_class1_noHATAGABAAmy.txt"))
+#markers = readLines(here(Dr,"markers_layer_celltype_class1_noHATAGABAAmy.txt"))
 sceb = sce[rowData(sce)$gene_id %in% markers,]
 sce = sceb
 
- cell_types = colData(sce)$broad.class
-# cell_types = colData(sce)$cell.class
+cell_types = colData(sce)$broad.class
+#cell_types = colData(sce)$cell.class
 
 # reference data
 counts = assays(sce)$counts
