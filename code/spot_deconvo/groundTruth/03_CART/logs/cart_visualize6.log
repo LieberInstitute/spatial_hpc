@@ -84,3 +84,232 @@ id
 13455  2.407   0.000   10.491  246.732
 **** Job ends ****
 Thu Sep 28 16:45:39 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 13:54:42 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750113
+Job name: cart_visualize
+Hostname: compute-123.cm.cluster
+Loading LIBD module for cellpose/2.0
+Intensities for 20 random other cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+54824  0.081   3.735    2.807   0.840
+21523  1.041  19.911    6.562   4.584
+19519  0.846   8.667    7.288   3.530
+55508  0.369   8.497    3.977   0.500
+35408  1.927   6.371    4.367   0.266
+40116  1.784   4.244   10.616   1.369
+37831  3.934   3.030   10.023   0.030
+56324  0.477   3.154   10.154   0.000
+41552  1.564   2.548    3.580   6.394
+42224  0.508   4.758    5.886   0.174
+14030  0.806   4.870    5.517   0.024
+50555  2.181   6.805    6.864   4.692
+41337  0.398   3.071   14.436   8.223
+767    0.151   2.957    5.699   0.054
+37035  1.348   7.075   12.588   0.000
+6307   0.096  18.539    4.998  13.099
+52172  2.533  12.097    8.119   0.101
+35022  3.367   5.661    2.927   0.000
+46493  0.412   9.577   10.950   0.592
+3166   4.702  19.441   14.644   0.000
+Intensities for 20 random neuron cells:
+         NeuN   OLIG2  TMEM119   GFAP
+id                                   
+46518  44.337  28.019   71.429  0.000
+56321  23.365   2.750    4.672  0.057
+39974  52.004  13.665   20.797  8.899
+25226  41.117  23.496   73.275  0.000
+55636  32.939   4.688    3.627  1.013
+49309  30.876  25.680   52.338  0.000
+38444  66.699   9.080    5.596  0.152
+2601   28.700  29.027   71.208  0.000
+93     20.015   0.000   13.230  0.000
+235    22.602  18.528   60.218  0.000
+32623  31.919   5.738    9.953  0.007
+47641  22.984  19.066   46.828  0.000
+43591  29.446  19.002   38.614  1.490
+39241  52.046   1.675   23.689  0.715
+55088  20.358   0.851   20.821  0.000
+48530  45.383  31.977   69.865  0.000
+51408  19.331   5.197   31.142  0.000
+38596  38.815  10.021   15.311  0.091
+52304  28.372  15.312   45.917  0.000
+41400  25.732  26.510   55.012  0.000
+Traceback (most recent call last):
+  File "cart_visualize.py", line 100, in <module>
+    fig.savefig(os.path.join(plot_dir, f'{cell_type}_{sample_id}.{plot_file_type}'))
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/figure.py", line 3046, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/backend_bases.py", line 2319, in print_figure
+    result = print_method(
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/backend_bases.py", line 1648, in wrapper
+    return func(*args, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/_api/deprecation.py", line 389, in wrapper
+    return func(*inner_args, **inner_kwargs)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/backends/backend_pdf.py", line 2790, in print_pdf
+    self.figure.draw(renderer)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/artist.py", line 73, in draw_wrapper
+    result = draw(artist, renderer, *args, **kwargs)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/artist.py", line 50, in draw_wrapper
+    return draw(artist, renderer)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/figure.py", line 2837, in draw
+    mimage._draw_list_compositing_images(
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/image.py", line 132, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/artist.py", line 50, in draw_wrapper
+    return draw(artist, renderer)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/axes/_base.py", line 3091, in draw
+    mimage._draw_list_compositing_images(
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/image.py", line 132, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/artist.py", line 37, in draw_wrapper
+    renderer.start_rasterizing()
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/backends/backend_mixed.py", line 83, in start_rasterizing
+    self._raster_renderer = self._raster_renderer_class(
+  File "/jhpce/shared/jhpce/libd/cellpose/2.0/cellpose_env/lib/python3.8/site-packages/matplotlib/backends/backend_agg.py", line 93, in __init__
+    self._renderer = _RendererAgg(int(width), int(height), dpi)
+MemoryError: In RendererAgg: Out of memory
+**** Job ends ****
+Wed Oct  4 13:56:21 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 14:14:10 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750124
+Job name: cart_visualize
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Intensities for 20 random other cells:
+        NeuN   OLIG2  TMEM119    GFAP
+id                                   
+54824  0.081   3.735    2.807   0.840
+21523  1.041  19.911    6.562   4.584
+19519  0.846   8.667    7.288   3.530
+55508  0.369   8.497    3.977   0.500
+35408  1.927   6.371    4.367   0.266
+40116  1.784   4.244   10.616   1.369
+37831  3.934   3.030   10.023   0.030
+56324  0.477   3.154   10.154   0.000
+41552  1.564   2.548    3.580   6.394
+42224  0.508   4.758    5.886   0.174
+14030  0.806   4.870    5.517   0.024
+50555  2.181   6.805    6.864   4.692
+41337  0.398   3.071   14.436   8.223
+767    0.151   2.957    5.699   0.054
+37035  1.348   7.075   12.588   0.000
+6307   0.096  18.539    4.998  13.099
+52172  2.533  12.097    8.119   0.101
+35022  3.367   5.661    2.927   0.000
+46493  0.412   9.577   10.950   0.592
+3166   4.702  19.441   14.644   0.000
+Intensities for 20 random neuron cells:
+         NeuN   OLIG2  TMEM119   GFAP
+id                                   
+46518  44.337  28.019   71.429  0.000
+56321  23.365   2.750    4.672  0.057
+39974  52.004  13.665   20.797  8.899
+25226  41.117  23.496   73.275  0.000
+55636  32.939   4.688    3.627  1.013
+49309  30.876  25.680   52.338  0.000
+38444  66.699   9.080    5.596  0.152
+2601   28.700  29.027   71.208  0.000
+93     20.015   0.000   13.230  0.000
+235    22.602  18.528   60.218  0.000
+32623  31.919   5.738    9.953  0.007
+47641  22.984  19.066   46.828  0.000
+43591  29.446  19.002   38.614  1.490
+39241  52.046   1.675   23.689  0.715
+55088  20.358   0.851   20.821  0.000
+48530  45.383  31.977   69.865  0.000
+51408  19.331   5.197   31.142  0.000
+38596  38.815  10.021   15.311  0.091
+52304  28.372  15.312   45.917  0.000
+41400  25.732  26.510   55.012  0.000
+Intensities for 20 random oligo cells:
+         NeuN   OLIG2  TMEM119   GFAP
+id                                   
+38119   0.336  39.242    4.830  0.151
+15358   2.008  23.566   23.158  0.081
+30556   0.320  30.315   12.827  0.023
+25004   3.310  38.740    9.272  0.004
+33125   1.324  24.905    4.625  2.106
+2365   15.646  92.524  103.956  0.000
+16544   2.324  25.940   11.548  0.641
+11334   1.410  66.512   14.191  0.008
+11807   1.181  22.652   18.233  5.059
+35567   1.847  40.864   17.243  0.253
+14867   1.266  51.007    5.683  0.978
+26283   4.415  36.585   16.806  0.012
+35297   0.217  52.239   10.566  0.004
+18709   1.910  56.969   10.014  0.080
+28088   1.932  23.193   11.280  0.000
+14580   3.517  29.264   23.188  0.000
+46438  63.015  42.702  144.706  0.000
+3858    3.546  46.188   16.712  0.000
+10156  35.978  70.898  176.486  0.918
+29150   2.294  32.528   15.472  0.604
+Intensities for 20 random microglia cells:
+         NeuN    OLIG2  TMEM119    GFAP
+id                                     
+10718   4.348    4.457   60.907   1.661
+2537    4.158   42.246   43.044   0.100
+10756   3.407   52.984   36.789   0.000
+50041  67.665    1.430  115.534   0.000
+21130   9.926   10.273  128.641   0.000
+2752    1.901    1.391   45.414   0.000
+12331   5.790    8.775   20.820   0.000
+29932   7.473    1.349   32.952   1.251
+41346  48.830   16.007   88.993   0.000
+32804   2.004    1.611   25.529   0.582
+35934  52.499   31.252  105.823   0.000
+50929   7.182    4.836   20.667   7.506
+56266   0.905    1.725   37.967   0.033
+53358  14.495   21.437   80.785   0.001
+50694  55.147    3.792   87.672   0.000
+30535   0.947  124.157  221.322   9.504
+4919    3.905    8.861   53.490   0.000
+41842   9.407   28.430   67.149   0.000
+15784   3.159    2.346   36.114  44.712
+53601   0.000    2.080   20.320   0.000
+Intensities for 20 random astrocyte cells:
+         NeuN   OLIG2  TMEM119    GFAP
+id                                    
+46299  13.204   3.009    2.607  22.136
+51772   4.137   0.208    7.797  84.782
+28093   2.325   0.268    8.240  21.984
+18221   0.590   0.517    8.153  28.350
+47384   2.262   3.683    6.167  25.808
+49034   0.400   5.249    3.294  18.677
+22745   5.210   0.348   12.731  29.847
+48018   0.285   0.952   11.267  21.527
+38876   0.155   3.304   11.163  19.840
+51821   4.293   0.018   18.324  65.797
+43983   7.561  20.394   20.492  17.642
+17494   0.341  14.489   20.063  25.033
+47373   7.312   4.200    7.213  52.062
+41603   2.145   1.897   12.971  26.723
+25129   1.367   0.633    7.367  27.305
+46973   2.060   2.063    3.049  18.005
+13364   0.676  19.883    9.882  28.198
+51520   1.324   0.859   13.542  19.667
+2383    0.357  20.605    7.102  49.198
+36536   0.467  17.926   17.911  84.157
+**** Job ends ****
+Wed Oct  4 14:16:52 EDT 2023
