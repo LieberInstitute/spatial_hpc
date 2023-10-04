@@ -1,0 +1,89 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Wed Oct  4 12:03:29 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3750072
+Job name: runRCTD
+Hostname: compute-126.cm.cluster
+Task id: 4
+Unloading conda_R/4.1.x
+Loading conda_R/devel
+
+The following have been reloaded with a version change:
+  1) conda_R/4.1.x => conda_R/devel
+
+Warning in .make_numeric_version(x, strict, .standard_regexps()$valid_numeric_version) :
+  invalid non-character version specification 'x' (type: double)
+Warning message:
+replacing previous import ‘utils::findMatches’ by ‘S4Vectors::findMatches’ when loading ‘AnnotationDbi’ 
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+Loading required package: viridisLite
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 39585.4007781149
+Sigma value:  0.84
+Likelihood value: 39074.0126553365
+Sigma value:  0.69
+Likelihood value: 38698.028377272
+Sigma value:  0.61
+Likelihood value: 38547.012755987
+Sigma value:  0.53
+Likelihood value: 38435.1496922779
+Sigma value:  0.45
+Likelihood value: 38564.1489341709
+Sigma value:  0.42
+Likelihood value: 38352.362530393
+Sigma value:  0.39
+Likelihood value: 38344.7813536932
+Sigma value:  0.38
+[1] "Examining multi mode all weights results"
+[1] "Astro"
+[1] "CSF"
+[1] "ExcN"
+[1] "InhN"
+[1] "Micro_Macro_T"
+[1] "Oligo"
+[1] "OPC"
+[1] "Vascular"
+[1] "Examining multi mode sub weights results"
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+Likelihood value: 39100.5530518818
+Sigma value:  0.84
+Likelihood value: 38599.3802940332
+Sigma value:  0.69
+Likelihood value: 38230.7332895296
+Sigma value:  0.61
+Likelihood value: 38082.1807898438
+Sigma value:  0.53
+Likelihood value: 37971.7288563101
+Sigma value:  0.45
+Likelihood value: 37903.5385626855
+Sigma value:  0.4
+Likelihood value: 37883.339535414
+Sigma value:  0.38
+Likelihood value: 37880.2853826026
+Sigma value:  0.37
+**** Job ends ****
+Wed Oct  4 12:16:43 EDT 2023
