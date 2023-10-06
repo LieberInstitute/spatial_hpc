@@ -1,11 +1,11 @@
 #!/bin/bash
 #$ -cwd
 #$ -N "align_tangram_HE"
-#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_layer_class$TASK_ID.log
-#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_HE_layer_class$TASK_ID.log
-#$ -l caracol,mf=210G,h_vmem=210G
+#$ -o /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_IF_layer_class$TASK_ID.log
+#$ -e /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/spot_deconvo/tangram/logs/02_align_tangram_IF_layer_class$TASK_ID.log
+#$ -l caracol,mf=200G,h_vmem=200G
 #$ -t 1-8
-#$ -tc 1
+#$ -tc 2
 
 echo "**** Job starts ****"
 date
