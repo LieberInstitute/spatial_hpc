@@ -27,63 +27,10 @@ spe <- scuttle::addPerCellQC(
 ##### Check for low quality spots ####
 #
 ### High mito
+###NOTE:based on exploratory data analysis, discarding spots based on mitochondrial rate appears to discard large
+###numbers of neuropil spots. This code has been commented. Mito rate is still stored in spe for analysis purposes
 #spe$high_mito_id <- isOutlier(spe$subsets_Mito_percent, nmads = 3, type = "higher", batch = spe$sample_id)
 #spe$high_mito_br <- isOutlier(spe$subsets_Mito_percent, nmads = 3, type = "higher", batch = spe$brnum)
-#table(spe$high_mito_id)
-##  FALSE   TRUE
-## 151823   1260
-#table(spe$high_mito_br)
-## FALSE   TRUE
-## 151823   2099
-#table(spe$sample_id, spe$high_mito_id)
-## FALSE TRUE
-## V10B01-085_A1  3648   27
-## V10B01-085_B1  3287    7
-## V10B01-085_C1  3762   30
-## V10B01-085_D1  3332   25
-## V10B01-086_A1  4666   31
-## V10B01-086_B1  3946   31
-## V10B01-086_C1  2472  146
-## V10B01-086_D1  3415   46
-## V11A20-297_A1  4457   12
-## V11A20-297_B1  4622   44
-## V11A20-297_C1  3551  114
-## V11A20-297_D1  3510   18
-## V11L05-333_A1  4643  349
-## V11L05-333_B1  4955   37
-## V11L05-333_C1  4762   53
-## V11L05-333_D1  4969    0
-## V11L05-335_A1  4669    0
-## V11L05-335_B1  4765    1
-## V11L05-335_C1  4964    1
-## V11L05-335_D1  4493   25
-## V11L05-336_A1  4677    4
-## V11L05-336_B1  4458   19
-## V11L05-336_C1  4460    3
-## V11L05-336_D1  4681    5
-## V11U08-081_A1  4558   67
-## V11U08-081_B1  3728   37
-## V11U08-081_C1  3651    3
-## V11U08-081_D1  4366   81
-## V11U08-084_A1  4849   24
-## V11U08-084_B1  4600    0
-## V11U08-084_C1  4990    0
-## V11U08-084_D1  4296    0
-## V12F14-051_A1  3755    7
-## V12F14-051_B1  3134    1
-## V12F14-051_C1  4107   10
-## V12F14-051_D1  4625    2
-# table(spe$high_mito_br, spe$brnum)
-## Br2743 Br3942 Br6423 Br6432 Br6471 Br6522 Br8325 Br8492 Br8667 Br2720
-## FALSE  13920  19057  13901   8525  14396  18759  20363   8214  18257  15592
-## TRUE     260    711    217    149      4      0    483    176     50     49
-#
-##are high_mito_br spots and high_mito_id spots same? No
-#table(spe$high_mito_br,spe$high_mito_id)
-##              id    id
-##            FALSE   TRUE
-## br FALSE  150076   908
-## br TRUE    1747    352
 
 ## low library size
 spe$low_sum_id <- isOutlier(spe$sum, log = TRUE, type = "lower", batch = spe$sample_id)
