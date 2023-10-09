@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
   library("tictoc")
 })
 
-load(file = here::here("processed-data", "06_clustering", "PRECAST", "seuList_counts_brnum.Rdata"))
+load(file = here::here("processed-data", "06_clustering", "PRECAST", "seuList_HE.Rdata"))
 load(file = here::here("processed-data","nnSVG","nnSVG_gene_lists.rda"))
 
 set.seed(1257)
@@ -28,4 +28,4 @@ tic()
 PRECASTObj <- PRECAST(PRECASTObj, K = K)
 toc()
 
-save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("PRECASTObj_nnSVG_2000_",K,"_brnum_rerun",".Rdata")))
+save(PRECASTObj, file = here("processed-data", "06_clustering", "PRECAST", paste0("nnSVG_2000_",K,"_HE",".Rdata")))

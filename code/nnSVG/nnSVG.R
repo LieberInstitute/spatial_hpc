@@ -7,9 +7,10 @@ library(scran)
 
 load(file=here::here("processed-data","05_preprocess_batchCorrection","spe_norm.rda"))
 dim(spe)
-##filter out mito genes...just trying something here
-spe[!which(seqnames(spe)=='chrM'),]
+##remove VSPG objects (batch effect)
+spe<-spe[,spe$brnum %in% levels(spe$brnum[1:10])]
 dim(spe)
+
 ##filter genes for lowly expressed guys
 n_umis <- 100
 ix_low_genes <- rowSums(counts(spe)) < n_umis
@@ -140,6 +141,6 @@ head(df_summaryReplicated)
 topSVGsReplicated <- df_summaryReplicated$gene_name
 
 save(res_ranks,topSVGsReplicated,df_summaryReplicated,df_summary,top1000genes,
-     file=here::here('processed-data','nnSVG','nnSVG_outs_mitoFilter.rda'))
+     file=here::here('processed-data','nnSVG','nnSVG_outs_HE.rda'))
 
 
