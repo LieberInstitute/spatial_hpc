@@ -12,6 +12,7 @@ suppressPackageStartupMessages({
 })
 print('Loading spe!')
 load(file="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/05_preprocess_batchCorrection/spe_norm.rda")
+spe<-spe[,spe$brnum %in% levels(spe$brnum)[1:10])
 
 k_vals<-16:20
 
@@ -77,4 +78,4 @@ rm(list = setdiff(ls(), c("spe", "k_vals","aicList",'hk_genes')))
 }
 
 print('loop over, saving SPE')
-save(spe,file=here::here('processed-data','02_build_spe','spe_precast.rda'))
+save(spe,file=here::here('processed-data','06_clustering','PRECAST','spe_precast_HE.rda'))
