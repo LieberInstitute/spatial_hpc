@@ -404,6 +404,10 @@ lobstr::obj_size(spe)
 # 5.53 GB
 dim(spe)
 # [1] 36601 159744
+
+#make sure these are factors for downstream analysis:
+spe$brnum<-factor(spe$brnum)
+spe$sample_id<-factor(spe$sample_id)
 save(spe, file = here::here("processed-data", "02_build_spe", "spe_transform.Rdata"))
 
 ## Reproducibility information
