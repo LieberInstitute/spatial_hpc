@@ -8,7 +8,7 @@ library(scran)
 load(file=here::here("processed-data","05_preprocess_batchCorrection","spe_norm.rda"))
 dim(spe)
 ##remove VSPG objects (batch effect)
-spe<-spe[,spe$brnum %in% levels(spe$brnum[1:10])]
+spe<-spe[,spe$brnum %in% levels(spe$brnum)[1:10]]
 dim(spe)
 
 ##filter genes for lowly expressed guys
@@ -65,7 +65,7 @@ for (s in seq_along(sample_ids)) {
 
     # run nnSVG
     set.seed(123)
-    spe_sub <- nnSVG(spe_sub,n_threads=12,verbose=F)
+    spe_sub <- nnSVG(spe_sub,n_threads=10,verbose=F)
 
     # store results for this sample
     res_list[[s]] <- rowData(spe_sub)
@@ -141,6 +141,6 @@ head(df_summaryReplicated)
 topSVGsReplicated <- df_summaryReplicated$gene_name
 
 save(res_ranks,topSVGsReplicated,df_summaryReplicated,df_summary,top1000genes,
-     file=here::here('processed-data','nnSVG','nnSVG_outs_HE.rda'))
+     file=here::here('processed-data','nnSVG','nnSVG_outs_HE_only.rda'))
 
 
