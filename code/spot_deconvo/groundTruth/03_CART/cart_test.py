@@ -75,7 +75,7 @@ df.to_csv(cells_path, float_format="%.3f")
 #-------------------------------------------------------------------------------
 #   Count cells per spot and print some related statistics
 #-------------------------------------------------------------------------------
-raw = pd.read_csv(spot_path,header=0,names=["barcode", "included", "row", "col", "x", "y"],)
+raw = pd.read_csv(spot_path,header=0,names=["barcode", "included", "row", "col", "y", "x"],)
 
 #   Take only spots that overlap tissue
 raw = raw.iloc[raw.included[raw.included == 1].index].reset_index().drop(columns=["included", "index"])
