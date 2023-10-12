@@ -24,7 +24,7 @@ cell_group = "layer"
 cell_type_var = "cell.class"
 name = "_celltype_class1_noHATAGABAAmy"
 
-n_markers_per_type <- 25
+n_markers_per_type <- 50
 cell_type_nrow <- 4
 
 plot_dir <- here("plots", "spot_deconvo", "shared_utilities", cell_group)

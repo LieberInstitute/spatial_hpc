@@ -7,15 +7,19 @@ library('dplyr')
 library('gridExtra')
 
 spe = readRDS(here("processed-data", "spot_deconvo", "shared_utilities", "spe.rds"))
-#dat = as.data.frame(colData(spe)) %>% select("key", "cluster_collapsed", "array_row", "array_col", "sample_id")
-dat = as.data.frame(colData(spe)) %>% select("key", "broad2", "array_row", "array_col", "sample_id")
+dat = as.data.frame(colData(spe)) %>% select("key", "cluster_collapsed", "array_row", "array_col", "sample_id")
+levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.1"] <- "WM"
+levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.2"] <- "WM"
+levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.3"] <- "WM"
 
-#group = "layer" 
-#celltypes = c("Astro","CA1_ProS","CA2.4","Cajal","Choroid","Ependy","GABA.CGE","GABA.LAMP5","GABA.MGE"      "GC"            "L2_3.PrS.PaS"  "L2_3.Prs.Ent" 
-#"L5","L6_6b","Micro_Macro_T","OPC","Oligo","Sub.1","Sub.2","Thal","Vascular") 
+#dat = as.data.frame(colData(spe)) %>% select("key", "broad2", "array_row", "array_col", "sample_id")
 
-group = "broad"
-celltypes = c("Oligo","Micro_Macro_T","InhN","ExcN","Astro","Vascular","OPC","CSF")      
+group = "layer"
+celltypes = c("Astro","CA1_ProS","CA2.4","Cajal","Choroid","Ependy","GABA.CGE","GABA.LAMP5","GABA.MGE","GC","L2_3.PrS.PaS","L2_3.Prs.Ent",
+"L5","L6_6b","Micro_Macro_T","OPC","Oligo","Sub.1","Sub.2","Thal","Vascular")
+
+# group = "broad"
+# celltypes = c("Oligo","Micro_Macro_T","InhN","ExcN","Astro","Vascular","OPC","CSF")      
 
 ## cell2location
 tool =  "cell2location"
@@ -114,9 +118,10 @@ temp_df$key <- gsub("Br2720", "V12F14-051", temp_df$key)
 setdiff(temp_df$key, dat$key)
 setdiff(dat$key,temp_df$key)
 
+if (group == "broad"){
 rmv = which(dat$key %in% setdiff(dat$key,temp_df$key))
 dat = dat[-rmv,]
-
+}
 #temp_df$slide = sapply(strsplit(temp_df$key,"_"), `[`, 2)
 counts_match <- match(dat$key, temp_df$key)
 counts_info <-temp_df[counts_match,]
@@ -139,11 +144,11 @@ which(is.na(dat1), arr.ind=TRUE)
 
 ## for box plots
 plot_list <- lapply(celltypes, function(i){
-  #ggplot(dat1, aes(x = dat1$cluster_collapsed, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
-  ggplot(dat1, aes(x = dat1$broad2, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
+  ggplot(dat1, aes(x = dat1$cluster_collapsed, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
+  #ggplot(dat1, aes(x = dat1$broad2, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
 })
 
-ggsave(here("plots","spot_deconvo","shared_utilities",group,"boxplot.pdf"), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
+ggsave(here("plots","spot_deconvo","shared_utilities",group,"boxplot_WMcollapsed.pdf"), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
 
 ## proportion plots
 #celltypes = colnames(dat1)[6:26]
