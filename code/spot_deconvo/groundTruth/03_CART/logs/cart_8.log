@@ -25,3 +25,30 @@ Standard deviation (num cells per spot): 3.38
 Max number of cells per spot: 26
 **** Job ends ****
 Wed Oct  4 12:25:48 EDT 2023
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+Loading LIBD module for git-lfs/2.8.0
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+Loading conda_R/4.1.x
+**** Job starts ****
+Thu Oct 12 17:12:33 EDT 2023
+**** JHPCE info ****
+User: mtippani
+Job id: 3753837
+Job name: cart
+Hostname: compute-126.cm.cluster
+Loading LIBD module for cellpose/2.0
+Keeping 22.5% of masks, which were within spots covered by tissue.
+Total number of neuron cells: 1869
+Total number of other cells: 6135
+Total number of oligo cells: 5393
+Total number of microglia cells: 708
+Total number of astrocyte cells: 429
+Percentage of spots with at least one cell: 84.4%
+Mean number of cells per spot: 2.941
+Standard deviation (num cells per spot): 2.88
+Max number of cells per spot: 24
+**** Job ends ****
+Thu Oct 12 17:12:38 EDT 2023
