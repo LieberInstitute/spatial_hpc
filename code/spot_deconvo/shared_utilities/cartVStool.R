@@ -44,6 +44,23 @@ df_list <- list()
 final_df <- do.call(rbind, df_list)
 which(is.na(final_df), arr.ind=TRUE)
 
+df = melt(final_df, id.variables = c("key", "sample_id", "tool"))
+
+CART = df[which(df$tool == "CART"),]
+RCTD = df[which(df$tool == "RCTD"),]
+tangram = df[which(df$tool == "tangram"),]
+cell2location = df[which(df$tool == "cell2location"),]
+rm = setdiff(CART$key, RCTD$key)
+CART = CART[!(CART$key %in% rm), ]
+
+sorted_keys <- CART$key
+RCTD <- RCTD[RCTD$key %in% sorted_keys, ]
+RCTD$actual = CART$value
+cell2location <- cell2location[cell2location$key %in% sorted_keys, ]
+cell2location$actual = CART$value
+tangram <- tangram[tangram$key %in% sorted_keys, ]
+tangram$actual = CART$value
+
 CART = final_df[which(final_df$tool == "CART"),]
 RCTD = final_df[which(final_df$tool == "RCTD"),]
 tangram = final_df[which(final_df$tool == "tangram"),]
@@ -56,61 +73,25 @@ RCTD <- RCTD[RCTD$key %in% sorted_keys, ]
 cell2location <- cell2location[cell2location$key %in% sorted_keys, ]
 tangram <- tangram[tangram$key %in% sorted_keys, ]
 
-RCTD_list <- split(RCTD[celltypes], RCTD$sample)
-CART_list <- split(CART[celltypes], CART$sample)
-tangram_list <- split(tangram[celltypes], tangram$sample)
-cell2location_list <- split(cell2location[celltypes], cell2location$sample)
+df1 = rbind(RCTD, cell2location, tangram)
 
-# Define a function to calculate RMSE
-calculate_rmse <- function(observed, predicted) {signif(sqrt(mean((observed - predicted)^2)),3)}
-
-# Calculate correlations and RMSE for each sample
-results <- lapply(names(RCTD_list), function(sample_id) {
-  corr_RCTD_CART <- round(cor(RCTD_list[[sample_id]], CART_list[[sample_id]]),2)
-  corr_tangram_CART <- round(cor(tangram_list[[sample_id]], CART_list[[sample_id]]),2)
-  corr_cell2location_CART <- round(cor(cell2location_list[[sample_id]], CART_list[[sample_id]]),2)
-  
-  rmse_RCTD_CART <- sapply(celltypes, function(col) {calculate_rmse(RCTD_list[[sample_id]][[col]], CART_list[[sample_id]][[col]])})
-  rmse_tangram_CART <- sapply(celltypes, function(col) {calculate_rmse(tangram_list[[sample_id]][[col]], CART_list[[sample_id]][[col]])})
-  rmse_cell2location_CART <- sapply(celltypes, function(col) {calculate_rmse(cell2location_list[[sample_id]][[col]], CART_list[[sample_id]][[col]])})
-  #sapply(celltypes, function(col) {calculate_rmse(RCTD[[col]], CART[[col]])})
-  
-  data.frame(
-    sample_id = sample_id,
-    celltypes = celltypes,
-    Corr_RCTD_CART = diag(corr_RCTD_CART),
-    Corr_tangram_CART = diag(corr_tangram_CART),
-    Corr_cell2location_CART = diag(corr_cell2location_CART),
-    RMSE_RCTD_CART = rmse_RCTD_CART,
-    RMSE_tangram_CART = rmse_tangram_CART,
-    RMSE_cell2location_CART = rmse_cell2location_CART
+metrics_df = df1 |> filter(variable != "other")|>
+group_by(tool, variable, sample) |>
+  summarize(
+    corr = round(cor(value, actual), 2),
+    rmse = signif(mean((value - actual)**2)**0.5, 3)
+  ) |>
+group_by(tool) |>
+  summarize(
+    corr = round(mean(corr), 2), rmse = signif(mean(rmse), 3)
   )
-})
+    
 
-# Combine the results into a single data frame
-results <- do.call(rbind, results)
-results = results[which(results$celltypes != "other"),]
-
-RCTD = results %>% select(sample_id = sample_id, celltypes = celltypes,Corr = Corr_RCTD_CART,RMSE = RMSE_RCTD_CART)
-RCTD$tool = "RCTD"
-cell2location = results %>% select(sample_id = sample_id, celltypes = celltypes,Corr = Corr_cell2location_CART, RMSE = RMSE_cell2location_CART)
-cell2location$tool = "cell2location"
-tangram = results %>% select(sample_id = sample_id, celltypes = celltypes,Corr = Corr_tangram_CART, RMSE = RMSE_tangram_CART)
-tangram$tool = "tangram"
-
-df = rbind(RCTD, cell2location, tangram)
 # Load the ggplot2 library
 library(ggplot2)
 library(gridExtra)
 
-p = ggplot(df, aes(x = Corr, y = RMSE, color = sample_id, shape = celltypes))+geom_point(size = 3)+facet_wrap(~tool)
-
-rctd_corr = mean(RCTD$Corr)
-rctd_rmse = mean(RCTD$RMSE)
-tan_corr = mean(tangram$Corr)
-tan_rmse = mean(tangram$RMSE)
-cell_corr = mean(cell2location$Corr)
-cell_rmse = mean(cell2location$RMSE)
+p = ggplot(metrics_df, aes(x = corr, y = rmse, color = sample, shape = variable))+geom_point(size = 3)+facet_wrap(~tool)
 
 #gridplot = grid.arrange(grobs = plot_list, nrow = length(celltypes))
 ggsave(here("plots","spot_deconvo","shared_utilities","cartVStool.pdf"), plot = p, width = 12, height = 6)
