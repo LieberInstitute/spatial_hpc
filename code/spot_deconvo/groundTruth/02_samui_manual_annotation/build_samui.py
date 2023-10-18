@@ -1,3 +1,5 @@
+# module load loopy/1.0.0-next.8
+
 from pathlib import Path
 import os
 os.chdir('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
@@ -34,7 +36,7 @@ OUT_dir = here('processed-data', 'spot_deconvo','groundTruth', '02_samui_manual_
 ################################################################################
 #   Read in sample info and clean
 ################################################################################
-os.environ['SGE_TASK_ID'] = '4'
+os.environ['SGE_TASK_ID'] = '8'
 
 #   Subset all types of IDs to this sample only
 sample_id = spaceranger_dirs.sample_id.iloc[int(os.environ['SGE_TASK_ID']) - 1]
