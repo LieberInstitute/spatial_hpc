@@ -1,4 +1,4 @@
-setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
+#cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
 
 suppressPackageStartupMessages({
   library(SpatialExperiment)
@@ -16,85 +16,111 @@ suppressPackageStartupMessages({
 })
 
 # Load SPE
-load(file = here::here("processed-data", "06_clustering", "PRECAST", "spe_modify_PRECAST_k16.Rdata"))
+load(file=here::here('processed-data','06_clustering','PRECAST','spe_precast_HE.rda'))
+# Set up palette
+palette <- c(
+  "#008000",  # Level 1 Brighter Forest Green
+  "#FF1493",  # Level 2 Bright Hot Pink
+  "#FFB6C1",  # Level 3 Medium Pink
+  "#800080",  # Level 4 Purple (darker muted purple)
+  "#D8BFD8",  # Level 5 Thistle (light muted purple)
+  "#FFEC8B",  # Level 6 Light Goldenrod
+  "#DAA520",  # Level 7 Goldenrod
+  "#FF0000",  # Level 8 Bright Red (less brown, more red)
+  "#98FF98",  # Level 9 Mint Green (mintier)
+  "#111111",  # Level 10 Lighter Black
+  "#dddddd",  # Level 11 Lighter Gray
+  "#A9A9A9",  # Level 12 Medium Gray (lighter)
+  "#000080",  # Level 13 Lighter Deep Navy
+  "#87CEEB",  # Level 14 Sky Blue
+  "#4682B4",  # Level 15 Steel Blue
+  "#3333DD",  # Level 16 Lighter Dark Blue
+  "#F4A460",  # Level 17 Sandy Brown
+  "#8B4513"   # Level 18 Saddle Brown
+)
+names(palette) <- levels(spe$cluster)
 
-# Maddy left the spots that failed QC, discard the failed spots QC'ed by sample_id
-spe <- spe[, colData(spe)$discard_auto_id == FALSE]
-dim(spe)
-
-table(spe$sample_id,spe$PRECAST_k16)
-#                 1    2    3    4    5    6    7    8    9   10   11   12
-#  V10B01-085_A1    1 2973  516    0    1    3    0    0   97    0    0   14
-#  V10B01-085_B1  491  585  748  416    1    1  125  164   69  355    8  184
-#  V10B01-085_C1    1  210 1398    1   24    3    0   59  325   82  356  835
-#  V10B01-085_D1   69   87  862  269    0    4  653   39  105  267  140  679
-#  V10B01-086_A1  461 1118 1178    8    1    8    0  223  202  195  276  806
-#  V10B01-086_B1  193  177 1585  383    3    1   53  269  225  448   94  347
-#  V10B01-086_C1  327  754  388    4    0    4   18  615   76  117   16   62
-#  V10B01-086_D1   56   44 1081  172    0    1  818  451  232  243   48  111
-#  V11A20-297_A1 1305  299  949   77  196  379   52   32  249  548  125   55
-#  V11A20-297_B1  375    9  606   13 1114   73    0  370  292  111  309 1011
-#  V11A20-297_C1  127  142  117   49    0    0   58 1244  145   67  120 1219
-#  V11A20-297_D1    9   80  241 1111    2    0  280  556  152   54   53  721
-#  V11L05-333_A1  501  509  325   85    0    0  195   62  194   87  111 2411
-#  V11L05-333_B1   14   30  447  758  188  564  269  771  356  539   71  625
-#  V11L05-333_C1 1380  586  903   87    1    3   21  679  196  205   62  197
-#  V11L05-333_D1    0    4  931  505  870  587   63   20  331  849   61  295
-#  V11L05-335_A1    1    7  862  417  360  267  348  299  312 1113   25  131
-#  V11L05-335_B1   12    7 1239   29  692  404   22   87  627 1287   36  107
-#  V11L05-335_C1    0   10 1556    5 1146  439    2   73  316  966   18   84
-#  V11L05-335_D1    7    2  665  850  596  181  109  212   95  734   59  226
-#  V11L05-336_A1    8    4  649  479  684  424  457   38  297  945   67  274
-#  V11L05-336_B1  629  207  544  103  582   24  125  472  556  290   39  457
-#  V11L05-336_C1    0    0  918   20 1231  351    5  402  258  672   51  168
-#  V11L05-336_D1    0   59 1104   15 1226  225    6  148  427  803   32  230
-#  V11U08-081_A1   91  158 1836   18  310  618    1  422  315  402   79   75
-#  V11U08-081_B1   10    7 1387   21  586  421    2  272  221  411   31   75
-#  V11U08-081_C1    1    2  786  458    1    4 1584   27   96  530   14   46
-#  V11U08-081_D1  525  896  666   65    1    8  445  683  113  448   36  338
-#  V11U08-084_A1  158  678  987   12    3  256    0 1291  410  400   52  267
-#  V11U08-084_B1   40   13 1434  687    0    6  149   87  260 1285   39  102
-#  V11U08-084_C1    3  162 1487  555  168  292  398   24  206  983   36  337
-#  V11U08-084_D1    2    1  948  835   74    0  233   43  107  325   30  157
-#
-#                  13   14   15
-#  V10B01-085_A1    0   27    0
-#  V10B01-085_B1   51   62    0
-#  V10B01-085_C1    7  396   12
-#  V10B01-085_D1    2  128   19
-#  V10B01-086_A1   42  109    1
-#  V10B01-086_B1   33  122    0
-#  V10B01-086_C1   19   60    0
-#  V10B01-086_D1   17   67    6
-#  V11A20-297_A1   28  126    0
-#  V11A20-297_B1   29   70  233
-#  V11A20-297_C1   23   37    2
-#  V11A20-297_D1   62   68   11
-#  V11L05-333_A1   16  127    0
-#  V11L05-333_B1  118  197    1
-#  V11L05-333_C1   36  141    0
-#  V11L05-333_D1   98  202  122
-#  V11L05-335_A1  339  126    0
-#  V11L05-335_B1   74  107    7
-#  V11L05-335_C1   58  211    2
-#  V11L05-335_D1  504  183   35
-#  V11L05-336_A1   41  163    6
-#  V11L05-336_B1   46   99    1
-#  V11L05-336_C1  247   75   42
-#  V11L05-336_D1   98  124  156
-#  V11U08-081_A1   99  115    3
-#  V11U08-081_B1  110  172    0
-#  V11U08-081_C1   15   82    0
-#  V11U08-081_D1   21  117    0
-#  V11U08-084_A1   67  197   17
-#  V11U08-084_B1  298  119   22
-#  V11U08-084_C1   31  220   84
-#  V11U08-084_D1  520   94  922
+# table(spe$sample_id,spe$cluster)
+# GCL CA2.4.1 CA2.4.2 CA1.1 CA1.2  SUB SUB.RHP  RHP GABA SL.SR   ML SR.SLM SLM.WM WM.1 WM.2 WM.3 Vascular
+# V10B01-085_A1    2       0       1     0     0    0       4 3562   15     2    0      0      0   14    0    2       52
+# V10B01-085_B1    1       0       4   112   417  290     786  346   73   153    0    798      7  150   63   27       36
+# V10B01-085_C1    0      19      92     0     0    1       8  690  347     7    0    294   1049  811   41   32      345
+# V10B01-085_D1    2       2     184   630   330   35     158   75  152   141    0    430    374  672   57   10       95
+# V10B01-086_A1    0       0       5     0     3  463     582 1038   83   104  187    494    586  724  314   21       51
+# V10B01-086_B1    0       1       7    31   326  128     588  267   95   426  293   1059    281  275   78    4      105
+# V10B01-086_C1    4       0       4    16     4  327     285  704   44    87    6    334     16   64  473  199       39
+# V10B01-086_D1    1       0       9   773   351   44      67   40   56   679    1    323    160   75  614   45      150
+# V11A20-297_A1  188     102     105    20    35 1072     917  197  100   100  228   1029    171   29   19   26       94
+# V11A20-297_B1   38     839     595     0     1  290     183    9   69    43   60    407    422  957  281   25      232
+# V11A20-297_C1    0       0       1    40    76  129     204   57   41     2    0     28     47  564 2081   98       61
+# V11A20-297_D1    0       0       6   232  1169   13      54   56   67   116    0    167     72  675  621   96       67
+# V11L05-333_A1    0       0       4   129   164  647     731   87  113    43    0    110    273 2085  507   15       61
+# V11L05-333_B1  247     111      99   245   801   22      48    4  207   213  419    810    121  565  646  375       52
+# V11L05-333_C1    2       0       1    11    68 1180    1538  117  102    59    6    467     81   87  211  562       56
+# V11L05-333_D1  283     450     657    62   477    0      18    2  202   245  645   1055    312  256   25   20      133
+# V11L05-335_A1  161     166     384   333   414    2      19    2  133   469  206   1797    209  122   19  100       71
+# V11L05-335_B1   44     566     748     5    13   13      18    2   97   179  510   1657    425   51  136  106      166
+# V11L05-335_C1  248     518    1155     2     3    0      25    3  221   171  383   1599    327   58   34   66       73
+# V11L05-335_D1   96     438     285   134   559    7      27    0  199   906  107    920    119  126  335  144       65
+# V11L05-336_A1  218     350     649   366   539   10      25    0  149   120  486   1072    114  247   23   71      100
+# V11L05-336_B1   14     378     266    88   124  585     698   93   96    29   21    611    172  394  153  359      112
+# V11L05-336_C1  192     615    1084     5    10    0       8    1   80    65  344   1368    166  121  196   62      104
+# V11L05-336_D1  126     364    1440     5    17    0      94    5  138    66  233   1416    129  166  121   81      120
+# V11U08-081_A1  426     209     536     1    17   95     621   91  131   169  446    971    534   92   47   70      152
+# V11U08-081_B1  303     246     992     1    16   10      22   14  180   104  325    962    348   51   70    8      111
+# V11U08-081_C1    4       0       4  1574   522    1       2    1   63   628    0    723     14   30   34   15       34
+# V11U08-081_D1    5       0       1   411   107  467    1180  150  117    77    3    716     33  174  933   16       53
+# V11U08-084_A1  121       0       7     0     2  207    1275  207  190    41  159    533    244  207 1192  283      154
+# V11U08-084_B1    5       0       4   112   678   36      60    3  111  1241    2   1976     56   55  105   24       73
+# V11U08-084_C1  146     141     375   289   606    2      50  131  211   684  310   1289    247  260   87   15       68
+# V11U08-084_D1    0      73      54   224   823    1       5    0  104  1077    0    663     72  100   88   19      121
+# V12F14-051_A1  114     381     515   106   258    0       9    1   92   147  166   1290    108  154  250   65       72
+# V12F14-051_B1  161     473     726     0     3    0      14   26   96    52  319    866    130   41    5   23      139
+# V12F14-051_C1  101      81     236   118   461   43      95    7  153   817  151   1082     96   86  324  113       73
+# V12F14-051_D1  242     563     796     0     2    2     168   21  150   132  578   1053    305   70  142   44      169
+# 
+# Choroid
+# V10B01-085_A1       0
+# V10B01-085_B1       0
+# V10B01-085_C1       2
+# V10B01-085_D1       1
+# V10B01-086_A1       0
+# V10B01-086_B1       0
+# V10B01-086_C1       0
+# V10B01-086_D1       1
+# V11A20-297_A1       0
+# V11A20-297_B1     208
+# V11A20-297_C1       0
+# V11A20-297_D1       1
+# V11L05-333_A1       0
+# V11L05-333_B1       0
+# V11L05-333_C1       0
+# V11L05-333_D1      96
+# V11L05-335_A1       0
+# V11L05-335_B1       1
+# V11L05-335_C1       1
+# V11L05-335_D1      16
+# V11L05-336_A1       0
+# V11L05-336_B1       0
+# V11L05-336_C1      22
+# V11L05-336_D1     137
+# V11U08-081_A1       1
+# V11U08-081_B1       0
+# V11U08-081_C1       0
+# V11U08-081_D1       0
+# V11U08-084_A1       0
+# V11U08-084_B1       0
+# V11U08-084_C1      75
+# V11U08-084_D1     867
+# V12F14-051_A1       0
+# V12F14-051_B1       0
+# V12F14-051_C1       0
+# V12F14-051_D1       1
 
 # Rmove CP clusters & NA cluster
 #speb = spe[, which(spe$PRECAST_k16 != "9")]
 #speb = speb[, which(speb$PRECAST_k16 != "15")]
-speb = spe[, !is.na(spe$cluster)]
+#speb = spe[, !is.na(spe$cluster)]
 
 
 ## Pseudo-bulk for PRECAST_k16
@@ -107,10 +133,15 @@ spe_pseudo <- aggregateAcrossCells(
 
 spe_pseudo$cluster <- factor(spe_pseudo$cluster)
 spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 50]
-colData(spe_pseudo)<-colData(spe_pseudo)[,c(1,21,24,31:33,57,81:84)]
+colData(spe_pseudo)<-colData(spe_pseudo)[,c(21,22,24,31:33,48,49,50)]
+colData(spe_pseudo)$tissue.type<-factor(
+  ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[1:9],'Neuron',
+         ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[10:13],'Neuropil',
+                ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[14:16],'WM',
+                       'Vasc/CSF'))))
 
 dim(spe_pseudo)
-# 30432   409
+# 31483   409
 
 ##
 pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "histogram_boxplot_precast16.pdf"), width = 14, height = 14)
@@ -123,13 +154,13 @@ rowData(spe_pseudo)$high_expr_group_sample_id <- filterByExpr(spe_pseudo, group 
 rowData(spe_pseudo)$high_expr_group_cluster <- filterByExpr(spe_pseudo, group = spe_pseudo$cluster)
 
 summary(rowData(spe_pseudo)$high_expr_group_sample_id)
-#Mode   FALSE    TRUE
-#logical   16231   14097
+# Mode   FALSE    TRUE 
+# logical   15907   15576
 
 
 summary(rowData(spe_pseudo)$high_expr_group_cluster)
-#   Mode   FALSE    TRUE
-#logical   17999   12360
+# Mode   FALSE    TRUE 
+# logical   17386   14097
 
 with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_cluster))
 #high_expr_group_sample_id FALSE  TRUE
@@ -142,24 +173,34 @@ dim(spe_pseudo)
 #15576   409
 
 #run voom
-x<-voom(counts(spe_pseudo), design = 'mod', lib.size = NULL, 
-     block = spe_pseudo$batch, correlation = NULL, weights = NULL,
-     span = 0.5, plot = FALSE, save.plot = FALSE)
+# x<-voom(counts(spe_pseudo), design = 'mod', lib.size = NULL, 
+#      block = spe_pseudo$batch, correlation = NULL, weights = NULL,
+#      span = 0.5, plot = FALSE, save.plot = FALSE)
 ## Store the log normalized counts on the spe object
-#x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
+x <- edgeR::cpm(edgeR::calcNormFactors(spe_pseudo), log = TRUE, prior.count = 1)
 #
 ## Verify that the gene order hasn't changed
-stopifnot(identical(rownames(x$E), rownames(spe_pseudo)))
+stopifnot(identical(rownames(x), rownames(spe_pseudo)))
 #
 ## Fix the column names. DGEList will have samples name as Sample1 Sample2 etc
 dimnames(x) <- dimnames(spe_pseudo)
 #
 ## Store the log normalized counts on the SingleCellExperiment object
-#logcounts(spe_pseudo) <- x
-#dim(spe_pseudo)
-##12360   281
-#
-#rm(x)
+logcounts(spe_pseudo) <- x
+
+
+dim(spe_pseudo)
+##quick QC
+spe_pseudo <- scuttle::addPerCellQC(
+  spe_pseudo,
+  subsets = list(Mito = which(seqnames(spe_pseudo) == "chrM")),
+  BPPARAM = BiocParallel::MulticoreParam(4)
+)
+spe_pseudo$det_out<-as.logical(isOutlier(spe_pseudo$detected,type='lower',nmads=3))
+spe_pseudo<-spe_pseudo[,spe_pseudo$det_out==F]
+dim(spe_pseudo)
+# [1] 15576   373
+rm(x)
 
 #run PCA
 set.seed(12141)
@@ -261,34 +302,6 @@ plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 4, point_size = 4, la
 
 dev.off()
 
-## Compute some reduced dims
-set.seed(20220423)
-spe_pseudo <- scater::runMDS(spe_pseudo, ncomponents = 20)
-spe_pseudo <- scater::runPCA(spe_pseudo, name = "runPCA")
-
-####plot explanatory variables ####
-
-spe_pseudo <- scuttle::addPerCellQC(
-    spe_pseudo,
-    subsets = list(Mito = which(seqnames(spe_pseudo) == "chrM")),
-    BPPARAM = BiocParallel::MulticoreParam(4)
-)
-spe_pseudo$det_out<-as.logical(isOutlier(spe_pseudo$detected,type='lower',nmads=3))
-spe_pseudo<-spe_pseudo[,spe_pseudo$det_out==F]
-spe_pseudo$cluster<-droplevels(spe_pseudo$cluster)
-spe_pseudo_2$broad_class<-ifelse(spe_pseudo$cluster %in% levels(spe_pseudo2$cluster),'Vasc',
-                         ifelse(spe_pseudo$cluster %in% c(1,4,11),'WM',
-                           ifelse(spe_pseudo$cluster %in% c(12,17),'Vasc',
-                             ifelse(spe_pseudo$cluster %in% c(5,6,9,13),'Neuropil',
-                               'Neuron'))))
-spe$broad_class<-ifelse(spe$cluster %in% c(12,17),'Vasc',
-                               ifelse(spe$cluster %in% c(1,4,11),'WM',
-                                      ifelse(spe$cluster %in% c(12,17),'Vasc',
-                                             ifelse(spe$cluster %in% c(5,6,9,13),'Neuropil',
-                                                    'Neuron'))))
-
-
-
 #uses linear regression model
 vars <- getVarianceExplained(spe_pseudo, variables=c("PRECAST_k16","sample_id","age","sex",'detected','subsets_Mito_percent'))
 head(vars)
@@ -305,7 +318,7 @@ plotExplanatoryVariables(vars)
 dev.off()
 
 
-plotPCA(spe_pseudo2, colour_by = "cluster", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "cluster", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)+
     geom_mark_ellipse(aes(color = spe$broad,
     label=spe$broad),
@@ -347,24 +360,26 @@ proc.time()
 options(width = 120)
 session_info()
 
-
+spe_pseudo$age_scaled<-scales::rescale(spe_pseudo$age,to=c(0,1))
+spe_pseudo$dateImg<-factor(
+  gsub(spe_pseudo$dateImg,pattern='-',replacement='_'))
 mod<-registration_model(
     spe_pseudo,
-    covars = c('sex','age_scaled'),
-    var_registration = "broad2"
+    covars = c('sex','age_scaled','dateImg'),
+    var_registration = "tissue.type"
 )
 
 cors<-registration_block_cor(
     spe_pseudo,
     mod,
-    var_sample_id = "batch"
+    var_sample_id = "sample_id"
 )
 
 reg<-registration_stats_enrichment(
     spe_pseudo,
     block_cor=cors,
-    covars = c('sex','age_scaled'),
-    var_registration = "broad2",
+    covars = c('sex','age_scaled','dateImg'),
+    var_registration = "tissue.type",
     var_sample_id = "batch",
     gene_ensembl = 'gene_id',
     gene_name = 'gene_name'
@@ -373,7 +388,7 @@ reg<-registration_stats_enrichment(
 rega<-registration_stats_anova(
     spe_pseudo,
     block_cor=cors,
-    covars = c('sex','age_scaled'),
+    covars = c('sex','age_scaled','dateImg'),
     var_registration = "broad2",
     var_sample_id = "batch",
     gene_ensembl = 'gene_id',
