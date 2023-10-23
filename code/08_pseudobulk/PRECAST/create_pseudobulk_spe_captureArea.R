@@ -212,8 +212,8 @@ metadata(spe_pseudo)
 metadata(spe_pseudo) <- list("PCA_var_explained" = jaffelab::getPcaVars(pca)[seq_len(20)])
 metadata(spe_pseudo)
 # $PCA_var_explained
-# [1] 14.900  8.630  3.840  2.600  2.130  1.940  1.510  1.360  0.975  0.937  0.888  0.798  0.782
-# [14]  0.769  0.756  0.729  0.723  0.697  0.671  0.643
+# [1] 18.000  5.010  3.880  3.400  2.820  2.260  2.040  1.730  1.220  0.977  0.955  0.869  0.853  0.759  0.665  0.626  0.594
+# [18]  0.594  0.578  0.561
 
 
 pca_pseudo <- pca$x[, seq_len(50)]
@@ -221,89 +221,32 @@ colnames(pca_pseudo) <- paste0("PC", sprintf("%02d", seq_len(ncol(pca_pseudo))))
 reducedDims(spe_pseudo) <- list(PCA = pca_pseudo)
 
 jaffelab::getPcaVars(pca)[seq_len(50)]
-# [1] 14.900  8.630  3.840  2.600  2.130  1.940  1.510  1.360  0.975  0.937  0.888  0.798  0.782
-# [14]  0.769  0.756  0.729  0.723  0.697  0.671  0.643  0.620  0.612  0.583  0.574  0.548  0.540
-# [27]  0.537  0.531  0.525  0.519  0.507  0.503  0.489  0.485  0.477  0.470  0.466  0.462  0.458
-# [40]  0.452  0.446  0.444  0.439  0.430  0.429  0.427  0.422  0.417  0.413  0.412
+# [1] 18.000  5.010  3.880  3.400  2.820  2.260  2.040  1.730  1.220  0.977  0.955  0.869  0.853  0.759  0.665  0.626  0.594
+# [18]  0.594  0.578  0.561  0.553  0.531  0.517  0.509  0.506  0.489  0.485  0.477  0.474  0.471  0.468  0.461  0.457  0.447
+# [35]  0.441  0.440  0.436  0.433  0.427  0.418  0.414  0.411  0.407  0.400  0.396  0.392  0.384  0.381  0.379  0.375
 
 # Plot PCA
-pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_PCA_PRECAST16_2comp.pdf"), width = 14, height = 14)
-plotPCA(spe_pseudo, colour_by = "broad", ncomponents = 5, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
+pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_PCA_visiumHE.pdf"), width = 14, height = 14)
+plotPCA(spe_pseudo, colour_by = "cluster", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)+scale_color_manual(values=palette)
+plotPCA(spe_pseudo, colour_by = "tissue.type", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "broad2", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "dateImg", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "broad2", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "subsets_Mito_percent", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "age", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 2, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
+plotPCA(spe_pseudo, colour_by = "subsets_Mito_percent", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+plotPCA(spe_pseudo, colour_by = "sum", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
+        percentVar = metadata(spe_pseudo)$PCA_var_explained)
+plotPCA(spe_pseudo, colour_by = "detected", ncomponents = 4, point_size = 1, label_format = c("%s %02i", " (%i%%)"),
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_captureArea_PCA_2_wo_9-15-NA_Fncells50.pdf"), width = 14, height = 14)
-plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "detected", ncomponents = 2, point_size = 3, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "age", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "ncells", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "pmi", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "experimenterSeq", ncomponents = 2, point_size = 8,
-    label_format = c("%s %02i", " (%i%%)"), percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-plotPCA(spe_pseudo, colour_by = "slide", ncomponents = 2, point_size = 8, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained) +
-    theme(text = element_text(size = 20),
-        axis.text = element_text(size = 20),
-        axis.line = element_line(size=2))
-dev.off()
-
-pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "pseudobulk_captureArea_PCA_4_wo_9-15-NA_Fncells50.pdf"), width = 14, height = 14)
-plotPCA(spe_pseudo, colour_by = "brnum", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "PRECAST_k16", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "age", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "sex", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
-plotPCA(spe_pseudo, colour_by = "sample_id", ncomponents = 4, point_size = 4, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)
-
-dev.off()
-
-#uses linear regression model
-vars <- getVarianceExplained(spe_pseudo, variables=c("PRECAST_k16","sample_id","age","sex",'detected','subsets_Mito_percent'))
+vars <- getVarianceExplained(spe_pseudo, variables=c("cluster","sample_id","age_scaled","sex",
+                                                     'detected','subsets_Mito_percent','tissue.type','dateImg'))
 head(vars)
 #                    brnum PRECAST_k16 sample_id         age         sex
 #ENSG00000237491  5.659548    18.37760 11.435987 0.074224263 0.060950740
@@ -313,56 +256,43 @@ head(vars)
 #ENSG00000187961  1.612837    16.23562  6.775156 0.001670936 0.034610098
 #ENSG00000188290 19.135854    43.32915 25.823902 2.695833055 7.628942721
 
-pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "variance_captureArea_wo_9-15-NA_Fncells50.pdf"))
+pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "variance_explained_visiumHE.pdf"))
 plotExplanatoryVariables(vars)
 dev.off()
 
-
-plotPCA(spe_pseudo, colour_by = "cluster", ncomponents = 2, point_size = 2, label_format = c("%s %02i", " (%i%%)"),
-        percentVar = metadata(spe_pseudo)$PCA_var_explained)+
-    geom_mark_ellipse(aes(color = spe$broad,
-    label=spe$broad),
-    expand = unit(0.5,"mm"),
-    label.buffer = unit(-5, 'mm'))
+getExplanatoryPCs(spe_pseudo)
 
 # save file
 save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "PRECAST", "spe_pseudo_PRECAST_k16.Rdata"))
 
-# Extract the PCA data from spe_pseudo2 into a dataframe
-PCAData <- as.data.frame(reducedDim(spe_pseudo2, "PCA"))
-# Assuming "broad" is part of colData in spe_pseudo2
-PCAData$broad <- colData(spe_pseudo2)$broad
-PCAData$cluster<-spe_pseudo2$cluster
+# Extract the PCA data from spe_pseudo into a dataframe
+PCAData <- as.data.frame(reducedDim(spe_pseudo, "PCA"))
+# Assuming "broad" is part of colData in spe_pseudo
+PCAData$tissue.type <- colData(spe_pseudo)$tissue.type
+PCAData$cluster<-spe_pseudo$cluster
 
 # Now create your PCA plot using ggplot directly
 pca_plot <- ggplot(PCAData, aes(PC01, PC02)) +
-         geom_point(aes(color = cluster),size=) + # Assuming you have a "cluster" column in your PCAData
-         scale_color_manual(values=as.vector(palette36.colors(21)), breaks = levels(PCAData$cluster)) +
+         geom_point(aes(color = cluster),size=2) + # Assuming you have a "cluster" column in your PCAData
+         scale_color_manual(values=palette, breaks = levels(PCAData$cluster)) +
          labs(x = "PC1", y = "PC2") +
          theme_bw()+theme(panel.grid.major = element_blank(),  # Remove major grid lines
                           panel.grid.minor = element_blank())  # Remove minor grid lines
 
 # Add the ellipses
 pdf(file=here::here('plots','figures','figure_2','pca_plot.pdf'),h=6,w=8)
-pca_plot + geom_mark_ellipse(aes(color = broad, label = broad),
+pca_plot + geom_mark_ellipse(aes(color = tissue.type, label = tissue.type),
                              expand = unit(0.5,"mm"),
                              label.buffer = unit(-5, 'mm'),
                              show.legend = FALSE,
                              con.type = 'none')
 dev.off()
 
-
-
-## Reproducibility information
-print("Reproducibility information:")
-Sys.time()
-proc.time()
-options(width = 120)
-session_info()
-
+##############DE ANALYSIS################
 spe_pseudo$age_scaled<-scales::rescale(spe_pseudo$age,to=c(0,1))
 spe_pseudo$dateImg<-factor(
   gsub(spe_pseudo$dateImg,pattern='-',replacement='_'))
+levels(spe_pseudo$tissue.type)[3]<-'Vasc_CSF'
 mod<-registration_model(
     spe_pseudo,
     covars = c('sex','age_scaled','dateImg'),
@@ -380,131 +310,78 @@ reg<-registration_stats_enrichment(
     block_cor=cors,
     covars = c('sex','age_scaled','dateImg'),
     var_registration = "tissue.type",
-    var_sample_id = "batch",
+    var_sample_id = "sample_id",
     gene_ensembl = 'gene_id',
     gene_name = 'gene_name'
 )
 
 rega<-registration_stats_anova(
-    spe_pseudo,
-    block_cor=cors,
-    covars = c('sex','age_scaled','dateImg'),
-    var_registration = "broad2",
-    var_sample_id = "batch",
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name'
+  spe_pseudo,
+  block_cor=cors,
+  covars = c('sex','age_scaled','dateImg'),
+  var_registration = "tissue.type",
+  var_sample_id = "sample_id",
+  gene_ensembl = 'gene_id',
+  gene_name = 'gene_name'
 )
 
-stats<-list(reg,rega)
-names(stats)<-c('enrichment','anova')
-
-
-tstats1 <- stats$enrichment
-tstats1 <- tstats1[ , grepl("^t_stat_", colnames(tstats1))]
-colnames(tstats1) <- gsub("^t_stat_", "", colnames(tstats1))
-rownames(tstats1) <- stats$anova$ensembl
-
-mod2<-registration_model(
-    spe_pseudo,
-    covars = 'sex',
-    var_registration = "broad"
+regp<-registration_stats_pairwise(
+  spe_pseudo,
+  block_cor=cors,
+  registration_model=mod,
+  var_registration = "tissue.type",
+  var_sample_id = "sample_id",
+  gene_ensembl = 'gene_id',
+  gene_name = 'gene_name'
 )
 
-cors2<-registration_block_cor(
-    spe_pseudo,
-    mod2,
-    var_sample_id = "sample_id"
-)
-
-reg2<-registration_stats_enrichment(
-    spe_pseudo,
-    block_cor=cors2,
-    covars = 'sex',
-    var_registration = "broad",
-    var_sample_id = "sample_id",
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name'
-)
-
-rega2<-registration_stats_anova(
-    spe_pseudo,
-    block_cor=cors2,
-    covars = 'sex',
-    var_registration = "broad",
-    var_sample_id = "sample_id",
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name'
-)
-
+stats<-list(reg,rega,regp)
+names(stats)<-c('enrichment','anova','pairwise')
+save(stats,file=here::here('processed-data','08_pseudobulk','PRECAST','visiumHE_DE_stats_tissue.rda'))
 
 mod<-registration_model(
-    sce_pseudo,
-    covars = 'sex',
-    var_registration = "cellType"
+  spe_pseudo,
+  covars = c('sex','age_scaled','dateImg'),
+  var_registration = "cluster"
 )
 
 cors<-registration_block_cor(
-    sce_pseudo,
-    mod,
-    var_sample_id = "Sample"
+  spe_pseudo,
+  mod,
+  var_sample_id = "sample_id"
 )
 
 reg<-registration_stats_enrichment(
-    sce_pseudo,
-    block_cor=cors,
-    covars = 'sex',
-    var_registration = "cellType",
-    var_sample_id = "Sample",
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name'
+  spe_pseudo,
+  block_cor=cors,
+  covars = c('sex','age_scaled','dateImg'),
+  var_registration = "cluster",
+  var_sample_id = "sample_id",
+  gene_ensembl = 'gene_id',
+  gene_name = 'gene_name'
 )
 
-rega3<-registration_stats_anova(
-    spe_pseudo,
-    block_cor=cors3,
-    covars = 'sex',
-    var_registration = "broad3",
-    var_sample_id = "sample_id",
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name'
+rega<-registration_stats_anova(
+  spe_pseudo,
+  block_cor=cors,
+  covars = c('sex','age_scaled','dateImg'),
+  var_registration = "cluster",
+  var_sample_id = "sample_id",
+  gene_ensembl = 'gene_id',
+  gene_name = 'gene_name'
 )
 
-rega3<-registration_stats_anova(
-    spe_pseudo,
-    block_cor=cors3,
-    covars = 'sex',
-    var_registration = "broad3",
-    var_sample_id = "sample_id",
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name'
+regp<-registration_stats_pairwise(
+  spe_pseudo,
+  block_cor=cors,
+  registration_model=mod,
+  var_registration = "cluster",
+  var_sample_id = "sample_id",
+  gene_ensembl = 'gene_id',
+  gene_name = 'gene_name'
 )
 
-
-
-stats2<-list(reg2,rega2)
-names(stats2)<-c('enrichment','anova')
-
-
-spe_pseudo$broad3<-factor(ifelse(spe_pseudo$cluster %in% c('ML','GCL'),'DG',as.character(spe_pseudo$broad))
-)
-
-
-stats<-registration_wrapper(
-    sce,
-    var_registration='cellType',
-    var_sample_id='Sample',
-    covars = 'sex',
-    gene_ensembl = 'gene_id',
-    gene_name = 'gene_name',
-    min_ncells = 10,
-    pseudobulk_rds_file = NULL
-)
-
-sce_pseudo<-registration_pseudobulk(
-    sce,
-    var_registration='cellType',
-    var_sample_id='Sample',
-    covars = 'sex',
-    min_ncells = 10,
-    pseudobulk_rds_file = NULL
-)
+stats<-list(reg,rega,regp)
+names(stats)<-c('enrichment','anova','pairwise')
+save(stats,file=here::here('processed-data','08_pseudobulk','PRECAST','visiumHE_DE_stats_cluster.rda'))
+save(spe_pseudo,file=here::here('processed-data','08_pseudobulk','PRECAST','spe_pseudo_HE.rda'))
