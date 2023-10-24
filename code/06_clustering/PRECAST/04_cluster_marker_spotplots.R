@@ -53,7 +53,7 @@ spe$cluster<-factor(spe$cluster,levels=c("GCL","CA2.4.1", "CA2.4.2",
                                                        "RHP","GABA","SL.SR","ML", "SR.SLM","SLM.WM",
                                                        paste0("WM.",c(1,2,3)),"Vascular","Choroid"))
 
-clustering_name <- colnames(colData(spe))[47]
+clustering_name <- 'cluster'
 
 #make sure these are factors
 spe$brnum<-factor(spe$brnum)
@@ -122,7 +122,7 @@ for (i in seq_along(clustering_name)) {
     pdf(
         file = here::here("plots", "06_clustering", "PRECAST",
                           paste0(clustering_name[i], ".pdf")))
-    print("printing next one")
+   
 
     for (j in seq_along(p[[i]])) {
         print(p[[i]][[j]])
