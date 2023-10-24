@@ -3,214 +3,93 @@ suppressPackageStartupMessages(library("spatialLIBD"))
 suppressPackageStartupMessages(library("ggspavis"))
 suppressPackageStartupMessages(library("gridExtra"))
 suppressPackageStartupMessages(library("here"))
+suppressPackageStartupMessages(library("ggrastr"))
 
 load(here("processed-data", "04_QC", "spe_QC_allSamples.Rdata"), verbose = TRUE)
 spe$discard_auto_br <- spe$low_sum_br | spe$low_detected_br
 spe$discard_auto_id <- spe$low_sum_id | spe$low_detected_id
 
-## QC plot of tissue spots discarded by brain with low sum and features
-pdf(here("plots", "04_QC", "QC_discard_lowFeaturesCount_by_brain_allSamples.pdf"), width = 21, height = 10)
-samples <- unique(colData(spe)[, c("sample_id", "brnum")])
-rownames(samples) <- NULL
+# ## low sum/detected genes
+pdf(file=here::here('plots','figures','supp_figures','QC_plots_sampleID.pdf'))
+p1<-plotColData(spe, x = "sample_id", y = "sum", colour_by = "low_sum_id",point_alpha=1,point_size=0.25) +
+  scale_y_log10() +
+  ggtitle("Total UMIs") +theme(axis.text.x = element_text(size = 10, angle = 90))
+p2<-plotColData(spe, x = "sample_id", y = "detected", colour_by = "low_detected_id",point_alpha=1,point_size=0.25) +
+  scale_y_log10() +
+  ggtitle("Detected genes") +theme(axis.text.x = element_text(size = 10, angle = 90))
+grid.arrange(p1, p2,nrow=2)
+dev.off()
+#  facet_wrap(~ sce$round, scales = "free_x", nrow = 1)
+# +
+#   geom_hline(yintercept = 1000) ## hline doesn't work w/ facet_wrap?
 
-for (i in 1:36) {
-    p <- vis_clus(
-        spe = spe,
-        sampleid = samples$sample_id[i],
-        clustervar = "discard_auto_br",
-        colors = c("FALSE" = "grey90", "TRUE" = "red"),
-        point_size = 2,
-        ... = paste0("_", samples$brnum[i])
-    )
+pdf(here::here('plots','figures','supp_figures','mito_rate.pdf'),h=7,w=7)
+brains <- unique(spe$brnum)
 
-    p1 <- plotVisium(spe[, which(spe$sample_id == samples$sample_id[i])], spots = FALSE)
-
-    grid.arrange(p, p1, nrow = 1)
+for(i in 1:length(brains)){
+  print(paste0('printing plot ',i))
+  speb <- spe[, (colData(spe)$brnum == brains[[i]])]
+  speb$sample_id <- droplevels(speb$sample_id)
+  speb$sample_id <- as.character(speb$sample_id)
+  samples <- unique(speb$sample_id)
+  speb$sample_id <- factor(speb$sample_id, levels = samples)
+  samples
+  speb$brnum <- droplevels(speb$brnum)
+  print(
+    rasterize(
+      plotVisium(
+    speb,
+    spots = T,
+    fill = 'mito_percent',
+    highlight = NULL,
+    facets = "sample_id",
+    assay = "logcounts",
+    trans = "identity",
+    x_coord = NULL,
+    y_coord = NULL,
+    y_reverse = TRUE,
+    sample_ids = NULL,
+    image_ids = NULL,
+    # palette = c('blue','red'),
+    image=F)+scale_fill_distiller(
+      type = "seq",
+      palette = rev('Greys'),
+      direction=1,
+      limits=c(0,50)),dpi=500))
 }
 dev.off()
 
-pdf(here("plots", "04_QC", "QC_discard_lowFeaturesCount_by_brain_grid_allSamples.pdf"), width = 21, height = 20)
-brains = unique(spe$brnum)
+pdf(here::here('plots','figures','supp_figures','discarded_spots.pdf'),h=7,w=7)
+brains <- unique(spe$brnum)
 
-for (i in seq_along(brains)){
-    speb <- spe[, which(spe$brnum == brains[i])]
-    samples <- unique(speb$sample_id)
-    samples
-    
-    if (length(samples) == 1){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-    } else if (length(samples) == 2){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, nrow = 2)
-    } else if (length(samples) == 3){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, nrow = 2)
-    } else if (length(samples) == 4){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, nrow = 2)
-    } else if (length(samples) == 5){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p5 <- vis_clus(spe = speb, sampleid = samples[5], clustervar = "discard_auto_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
+for(i in 1:length(brains)){
+  print(paste0('printing plot ',i))
+  speb <- spe[, (colData(spe)$brnum == brains[[i]])]
+  speb$sample_id <- droplevels(speb$sample_id)
+  speb$sample_id <- as.character(speb$sample_id)
+  samples <- unique(speb$sample_id)
+  speb$sample_id <- factor(speb$sample_id, levels = samples)
+  samples
+  speb$brnum <- droplevels(speb$brnum)
+  print(
+    rasterize(
+      plotVisium(
+    speb,
+    spots = T,
+    fill = 'discard_auto_id',
+    highlight = NULL,
+    facets = "sample_id",
+    assay = "logcounts",
+    trans = "identity",
+    x_coord = NULL,
+    y_coord = NULL,
+    y_reverse = TRUE,
+    sample_ids = NULL,
+    image_ids = NULL,
+    # palette = c('blue','red'),
+    image=F)+scale_fill_manual(values=c('#dddddd','magenta'))),dpi=500)#+scale_fill_distiller(
+  #type = "seq",
+  # palette = rev('RdPu'),
+  # direction=1))
 }
-
 dev.off()
-
-## QC plot of tissue spots discarded by bcapture area with low sum and features
-pdf(here("plots", "04_QC", "QC_discard_lowFeaturesCount_by_capture_area_allSamples.pdf"), width = 21, height = 10)
-samples <- unique(colData(spe)[, c("sample_id", "brnum")])
-rownames(samples) <- NULL
-
-for (i in 1:36) {
-    p <- vis_clus(
-        spe = spe,
-        sampleid = samples$sample_id[i],
-        clustervar = "discard_auto_id",
-        colors = c("FALSE" = "grey90", "TRUE" = "red"),
-        point_size = 2,
-        ... = paste0("_", samples$brnum[i])
-    )
-
-    p1 <- plotVisium(spe[, which(spe$sample_id == samples$sample_id[i])], spots = FALSE)
-
-    grid.arrange(p, p1, nrow = 1)
-}
-
-dev.off()
-
-pdf(here("plots", "04_QC", "QC_discard_lowFeaturesCount_by_capture_area_grid_allSamples.pdf"), width = 21, height = 20)
-brains = unique(spe$brnum)
-for (i in seq_along(brains)){
-    speb <- spe[, which(spe$brnum == brains[i])]
-    samples <- unique(speb$sample_id)
-    samples
-    
-    if (length(samples) == 1){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-    } else if (length(samples) == 2){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, nrow = 2)
-    } else if (length(samples) == 3){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, nrow = 2)
-    } else if (length(samples) == 4){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, nrow = 2)
-    } else if (length(samples) == 5){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p5 <- vis_clus(spe = speb, sampleid = samples[5], clustervar = "discard_auto_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
-}
-
-dev.off()
-
-
-## QC plot of tissue spots discarded by brain with high mito spots
-pdf(here("plots", "04_QC", "QC_discard_highMito_by_brain_allSamples.pdf"), width = 21, height = 20)
-for (i in seq_along(brains)){
-    speb <- spe[, which(spe$brnum == brains[i])]
-    samples <- unique(speb$sample_id)
-    samples
-    
-    if (length(samples) == 1){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-    } else if (length(samples) == 2){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, nrow = 2)
-    } else if (length(samples) == 3){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, nrow = 2)
-    } else if (length(samples) == 4){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, nrow = 2)
-    } else if (length(samples) == 5){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p5 <- vis_clus(spe = speb, sampleid = samples[5], clustervar = "high_mito_br", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
-}
-
-dev.off()
-
-## QC plot of tissue spots discarded by capture with high mito spots
-pdf(here("plots", "04_QC", "QC_discard_highMito_by_capture_area_allSamples.pdf"), width = 21, height = 20)
-for (i in seq_along(brains)){
-    speb <- spe[, which(spe$brnum == brains[i])]
-    samples <- unique(speb$sample_id)
-    samples
-    
-    if (length(samples) == 1){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-    } else if (length(samples) == 2){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, nrow = 2)
-    } else if (length(samples) == 3){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, nrow = 2)
-    } else if (length(samples) == 4){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, nrow = 2)
-    } else if (length(samples) == 5){
-        p1 <- vis_clus(spe = speb, sampleid = samples[1], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p2 <- vis_clus(spe = speb, sampleid = samples[2], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p3 <- vis_clus(spe = speb, sampleid = samples[3], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p4 <- vis_clus(spe = speb, sampleid = samples[4], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        p5 <- vis_clus(spe = speb, sampleid = samples[5], clustervar = "high_mito_id", colors = c("FALSE" = "grey90", "TRUE" = "red"), point_size = 2,... = paste0("_",brains[i]) )
-        grid.arrange(p1, p2, p3, p4, p5, nrow = 2)}
-}
-
-dev.off()
-
-# to look at all samples in single page
-
-# vis_grid_clus(
-#     spe = spe,
-#     clustervar = "high_mito_br",
-#     pdf = here::here("plots", "04_QC", "QC_discard_mito_by_brain.pdf"),
-#     spatial = FALSE,
-#     sort_clust = FALSE,
-#     colors = c("FALSE" = "grey90", "TRUE" = "red"),
-#     point_size = 2
-# )
-# 
-# vis_grid_clus(
-#     spe = spe,
-#     clustervar = "high_mito_id",
-#     pdf = here::here("plots", "04_QC", "QC_discard_mito_by_capture_area.pdf"),
-#     spatial = FALSE,
-#     sort_clust = FALSE,
-#     colors = c("FALSE" = "grey90", "TRUE" = "red"),
-#     point_size = 2
-# )
