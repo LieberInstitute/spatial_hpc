@@ -55,7 +55,7 @@ for(i in 1:length(brains)){
       type = "seq",
       palette = rev('Greys'),
       direction=1,
-      limits=c(0,50)),dpi=500))
+      limits=c(0,50)),dpi=200))
 }
 dev.off()
 
@@ -71,12 +71,11 @@ for(i in 1:length(brains)){
   speb$sample_id <- factor(speb$sample_id, levels = samples)
   samples
   speb$brnum <- droplevels(speb$brnum)
-  print(
-    rasterize(
+  print(rasterize(
       plotVisium(
     speb,
     spots = T,
-    fill = 'discard_auto_id',
+    fill = 'discard',
     highlight = NULL,
     facets = "sample_id",
     assay = "logcounts",
@@ -86,10 +85,7 @@ for(i in 1:length(brains)){
     y_reverse = TRUE,
     sample_ids = NULL,
     image_ids = NULL,
-    # palette = c('blue','red'),
-    image=F)+scale_fill_manual(values=c('#dddddd','magenta'))),dpi=500)#+scale_fill_distiller(
-  #type = "seq",
-  # palette = rev('RdPu'),
-  # direction=1))
+     palette = c('#dddddd','magenta'),
+    image=F),dpi=500))
 }
 dev.off()
