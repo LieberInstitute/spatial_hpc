@@ -1,42 +1,43 @@
 #cd /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/
 
 suppressPackageStartupMessages({
-  library(SpatialExperiment)
-  library(spatialLIBD)
-  library(here)
-  library(edgeR)
-  library(scuttle)
-  library(scater)
-  library(scran)
-  library(dplyr)
-  library(PCAtools)
-  library(sessioninfo)
-  library(gridExtra)
-  library(ggforce)
+    library(SpatialExperiment)
+    library(spatialLIBD)
+    library(here)
+    library(edgeR)
+    library(scuttle)
+    library(scater)
+    library(scran)
+    library(dplyr)
+    library(PCAtools)
+    library(sessioninfo)
+    library(gridExtra)
+    library(ggforce)
+    library(pheatmap)
 })
 
 # Load SPE
 load(file=here::here('processed-data','06_clustering','PRECAST','spe_precast_HE.rda'))
 # Set up palette
 palette <- c(
-  "#008000",  # Level 1 Brighter Forest Green
-  "#FF1493",  # Level 2 Bright Hot Pink
-  "#FFB6C1",  # Level 3 Medium Pink
-  "#800080",  # Level 4 Purple (darker muted purple)
-  "#D8BFD8",  # Level 5 Thistle (light muted purple)
-  "#FFEC8B",  # Level 6 Light Goldenrod
-  "#DAA520",  # Level 7 Goldenrod
-  "#FF0000",  # Level 8 Bright Red (less brown, more red)
-  "#98FF98",  # Level 9 Mint Green (mintier)
-  "#111111",  # Level 10 Lighter Black
-  "#dddddd",  # Level 11 Lighter Gray
-  "#A9A9A9",  # Level 12 Medium Gray (lighter)
-  "#000080",  # Level 13 Lighter Deep Navy
-  "#87CEEB",  # Level 14 Sky Blue
-  "#4682B4",  # Level 15 Steel Blue
-  "#3333DD",  # Level 16 Lighter Dark Blue
-  "#F4A460",  # Level 17 Sandy Brown
-  "#8B4513"   # Level 18 Saddle Brown
+    "#008000",  # Level 1 Brighter Forest Green
+    "#FF1493",  # Level 2 Bright Hot Pink
+    "#FFB6C1",  # Level 3 Medium Pink
+    "#800080",  # Level 4 Purple (darker muted purple)
+    "#D8BFD8",  # Level 5 Thistle (light muted purple)
+    "#FFEC8B",  # Level 6 Light Goldenrod
+    "#DAA520",  # Level 7 Goldenrod
+    "#FF0000",  # Level 8 Bright Red (less brown, more red)
+    "#98FF98",  # Level 9 Mint Green (mintier)
+    "#111111",  # Level 10 Lighter Black
+    "#dddddd",  # Level 11 Lighter Gray
+    "#A9A9A9",  # Level 12 Medium Gray (lighter)
+    "#000080",  # Level 13 Lighter Deep Navy
+    "#87CEEB",  # Level 14 Sky Blue
+    "#4682B4",  # Level 15 Steel Blue
+    "#3333DD",  # Level 16 Lighter Dark Blue
+    "#F4A460",  # Level 17 Sandy Brown
+    "#8B4513"   # Level 18 Saddle Brown
 )
 names(palette) <- levels(spe$cluster)
 
@@ -78,7 +79,7 @@ names(palette) <- levels(spe$cluster)
 # V12F14-051_B1  161     473     726     0     3    0      14   26   96    52  319    866    130   41    5   23      139
 # V12F14-051_C1  101      81     236   118   461   43      95    7  153   817  151   1082     96   86  324  113       73
 # V12F14-051_D1  242     563     796     0     2    2     168   21  150   132  578   1053    305   70  142   44      169
-# 
+#
 # Choroid
 # V10B01-085_A1       0
 # V10B01-085_B1       0
@@ -125,20 +126,20 @@ names(palette) <- levels(spe$cluster)
 
 ## Pseudo-bulk for PRECAST_k16
 spe_pseudo <- aggregateAcrossCells(
-  spe,
-  DataFrame(
-    cluster = colData(spe)$cluster,
-    sample_id = spe$sample_id
-  ))
+    spe,
+    DataFrame(
+        cluster = colData(spe)$cluster,
+        sample_id = spe$sample_id
+    ))
 
 spe_pseudo$cluster <- factor(spe_pseudo$cluster)
 spe_pseudo <- spe_pseudo[, spe_pseudo$ncells >= 50]
 colData(spe_pseudo)<-colData(spe_pseudo)[,c(21,22,24,31:33,48,49,50)]
 colData(spe_pseudo)$tissue.type<-factor(
-  ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[1:9],'Neuron',
-         ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[10:13],'Neuropil',
-                ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[14:16],'WM',
-                       'Vasc/CSF'))))
+    ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[1:9],'Neuron',
+           ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[10:13],'Neuropil',
+                  ifelse(spe_pseudo$cluster %in% levels(spe_pseudo$cluster)[14:16],'WM',
+                         'Vasc/CSF'))))
 
 dim(spe_pseudo)
 # 31483   409
@@ -154,12 +155,12 @@ rowData(spe_pseudo)$high_expr_group_sample_id <- filterByExpr(spe_pseudo, group 
 rowData(spe_pseudo)$high_expr_group_cluster <- filterByExpr(spe_pseudo, group = spe_pseudo$cluster)
 
 summary(rowData(spe_pseudo)$high_expr_group_sample_id)
-# Mode   FALSE    TRUE 
+# Mode   FALSE    TRUE
 # logical   15907   15576
 
 
 summary(rowData(spe_pseudo)$high_expr_group_cluster)
-# Mode   FALSE    TRUE 
+# Mode   FALSE    TRUE
 # logical   17386   14097
 
 with(rowData(spe_pseudo), table(high_expr_group_sample_id, high_expr_group_cluster))
@@ -173,7 +174,7 @@ dim(spe_pseudo)
 #15576   409
 
 #run voom
-# x<-voom(counts(spe_pseudo), design = 'mod', lib.size = NULL, 
+# x<-voom(counts(spe_pseudo), design = 'mod', lib.size = NULL,
 #      block = spe_pseudo$batch, correlation = NULL, weights = NULL,
 #      span = 0.5, plot = FALSE, save.plot = FALSE)
 ## Store the log normalized counts on the spe object
@@ -192,9 +193,9 @@ logcounts(spe_pseudo) <- x
 dim(spe_pseudo)
 ##quick QC
 spe_pseudo <- scuttle::addPerCellQC(
-  spe_pseudo,
-  subsets = list(Mito = which(seqnames(spe_pseudo) == "chrM")),
-  BPPARAM = BiocParallel::MulticoreParam(4)
+    spe_pseudo,
+    subsets = list(Mito = which(seqnames(spe_pseudo) == "chrM")),
+    BPPARAM = BiocParallel::MulticoreParam(4)
 )
 spe_pseudo$det_out<-as.logical(isOutlier(spe_pseudo$detected,type='lower',nmads=3))
 spe_pseudo<-spe_pseudo[,spe_pseudo$det_out==F]
@@ -245,26 +246,6 @@ plotPCA(spe_pseudo, colour_by = "detected", ncomponents = 4, point_size = 1, lab
         percentVar = metadata(spe_pseudo)$PCA_var_explained)
 dev.off()
 
-vars <- getVarianceExplained(spe_pseudo, variables=c("cluster","sample_id","age_scaled","sex",
-                                                     'detected','subsets_Mito_percent','tissue.type','dateImg'))
-head(vars)
-#                    brnum PRECAST_k16 sample_id         age         sex
-#ENSG00000237491  5.659548    18.37760 11.435987 0.074224263 0.060950740
-#ENSG00000228794  1.442367    28.20134  6.077650 0.067342238 0.007492453
-#ENSG00000187634  4.437502    41.13168 12.615463 0.378358463 1.966665636
-#ENSG00000188976  2.513945    32.18221  8.967045 0.005082043 0.081176015
-#ENSG00000187961  1.612837    16.23562  6.775156 0.001670936 0.034610098
-#ENSG00000188290 19.135854    43.32915 25.823902 2.695833055 7.628942721
-
-pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "variance_explained_visiumHE.pdf"))
-plotExplanatoryVariables(vars)
-dev.off()
-
-getExplanatoryPCs(spe_pseudo)
-
-# save file
-save(spe_pseudo, file = here::here("processed-data", "08_pseudobulk", "PRECAST", "spe_pseudo_PRECAST_k16.Rdata"))
-
 # Extract the PCA data from spe_pseudo into a dataframe
 PCAData <- as.data.frame(reducedDim(spe_pseudo, "PCA"))
 # Assuming "broad" is part of colData in spe_pseudo
@@ -273,11 +254,11 @@ PCAData$cluster<-spe_pseudo$cluster
 
 # Now create your PCA plot using ggplot directly
 pca_plot <- ggplot(PCAData, aes(PC01, PC02)) +
-         geom_point(aes(color = cluster),size=2) + # Assuming you have a "cluster" column in your PCAData
-         scale_color_manual(values=palette, breaks = levels(PCAData$cluster)) +
-         labs(x = "PC1", y = "PC2") +
-         theme_bw()+theme(panel.grid.major = element_blank(),  # Remove major grid lines
-                          panel.grid.minor = element_blank())  # Remove minor grid lines
+    geom_point(aes(color = cluster),size=2) + # Assuming you have a "cluster" column in your PCAData
+    scale_color_manual(values=palette, breaks = levels(PCAData$cluster)) +
+    labs(x = "PC1", y = "PC2") +
+    theme_bw()+theme(panel.grid.major = element_blank(),  # Remove major grid lines
+                     panel.grid.minor = element_blank())  # Remove minor grid lines
 
 # Add the ellipses
 pdf(file=here::here('plots','figures','figure_2','pca_plot.pdf'),h=6,w=8)
@@ -291,7 +272,7 @@ dev.off()
 ##############DE ANALYSIS################
 spe_pseudo$age_scaled<-scales::rescale(spe_pseudo$age,to=c(0,1))
 spe_pseudo$dateImg<-factor(
-  gsub(spe_pseudo$dateImg,pattern='-',replacement='_'))
+    gsub(spe_pseudo$dateImg,pattern='-',replacement='_'))
 levels(spe_pseudo$tissue.type)[3]<-'Vasc_CSF'
 mod<-registration_model(
     spe_pseudo,
@@ -316,23 +297,23 @@ reg<-registration_stats_enrichment(
 )
 
 rega<-registration_stats_anova(
-  spe_pseudo,
-  block_cor=cors,
-  covars = c('sex','age_scaled','dateImg'),
-  var_registration = "tissue.type",
-  var_sample_id = "sample_id",
-  gene_ensembl = 'gene_id',
-  gene_name = 'gene_name'
+    spe_pseudo,
+    block_cor=cors,
+    covars = c('sex','age_scaled','dateImg'),
+    var_registration = "tissue.type",
+    var_sample_id = "sample_id",
+    gene_ensembl = 'gene_id',
+    gene_name = 'gene_name'
 )
 
 regp<-registration_stats_pairwise(
-  spe_pseudo,
-  block_cor=cors,
-  registration_model=mod,
-  var_registration = "tissue.type",
-  var_sample_id = "sample_id",
-  gene_ensembl = 'gene_id',
-  gene_name = 'gene_name'
+    spe_pseudo,
+    block_cor=cors,
+    registration_model=mod,
+    var_registration = "tissue.type",
+    var_sample_id = "sample_id",
+    gene_ensembl = 'gene_id',
+    gene_name = 'gene_name'
 )
 
 stats<-list(reg,rega,regp)
@@ -340,48 +321,69 @@ names(stats)<-c('enrichment','anova','pairwise')
 save(stats,file=here::here('processed-data','08_pseudobulk','PRECAST','visiumHE_DE_stats_tissue.rda'))
 
 mod<-registration_model(
-  spe_pseudo,
-  covars = c('sex','age_scaled','dateImg'),
-  var_registration = "cluster"
+    spe_pseudo,
+    covars = c('sex','age_scaled','dateImg'),
+    var_registration = "cluster"
 )
 
 cors<-registration_block_cor(
-  spe_pseudo,
-  mod,
-  var_sample_id = "sample_id"
+    spe_pseudo,
+    mod,
+    var_sample_id = "sample_id"
 )
 
 reg<-registration_stats_enrichment(
-  spe_pseudo,
-  block_cor=cors,
-  covars = c('sex','age_scaled','dateImg'),
-  var_registration = "cluster",
-  var_sample_id = "sample_id",
-  gene_ensembl = 'gene_id',
-  gene_name = 'gene_name'
+    spe_pseudo,
+    block_cor=cors,
+    covars = c('sex','age_scaled','dateImg'),
+    var_registration = "cluster",
+    var_sample_id = "sample_id",
+    gene_ensembl = 'gene_id',
+    gene_name = 'gene_name'
 )
 
 rega<-registration_stats_anova(
-  spe_pseudo,
-  block_cor=cors,
-  covars = c('sex','age_scaled','dateImg'),
-  var_registration = "cluster",
-  var_sample_id = "sample_id",
-  gene_ensembl = 'gene_id',
-  gene_name = 'gene_name'
+    spe_pseudo,
+    block_cor=cors,
+    covars = c('sex','age_scaled','dateImg'),
+    var_registration = "cluster",
+    var_sample_id = "sample_id",
+    gene_ensembl = 'gene_id',
+    gene_name = 'gene_name'
 )
 
 regp<-registration_stats_pairwise(
-  spe_pseudo,
-  block_cor=cors,
-  registration_model=mod,
-  var_registration = "cluster",
-  var_sample_id = "sample_id",
-  gene_ensembl = 'gene_id',
-  gene_name = 'gene_name'
+    spe_pseudo,
+    block_cor=cors,
+    registration_model=mod,
+    var_registration = "cluster",
+    var_sample_id = "sample_id",
+    gene_ensembl = 'gene_id',
+    gene_name = 'gene_name'
 )
 
 stats<-list(reg,rega,regp)
 names(stats)<-c('enrichment','anova','pairwise')
 save(stats,file=here::here('processed-data','08_pseudobulk','PRECAST','visiumHE_DE_stats_cluster.rda'))
 save(spe_pseudo,file=here::here('processed-data','08_pseudobulk','PRECAST','spe_pseudo_HE.rda'))
+###make supplementary figures
+vars <- getVarianceExplained(spe_pseudo, variables=c("cluster","sample_id","age_scaled","sex",
+                                                     'tissue.type','dateImg'))
+head(vars)
+#                    brnum PRECAST_k16 sample_id         age         sex
+#ENSG00000237491  5.659548    18.37760 11.435987 0.074224263 0.060950740
+#ENSG00000228794  1.442367    28.20134  6.077650 0.067342238 0.007492453
+#ENSG00000187634  4.437502    41.13168 12.615463 0.378358463 1.966665636
+#ENSG00000188976  2.513945    32.18221  8.967045 0.005082043 0.081176015
+#ENSG00000187961  1.612837    16.23562  6.775156 0.001670936 0.034610098
+#ENSG00000188290 19.135854    43.32915 25.823902 2.695833055 7.628942721
+pdf(file = here::here("plots","08_pseudobulk", "PRECAST", "variance_explained_visiumHE.pdf"))
+plotExplanatoryVariables(vars)
+dev.off()
+
+
+covs<-c("brnum","dateImg","sex","pmi","cluster","sample_id",
+"ncells","tissue.type","sum","detected","subsets_Mito_percent",
+"age_scaled")
+colData(spe_pseudo)<-colData(spe_pseudo)[,covs]
+pheatmap(getExplanatoryPCs(spe_pseudo))
