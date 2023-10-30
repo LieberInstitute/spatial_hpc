@@ -35,7 +35,7 @@ temp_df$other = temp_df$CSF + temp_df$OPC + temp_df$Vascular
 temp_df$microglia = temp_df$Micro_Macro_T
 temp_df$astrocyte = temp_df$Astro
 temp_df$oligo = temp_df$Oligo
-
+temp_df$none = rowSums(temp_df[,celltypes])
 temp_df$tool = tool
 counts_match <- match(dat$key, temp_df$key)
 temp_df <-temp_df[counts_match,]

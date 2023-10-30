@@ -40,7 +40,7 @@ for (grp in group){
       temp_df$ExcN = rowSums(temp_df[,exct])
       }
     
-    celltypes = c('InhN', 'ExcN', 'CSF', 'Astro', 'Micro_Macro_T', 'Oligo', 'Vascular', 'OPC')
+    celltypes = c('InhN', 'ExcN', 'Astro', 'Micro_Macro_T', 'Oligo', 'Vascular', 'OPC', 'CSF')
     temp_df$count = rowSums(temp_df[,celltypes])
     if (tool == "RCTD") {
     temp_df$key = temp_df$X
@@ -90,7 +90,16 @@ df[, celltypes] <- lapply(df[, celltypes], function(col) col/rowSums(df[,celltyp
 
 df = melt(df, id.variable = c("group", "tool", "cluster"))
 
-p = ggplot(df, aes(x = group, y = value, fill = variable, color = variable))+
-  geom_bar(stat = "identity") + facet_grid(tool~cluster)
+df$group=gsub('broad', 'Sub', df$group)
+df$group=gsub('layer', 'Fine', df$group)
+df$group = factor(df$group, levels = c("Sub", "Fine"))
 
-ggsave(here("plots","spot_deconvo","shared_utilities","stackedBars_layerVsbroad.pdf"), plot = p,  width = 16, height = 8)
+df$tool = gsub('tangram', 'Tangram', df$tool)
+
+colors = c("green2", "green", "darkorange", "yellow", "magenta", "blue1", "blue2", "blue3")
+p = ggplot(df, aes(x = group, y = value, fill = variable))+
+  geom_bar(stat = "identity") + facet_grid(tool~cluster) + scale_fill_manual(values = colors) +
+  theme(text = element_text(size=24, color="black"))+ theme(legend.position="bottom")+labs(fill = "Sub cell type" )+
+  guides(fill = guide_legend(nrow = 1))
+
+ggsave(here("plots","spot_deconvo","shared_utilities","stackedBars_layerVsbroad.png"), plot = p,  width = 18, height = 9)

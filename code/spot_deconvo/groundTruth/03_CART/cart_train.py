@@ -64,7 +64,7 @@ def prune(tree):
 #   Read in sample IDs and manual-annotation dataset
 #-------------------------------------------------------------------------------
 
-with open(, 'rb') as f:
+with open(dataset_path, 'rb') as f:
     x_train, x_test, y_train, y_test = pickle.load(f)
 
 #-------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ model = tree.DecisionTreeClassifier(
     max_depth = 4,
     min_samples_leaf = 1, 
     random_state = random_seed,
-    ccp_alpha = 0
+    ccp_alpha = 0.01
 )
 
 model.fit(x_train, y_train)
