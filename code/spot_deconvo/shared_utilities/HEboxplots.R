@@ -12,11 +12,12 @@ levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.1"] <- "WM"
 levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.2"] <- "WM"
 levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.3"] <- "WM"
 
+#colors = load(here("plots","palettes.rda"))
 #dat = as.data.frame(colData(spe)) %>% select("key", "broad2", "array_row", "array_col", "sample_id")
 
 group = "layer"
 celltypes = c("Astro","CA1_ProS","CA2.4","Cajal","Choroid","Ependy","GABA.CGE","GABA.LAMP5","GABA.MGE","GC","L2_3.PrS.PaS","L2_3.Prs.Ent",
-"L5","L6_6b","Micro_Macro_T","OPC","Oligo","Sub.1","Sub.2","Thal","Vascular")
+              "L5","L6_6b","Micro_Macro_T","OPC","Oligo","Sub.1","Sub.2","Thal","Vascular")
 
 # group = "broad"
 # celltypes = c("Oligo","Micro_Macro_T","InhN","ExcN","Astro","Vascular","OPC","CSF")      
@@ -119,8 +120,8 @@ setdiff(temp_df$key, dat$key)
 setdiff(dat$key,temp_df$key)
 
 if (group == "broad"){
-rmv = which(dat$key %in% setdiff(dat$key,temp_df$key))
-dat = dat[-rmv,]
+  rmv = which(dat$key %in% setdiff(dat$key,temp_df$key))
+  dat = dat[-rmv,]
 }
 #temp_df$slide = sapply(strsplit(temp_df$key,"_"), `[`, 2)
 counts_match <- match(dat$key, temp_df$key)
@@ -142,9 +143,14 @@ dat1 = rbind(cell2location, tangram, RCTD)
 # dat1 = dat1[!dat1$sample_id %in% rmv, ]  
 which(is.na(dat1), arr.ind=TRUE)
 
+dat2 = dat1
+colnames(dat2)[27] <- "Tool"
+dat2$Tool=gsub('tangram', 'Tangram', dat2$Tool)
+
 ## for box plots
 plot_list <- lapply(celltypes, function(i){
-  ggplot(dat1, aes(x = dat1$cluster_collapsed, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
+  ggplot(dat2, aes(x = dat2$cluster_collapsed, y = dat2[,i])) + geom_boxplot(aes(fill=Tool), outlier.shape = NA)+
+    labs(title = i)+theme(text = element_text(size=26, color="black"))+scale_fill_manual(values = c('grey40', 'black','white'))
   #ggplot(dat1, aes(x = dat1$broad2, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
 })
 
@@ -158,11 +164,43 @@ for (sample_id in unique(dat1$sample_id)){
   datb = dat1[which(dat1$sample_id == sample_id), ]
   plot_list <- lapply(celltypes, function(i){
     ggplot(data = datb, aes(x=array_row, y=array_col, color = datb[,i]))+
-      geom_point(size = 3)+facet_wrap(~tool)+scale_color_gradientn(colours = viridis(10, option = "magma"))+
-      theme(legend.position = "none")+labs(title = i)
+      geom_point(size = 3)+facet_wrap(~tool)+
+      scale_color_gradientn(colours = viridis(10, option = "magma"))+
+      theme(legend.position = "right")+labs(title = i)
   })
   #gridplot = grid.arrange(grobs = plot_list, nrow = length(celltypes))
   ggsave(here("plots","spot_deconvo","shared_utilities",group,paste0(sample_id,".pdf")), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
   print(paste0("done ", sample_id))
 }
 
+na_color = "#CCCCCC40"
+for (sample_id in unique(dat1$sample_id)){
+  datb = dat1[which(dat1$sample_id == sample_id), ]
+  datb[, celltypes][datb[, celltypes] <= 0.05] <- NA
+  plot_list <- lapply(celltypes, function(i){
+    ggplot(data = datb, aes(x=array_row, y=array_col, color = datb[,i]))+
+      geom_point(size = 2.3)+facet_wrap(~tool)+
+      #scale_color_gradientn(colours = viridisLite::plasma(21), na.value = na_color)+
+      scale_color_distiller(type = "seq",palette = rev('Greys'),direction=1, na.value = na_color)+
+      labs(title = i, color = "min>0.05" )+ theme_bw() +
+      theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+  })
+  #gridplot = grid.arrange(grobs = plot_list, nrow = length(celltypes))
+  ggsave(here("plots","spot_deconvo","shared_utilities",group,paste0(sample_id,"_new.pdf")), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
+  print(paste0("done ", sample_id))
+}
+
+load(here("plots","palettes.rda"))
+colors = data.frame(colors = c("green1",precast_palette[c(9,4,6,8,17,3,13,2,7,11,12,18)]))
+p=ggplot(data = datb, aes(x = array_row, y=array_col, color = cluster_collapsed))+
+  geom_point(size = 2.3)+scale_color_manual(values = colors$colors)+theme(legend.position="none")
+ggsave(here("plots","spot_deconvo","shared_utilities","precastposter.png"), plot = p,  width = 7, height = 6.8)
+
+colors = data.frame(colors = c("green1",precast_palette[c(9,4,5,6,8,17,3,13,2,7,11,12,18)]))
+row.names(colors) = NULL
+png(here("plots","spot_deconvo","shared_utilities", "precast.png"), width = 1000, height = 400, units = "px")
+plot(x = 1:14, y=rep(0,14), col = colors$colors, pch = 19, cex = 5)
+dev.off()
+
+plot(x = 1:18, y=rep(0,18), col = precast_palette, pch = 19, cex = 5)

@@ -61,17 +61,17 @@ cell2location$actual = CART$value
 tangram <- tangram[tangram$key %in% sorted_keys, ]
 tangram$actual = CART$value
 
-CART = final_df[which(final_df$tool == "CART"),]
-RCTD = final_df[which(final_df$tool == "RCTD"),]
-tangram = final_df[which(final_df$tool == "tangram"),]
-cell2location = final_df[which(final_df$tool == "cell2location"),]
-rm = setdiff(CART$key, RCTD$key)
-CART = CART[!(CART$key %in% rm), ]
-
-sorted_keys <- CART$key
-RCTD <- RCTD[RCTD$key %in% sorted_keys, ]
-cell2location <- cell2location[cell2location$key %in% sorted_keys, ]
-tangram <- tangram[tangram$key %in% sorted_keys, ]
+# CART = final_df[which(final_df$tool == "CART"),]
+# RCTD = final_df[which(final_df$tool == "RCTD"),]
+# tangram = final_df[which(final_df$tool == "tangram"),]
+# cell2location = final_df[which(final_df$tool == "cell2location"),]
+# rm = setdiff(CART$key, RCTD$key)
+# CART = CART[!(CART$key %in% rm), ]
+# 
+# sorted_keys <- CART$key
+# RCTD <- RCTD[RCTD$key %in% sorted_keys, ]
+# cell2location <- cell2location[cell2location$key %in% sorted_keys, ]
+# tangram <- tangram[tangram$key %in% sorted_keys, ]
 
 df1 = rbind(RCTD, cell2location, tangram)
 
@@ -91,8 +91,18 @@ group_by(tool) |>
 library(ggplot2)
 library(gridExtra)
 
-p = ggplot(metrics_df, aes(x = corr, y = rmse, color = sample, shape = variable))+geom_point(size = 3)+facet_wrap(~tool)
+metrics_df$variable = factor(metrics_df$variable, levels = c("neuron", "astrocyte", "microglia", "oligo"))
+#metrics_df$variable = factor(metrics_df$variable, levels = toupper(levels(metrics_df$variable)))
+metrics_df$tool = gsub('tangram', 'Tangram', metrics_df$tool)
+
+p = ggplot(metrics_df, aes(x = corr, y = rmse, color = variable, shape = sample))+geom_point(size = 5)+
+  facet_wrap(~tool, nrow=2)+ scale_color_manual(values = c("green", "darkorange", "yellow", "magenta"))+
+  scale_shape_manual(values = c(0, 7, 12, 15, 1, 10, 13, 19)) + theme(legend.position="none") +
+  labs( x = "Correlation", y = "RMSE")+
+  # theme(legend.position="bottom", legend.box = "vertical") +
+  # guides(shape = guide_legend(nrow = 2,  title = "Sample"), color = guide_legend(nrow = 1, ncol =4,  title = "Broad cell type")) +
+  theme(text = element_text(size=24, color="black"))
 
 #gridplot = grid.arrange(grobs = plot_list, nrow = length(celltypes))
-ggsave(here("plots","spot_deconvo","shared_utilities","cartVStool.pdf"), plot = p, width = 12, height = 6)
+ggsave(here("plots","spot_deconvo","shared_utilities","cartVStoolposter.png"), plot = p, width = 12, height = 12)
 
