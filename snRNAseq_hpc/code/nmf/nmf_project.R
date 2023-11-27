@@ -1,12 +1,12 @@
 library(RcppML)
 library(pheatmap)
 library(SingleCellExperiment)
-load(file=here::here(SCE_PATH_HERE)
+load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_final.rda')
 ###Run NMF
 x<-RcppML::nmf(assay(sce,'logcounts'),
-    k=100,
+    k=120,
     tol = 1e-06,
-    maxit = 10000,
+    maxit = 1000,
     verbose = T,
     L1 = 0.1,
     seed = 1135,
@@ -29,6 +29,19 @@ onehot_cellType[,1]<-NULL
 heat<-cor(onehot_cellType,as.data.frame(loads))
 heat<-heat[,-c(1,2,3,15,24)]
 pheatmap(heat)
+
+cvnmf<-cross_validate_nmf(
+    logcounts(sce),
+    ranks=c(5,10,50,100,125,150,200),
+    n_replicates = 2,
+    tol = 1e-03,
+    maxit = 100,
+    verbose = 3,
+    L1 = 0.1,
+    L2 = 0,
+    threads = 0,
+    test_density = 0.2
+)
 
 save(sce,file=here::here(SCE_PATH_HERE))
 save(x,file=here::here(NMF_PATH_HERE))

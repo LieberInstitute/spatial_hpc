@@ -2,16 +2,16 @@ keep_feature <- rowSums(counts(sce) > 0) > 0
 sce <- sce[keep_feature, ]
 
 ego_bp<-list()
-for(i in 1:length(pats2)){
+for(i in 1:length(scoreList)){
     print(paste0('running for pattern ',i))
     print(Sys.time())
     ego_bp[[i]]<-gseGO(
-        pats2[[i]],
+        scoreList[[i]],
         ont = "BP",
         org.Hs.eg.db,
         keyType = "SYMBOL",
        # exponent = 1,
-        minGSSize = 15,
+        minGSSize = 10,
         maxGSSize = 500,
         eps = 1e-100,
         pvalueCutoff = 0.001,
@@ -21,30 +21,62 @@ for(i in 1:length(pats2)){
         by = "fgsea"    )
 }
 
-stats2<-list()
-for(i in 1:length(pats)){
-    print(paste0('running for pattern ',i))
-    print(Sys.time())
-    stats2[[i]]<-fgsea(
-        stats=pats[[i]],
-        pathways=projections,
-        minSize = 1,
-        maxSize = 1000,
-        gseaParam = 1)
+##make sure all genes have a weight for at least one pattern
+
+loads<-x@w
+loads<-loads[,!colnames(loads) %in% discard]
+no_expr <- which(rowSums(loads) == 0)
+length(no_expr)
+# [1] 5118
+length(no_expr) / nrow(loads) * 100
+# [1] 13.98322
+loads <- loads[-no_expr, ]
+dim(loads)
+# loads<-loads[,!colnames(loads) %in% nonSpec]
+# dim(loads)
+# no_expr <- which(rowSums(loads) == 0)
+# length(no_expr)
+# # [1] 5118
+# length(no_expr) / nrow(loads) * 100
+# # [1] 13.98322
+# loads <- loads[-no_expr, ]
+# dim(loads)
+##now filter mito genes and non-protein coding genes plz
+protein<-rownames(sce)[rowData(sce)$gene_type=='protein_coding']
+loads<-loads[rownames(loads) %in% protein,]
+mito<-rownames(sce)[which(seqnames(sce) == "chrM")]
+loads<-loads[!rownames(loads) %in% mito,]
+##now get markers
+marks<-patternMarkers(loads,x@h,'all',1,100)
 }
 
-ego_wp<-list()
+ego_bp<-list()
 for(i in 1:length(genes)){
     print(paste0('running for pattern ',i))
     print(Sys.time())
-    ego_wp[[i]] <- enrichPathway(gene     = genes[[i]],
-                            universe      = l,
+
+
+    test<-loads[rownames(loads) %in% genes[[70]],]
+    test<-test[order(test[,70],decreasing=T),]
+    plot(test[,70])
+    test<-as.data.frame(test)
+    test$index=c(1:nrow(test))
+    f2 <- lm(nmf75 ~ index, data = test)
+
+    seg2 <- segmented(f2,
+                      seg.Z = ~index,
+                      npsi = 2
+    )
+    chosen<-rownames(test)[1:round(seg2$psi[2,2])]
+
+    ego <- enrichGO(gene     = genes[[70]],
+                            universe      = rownames(loads),
                             OrgDb         = org.Hs.eg.db,
                             #organism='hsa',
-                            #ont           = "ALL",
+                            ont           = "BP",
                             pAdjustMethod = "BH",
                             pvalueCutoff  = 0.05,
-                            qvalueCutoff  = 0.1,
+                            qvalueCutoff  = 0.05,
                             readable      = TRUE,
                             keyType = 'SYMBOL')
 }
