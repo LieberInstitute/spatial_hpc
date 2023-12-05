@@ -2,15 +2,15 @@
 
 #$ -cwd
 #$ -N "clean_sample_info"
-#$ -o ../../processed-data/02_image_stitching/02-clean_sample_info.log
-#$ -e ../../processed-data/02_image_stitching/02-clean_sample_info.log
+#$ -o logs/02-clean_sample_info.log
+#$ -e logs/02-clean_sample_info.log
 #$ -l mf=5G,h_vmem=5G
 
-#SBATCH -p shared
+
 #SBATCH --mem=5G
 #SBATCH --job-name=clean_sample_info
-#SBATCH -o ../../processed-data/02_image_stitching/02-clean_sample_info.log
-#SBATCH -e ../../processed-data/02_image_stitching/02-clean_sample_info.log
+#SBATCH -o logs/02-clean_sample_info.log
+
 
 set -e
 
@@ -34,7 +34,7 @@ echo "Node name: ${node_name}"
 
 module list
 
-module load samui/1.0.0-next.24
+module load samui/1.0.0-next.45
 python 02-clean_sample_info.py
 
 echo "**** Job ends ****"

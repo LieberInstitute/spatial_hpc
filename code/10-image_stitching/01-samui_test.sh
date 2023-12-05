@@ -12,8 +12,8 @@
 #SBATCH -o /dev/null
 #SBATCH -e /dev/null
 
-donor="Br6522"
-mode="adjusted"
+donor="Br3942"
+mode="initial"
 
 if [[ ! -z $SLURMD_NODENAME ]]; then
     job_id=$SLURM_JOB_ID
@@ -27,7 +27,7 @@ else
     module_name=loopy
 fi
 
-log_path="../../processed-data/02_image_stitching/01-samui_test_${donor}_${mode}.log"
+log_path="logs/01-samui_test_${donor}_${mode}.log"
 
 {
 echo "**** Job starts ****"
@@ -38,7 +38,7 @@ echo "Job id: ${job_id}"
 echo "Job name: ${job_name}"
 echo "Node name: ${node_name}"
 
-module load ${module_name}/1.0.0-next.24
+module load samui/1.0.0-next.45
 python 01-samui_test.py $donor $mode
 
 echo "**** Job ends ****"
