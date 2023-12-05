@@ -22,41 +22,41 @@ this_donor, file_suffix = sys.argv[1:]
 assert file_suffix in ('initial', 'adjusted')
 
 sample_info_path = here(
-    'processed-data', '02_image_stitching', 'sample_info_clean.csv'
+    'processed-data', '10-image_stitching', 'sample_info_clean.csv'
 )
 estimate_path = Path(
     here(
-        'processed-data', '02_image_stitching',
+        'processed-data', '10-image_stitching',
         f'transformation_estimates_{this_donor}.csv'
     )
 )
 out_dir = Path(
     here(
-        'processed-data', '02_image_stitching',
+        'processed-data', '10-image_stitching',
         f'combined_{this_donor}_{file_suffix}'
     )
 )
 img_out_browser_path = Path(
     here(
-        'processed-data', '02_image_stitching',
+        'processed-data', '10-image_stitching',
         f'combined_{this_donor}_{file_suffix}.tif'
     )
 )
 tissue_out_path = Path(
     here(
-        'processed-data', '02_image_stitching',
+        'processed-data', '10-image_stitching',
         f'tissue_positions_{this_donor}.csv'
     )
 )
 img_out_export_path = Path(
     here(
-        'processed-data', '04_VisiumStitcher', this_donor,
+        'processed-data', '11-visiumStitcher', this_donor,
         'tissue_lowres_image.png'
     )
 )
 json_out_path = Path(
     here(
-        'processed-data', '04_VisiumStitcher', this_donor,
+        'processed-data', '11-visiumStitcher', this_donor,
         'scalefactors_json.json'
     )
 )
@@ -65,7 +65,7 @@ json_out_path = Path(
 #   Instead, we'll just run these donors with 'file_suffix' = 'initial',
 #   outputting scalefactors, spot coordinates, and the low-res image without
 #   having to run with 'file_suffix' = 'adjusted'
-unadjusted_donors = ['Br8667']
+unadjusted_donors = ['Br3942']
 
 json_out_path.parent.mkdir(parents = True, exist_ok = True)
 

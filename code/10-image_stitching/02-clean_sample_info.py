@@ -8,13 +8,15 @@ import json
 import pandas as pd
 import numpy as np
 
-out_path = here('processed-data', '02_image_stitching', 'sample_info_clean.csv')
+out_path = here('processed-data', '10-image_stitching', 'sample_info_clean.csv')
 
 sample_info_path = Path(
-    here('raw-data', 'sample_info', 'visium-mastersheet.xlsx')
+    here('raw-data', 'sample_info', 'Visium_HPC_Round3-8_033022_SCP.xlsx')
 )
 
-xml_map_path = here('raw-data', 'sample_key_spatial_NAc.csv')
+xml_map_path = here('raw-data', 'sample_info', 'sample_key.csv')
+
+sRanger-subdir = 'spaceranger_2022-04-12_SPag033122'
 
 ################################################################################
 #   Functions
@@ -103,7 +105,7 @@ sample_info.drop(
 sample_info['spaceranger_dir'] = [
     Path(x)
     for x in here(
-        'processed-data', '01_spaceranger_reorg', sample_info.index, 'outs',
+        'processed-data', '01_spaceranger', sRanger-subdir, sample_info.index, 'outs',
         'spatial'
     )
 ]
