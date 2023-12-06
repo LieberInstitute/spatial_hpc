@@ -1,0 +1,31 @@
+Loading LIBD SLURM module for rmate/1.5.10
+Loading LIBD SLURM module for ruby/3.2.2
+**** Job starts ****
+Wed Dec  6 02:42:34 PM EST 2023
+**** JHPCE info ****
+User: rmiller
+Job id: 1014614
+Job name: clean_sample_info
+Node name: compute-152
+
+Currently Loaded Modules:
+  1) JHPCE_ROCKY9_DEFAULT_ENV   3) ruby/3.2.2
+  2) JHPCE_tools/3.0            4) rmate/1.5.10
+
+ 
+
+Loading LIBD SLURM module for samui/1.0.0-next.45
+/jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/openpyxl/worksheet/_reader.py:329: UserWarning: Unknown extension is not supported and will be removed
+  warn(msg)
+-----
+numpy               1.24.4
+pandas              2.0.3
+pyhere              1.0.0
+session_info        1.0.0
+-----
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:40:32) [GCC 12.3.0]
+Linux-5.14.0-284.11.1.el9_2.x86_64-x86_64-with-glibc2.34
+-----
+Session information updated at 2023-12-06 14:42
+**** Job ends ****
+Wed Dec  6 02:42:58 PM EST 2023

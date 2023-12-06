@@ -11,12 +11,12 @@ import numpy as np
 out_path = here('processed-data', '10-image_stitching', 'sample_info_clean.csv')
 
 sample_info_path = Path(
-    here('raw-data', 'sample_info', 'Visium_HPC_Round3-8_033022_SCP.xlsx')
+    here('raw-data', 'sample_info', 'samSheet.xlsx')
 )
 
 xml_map_path = here('raw-data', 'sample_info', 'sample_key.csv')
 
-sRanger-subdir = 'spaceranger_2022-04-12_SPag033122'
+sRanger = "spaceranger_2022-04-12_SPag033122"
 
 ################################################################################
 #   Functions
@@ -79,10 +79,10 @@ sample_info.index = sample_info['Slide #'] + '_' + sample_info['Array #']
 
 xml_map = pd.read_csv(xml_map_path, index_col = 'Slide')
 xml_map.index.name = 'sample_id'
-xml_map = xml_map.loc[:, ['Brain', 'XML file name', 'In analysis']].copy()
+xml_map = xml_map.loc[:, ['Brain', 'XML file name']].copy()
 xml_map['Slide #'] = [x.split('_')[0] for x in xml_map.index]
 xml_map['Array #'] = [x.split('_')[1] for x in xml_map.index]
-xml_map['In analysis'] = xml_map['In analysis'] == 'Yes'
+#xml_map['In analysis'] = xml_map['In analysis'] == 'Yes'
 
 #   Merge sample_info and xml_map by index, keeping the union of their columns.
 #   There should be a more elegant way to do this...
@@ -105,7 +105,7 @@ sample_info.drop(
 sample_info['spaceranger_dir'] = [
     Path(x)
     for x in here(
-        'processed-data', '01_spaceranger', sRanger-subdir, sample_info.index, 'outs',
+        'processed-data', '01_spaceranger', sRanger, sample_info.index, 'outs',
         'spatial'
     )
 ]
@@ -153,12 +153,12 @@ for imagej_xml_path in sample_info['XML file name'].dropna().unique():
     #   handling new samples that use slide + array. It takes advantage of the fact
     #   that for old samples, the slide number is always in the title of the XML
     #   project, which the below regexs look for
-    if len(slide_nums) == len(re.findall(r'title="V[0-9]{2}[A-Z][0-9]{2}', imagej_xml)):
-        #   Just use the slide in the title
-        slide_nums = slide_nums * len(array_nums)
-    elif len(re.findall(r'title="V[0-9]{2}[A-Z][0-9]{2}', imagej_xml)) == 1:
-        #   Otherwise use the slides in the image paths, not the title
-        slide_nums = slide_nums[1:]
+    #if len(slide_nums) == len(re.findall(r'title="V[0-9]{2}[A-Z][0-9]{2}', imagej_xml)):
+    #    #   Just use the slide in the title
+    #    slide_nums = slide_nums * len(array_nums)
+    #elif len(re.findall(r'title="V[0-9]{2}[A-Z][0-9]{2}', imagej_xml)) == 1:
+    #    #   Otherwise use the slides in the image paths, not the title
+    slide_nums = slide_nums[1:]
     
     #   Grab the transformation matrices and import as numpy array with the
     #   structure used in 01-samui_test.py
