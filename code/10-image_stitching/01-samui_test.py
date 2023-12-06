@@ -85,8 +85,8 @@ BACKGROUND_COLOR = (240, 240, 240)
 sample_info = pd.read_csv(sample_info_path, index_col = 0)
 sample_info = sample_info.loc[
     (sample_info['Brain'] == this_donor) &
-    ~sample_info['XML file name'].isna() &
-    sample_info['In analysis'],
+    ~sample_info['XML file name'].isna(),# &
+    #sample_info['In analysis'],
     :
 ]
 
