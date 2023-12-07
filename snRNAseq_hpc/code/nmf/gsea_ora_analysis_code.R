@@ -1,3 +1,22 @@
+library(ggplot2)
+library(dplyr)
+
+# Filter the data to include only the highest iter value for each combination of k and rep
+filtered_df <- df %>%
+    group_by(k, rep) %>%
+    filter(iter == max(iter)) %>%
+    ungroup()
+
+# Create the plot with the filtered data
+ggplot(filtered_df, aes(x = k, y = test_error, group = rep, color = as.factor(rep))) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = "Test Error vs K (Highest Iter)",
+         x = "K",
+         y = "Test Error",
+         color = "Rep")
+
+
 keep_feature <- rowSums(counts(sce) > 0) > 0
 sce <- sce[keep_feature, ]
 
@@ -22,6 +41,8 @@ for(i in 1:length(scoreList)){
 }
 
 ##make sure all genes have a weight for at least one pattern
+discard<-c('nmf19','nmf1','nmf2','nmf7','nmf8','nmf67','nmf45','nmf98',
+           'nmf56','nmf60','nmf19','nmf100')
 
 loads<-x@w
 loads<-loads[,!colnames(loads) %in% discard]
@@ -51,17 +72,16 @@ marks<-patternMarkers(loads,x@h,'all',1,100)
 }
 
 ego_bp<-list()
-for(i in 1:length(genes)){
+for(i in filt){
     print(paste0('running for pattern ',i))
     print(Sys.time())
 
-
-    test<-loads[rownames(loads) %in% genes[[70]],]
-    test<-test[order(test[,70],decreasing=T),]
-    plot(test[,70])
+    test<-loads[rownames(loads) %in% genes[[i]],]
+    test<-test[order(test[,i],decreasing=T),]
+    plot(test[,20])
     test<-as.data.frame(test)
     test$index=c(1:nrow(test))
-    f2 <- lm(nmf75 ~ index, data = test)
+    f2 <- lm(nmf20 ~ index, data = test)
 
     seg2 <- segmented(f2,
                       seg.Z = ~index,
@@ -69,14 +89,14 @@ for(i in 1:length(genes)){
     )
     chosen<-rownames(test)[1:round(seg2$psi[2,2])]
 
-    ego <- enrichGO(gene     = genes[[70]],
-                            universe      = rownames(loads),
+    nmf20 <- enrichGO(gene     = chosen,
+                           # universe      = rownames(loads),
                             OrgDb         = org.Hs.eg.db,
                             #organism='hsa',
                             ont           = "BP",
                             pAdjustMethod = "BH",
                             pvalueCutoff  = 0.05,
-                            qvalueCutoff  = 0.05,
+                            qvalueCutoff  = 0.1,
                             readable      = TRUE,
                             keyType = 'SYMBOL')
 }

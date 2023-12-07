@@ -1,14 +1,40 @@
-plotVisiumRGB <- function(spe, vars, ...) {
+####Function to rescale multiple continuous variables in one RGB space and plot
+###Args:
+##spe: a SpatialExperiment object
+##vars: names of variables  to plot. Can be genes with names in rownames(spe) OR colData columns
+##independent: a logical asking whether to rescale variables independently or not.
+#If FALSE, rescale all vars to 0 to 1 from min to max of all vars
+#if TRUE, rescale each var to 0 to 1 from min to max of each var independently
+#default TRUE
+##assay: which assay in assays(spe) to plot
+#default is logcounts
+plotVisiumRGB <- function(spe, vars, independent=TRUE, assay='logcounts', ...) {
     plt_df <- data.frame(colData(spe), spatialCoords(spe))
+    if (any(vars %in% rownames(spe))) {
+        df<-assay(spe,assay)[rownames(assay(spe,assay)) %in% vars,]
+        plt_df<-cbind(t(as.matrix(df)),plt_df)
+        rm(df)
+    }
 
     if (any(!vars %in% names(plt_df))) {
         stop("One or more variables not found in the data.")
     }
 
+    if(independent==TRUE){
     for (var in vars) {
         plt_df[[var]] <- scales::rescale(plt_df[[var]], to = c(0, 1))
     }
+    }
+    if(independent==FALSE){
+        # Find the minimum and maximum values across all variables in vars
+        min_value <- min(unlist(lapply(plt_df[vars], min)))
+        max_value <- max(unlist(lapply(plt_df[vars], max)))
 
+        # Scale each variable in vars dependently from 0 to 1
+        for (var in vars) {
+            plt_df[[var]] <- scales::rescale(plt_df[[var]], to = c(0, 1), from = c(min_value, max_value))
+        }
+    }
     num_vars <- length(vars)
 
     # Initialize RGB channels based on number of variables
@@ -47,8 +73,7 @@ plotVisiumRGB <- function(spe, vars, ...) {
       #  scale_color_identity()
 }
 
-plotVisiumRGB
-function(spe, vars, ...) {
+plotVisiumRGB<-function(spe, vars, ...) {
     plt_df <- data.frame(colData(spe), spatialCoords(spe))
 
     if (any(!vars %in% names(plt_df))) {
@@ -87,9 +112,17 @@ function(spe, vars, ...) {
 
     if (num_vars == 4) {
         plt_df$B <- plt_df$B + (1 - plt_df$B) * plt_df[[vars[4]]] # Blue component
+
     }
 
     spe$RGB <- rgb(plt_df$R, plt_df$G, plt_df$B, maxColorValue = 1)
     plotVisium(spe, fill = "RGB", ...)+scale_fill_identity()
 }
 
+set.seed(1029)
+i<-intersect(rownames(spe),rownames(x2@w))
+loadings<-x2@w
+loadings<-loadings[rownames(loadings) %in% i,]
+spe2<-spe[rownames(spe) %in% i,]
+loadings<-loadings[match(rownames(spe2),rownames(loadings)),]
+nmf47,nmf9,nmf57,nmf54,nmf15
