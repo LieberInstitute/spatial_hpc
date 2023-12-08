@@ -195,7 +195,7 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
     #   maximal coordinates in each dimension of each rotated and translated
     #   image
     combined_img = np.full(
-        (max0 + 1, max1 + 1, 3), 240, dtype = np.uint8
+        (max0 + 1, max1 + 1, 3), 240, dtype = np.float16
     )
     weights = np.zeros((max0 + 1, max1 + 1, 1), dtype = np.float64)
 
