@@ -194,12 +194,13 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
     #   Initialize the combined tiff. Determine the boundaries by computing the
     #   maximal coordinates in each dimension of each rotated and translated
     #   image
-    combined_img = np.zeros(
-        (max0 + 1, max1 + 1, sample_info.shape[0]), dtype = np.uint8
+    combined_img = np.full(
+        (max0 + 1, max1 + 1, 3), 240, dtype = np.uint8
     )
+    weights = np.zeros((max0 + 1, max1 + 1, 1), dtype = np.float64)
 
     for i in range(sample_info.shape[0]):
-        img_pil = Image.open(sample_info['raw_image_path'].iloc[i]).convert('L')
+        img_pil = Image.open(sample_info['raw_image_path'].iloc[i])
 
         #   Rotate about the top left corner of the image
         theta_deg = 180 * theta[i] / np.pi # '.rotate' uses degrees, not radians
@@ -212,8 +213,22 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
         combined_img[
                 trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
                 trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
-                i : (i + 1)
-            ] += img.reshape((img.shape[0], img.shape[1], 1))
+                :
+            ] += img
+
+        #   Count how many times a pixel is added to
+        weights[
+                trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
+                trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
+                :
+            ] += 1
+    
+    #   Fill in empty pixels with background color
+    combined_img[weights[:, :, 0] == 0, :] = BACKGROUND_COLOR
+
+    #   Average the color across all images that overlap a given pixel
+    weights[weights == 0] = 1
+    combined_img = (combined_img / weights).astype(np.uint8)
     
     return combined_img
 
@@ -468,7 +483,7 @@ this_sample.add_coords(
 
 this_sample.add_image(
     tiff = img_out_browser_path,
-    channels = [x.replace('-', 'x') for x in sample_info.index],
+    channels = 'rgb',
     scale = m_per_px
 )
 

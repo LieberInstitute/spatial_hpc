@@ -1,39 +1,28 @@
 **** Job starts ****
-Wed Dec  6 04:38:30 PM EST 2023
+Fri Dec  8 02:30:38 PM EST 2023
 **** JHPCE info ****
 User: rmiller
-Job id: 1015853
-Job name: samui_test
-Node name: compute-145
+Job id: 1044422
+Job name: bash
+Node name: compute-093
 Loading LIBD SLURM module for samui/1.0.0-next.45
 /jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:261: UserWarning: Valid config keys have changed in V2:
 * 'allow_mutation' has been removed
   warnings.warn(message, UserWarning)
-[16:42:06] INFO     Transforming                                    logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br3942_ini             
-                    tial/combined_Br3942_initial.tif to COG.                    
-           INFO     'combined_Br3942_initial' Executing queued      logger.py:27
-                    functions                                                   
-           INFO     combined_Br3942_initial Adding coords 'coords'  logger.py:27
-[16:42:07] INFO     Writing uncompressed GeoTIFF                    logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br3942_ini             
-                    tial/combined_Br3942_initial.tif                            
-[16:43:22] INFO     Writing COG                                     logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br3942_ini             
-                    tial/combined_Br3942_initial.tif                            
-[16:45:54] INFO     combined_Br3942_initial Adding csv feature      logger.py:27
-                    'Sample Info'                                               
-           INFO     'combined_Br3942_initial' written to            logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br3942_ini             
-                    tial                                                        
+[14:37:09] INFO     Transforming                                                                                                                                                             logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/../../processed-data/10-image_stitching/combined_Br3942_initial/combined_Br3942_initia             
+                    l.tif to COG.                                                                                                                                                                        
+           INFO     'combined_Br3942_initial' Executing queued functions                                                                                                                     logger.py:27
+           INFO     combined_Br3942_initial Adding coords 'coords'                                                                                                                           logger.py:27
+[14:37:19] INFO     Writing uncompressed GeoTIFF                                                                                                                                             logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/../../processed-data/10-image_stitching/combined_Br3942_initial/combined_Br3942_initia             
+                    l.tif                                                                                                                                                                                
+[14:38:10] INFO     Writing COG                                                                                                                                                              logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/../../processed-data/10-image_stitching/combined_Br3942_initial/combined_Br3942_initia             
+                    l.tif                                                                                                                                                                                
+[14:40:25] INFO     combined_Br3942_initial Adding csv feature 'Sample Info'                                                                                                                 logger.py:27
+           INFO     'combined_Br3942_initial' written to                                                                                                                                     logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/../../processed-data/10-image_stitching/combined_Br3942_initial                                    
 -----
 PIL                 10.0.0
 loopy               NA
@@ -46,6 +35,6 @@ tifffile            2023.7.4
 Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:40:32) [GCC 12.3.0]
 Linux-5.14.0-284.11.1.el9_2.x86_64-x86_64-with-glibc2.34
 -----
-Session information updated at 2023-12-06 16:45
+Session information updated at 2023-12-08 14:40
 **** Job ends ****
-Wed Dec  6 04:45:56 PM EST 2023
+Fri Dec  8 02:40:28 PM EST 2023

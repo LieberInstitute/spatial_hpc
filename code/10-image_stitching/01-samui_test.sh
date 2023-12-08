@@ -6,7 +6,6 @@
 #$ -e /dev/null
 #$ -l mf=80G,h_vmem=80G,h_fsize=50G
 
-#SBATCH -p shared
 #SBATCH --mem=80G
 #SBATCH --job-name=samui_test
 #SBATCH -o /dev/null
