@@ -157,12 +157,40 @@ sum_long <- melt(as.data.frame(sum_df), id.vars = c("sample", "group","tool"), v
 df1 = inner_join(sum_long[which(sum_long$group=="layer"),], sum_long[which(sum_long$group=="broad"),], by = c("sample", "tool", "variable"))
 df1$tool = gsub('tangram', 'Tangram', df1$tool)
 corr_df$tool = gsub('tangram', 'Tangram', corr_df$tool)
+load(here("plots","snRNAseq_palettes.rda"))
+names(sn.broad.palette) = c("Neuron", "Microglia", "Astrocyte", "Oligodendrocyte", "Other")
 
-p = ggplot(df1, aes(x = log(value.y), y = log(value.x), shape = sample, color = variable)) + geom_point(size = 5) +
-  facet_wrap(~tool)+ geom_abline(intercept = 0, slope = 1, linetype = 3, color = "black")+
-  labs(x = "log(sub counts)", y = "log(fine counts)")+ scale_color_manual(values = c("green", "darkorange", "yellow", "magenta"))+
-  scale_shape_manual(values = c(0, 7, 12, 15, 1, 10, 13, 19))+ theme(legend.position="right") +
-  guides(shape = guide_legend(ncol = 1, title = "Sample"), color = guide_legend(ncol = 1, title = "Broad cell type")) +
-  theme(text = element_text(size=24, color="black"))
+png(here("plots","spot_deconvo","figures","main_figure", "mid vs fine.png"), width = 400, height = 1200, units = "px") 
+p = ggplot(df1, aes(x = log(value.y), y = log(value.x))) + 
+  geom_point(size = 5, aes(color = variable, shape = sample)) + facet_wrap(~tool, nrow = 3)+ 
+  geom_abline(intercept = 0, slope = 1, linetype = 3, color = "black")+
+  theme_bw() + labs(title = "Mid vs Fine", x = "log(mid counts)", y = "log(fine counts)") + 
+  scale_color_manual(values = sn.broad.palette) +
+  scale_shape_manual(values = c(0, 7, 12, 15, 1, 10, 13, 19))+ 
+  theme(text = element_text(size = 32, colour = "black"),
+        axis.text = element_text(size = 24, colour = "black"),
+        panel.grid.minor = element_blank(), 
+        panel.grid.major = element_blank(),
+        strip.text = element_text(size = 24, color = "black"),
+        legend.text = element_text(size = 20, colour = "black"),
+        legend.position="bottom",
+        legend.title.align=0.5,
+        legend.margin = margin(t = 0, r = 0, b = 0, l = -35, unit = "pt"),
+        plot.title = element_text(hjust = 0.5)) +
+  guides(shape = guide_legend(ncol = 2, title = "Sample", title.position="top"), colour = "none")+
+  geom_text(data = as.data.frame(corr_df), label = corr_df$corr, x= 8.5, y = 6.5, size = 8) +
+  geom_text(data = as.data.frame(corr_df), label = corr_df$rmse, x= 8.5, y = 6, size = 8)
+  
+ #guides(color = guide_legend(ncol = 1, title = "Broad cell type", title.position="top"), shape  = "none")
+print(p)
+dev.off()
 
-ggsave(here("plots","spot_deconvo","shared_utilities","broadVSlayerPoster.png"), plot = p,  width = 18, height = 6)
+png(here("plots","spot_deconvo","figures","main_figure", "mid vs fine color.png"), width = 400, height = 1200, units = "px") 
+p =ggplot(data.frame(x=c(1:5), y = c(1:5), K = names(sn.broad.palette)), aes(x = x,  y=y, color = K))+
+  geom_point(size = 5)+theme_bw()+scale_color_manual(values = sn.broad.palette)+
+  theme(text = element_text(size = 32, colour = "black"),
+        legend.position="bottom", legend.text = element_text(size = 20, colour = "black"),
+        legend.title.align=0.5, plot.title = element_text(hjust = 0.5))+
+  guides(color = guide_legend(ncol = 1, title = "Broad cell type",title.position="top"))
+print(p)
+dev.off()

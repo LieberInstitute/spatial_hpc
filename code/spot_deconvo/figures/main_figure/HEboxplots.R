@@ -119,11 +119,6 @@ temp_df$key <- gsub("Br2720", "V12F14-051", temp_df$key)
 setdiff(temp_df$key, dat$key)
 setdiff(dat$key,temp_df$key)
 
-if (group == "broad"){
-  rmv = which(dat$key %in% setdiff(dat$key,temp_df$key))
-  dat = dat[-rmv,]
-}
-#temp_df$slide = sapply(strsplit(temp_df$key,"_"), `[`, 2)
 counts_match <- match(dat$key, temp_df$key)
 counts_info <-temp_df[counts_match,]
 which(is.na(counts_info), arr.ind=TRUE)
@@ -136,8 +131,6 @@ column_order <- colnames(cell2location)
 RCTD <- RCTD[, column_order]
 which(is.na(RCTD), arr.ind=TRUE)
 
-cell2location = cell2location[-rmv,]
-tangram = tangram[-rmv,]
 dat1 = rbind(cell2location, tangram, RCTD)
 # rmv = c("V11L05-335_B1", "V11U08-081_A1", "V11U08-081_C1", "V11U08-081_D1", "V11U08-084_D1")
 # dat1 = dat1[!dat1$sample_id %in% rmv, ]  
@@ -147,60 +140,18 @@ dat2 = dat1
 colnames(dat2)[27] <- "Tool"
 dat2$Tool=gsub('tangram', 'Tangram', dat2$Tool)
 
-## for box plots
-plot_list <- lapply(celltypes, function(i){
-  ggplot(dat2, aes(x = dat2$cluster_collapsed, y = dat2[,i])) + geom_boxplot(aes(fill=Tool), outlier.shape = NA)+
-    labs(title = i)+theme(text = element_text(size=26, color="black"))+scale_fill_manual(values = c('grey40', 'black','white'))
-  #ggplot(dat1, aes(x = dat1$broad2, y = dat1[,i])) + geom_boxplot(aes(fill=tool), outlier.shape = NA)+labs(title = i)
-})
-
-ggsave(here("plots","spot_deconvo","shared_utilities",group,"boxplot_WMcollapsed.pdf"), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
-
-## proportion plots
-#celltypes = colnames(dat1)[6:26]
-library(viridis)
-
-for (sample_id in unique(dat1$sample_id)){
-  datb = dat1[which(dat1$sample_id == sample_id), ]
-  plot_list <- lapply(celltypes, function(i){
-    ggplot(data = datb, aes(x=array_row, y=array_col, color = datb[,i]))+
-      geom_point(size = 3)+facet_wrap(~tool)+
-      scale_color_gradientn(colours = viridis(10, option = "magma"))+
-      theme(legend.position = "right")+labs(title = i)
-  })
-  #gridplot = grid.arrange(grobs = plot_list, nrow = length(celltypes))
-  ggsave(here("plots","spot_deconvo","shared_utilities",group,paste0(sample_id,".pdf")), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
-  print(paste0("done ", sample_id))
-}
-
-na_color = "#CCCCCC40"
-for (sample_id in unique(dat1$sample_id)){
-  datb = dat1[which(dat1$sample_id == sample_id), ]
-  datb[, celltypes][datb[, celltypes] <= 0.05] <- NA
-  plot_list <- lapply(celltypes, function(i){
-    ggplot(data = datb, aes(x=array_row, y=array_col, color = datb[,i]))+
-      geom_point(size = 2.3)+facet_wrap(~tool)+
-      #scale_color_gradientn(colours = viridisLite::plasma(21), na.value = na_color)+
-      scale_color_distiller(type = "seq",palette = rev('Greys'),direction=1, na.value = na_color)+
-      labs(title = i, color = "min>0.05" )+ theme_bw() +
-      theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
-  })
-  #gridplot = grid.arrange(grobs = plot_list, nrow = length(celltypes))
-  ggsave(here("plots","spot_deconvo","shared_utilities",group,paste0(sample_id,"_new.pdf")), plot = marrangeGrob(plot_list, nrow=1, ncol=1),  width = 24, height = 8)
-  print(paste0("done ", sample_id))
-}
-
-load(here("plots","palettes.rda"))
-colors = data.frame(colors = c("green1",precast_palette[c(9,4,6,8,17,3,13,2,7,11,12,18)]))
-p=ggplot(data = datb, aes(x = array_row, y=array_col, color = cluster_collapsed))+
-  geom_point(size = 2.3)+scale_color_manual(values = colors$colors)+theme(legend.position="none")
-ggsave(here("plots","spot_deconvo","shared_utilities","precastposter.png"), plot = p,  width = 7, height = 6.8)
-
-colors = data.frame(colors = c("green1",precast_palette[c(9,4,5,6,8,17,3,13,2,7,11,12,18)]))
-row.names(colors) = NULL
-png(here("plots","spot_deconvo","shared_utilities", "precast.png"), width = 1000, height = 400, units = "px")
-plot(x = 1:14, y=rep(0,14), col = colors$colors, pch = 19, cex = 5)
+png(here("plots","spot_deconvo","figures","main_figure", "GCboxplot.png"), width = 1150, height = 450, units = "px") 
+p =  ggplot(dat2, aes(x = dat2$cluster_collapsed, y = dat2[,"GC"])) + 
+    geom_boxplot(aes(fill=Tool), outlier.shape = NA)+theme_bw()+
+    labs(title = "Predicted % cell types in PRECAST spatial domains", x="", y="")+
+    scale_fill_manual(values = c('grey40', 'black','white'))+
+    theme(text = element_text(size = 36, colour = "black"),
+      axis.text = element_text(size = 24, colour = "black"),
+      axis.text.x = element_text(angle = 90),
+      panel.grid.minor = element_blank(), 
+      panel.grid.major = element_blank(),
+      legend.text = element_text(size = 20, colour = "black"),
+      legend.position = c(0.9, 0.75))
+print(p)
 dev.off()
 
-plot(x = 1:18, y=rep(0,18), col = precast_palette, pch = 19, cex = 5)

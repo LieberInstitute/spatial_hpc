@@ -14,30 +14,11 @@ count = as.data.frame(colData(spe)) %>% select("key", "count", "cluster_collapse
 grp = "layer" 
 tools = c("cell2location","RCTD","tangram")
 df_list <- list()
-palette<-c("Choroid"="#4A0404",
-           "Vascular"='#A0522D',
-           "Ependy"='#D2B48C',
-           "Micro_Macro_T"='#71797E',
-           'Oligo'='#0000FF',
-           'OPC'='#28282B',
-           'Astro'='#D3D3D3',
-           'GABA.LAMP5'='#40B5AD',
-           'GABA.CGE'='#7FFFD4',
-           'GABA.MGE'='#AFE1AF',
-           'CA2.4'='#F8C8DC',
-           'Thal'='#355E3B',
-           'GC'='#4CBB17',
-           'L5'='#FF7518',
-           'L2_3.PrS.PaS'='#FA5F55',
-           'CA1_ProS'='#DA70D6',
-           'Sub.1'='#FFFF8F',
-           'Sub.2'='#FFD700',
-           'L6_6b'='#FFAA33',
-           'L2_3.Prs.Ent'='#800080',
-           'Cajal'='#4682B4'
-)
 
-celltypes = names(palette)
+celltypes = c("Choroid","Vascular","Ependy","Micro_Macro_T",'Oligo',
+               'OPC','Astro','GABA.LAMP5','GABA.CGE','GABA.MGE','CA2.4',
+               'Thal','GC','L5','L2_3.PrS.PaS','CA1_ProS','Sub.1','Sub.2',
+               'L6_6b','L2_3.Prs.Ent','Cajal')
 
   for (tool in tools){
     Dr = here("processed-data", "spot_deconvo", tool, "HE", "2ndRun_newClass", grp)
@@ -92,23 +73,35 @@ df <- final_df %>%
   summarize(across(all_of(celltypes), sum)) %>%
   ungroup()
 
+celltypes = c("Choroid", "Vascular","Ependy", "Micro/Macro/T", "Oligo", "OPC",
+              "Astro", "GABA.LAMP5", "GABA.CGE", "GABA.MGE", "CA2.4",
+              "Thal", "GC", "L5", "L2/3.PrS.PaS", "CA1/ProS", "Sub.1", "Sub.2",
+              "L6/6b", "L2/3.Prs.Ent", "Cajal" )
+names(df) = c("tool", "cluster", celltypes)
 df = as.data.frame(df)
 df[, celltypes] <- lapply(df[, celltypes], function(col) col/rowSums(df[,celltypes]))
 
 df = melt(df, id.variable = c("tool", "cluster"))
 df$tool = gsub('tangram', 'Tangram', df$tool)
+load(here("plots","snRNAseq_palettes.rda"))
 
-
-png(here("plots","spot_deconvo","figures","fig_celltypeproportionsINdomains", "sfig_celltypeproportionsINdomains.png"), width = 1200, height = 600, units = "px") 
-p = ggplot(df, aes(x = cluster, y = value, fill = variable))+theme_bw() +
-  geom_bar(stat = "identity") + facet_grid(~tool) + scale_fill_manual(values = palette) +
-  labs(y = "proportion of counts", x="spatial domains", fill = "cell types")+ 
-  theme(text = element_text(size = 20, colour = "black"),
+png(here("plots","spot_deconvo","figures","main_figure", "celltypeproportionsINdomains.png"), width = 1200, height = 1000, units = "px") 
+p = ggplot(df, aes(x = cluster, y = value, fill = variable ))+theme_bw() +
+  geom_bar(stat = "identity") + facet_wrap(~tool, ncol=1, strip.position="right") + 
+  scale_fill_manual(values = sn.fine.palette) +
+  labs(fill = "Fine.cell.class", y = "", x = "")+ 
+  theme(text = element_text(size = 36, colour = "black"),
         axis.text = element_text(size = 24, colour = "black"),
-        axis.text.x = element_text(angle = 90),
+        #axis.text.x = element_text(angle = 90),
+        axis.text.x = element_blank(),
+        #axis.ticks.x=element_blank(),
         panel.grid.minor = element_blank(), 
         panel.grid.major = element_blank(),
-        strip.text = element_text(size = 24, color = "black")) +
-  guides(fill=guide_legend(ncol =1))
+        strip.text = element_text(size = 32, color = "black"),
+        legend.position = "bottom",
+        legend.text = element_text(size = 24, colour = "black"),
+        legend.title.align=0.5, plot.title = element_text(hjust = 0.5)) +
+        guides(fill=guide_legend(nrow =3,title.position="top"))+
+  scale_x_discrete(position = "top") 
 print(p)
 dev.off()
