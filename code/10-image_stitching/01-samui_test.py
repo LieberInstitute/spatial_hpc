@@ -194,8 +194,8 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
     #   Initialize the combined tiff. Determine the boundaries by computing the
     #   maximal coordinates in each dimension of each rotated and translated
     #   image
-    combined_img = np.full(
-        (max0 + 1, max1 + 1, 3), 240, dtype = np.float16
+    combined_img = np.zeros(
+        (max0 + 1, max1 + 1, 3), dtype = np.float16
     )
     weights = np.zeros((max0 + 1, max1 + 1, 1), dtype = np.float64)
 
@@ -205,7 +205,7 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
         #   Rotate about the top left corner of the image
         theta_deg = 180 * theta[i] / np.pi # '.rotate' uses degrees, not radians
         img = np.array(
-            img_pil.rotate(theta_deg, expand = True), dtype = np.uint8
+            img_pil.rotate(theta_deg, expand = True, fillcolor=BACKGROUND_COLOR), dtype = np.float16
         )
 
         #   "Place this image" on the combined image, considering translations.
