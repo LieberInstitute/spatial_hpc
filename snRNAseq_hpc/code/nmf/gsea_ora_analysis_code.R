@@ -41,8 +41,10 @@ for(i in 1:length(scoreList)){
 }
 
 ##make sure all genes have a weight for at least one pattern
-discard<-c('nmf19','nmf1','nmf2','nmf7','nmf8','nmf67','nmf45','nmf98',
-           'nmf56','nmf60','nmf19','nmf100')
+# discard<-c('nmf19','nmf1','nmf2','nmf7','nmf8','nmf67','nmf45','nmf98',
+#            'nmf56','nmf60','nmf19','nmf100')
+
+discard<-c('nmf37','nmf28','nmf18','nmf16','nmf94','nmf92','nmf2')
 
 loads<-x@w
 loads<-loads[,!colnames(loads) %in% discard]
@@ -69,19 +71,20 @@ mito<-rownames(sce)[which(seqnames(sce) == "chrM")]
 loads<-loads[!rownames(loads) %in% mito,]
 ##now get markers
 marks<-patternMarkers(loads,x@h,'all',1,100)
-}
 
+genes<-marks$PatternMarkers
 ego_bp<-list()
-for(i in filt){
+for(i in 1:length(genes)){
     print(paste0('running for pattern ',i))
     print(Sys.time())
 
     test<-loads[rownames(loads) %in% genes[[i]],]
     test<-test[order(test[,i],decreasing=T),]
-    plot(test[,20])
+    plot(test[,i])
     test<-as.data.frame(test)
     test$index=c(1:nrow(test))
-    f2 <- lm(nmf20 ~ index, data = test)
+    form<-eval(str2expression(paste0(colnames(test)[i],'~','index')))
+    f2 <- lm(formula=form, data = test)
 
     seg2 <- segmented(f2,
                       seg.Z = ~index,
@@ -89,11 +92,11 @@ for(i in filt){
     )
     chosen<-rownames(test)[1:round(seg2$psi[2,2])]
 
-    nmf20 <- enrichGO(gene     = chosen,
+    ego_bp[[i]] <- enrichGO(gene     = chosen,
                            # universe      = rownames(loads),
                             OrgDb         = org.Hs.eg.db,
                             #organism='hsa',
-                            ont           = "BP",
+                            ont           = "ALL",
                             pAdjustMethod = "BH",
                             pvalueCutoff  = 0.05,
                             qvalueCutoff  = 0.1,
