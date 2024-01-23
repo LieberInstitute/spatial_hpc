@@ -33,11 +33,16 @@ ggplot(dat, aes(x = x, y = y , color = weights)) +
   scale_color_distiller(type = "seq",palette = rev('Greys'),direction=1, na.value = "#CCCCCC40")+
   theme_void() + labs(y = "RCTD markers" )+ 
   scale_y_reverse()+
-  theme(text = element_text(size=24, color="black"),
-        axis.title.y = element_text(angle = 90),
+  facet_wrap(~celltype, nrow=2)+
+  theme(text = element_text(color="black"),
+        axis.title.y = element_text(size=42, angle = 90),
+        strip.text = element_text(size=42),
         panel.grid.minor = element_blank(), 
-        panel.grid.major = element_blank())+
-  facet_wrap(~celltype, nrow=2)
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(-15, "pt"),
+        legend.text = element_text(size=24),
+        legend.title = element_text(size=24))
+
 dev.off()
 
 
@@ -65,10 +70,14 @@ ggplot(dat, aes(x = x, y = y , color = weights)) +
   scale_color_distiller(type = "seq",palette = rev('Greys'),direction=1, na.value = "red")+
   theme_void() + labs(y = "User defined markers" )+ 
   scale_y_reverse()+
-  theme(text = element_text(size=24, color="black"),
-        axis.title.y = element_text(angle = 90),
+  facet_wrap(~celltype, nrow=2)+
+  theme(text = element_text(color="black"),
+        axis.title.y = element_text(size=42, angle = 90),
+        strip.text = element_text(size=42),
         panel.grid.minor = element_blank(), 
-        panel.grid.major = element_blank())+
-  facet_wrap(~celltype, nrow=2)
+        panel.grid.major = element_blank(),
+        panel.spacing = unit(-15, "pt"),
+        legend.text = element_text(size=24),
+        legend.title = element_text(size=24))
 dev.off()
 

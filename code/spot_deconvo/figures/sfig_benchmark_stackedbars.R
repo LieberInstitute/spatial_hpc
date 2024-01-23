@@ -58,12 +58,12 @@ for (tool in tools){
   if (tool == "RCTD"){
     temp_df <- temp_df[temp_df$key %in% CART$key, ]
     cnt = CART$n_cells[CART$key %in%  temp_df$key]
-    temp_df[, celltypes] <- lapply(temp_df[, celltypes], function(col) col*cnt)}
+    temp_df[, celltypes] <- lapply(temp_df[, celltypes], function(col) col*cnt)
+    temp_df$count = cnt}
   temp_df$sample <-sapply(strsplit(temp_df$key,"-1_"), `[`, 2)
   temp_df[which(temp_df$count == 0),celltypes] = 0
   temp_df = temp_df[,c("key","sample",celltypes)]
   temp_df$tool = tool
-  temp_df$count = cnt
   df_list[[length(df_list) + 1]] <- temp_df
 }
 final_df <- do.call(rbind, df_list)
@@ -73,6 +73,7 @@ RCTD = final_df[which(final_df$tool == "RCTD"),]
 rm = setdiff(CART$key, RCTD$key)
 CART = CART[!(CART$key %in% rm), ]
 final_df = final_df[!(final_df$key %in% rm), ]
+final_df$count = rowSums(final_df[,celltypes])
 
 CART = CART[,c("key", "sample", "oligo","other", "neuron","microglia","astrocyte","tool", "count")]
 df1 = rbind(CART, final_df)
@@ -92,14 +93,18 @@ library(ggplot2)
 library(gridExtra)
 
 metrics_df$tool = gsub('tangram', 'Tangram', metrics_df$tool)
-metrics_df = melt(metrics_df, id.vars = c("sample", "tool"))
+metrics_df = melt(as.data.frame(metrics_df), id.vars = c("sample", "tool"))
+
+load(here("plots","snRNAseq_palettes.rda"))
+names(sn.broad.palette) = c("Neuron", "Microglia", "Astrocyte", "Oligodendrocyte", "Other")
+sn.broad.palette["Other"] = "#0000f4"
 
 png(here("plots","spot_deconvo","figures","fig_benchmark", paste0("sfig_",grp,"_stackedbars.png")), width = 1200, height = 600, units = "px") 
 p = ggplot(metrics_df, aes(x = tool, y = value, fill = variable))+geom_bar(stat = "identity")+
   theme_bw() + facet_wrap(~sample, nrow=2)+ 
-  scale_color_manual(values = c("green", "darkorange", "yellow", "magenta"))+
-  labs( y = "sample wide proportion", color = "Cell type") + 
-  theme(text = element_text(size = 20, colour = "black"),
+  scale_fill_manual(values = sn.broad.palette) +
+  labs( y = "Sample wide proportion", color = "Cell type", x = "") + 
+  theme(text = element_text(size = 30, colour = "black"),
         axis.text = element_text(size = 24, colour = "black"),
         axis.text.x = element_text(angle = 90),
         panel.grid.minor = element_blank(), 

@@ -1,5 +1,24 @@
 setwd("/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/")
-library("here")
+suppressPackageStartupMessages(library("SingleCellExperiment"))
+suppressPackageStartupMessages(library("DeconvoBuddies"))
+suppressPackageStartupMessages(library("tidyverse"))
+suppressPackageStartupMessages(library("sessioninfo"))
+suppressPackageStartupMessages(library("here"))
+suppressPackageStartupMessages(library("spatialLIBD"))
+
+Dr <- here("processed-data","spot_deconvo","shared_utilities")
+marker_stats_layer = readRDS(here(Dr,paste0("marker_stats_layer_celltype_class1_noHATAGABAAmy.rds")))
+markers_layer <- as.data.frame(marker_stats_layer |>filter(rank_ratio <= 25,ratio > 1))
+markers_layer$cellTypeResolution = "Fine"
+
+marker_stats_broad = readRDS(here(Dr,paste0("marker_stats_broad_class.rds")))
+markers_broad <- as.data.frame(marker_stats_broad |>filter(rank_ratio <= 25,ratio > 1))
+markers_broad$cellTypeResolution = "Mid"
+
+markers = rbind(markers_broad, markers_layer)
+write.csv(markers, file = here("plots", "spot_deconvo", "markergenes_stats.csv"))
+
+##########
 library("jaffelab")
 library("SpatialExperiment")
 library("sessioninfo")
@@ -91,54 +110,17 @@ df1 = rbind(RCTD, cell2location, tangram)
 metrics_df = df1 |> filter(variable != "other")|>
   group_by(tool, variable, sample) |>
   summarize(
-    corr = round(cor(value, actual), 2),
-    rmse = signif(mean((value - actual)**2)**0.5, 3)
+    corr = cor(value, actual),
+    rmse = mean((value - actual)**2)**0.5
   ) 
 
-final_metrics = metrics_df |>
-  group_by(tool) |>
-  summarize(
-    corr = round(mean(corr), 2), rmse = signif(mean(rmse), 3)
-  )
+metrics_df_layer = as.data.frame(metrics_df)
+metrics_df_layer$cellTypeResolution = "Fine"
 
-final_metrics$corr <- paste("Avg. Cor =", final_metrics$corr)
-final_metrics$rmse <- paste("Avg. RMSE =", final_metrics$rmse)
-final_metrics$tool = gsub("tangram", "Tangram", final_metrics$tool)
+# metrics_df_broad = as.data.frame(metrics_df)
+# metrics_df_broad$cellTypeResolution = "Mid"
 
-# Load the ggplot2 library
-library(ggplot2)
-library(gridExtra)
-
-metrics_df$variable = as.character(metrics_df$variable)
-metrics_df$variable = gsub('oligo', 'Oligodendrocyte', metrics_df$variable)
-metrics_df$variable = gsub('neuron', 'Neuron', metrics_df$variable)
-metrics_df$variable = gsub('microglia', 'Microglia', metrics_df$variable)
-metrics_df$variable = gsub('astrocyte', 'Astrocyte', metrics_df$variable)
-
-metrics_df$tool = gsub('tangram', 'Tangram', metrics_df$tool)
-
-load(here("plots","snRNAseq_palettes.rda"))
-names(sn.broad.palette) = c("Neuron", "Microglia", "Astrocyte", "Oligodendrocyte", "Other")
-sn.broad.palette["Other"] = "#0000f4"
-
-png(here("plots","spot_deconvo","figures","fig_benchmark", paste0("sfig_",grp,"_RMSEvsCorr.png")), width = 1200, height = 400, units = "px") 
-p = ggplot(metrics_df, aes(x = corr, y = rmse))+
-  geom_point(size = 5, aes(color = variable, shape = sample))+ theme_bw() +
-  facet_wrap(~tool, nrow=1)+ 
-  scale_color_manual(values = sn.broad.palette) +
-  scale_shape_manual(values = c(0, 7, 12, 15, 1, 10, 13, 19)) + 
-  labs( x = "Correlation", y = "RMSE", color = "Cell type") + 
-  theme(text = element_text(size = 30, colour = "black"),
-        axis.text = element_text(size = 24, colour = "black"),
-        panel.grid.minor = element_blank(), 
-        panel.grid.major = element_blank(),
-        strip.text = element_text(size = 24, color = "black")) + 
-  geom_text(data = as.data.frame(final_metrics), label = final_metrics$corr, x= 0.015, y = 0.35, size = 8) +
-  geom_text(data = as.data.frame(final_metrics), label = final_metrics$rmse, x= 0.015, y = 0.3, size = 8)
-
-#  geom_text(data = as.data.frame(final_metrics), label = final_metrics$corr, x= 0.01, y = 0.65, size = 8) +
-#  geom_text(data = as.data.frame(final_metrics), label = final_metrics$rmse, x= 0.01, y = 0.6, size = 8)
+metrics = rbind(metrics_df_broad, metrics_df_layer)
+write.csv(metrics, file = here("plots", "spot_deconvo", "CARTvsTool_stats.csv"))
 
 
-print(p)
-dev.off()

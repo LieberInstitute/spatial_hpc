@@ -85,6 +85,9 @@ df = melt(df, id.variable = c("tool", "cluster"))
 df$tool = gsub('tangram', 'Tangram', df$tool)
 load(here("plots","snRNAseq_palettes.rda"))
 
+df$variable = gsub('CA2.4', 'CA2-4', df$variable)
+df$variable = gsub('L5', 'L5/6', df$variable)
+
 png(here("plots","spot_deconvo","figures","main_figure", "celltypeproportionsINdomains.png"), width = 1200, height = 1000, units = "px") 
 p = ggplot(df, aes(x = cluster, y = value, fill = variable ))+theme_bw() +
   geom_bar(stat = "identity") + facet_wrap(~tool, ncol=1, strip.position="right") + 

@@ -154,15 +154,15 @@ sum_df <- final_df %>%
   group_by(sample, group, tool) %>%
   summarise(Neuron = sum(neuron), Astrocyte = sum(astrocyte), Microglia = sum(microglia), Oligodendrocyte = sum(oligo))
 sum_long <- melt(as.data.frame(sum_df), id.vars = c("sample", "group","tool"), variable.name = "celltype", value.name = "totals")
-df1 = inner_join(sum_long[which(sum_long$group=="layer"),], sum_long[which(sum_long$group=="broad"),], by = c("sample", "tool", "variable"))
+df1 = inner_join(sum_long[which(sum_long$group=="layer"),], sum_long[which(sum_long$group=="broad"),], by = c("sample", "tool", "celltype"))
 df1$tool = gsub('tangram', 'Tangram', df1$tool)
 corr_df$tool = gsub('tangram', 'Tangram', corr_df$tool)
 load(here("plots","snRNAseq_palettes.rda"))
 names(sn.broad.palette) = c("Neuron", "Microglia", "Astrocyte", "Oligodendrocyte", "Other")
 
 png(here("plots","spot_deconvo","figures","main_figure", "mid vs fine.png"), width = 400, height = 1200, units = "px") 
-p = ggplot(df1, aes(x = log(value.y), y = log(value.x))) + 
-  geom_point(size = 5, aes(color = variable, shape = sample)) + facet_wrap(~tool, nrow = 3)+ 
+p = ggplot(df1, aes(x = log(totals.y), y = log(totals.x))) + 
+  geom_point(size = 5, aes(color = celltype, shape = sample)) + facet_wrap(~tool, nrow = 3)+ 
   geom_abline(intercept = 0, slope = 1, linetype = 3, color = "black")+
   theme_bw() + labs(title = "Mid vs Fine", x = "log(mid counts)", y = "log(fine counts)") + 
   scale_color_manual(values = sn.broad.palette) +
@@ -185,6 +185,7 @@ p = ggplot(df1, aes(x = log(value.y), y = log(value.x))) +
 print(p)
 dev.off()
 
+sn.broad.palette[5] = "#0000f4"
 png(here("plots","spot_deconvo","figures","main_figure", "mid vs fine color.png"), width = 400, height = 1200, units = "px") 
 p =ggplot(data.frame(x=c(1:5), y = c(1:5), K = names(sn.broad.palette)), aes(x = x,  y=y, color = K))+
   geom_point(size = 5)+theme_bw()+scale_color_manual(values = sn.broad.palette)+
