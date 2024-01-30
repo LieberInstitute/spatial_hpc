@@ -1,0 +1,51 @@
+**** Job starts ****
+Fri Jan 26 02:23:37 PM EST 2024
+**** JHPCE info ****
+User: rmiller
+Job id: 1749589
+Job name: samui_test
+Node name: compute-063
+Loading LIBD SLURM module for samui/1.0.0-next.45
+/jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:261: UserWarning: Valid config keys have changed in V2:
+* 'allow_mutation' has been removed
+  warnings.warn(message, UserWarning)
+[14:37:59] INFO     Transforming                                    logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br2720_ini             
+                    tial/combined_Br2720_initial.tif to COG.                    
+           INFO     'combined_Br2720_initial' Executing queued      logger.py:27
+                    functions                                                   
+           INFO     combined_Br2720_initial Adding coords 'coords'  logger.py:27
+[14:38:02] INFO     Writing uncompressed GeoTIFF                    logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br2720_ini             
+                    tial/combined_Br2720_initial.tif                            
+[14:38:44] INFO     Writing COG                                     logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br2720_ini             
+                    tial/combined_Br2720_initial.tif                            
+[14:40:13] INFO     combined_Br2720_initial Adding csv feature      logger.py:27
+                    'Sample Info'                                               
+           INFO     'combined_Br2720_initial' written to            logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br2720_ini             
+                    tial                                                        
+-----
+PIL                 10.0.0
+loopy               NA
+numpy               1.24.4
+pandas              2.0.3
+pyhere              1.0.0
+session_info        1.0.0
+tifffile            2023.7.4
+-----
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:40:32) [GCC 12.3.0]
+Linux-5.14.0-284.11.1.el9_2.x86_64-x86_64-with-glibc2.34
+-----
+Session information updated at 2024-01-26 14:40
+**** Job ends ****
+Fri Jan 26 02:40:18 PM EST 2024

@@ -16,6 +16,8 @@ sample_info_path = Path(
 
 xml_map_path = here('raw-data', 'sample_info', 'sample_key.csv')
 
+
+# for this project this should be directly inside 01_spaceranger directory
 sRanger = "spaceranger_2022-04-12_SPag033122"
 
 ################################################################################
@@ -158,7 +160,7 @@ for imagej_xml_path in sample_info['XML file name'].dropna().unique():
     #    slide_nums = slide_nums * len(array_nums)
     #elif len(re.findall(r'title="V[0-9]{2}[A-Z][0-9]{2}', imagej_xml)) == 1:
     #    #   Otherwise use the slides in the image paths, not the title
-    slide_nums = slide_nums[1:]
+    #slide_nums = slide_nums[1:]
     
     #   Grab the transformation matrices and import as numpy array with the
     #   structure used in 01-samui_test.py

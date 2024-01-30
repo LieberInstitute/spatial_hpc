@@ -19,6 +19,8 @@ Image.MAX_IMAGE_PIXELS = None
 #          estimates
 #       2. the donor to include in the combined image
 this_donor, file_suffix = sys.argv[1:]
+#this_donor = 'Br6423'
+#file_suffix = 'initial'
 assert file_suffix in ('initial', 'adjusted')
 
 sample_info_path = here(
@@ -65,7 +67,7 @@ json_out_path = Path(
 #   Instead, we'll just run these donors with 'file_suffix' = 'initial',
 #   outputting scalefactors, spot coordinates, and the low-res image without
 #   having to run with 'file_suffix' = 'adjusted'
-unadjusted_donors = ['Br3942']
+unadjusted_donors = ['Br8667']
 
 json_out_path.parent.mkdir(parents = True, exist_ok = True)
 

@@ -6,12 +6,12 @@
 #$ -e /dev/null
 #$ -l mf=80G,h_vmem=80G,h_fsize=50G
 
-#SBATCH --mem=80G
+#SBATCH --mem=120G
 #SBATCH --job-name=samui_test
 #SBATCH -o /dev/null
 #SBATCH -e /dev/null
 
-donor="Br3942"
+donor="Br8667"
 mode="initial"
 
 if [[ ! -z $SLURMD_NODENAME ]]; then

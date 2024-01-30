@@ -1,0 +1,14 @@
+**** Job starts ****
+Mon Jan 29 11:57:27 AM EST 2024
+**** JHPCE info ****
+User: rmiller
+Job id: 1777525
+Job name: samui_test
+Node name: compute-068
+Loading LIBD SLURM module for samui/1.0.0-next.45
+/jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:261: UserWarning: Valid config keys have changed in V2:
+* 'allow_mutation' has been removed
+  warnings.warn(message, UserWarning)
+/var/spool/slurm/d/job1777525/slurm_script: line 45: 2038878 Killed                  python 01-samui_test.py $donor $mode
+**** Job ends ****
+Mon Jan 29 12:10:20 PM EST 2024
