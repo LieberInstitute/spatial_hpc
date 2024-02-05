@@ -341,3 +341,25 @@ tissue_positions_r = pd.concat(tissue_positions_list).rename(
     )
 tissue_positions_r.index.name = 'key'
 tissue_positions_r.to_csv(tissue_out_path, index = True)
+
+################################################################################
+#   Gather gene-expression data into a DataFrame to later as a feature
+################################################################################
+
+#   Read in AnnData and subset to this_donor
+spg = sc.read(spg_path)
+#path_groups = spg.obs['path_groups'].cat.categories
+spgP = spg[spg.obs['brnum'] == this_donor+'_VSPG', :]
+spgP.obs.index = spgP.obs.index.str.replace('_'+this_donor, '')
+#   Convert the sparse gene-expression matrix to pandas DataFrame, with the
+#   gene symbols as column names
+gene_df = pd.DataFrame(
+    spgP.X.toarray(),
+    index = spgP.obs.index,
+    columns = spgP.var['gene_name']
+)
+#   Some gene symbols are actually duplicated. Just take the first column in
+#   any duplicated cases
+gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
+
+sample_df = spgP.obs[['sample_id', 'domain']].copy()
