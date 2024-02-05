@@ -363,3 +363,43 @@ gene_df = pd.DataFrame(
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
 
 sample_df = spgP.obs[['sample_id', 'domain']].copy()
+
+################################################################################
+#   Use the Samui API to create the importable directory for this combined
+#   "sample"
+################################################################################
+img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Autofluorescence']
+default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'pink': 'Alexa647', 'cyan': 'Autofluorescence'}
+default_gene = 'SNAP25'
+
+assert default_gene in gene_df.columns, "Default gene not in AnnData"
+
+this_sample = Sample(name = samui_dir.name, path = samui_dir)
+
+tissue_positions = pd.concat(tissue_positions_list)[['x', 'y']].astype(int)
+tissue_positions_filtered = tissue_positions.loc[gene_df.index]
+tissue_positions_arranged = tissue_positions.reindex(gene_df.index)
+
+this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M)
+
+this_sample.add_image(
+    tiff = img_out_fullres,
+    channels = img_channels,
+    defaultChannels = default_channels,
+    scale = m_per_px
+)
+this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
+
+#   Add additional requested observational columns (colData columns)
+#this_sample.add_csv_feature(
+#    spgP.obs[spgP_cont_features], name = "Spot Coverage", coordName = "coords",
+#    dataType = "quantitative"
+#)
+
+this_sample.set_default_feature(group = "Genes", feature = default_gene)
+
+this_sample.add_csv_feature(sample_df, name = "Sample Info", coordName = "coords")
+
+this_sample.write()
+
+session_info.show()
