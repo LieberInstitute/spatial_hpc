@@ -180,3 +180,54 @@ def merge_image_fullres(sample_info, theta, trans_img, max0, max1):
     weights[weights == 0] = 1
     combined_img = (combined_img / weights).astype(np.uint8)
     return combined_img
+    
+################################################################################
+#   Define the transformation matrix
+################################################################################
+
+#   Check if the adjusted estimates exist (i.e. if we already ran this script to
+#   display in Samui, annotated ROIs, then ran '03-adjust_transform.py' to
+#   refine the initial transformations from ImageJ). If not, use the initial
+#   estimate from ImageJ
+#if file_suffix == 'adjusted':
+#    #   Read in the adjusted transformations
+#    estimates_df = pd.read_csv(estimate_path)
+#    estimates_df = estimates_df.loc[estimates_df['adjusted']]
+#else:
+estimates_df = sample_info.rename(
+    {
+        'initial_transform_x': 'x',
+        'initial_transform_y': 'y',
+        'initial_transform_theta': 'theta'
+    },
+    axis = 1
+)
+
+#   x and y switch, so angles invert
+estimates_df['theta'] *= -1
+theta = np.array(estimates_df['theta'])
+
+#   Array defining an affine transformation:
+#   [x0', y0'] = trans[0] @ [x0, y0, 1]
+trans = np.array(
+    [
+        [
+            [
+                np.cos(estimates_df['theta'].iloc[i]),
+                -1 * np.sin(estimates_df['theta'].iloc[i]),
+                estimates_df['x'].iloc[i]
+            ],
+            [
+                np.sin(estimates_df['theta'].iloc[i]),
+                np.cos(estimates_df['theta'].iloc[i]),
+                estimates_df['y'].iloc[i]
+            ]
+        ]
+        for i in range(estimates_df.shape[0])
+    ],
+    dtype = np.float64
+)
+
+#   Flip x and y to follow Samui conventions. Translations must be an integer
+#   number of pixels
+trans[:, :, 2] = np.flip(np.round(trans[:, :, 2]), axis = 1)
