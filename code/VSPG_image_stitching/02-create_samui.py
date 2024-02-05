@@ -271,3 +271,73 @@ with open(json_path, 'r') as f:
 m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
 
 tissue_positions_list = []
+
+################################################################################
+#   Read in and translate images and spot coordinates
+################################################################################
+
+max0, max1 = np.max(rotated_shapes + trans_img, axis = 0)
+
+#   Write the full-resolution combined TIFF needed by Samui
+combined_img = merge_image_fullres(sample_info, theta, trans_img, max0, max1)
+with tifffile.TiffWriter(img_out_fullres, bigtiff = True) as tiff:
+    tiff.write(combined_img)
+
+#   Write the low-resolution combined PNG needed for the SpatialExperiment
+#   object, as well as a combined spaceranger-compatible JSON
+
+combined_img, lowres_sf = merge_image_export(sample_info, theta, trans_img, max0, max1)
+Image.fromarray(combined_img).save(img_out_export_path)
+
+    #   Overwrite the lowres scale factor and delete the highres one (which
+    #   isn't defined for our case). Then write
+spaceranger_json['tissue_lowres_scalef'] = lowres_sf
+spaceranger_json.pop('tissue_hires_scalef')
+with open(json_out_path, 'w') as f:
+    json.dump(spaceranger_json, f)
+
+#   Handle the spot coordinates
+for i in range(sample_info.shape[0]):
+    #   Read in the tissue positions file to get spatial coordinates. Index by
+    #   barcode + sample ID
+    pattern = re.compile(r'^tissue_positions(_list|)\.csv$')
+    this_dir = sample_info['spaceranger_dir'].iloc[i]
+    tissue_path = [
+            Path(os.path.join(this_dir, x)) for x in os.listdir(this_dir)
+            if pattern.match(x)
+        ][0]
+    if '_list' in tissue_path.name: 
+        tissue_positions = pd.read_csv(
+            tissue_path,
+            header = None,
+            # Note the switch of x and y
+            names = ["in_tissue", "row", "col", "y", "x"],
+            index_col = 0
+        )
+    else:
+        tissue_positions = pd.read_csv(
+            tissue_path,
+            skiprows = 1,
+            # Note the switch of x and y
+            names = ["in_tissue", "row", "col", "y", "x"],
+            index_col = 0
+        )
+    tissue_positions.index = tissue_positions.index + '_' + sample_info.index[i]
+    #   Apply affine transform of coordinates
+    tissue_positions[['y', 'x']] = (
+        trans[i] @ 
+        np.array(tissue_positions.assign(ones = 1)[['y', 'x', 'ones']]).T
+    ).T
+    tissue_positions_list.append(tissue_positions)
+
+#   Also export tissue positions with SpatialExperiment-friendly colnames
+
+tissue_positions_r = pd.concat(tissue_positions_list).rename(
+        {
+            'row': 'array_row', 'col': 'array_col', 'y': 'pxl_row_in_fullres',
+            'x': 'pxl_col_in_fullres'
+        },
+        axis = 1
+    )
+tissue_positions_r.index.name = 'key'
+tissue_positions_r.to_csv(tissue_out_path, index = True)
