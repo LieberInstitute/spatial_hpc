@@ -20,6 +20,11 @@ from rasterio import Affine
 from loopy.utils.utils import remove_dupes, Url
 import re
 
+Image.MAX_IMAGE_PIXELS = None
+
+this_donor = "Br8325"
+#this_donor = "Br3942"
+
 sample_info_path = here('processed-data', 'VSPG_image_stitching', 'transformations.csv')
 samui_dir = Path(here('processed-data', 'VSPG_image_stitching', this_donor))
 samui_dir.mkdir(parents = True, exist_ok = True)
