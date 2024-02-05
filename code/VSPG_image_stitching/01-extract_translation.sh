@@ -8,8 +8,8 @@
 
 
 #SBATCH --mem=5G
-#SBATCH --job-name=clean_sample_info
-#SBATCH -o logs/02-clean_sample_info.log
+#SBATCH --job-name=extract_translation
+#SBATCH -o logs/01-extract_translation.py.log
 
 
 set -e
@@ -35,7 +35,7 @@ echo "Node name: ${node_name}"
 module list
 
 module load samui/1.0.0-next.45
-python 02-clean_sample_info.py
+python 01-extract_translation.py
 
 echo "**** Job ends ****"
 date
