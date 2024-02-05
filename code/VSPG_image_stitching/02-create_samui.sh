@@ -7,7 +7,7 @@
 #$ -l mf=80G,h_vmem=80G,h_fsize=50G
 
 #SBATCH --mem=80G
-#SBATCH --job-name=samui_test
+#SBATCH --job-name=create_samui
 #SBATCH -o /dev/null
 #SBATCH -e /dev/null
 
@@ -38,7 +38,7 @@ echo "Job name: ${job_name}"
 echo "Node name: ${node_name}"
 
 module load samui/1.0.0-next.45
-python 01-samui_test.py $donor $mode
+python 02-create_samui.py $donor $mode
 
 echo "**** Job ends ****"
 date
