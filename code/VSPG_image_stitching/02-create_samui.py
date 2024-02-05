@@ -231,3 +231,43 @@ trans = np.array(
 #   Flip x and y to follow Samui conventions. Translations must be an integer
 #   number of pixels
 trans[:, :, 2] = np.flip(np.round(trans[:, :, 2]), axis = 1)
+
+################################################################################
+#   Determine image shapes and initialize the combined image
+################################################################################
+
+#   Loop through all samples and grab image dimensions so we can compute
+#   the dimensions of the combined image. Doesn't load the images into memory
+img_shapes = []
+for i in range(sample_info.shape[0]):
+    tif = tifffile.TiffFile(sample_info['raw_image_path'].iloc[i])
+    img_shapes.append(tif.pages[0].shape)
+    tif.close()
+
+img_shapes = np.array(img_shapes)
+rotated_shapes = rotate_shapes(img_shapes[:, :2], trans)
+
+trans_img = np.array(
+    [
+        trans[i, :, 2] +
+        adjust_trans(np.flip(img_shapes[i, :2]), theta[i])
+        for i in range(sample_info.shape[0])
+    ],
+    dtype = np.float64
+)
+trans_img = np.round(trans_img).astype(int)
+
+#   Equally translate images and spot coords such that the minimum pixel
+#   occupied by any image is at (0, 0) (also potentially saving memory)
+trans[:, :, 2] -= np.min(trans_img, axis = 0)
+trans_img -= np.min(trans_img, axis = 0)
+
+#   For now, just read in one JSON file and assume all samples are roughly on
+#   the same spatial scale (spots have the same diameter in pixels)
+json_path = os.path.join(sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json')
+with open(json_path, 'r') as f:
+    spaceranger_json = json.load(f)
+
+m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
+
+tissue_positions_list = []
