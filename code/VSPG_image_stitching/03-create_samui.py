@@ -47,8 +47,8 @@ gene_df = pd.DataFrame(
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
 
 sample_df = spgP.obs[['sample_id', 'domain']].copy()
-#sample_df['domain_codes'] = sample_df['domain'].cat.codes
-#sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
+sample_df['domain_codes'] = sample_df['domain'].cat.codes
+sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
 #sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
 
 ################################################################################
