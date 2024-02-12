@@ -19,12 +19,14 @@ import scanpy as sc
 from rasterio import Affine
 from loopy.utils.utils import remove_dupes, Url
 import re
+from scipy.spatial import KDTree
 
 this_donor = "Br8325"
 this_donor = "Br3942"
 
 samui_dir = Path(here('processed-data', 'VSPG_image_stitching', this_donor))
 samui_dir.mkdir(parents = True, exist_ok = True)
+
 
 ################################################################################
 #   Gather gene-expression data into a DataFrame to later as a feature
@@ -45,6 +47,7 @@ gene_df = pd.DataFrame(
 #   Some gene symbols are actually duplicated. Just take the first column in
 #   any duplicated cases
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
+gene_df.index.name = None
 
 sample_df = spgP.obs[['sample_id', 'domain']].copy()
 sample_df['domain_codes'] = sample_df['domain'].cat.codes
@@ -52,8 +55,32 @@ sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
 #sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
 
 ################################################################################
-#   Use the Samui API to create the importable directory for this combined
-#   "sample"
+#  remove overlapping spots
+################################################################################
+tissue_positions_path = Path(here("processed-data", "VSPG_image_stitching", "combined_"+this_donor, f'tissue_positions_{this_donor}.csv'))
+tissue_positions = pd.read_csv(tissue_positions_path ,index_col = 0).rename({'pxl_row_in_fullres': 'y', 'pxl_col_in_fullres': 'x'},axis = 1)
+tissue_positions.index.name = None
+tissue_positions = tissue_positions[['x', 'y']].astype(int)
+SPOT_DIAMETER_M = 55e-6
+m_per_px = 4.971263040387764e-07
+ 
+ # Build KD tree for nearest neighbor search.
+kd = KDTree(tissue_positions[["x", "y"]].values)
+ # Query the KDTree for pairs of points within the threshold distance
+overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(100)])
+
+unique_items = set(item.split('-1')[1] for col in overlapping_pairs.columns for item in overlapping_pairs[col])
+tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[1])]
+
+common_indices = gene_df.index.intersection(tissue_positions_f.index)
+tissue_positions_filtered = tissue_positions_f.loc[common_indices]
+
+sample_df = sample_df.loc[tissue_positions_filtered.index]
+gene_df = gene_df.loc[tissue_positions_filtered.index]
+tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
+ 
+################################################################################
+#   Use the Samui API to create the importable directory for this combined "sample"
 ################################################################################
 img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Autofluorescence']
 default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'magenta': 'Alexa647', 'cyan': 'Autofluorescence'}
@@ -62,16 +89,6 @@ default_gene = 'SNAP25'
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
 this_sample = Sample(name = samui_dir.name, path = samui_dir)
-
-tissue_positions_path = Path(here("processed-data", "VSPG_image_stitching", "combined_"+this_donor, f'tissue_positions_{this_donor}.csv'))
-tissue_positions = pd.read_csv(tissue_positions_path ,index_col = 0).rename(
-                {'pxl_row_in_fullres': 'y', 'pxl_col_in_fullres': 'x'},axis = 1)
-tissue_positions.index.name = None
-tissue_positions = tissue_positions[['x', 'y']].astype(int)
-tissue_positions_filtered = tissue_positions.loc[gene_df.index]
-tissue_positions_arranged = tissue_positions.reindex(gene_df.index)
-SPOT_DIAMETER_M = 55e-6
-m_per_px = 4.971263040387764e-07
 
 this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M)
 
