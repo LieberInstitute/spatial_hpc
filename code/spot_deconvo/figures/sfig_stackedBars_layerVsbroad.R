@@ -79,6 +79,7 @@ which(is.na(final_df), arr.ind=TRUE)
 levels(final_df$cluster)[levels(final_df$cluster)=="WM.1"] <- "WM"
 levels(final_df$cluster)[levels(final_df$cluster)=="WM.2"] <- "WM"
 levels(final_df$cluster)[levels(final_df$cluster)=="WM.3"] <- "WM"
+levels(final_df$cluster)[levels(final_df$cluster)=="SLM.WM"] <- "SLM.SGZ"
 
 df <- final_df %>%
   group_by(tool, group, cluster) %>%
@@ -90,9 +91,9 @@ df[, celltypes] <- lapply(df[, celltypes], function(col) col/rowSums(df[,celltyp
 
 df = melt(df, id.variable = c("group", "tool", "cluster"))
 
-df$group=gsub('broad', 'Mid', df$group)
-df$group=gsub('layer', 'Fine', df$group)
-df$group = factor(df$group, levels = c("Mid", "Fine"))
+df$group=gsub('broad', 'mid', df$group)
+df$group=gsub('layer', 'fine', df$group)
+df$group = factor(df$group, levels = c("mid", "fine"))
 
 df$tool = gsub('tangram', 'Tangram', df$tool)
 df$variable = gsub('Micro_Macro_T', 'Micro/Macro/T', df$variable)
@@ -101,7 +102,7 @@ load(here("plots","snRNAseq_palettes.rda"))
 png(here("plots","spot_deconvo","figures","fig_stackedbars_layerVsbroad", "sfig_stackedbars_layerVsbroad.png"), width = 1300, height = 600, units = "px") 
 p = ggplot(df, aes(x = group, y = value, fill = variable))+
   geom_bar(stat = "identity") + facet_grid(tool~cluster) + scale_fill_manual(values = sn.mid.palette) +
-  labs(y = "proportion of counts", x="spatial domains", fill = "Mid.cell.class")+ 
+  labs(y = "proportion of counts", x="spatial domains", fill = "mid.cell.class")+ 
   theme(text = element_text(size = 20, colour = "black"),
         axis.text = element_text(size = 24, colour = "black"),
         axis.text.x = element_text(angle = 90),

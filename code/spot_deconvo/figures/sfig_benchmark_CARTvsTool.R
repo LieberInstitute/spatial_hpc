@@ -17,8 +17,8 @@ rownames(CART) <- NULL
 CART$tool = "CART"
 
 
-grp = "broad"
-#grp = "layer"
+#grp = "broad"
+grp = "layer"
 tools <- c("tangram", "cell2location", "RCTD")
 df_list <- list()
 for (tool in tools){
@@ -153,19 +153,20 @@ p = ggplot(merged_df, aes(x = value.x, y = value.y))+
   facet_wrap(~tool.x, nrow=1)+ 
   scale_shape_manual(values = c(0, 7, 12, 15, 1, 10, 13, 19)) + 
   geom_abline(intercept = 0, slope = 1, linetype = 3, color = "black") +
- labs(title = "Mid collapsed to Broad", x = "Software estimated", y = "CART estimated", color = "Cell type") + 
- #labs(title = "Fine collapsed to Broad", x = "Software estimated", y = "CART estimated", color = "Cell type") + 
+ #labs(title = "mid collapsed to broad", x = "Software estimated", y = "CART estimated", color = "broad.cell.class") + 
+ labs(title = "fine collapsed to broad", x = "Software estimated", y = "CART estimated", color = "broad.cell.class") + 
   scale_color_manual(values = sn.broad.palette) +
   theme(text = element_text(size = 30, colour = "black"),
         axis.text = element_text(size = 24, colour = "black"),
         panel.grid.minor = element_blank(), 
         panel.grid.major = element_blank(),
         strip.text = element_text(size = 24, color = "black"),
-        plot.title = element_text(size = 48, colour = "black", hjust = 0.5))+
+        plot.title = element_text(size = 48, colour = "black", hjust = 0.5),
+        legend.title.align=0.5)+
   geom_text(data = as.data.frame(corr_df), label = corr_df$kl, x= 9000, y = 6500, size = 8) +
   geom_text(data = as.data.frame(corr_df), label = corr_df$corr, x= 9000, y = 5500, size = 8) +
-  geom_text(data = as.data.frame(corr_df), label = corr_df$rmse, x= 8800, y = 4500, size = 8) #+
-#  scale_x_continuous(labels = c("0" = "0", "3000" = "3000","6000" = "6000","9000" = "9000","12000" = ""))
+  geom_text(data = as.data.frame(corr_df), label = corr_df$rmse, x= 8800, y = 4500, size = 8) +
+  scale_x_continuous(labels = c("0" = "0", "3000" = "3000","6000" = "6000","9000" = "9000","12000" = ""))
 
 
 print(p)

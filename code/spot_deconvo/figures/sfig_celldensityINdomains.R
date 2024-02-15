@@ -41,8 +41,12 @@ mean(dat$count[dat$cluster_collapsed == "ML"])
 #[1] 2.755694
 getmode(dat$count[dat$cluster_collapsed == "ML"])
 #[1] 1
+median(dat$count[dat$cluster_collapsed == "ML"])
+#[1] 2
 
 mean(dat$count[dat$cluster_collapsed == "GCL"])
 #[1] 9.716166
 getmode(dat$count[dat$cluster_collapsed == "GCL"])
 #[1] 5
+median(dat$count[dat$cluster_collapsed == "GCL"])
+#[1] 9
