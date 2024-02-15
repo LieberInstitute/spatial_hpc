@@ -14,6 +14,8 @@ dat = dat[dat$count<50, ]
 #levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.1"] <- "WM"
 #levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.2"] <- "WM"
 #levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.3"] <- "WM"
+levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="SLM.WM"] <- "SLM.SGZ"
+
 
 load('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/plots/spatial_palettes.rda')
 colors = srt.palette
@@ -25,7 +27,7 @@ p = ggplot(data = dat, aes(x = dat$cluster_collapsed, y=count, fill = cluster_co
   theme(text = element_text(size = 20, colour = "black"),
         axis.text = element_text(size = 24, colour = "black"),
         axis.text.x = element_text(angle = 90),
-        axis.line = element_line(size=2, colour = "black"),
+        axis.line = element_line(linewidth=2, colour = "black"),
         panel.grid.minor = element_blank(), 
         panel.grid.major = element_blank(),
         panel.border = element_blank())
