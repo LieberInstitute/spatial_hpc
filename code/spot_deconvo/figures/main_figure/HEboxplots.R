@@ -11,6 +11,7 @@ dat = as.data.frame(colData(spe)) %>% select("key", "cluster_collapsed", "array_
 levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.1"] <- "WM"
 levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.2"] <- "WM"
 levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="WM.3"] <- "WM"
+levels(dat$cluster_collapsed)[levels(dat$cluster_collapsed)=="SLM.WM"] <- "SLM.SGZ"
 
 #colors = load(here("plots","palettes.rda"))
 #dat = as.data.frame(colData(spe)) %>% select("key", "broad2", "array_row", "array_col", "sample_id")
@@ -143,8 +144,14 @@ dat2$Tool=gsub('tangram', 'Tangram', dat2$Tool)
 png(here("plots","spot_deconvo","figures","main_figure", "GCboxplot.png"), width = 1150, height = 450, units = "px") 
 p =  ggplot(dat2, aes(x = dat2$cluster_collapsed, y = dat2[,"GC"])) + 
     geom_boxplot(aes(fill=Tool), outlier.shape = NA)+theme_bw()+
+    #theme_minimal()+
     labs(title = "Predicted % cell types in PRECAST spatial domains", x="", y="")+
     scale_fill_manual(values = c('grey40', 'black','white'))+
+    # theme(text = element_text(colour='black'),
+    #       legend.position = c(0.9, 0.75),
+    #       panel.grid.minor = element_blank(), 
+    #       panel.grid.major = element_blank()) +
+  
     theme(text = element_text(size = 36, colour = "black"),
       axis.text = element_text(size = 24, colour = "black"),
       axis.text.x = element_text(angle = 90),

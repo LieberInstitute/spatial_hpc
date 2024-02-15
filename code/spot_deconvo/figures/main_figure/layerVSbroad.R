@@ -154,7 +154,11 @@ sum_df <- final_df %>%
   group_by(sample, group, tool) %>%
   summarise(Neuron = sum(neuron), Astrocyte = sum(astrocyte), Microglia = sum(microglia), Oligodendrocyte = sum(oligo))
 sum_long <- melt(as.data.frame(sum_df), id.vars = c("sample", "group","tool"), variable.name = "celltype", value.name = "totals")
-df1 = inner_join(sum_long[which(sum_long$group=="layer"),], sum_long[which(sum_long$group=="broad"),], by = c("sample", "tool", "celltype"))
+#df1 = inner_join(sum_long[which(sum_long$group=="layer"),], sum_long[which(sum_long$group=="broad"),], by = c("sample", "tool", "celltype"))
+df1 = inner_join(sum_long[which(sum_long$group=="layer"),], sum_long[which(sum_long$group=="broad"),], by = c("sample", "tool", "variable"))
+df1$celltype = df1$variable
+df1$totals.x = df1$value.x
+df1$totals.y = df1$value.y
 df1$tool = gsub('tangram', 'Tangram', df1$tool)
 corr_df$tool = gsub('tangram', 'Tangram', corr_df$tool)
 load(here("plots","snRNAseq_palettes.rda"))
@@ -164,7 +168,7 @@ png(here("plots","spot_deconvo","figures","main_figure", "mid vs fine.png"), wid
 p = ggplot(df1, aes(x = log(totals.y), y = log(totals.x))) + 
   geom_point(size = 5, aes(color = celltype, shape = sample)) + facet_wrap(~tool, nrow = 3)+ 
   geom_abline(intercept = 0, slope = 1, linetype = 3, color = "black")+
-  theme_bw() + labs(title = "Mid vs Fine", x = "log(mid counts)", y = "log(fine counts)") + 
+  theme_bw() + labs(title = "mid vs fine", x = "log(mid cell counts)", y = "log(fine cell counts)") + 
   scale_color_manual(values = sn.broad.palette) +
   scale_shape_manual(values = c(0, 7, 12, 15, 1, 10, 13, 19))+ 
   theme(text = element_text(size = 32, colour = "black"),
@@ -177,7 +181,7 @@ p = ggplot(df1, aes(x = log(totals.y), y = log(totals.x))) +
         legend.title.align=0.5,
         legend.margin = margin(t = 0, r = 0, b = 0, l = -35, unit = "pt"),
         plot.title = element_text(hjust = 0.5)) +
-  guides(shape = guide_legend(ncol = 2, title = "Sample", title.position="top"), colour = "none")+
+  guides(shape = guide_legend(ncol = 2, title = "sample", title.position="top"), colour = "none")+
   geom_text(data = as.data.frame(corr_df), label = corr_df$corr, x= 8.5, y = 6.5, size = 8) +
   geom_text(data = as.data.frame(corr_df), label = corr_df$rmse, x= 8.5, y = 6, size = 8)
   
@@ -192,6 +196,6 @@ p =ggplot(data.frame(x=c(1:5), y = c(1:5), K = names(sn.broad.palette)), aes(x =
   theme(text = element_text(size = 32, colour = "black"),
         legend.position="bottom", legend.text = element_text(size = 20, colour = "black"),
         legend.title.align=0.5, plot.title = element_text(hjust = 0.5))+
-  guides(color = guide_legend(ncol = 1, title = "Broad cell type",title.position="top"))
+  guides(color = guide_legend(ncol = 1, title = "broad.cell.class",title.position="top"))
 print(p)
 dev.off()

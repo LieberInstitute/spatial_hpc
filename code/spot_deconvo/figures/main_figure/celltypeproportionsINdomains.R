@@ -67,6 +67,7 @@ which(is.na(final_df), arr.ind=TRUE)
 levels(final_df$cluster)[levels(final_df$cluster)=="WM.1"] <- "WM"
 levels(final_df$cluster)[levels(final_df$cluster)=="WM.2"] <- "WM"
 levels(final_df$cluster)[levels(final_df$cluster)=="WM.3"] <- "WM"
+levels(final_df$cluster)[levels(final_df$cluster)=="SLM.WM"] <- "SLM.SGZ"
 
 df <- final_df %>%
   group_by(tool, cluster) %>%
@@ -87,12 +88,13 @@ load(here("plots","snRNAseq_palettes.rda"))
 
 df$variable = gsub('CA2.4', 'CA2-4', df$variable)
 df$variable = gsub('L5', 'L5/6', df$variable)
+df$variable = gsub('L2/3.Prs.Ent', 'L2/3.PrS.Ent', df$variable)
 
 png(here("plots","spot_deconvo","figures","main_figure", "celltypeproportionsINdomains.png"), width = 1200, height = 1000, units = "px") 
 p = ggplot(df, aes(x = cluster, y = value, fill = variable ))+theme_bw() +
   geom_bar(stat = "identity") + facet_wrap(~tool, ncol=1, strip.position="right") + 
   scale_fill_manual(values = sn.fine.palette) +
-  labs(fill = "Fine.cell.class", y = "", x = "")+ 
+  labs(fill = "fine.cell.class", y = "", x = "")+ 
   theme(text = element_text(size = 36, colour = "black"),
         axis.text = element_text(size = 24, colour = "black"),
         #axis.text.x = element_text(angle = 90),
