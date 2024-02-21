@@ -260,10 +260,10 @@
 <trakem2>
 	<project 
 		id="0"
-		title="V12D07-332"
-		unuid="1706300041405.73141223.1039815755"
-		mipmaps_folder="/Users/madhavitippani/Desktop/HPC paper/stitching/trakem2.1706300041405.73141223.1039815755/trakem2.mipmaps/"
-		storage_folder="/Users/madhavitippani/Desktop/HPC paper/stitching/"
+		title="V12D07-332.xml"
+		unuid="1708523093023.73141223.1039815755"
+		mipmaps_folder="trakem2.1708523093023.73141223.1039815755/trakem2.mipmaps/"
+		storage_folder=""
 		mipmaps_format="4"
 		image_resizing_mode="Area downsampling"
 		first_mipmap_level_saved="0"
@@ -276,8 +276,8 @@
 		transform="matrix(1.0,0.0,0.0,1.0,0.0,0.0)"
 		title="Top Level"
 		links=""
-		layer_width="2904.0"
-		layer_height="4010.0"
+		layer_width="3992.0"
+		layer_height="3075.0"
 		rot_x="0.0"
 		rot_y="0.0"
 		rot_z="0.0"
@@ -311,10 +311,27 @@
 			 title=""
 		>
 			<t2_patch
-				oid="11"
+				oid="8"
 				width="1881.0"
 				height="2000.0"
-				transform="matrix(1.0,0.0,0.0,1.0,51.0,0.0)"
+				transform="matrix(-0.0,-1.0,1.0,0.0,78.0,1881.0)"
+				title="tissue_hires_image_332_A1.png"
+				links=""
+				type="4"
+				file_path="tissue_hires_image_332_A1.png"
+				style="fill-opacity:1.0;stroke:#ffff00;"
+				o_width="1881"
+				o_height="2000"
+				min="0.0"
+				max="255.0"
+				mres="32"
+			>
+			</t2_patch>
+			<t2_patch
+				oid="10"
+				width="1881.0"
+				height="2000.0"
+				transform="matrix(-0.0,-1.0,1.0,0.0,0.0,3075.0)"
 				title="tissue_hires_image_332_C1.png"
 				links=""
 				type="4"
@@ -328,10 +345,10 @@
 			>
 			</t2_patch>
 			<t2_patch
-				oid="8"
+				oid="9"
 				width="1881.0"
 				height="2000.0"
-				transform="matrix(1.0,0.0,0.0,1.0,0.0,1665.0)"
+				transform="matrix(-0.0,-1.0,1.0,0.0,1728.0,2883.0)"
 				title="tissue_hires_image_332_B1.png"
 				links=""
 				type="4"
@@ -342,14 +359,13 @@
 				min="0.0"
 				max="255.0"
 				mres="32"
-				alpha_mask_id="1"
 			>
 			</t2_patch>
 			<t2_patch
-				oid="9"
+				oid="11"
 				width="1881.0"
 				height="2000.0"
-				transform="matrix(1.0,0.0,0.0,1.0,1006.0,2010.0)"
+				transform="matrix(-0.0,-1.0,1.0,0.0,1992.0,1902.0)"
 				title="tissue_hires_image_332_D1.png"
 				links=""
 				type="4"
@@ -360,25 +376,6 @@
 				min="0.0"
 				max="255.0"
 				mres="32"
-				alpha_mask_id="2"
-			>
-			</t2_patch>
-			<t2_patch
-				oid="10"
-				width="1881.0"
-				height="2000.0"
-				transform="matrix(1.0,0.0,0.0,1.0,1023.0,47.0)"
-				title="tissue_hires_image_332_A1.png"
-				links=""
-				type="4"
-				file_path="tissue_hires_image_332_A1.png"
-				style="fill-opacity:1.0;stroke:#ffff00;"
-				o_width="1881"
-				o_height="2000"
-				min="0.0"
-				max="255.0"
-				mres="32"
-				alpha_mask_id="3"
 			>
 			</t2_patch>
 		</t2_layer>
@@ -387,13 +384,13 @@
 		layer_id="5"
 		c_alphas="-1"
 		c_alphas_state="-1"
-		x="1671"
-		y="11"
-		magnification="0.17079269817454362"
-		srcrect_x="-1096"
-		srcrect_y="-762"
-		srcrect_width="4000"
-		srcrect_height="4772"
+		x="1750"
+		y="25"
+		magnification="0.16666666666666666"
+		srcrect_x="0"
+		srcrect_y="0"
+		srcrect_width="3992"
+		srcrect_height="3075"
 		scroll_step="1"
 		filter_enabled="false"
 		filter_min_max_enabled="false"
