@@ -21,7 +21,7 @@ from loopy.utils.utils import remove_dupes, Url
 import re
 from scipy.spatial import KDTree
 
-this_donor = "Br8325"
+#this_donor = "Br8325"
 this_donor = "Br3942"
 
 samui_dir = Path(here('processed-data', 'VSPG_image_stitching', this_donor))

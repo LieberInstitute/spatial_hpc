@@ -31,7 +31,7 @@ def theta_from_mat(mat):
 ################################################################################
 
 #   Read in the sample sheet
-sample_info = (pd.read_excel(sample_info_path).loc[1:9, ['Brain', 'Slide #', 'Array #']])
+sample_info = pd.read_excel(sample_info_path).loc[1:9, ['Brain', 'Slide #', 'Array #']]
 sample_info.index = sample_info['Slide #'] + '_' + sample_info['Array #']
 #sample_info['xml_path'] = sample_info['Slide #'].apply(lambda x: 'processed-data/VSPG_image_stitching/335.xml' if x.endswith('335') else '')
 sample_info['xml_path'] = sample_info['Slide #'].apply(lambda x: 'processed-data/VSPG_image_stitching/V12D07-335.xml' if x.endswith('335') else 'processed-data/VSPG_image_stitching/V12D07-332.xml')
@@ -66,7 +66,6 @@ for imagej_xml_path in sample_info['xml_path'].dropna().unique():
     arrays = re.findall(r'[ABCD]1', imagej_xml)
     unique_set = set()
     array_nums = [x for x in arrays if x not in unique_set and not unique_set.add(x)]
-    
     slide_nums = re.findall(r'V[0-9]{2}[A-Z][0-9]{2}-[0-9]{3}', imagej_xml)
     #slide_nums = list(set(re.findall(r'33[0-9]_[ABCD]1', imagej_xml)))
     #   Clean the file; make sure new lines only separate XML elements
