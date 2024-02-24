@@ -1,4 +1,4 @@
-#####supplementary figs related to figs 1 and 2
+#####supplementary figs related to fig 1
 setwd('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 suppressPackageStartupMessages(library("spatialLIBD"))
 suppressPackageStartupMessages(library("ggspavis"))

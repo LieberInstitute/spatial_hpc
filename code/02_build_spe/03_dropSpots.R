@@ -39,4 +39,3 @@ if (any(colSums(counts(spe)) == 0)) {
 
 save(spe, file = here::here("processed-data", "02_build_spe", "spe_basic.Rdata"))
 
-# session_info()
