@@ -10,7 +10,7 @@ spe$discard_auto_br <- spe$low_sum_br | spe$low_detected_br
 spe$discard_auto_id <- spe$low_sum_id | spe$low_detected_id
 
 # ## low sum/detected genes
-pdf(file=here::here('plots','figures','supp_figures','QC_plots_sampleID.pdf'))
+pdf(file=here::here('plots','figures','supp_figures','fig_S7','fig_S7.pdf'))
 p1<-plotColData(spe, x = "sample_id", y = "sum", colour_by = "low_sum_id",point_alpha=1,point_size=0.25) +
   scale_y_log10() +
   ggtitle("Total UMIs") +theme(axis.text.x = element_text(size = 10, angle = 90))
