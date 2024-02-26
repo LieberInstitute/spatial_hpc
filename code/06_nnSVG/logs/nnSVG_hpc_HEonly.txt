@@ -1,0 +1,261 @@
+**** Job starts ****
+Tue Oct 10 01:10:11 PM EDT 2023
+**** SLURM info ****
+User: enelson
+Job id: 348651
+Job name: nnSVG_HPC_HEonly
+Hostname: compute-097
+Task id: 
+
+Currently Loaded Modules:
+  1) JHPCE_tools/3.0
+
+ 
+
+Loading conda_R/4.3
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+here() starts at /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following objects are masked from ‘package:GenomicRanges’:
+
+    intersect, setdiff, union
+
+The following object is masked from ‘package:GenomeInfoDb’:
+
+    intersect
+
+The following objects are masked from ‘package:IRanges’:
+
+    collapse, desc, intersect, setdiff, slice, union
+
+The following objects are masked from ‘package:S4Vectors’:
+
+    first, intersect, rename, setdiff, setequal, union
+
+The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+The following object is masked from ‘package:matrixStats’:
+
+    count
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: scuttle
+Loading required package: ggplot2
+[1]  31483 188762
+[1]  31483 150917
+ix_low_genes
+FALSE  TRUE 
+19611 11872 
+[1]  19611 150917
+ix_zero_genes
+FALSE 
+19611 
+[1]  19611 150917
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
+removed 13719 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 17) of spatial locations
+removed 15879 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
+removed 14567 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 17) of spatial locations
+removed 13596 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 24) of spatial locations
+removed 16914 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 20) of spatial locations
+removed 17484 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 14) of spatial locations
+removed 16520 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 17) of spatial locations
+removed 16407 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 15515 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 24) of spatial locations
+removed 16057 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 18) of spatial locations
+removed 17381 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 18) of spatial locations
+removed 17362 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 15555 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 15171 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 16242 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 16843 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 24) of spatial locations
+removed 17576 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 24) of spatial locations
+removed 17471 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 17428 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 18052 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 16799 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 21) of spatial locations
+removed 17212 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 18256 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 24) of spatial locations
+removed 18195 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 24) of spatial locations
+removed 17337 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
+removed 16065 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
+removed 15634 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 16029 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 17427 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 18491 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 25) of spatial locations
+removed 17397 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 22) of spatial locations
+removed 17575 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 19) of spatial locations
+removed 16285 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 16) of spatial locations
+removed 16490 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 21) of spatial locations
+removed 16846 out of 19611 genes due to low expression
+Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 23) of spatial locations
+removed 16489 out of 19611 genes due to low expression
+V10B01-085_A1 V10B01-085_B1 V10B01-085_C1 V10B01-085_D1 V10B01-086_A1 
+         5892          3732          5044          6015          2697 
+V10B01-086_B1 V10B01-086_C1 V10B01-086_D1 V11A20-297_A1 V11A20-297_B1 
+         2127          3091          3204          4096          3554 
+V11A20-297_C1 V11A20-297_D1 V11L05-333_A1 V11L05-333_B1 V11L05-333_C1 
+         2230          2249          4056          4440          3369 
+V11L05-333_D1 V11L05-335_A1 V11L05-335_B1 V11L05-335_C1 V11L05-335_D1 
+         2768          2035          2140          2183          1559 
+V11L05-336_A1 V11L05-336_B1 V11L05-336_C1 V11L05-336_D1 V11U08-081_A1 
+         2812          2399          1355          1416          2274 
+V11U08-081_B1 V11U08-081_C1 V11U08-081_D1 V11U08-084_A1 V11U08-084_B1 
+         3546          3977          3582          2184          1120 
+V11U08-084_C1 V11U08-084_D1 V12F14-051_A1 V12F14-051_B1 V12F14-051_C1 
+         2214          2036          3326          3121          2765 
+V12F14-051_D1 
+         3122 
+[1] 7028   36
+                        gene_id gene_name      gene_type overall_rank
+ENSG00000197971 ENSG00000197971       MBP protein_coding            1
+ENSG00000131095 ENSG00000131095      GFAP protein_coding            2
+ENSG00000198938 ENSG00000198938    MT-CO3 protein_coding            3
+ENSG00000123560 ENSG00000123560      PLP1 protein_coding            4
+ENSG00000110195 ENSG00000110195     FOLR1 protein_coding            5
+ENSG00000198804 ENSG00000198804    MT-CO1 protein_coding            6
+                average_rank n_withinTop1000
+ENSG00000197971     2.833333              36
+ENSG00000131095     6.611111              36
+ENSG00000198938     6.972222              36
+ENSG00000123560     8.527778              36
+ENSG00000110195    10.000000               5
+ENSG00000198804    11.277778              36
+[1] 2200    6
+                        gene_id gene_name      gene_type overall_rank
+ENSG00000197971 ENSG00000197971       MBP protein_coding            1
+ENSG00000131095 ENSG00000131095      GFAP protein_coding            2
+ENSG00000198938 ENSG00000198938    MT-CO3 protein_coding            3
+ENSG00000123560 ENSG00000123560      PLP1 protein_coding            4
+ENSG00000110195 ENSG00000110195     FOLR1 protein_coding            5
+ENSG00000198804 ENSG00000198804    MT-CO1 protein_coding            6
+                average_rank n_withinTop1000
+ENSG00000197971     2.833333              36
+ENSG00000131095     6.611111              36
+ENSG00000198938     6.972222              36
+ENSG00000123560     8.527778              36
+ENSG00000110195    10.000000               5
+ENSG00000198804    11.277778              36
