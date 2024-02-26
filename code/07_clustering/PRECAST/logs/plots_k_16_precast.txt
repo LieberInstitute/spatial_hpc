@@ -1,0 +1,81 @@
+**** HOLDING FOR RDATA OBJECT ****
+/cm/shared/apps/sge/sge-8.1.9//default/spool/compute-146/job_scripts/3066492: line 27: syntax error: unexpected end of file
+**** HOLDING FOR RDATA OBJECT ****
+**** HOLDING FOR RDATA OBJECT ****
+**** Job starts ****
+Wed Mar 22 02:27:05 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3066498
+Job name: plots_k_16_precast
+Hostname: compute-121.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Using only PRECAST results to obtain the batch corrected gene expressions since species is unknown or the genelist in PRECASTObj has less than 5 overlapp with the housekeeping genes of given species.
+Users can specify the custom_housekeep by themselves to use the housekeeping genes based methods.
+An object of class Seurat 
+2000 features across 151971 samples within 1 assay 
+Active assay: PRE_CAST (2000 features, 0 variable features)
+ 2 dimensional reductions calculated: PRECAST, position
+null device 
+          1 
+**** HOLDING FOR RDATA OBJECT ****
+**** Job starts ****
+Thu Mar 30 00:58:16 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3084531
+Job name: plots_k_16_precast
+Hostname: compute-119.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
+Calls: load -> readChar
+In addition: Warning message:
+In readChar(con, 5L, useBytes = TRUE) :
+  cannot open compressed file '/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/06_clustering/PRECAST/stitch_PRECASTObj_16.Rdata', probable reason 'No such file or directory'
+Execution halted
+**** HOLDING FOR RDATA OBJECT ****
+**** Job starts ****
+Thu Mar 30 05:50:02 EDT 2023
+**** JHPCE info ****
+User: enelson
+Job id: 3084535
+Job name: plots_k_16_precast
+Hostname: compute-122.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a     5) gcc/4.4.7
+  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
+  4) sge/8.1.9
+
+ 
+
+Loading conda_R/4.2.x
+Using bouth housekeeping gene and PRECAST results to obtain the batch corrected gene expressions.
+An object of class Seurat 
+2000 features across 127572 samples within 1 assay 
+Active assay: PRE_CAST (2000 features, 0 variable features)
+ 2 dimensional reductions calculated: PRECAST, position
+null device 
+          1 

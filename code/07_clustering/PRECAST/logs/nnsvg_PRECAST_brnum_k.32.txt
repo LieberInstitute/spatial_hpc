@@ -1,0 +1,537 @@
+**** Job starts ****
+Thu Aug 17 10:26:44 AM EDT 2023
+**** SLURM info ****
+User: enelson
+Job id: 22990
+Job name: nnSVG_PRECAST_brnum_k31-40
+Hostname: compute-153
+Task id: 32
+Loading conda_R/4.3
+
+Currently Loaded Modules:
+  1) JHPCE_tools/3.0   2) conda/3-23.3.1   3) conda_R/4.3
+
+ 
+
+Filter spots and features from Raw count data...
+ 
+ 
+2023-08-17 10:28:05.753422 : ***** Filtering step for raw count data finished!, 0.318 mins elapsed.
+Select the variable genes for each data batch...
+CreatePRECASTObject: remove genes:ENSG00000110195  ENSG00000164707  ENSG00000260440  ENSG00000164825  ENSG00000170323  ENSG00000105641  ENSG00000106341  ENSG00000115474  ENSG00000107165  ENSG00000130957  ENSG00000064205  ENSG00000113494  ENSG00000172724  ENSG00000168542  ENSG00000163017  ENSG00000165376  ENSG00000198734  ENSG00000149452  ENSG00000277639  ENSG00000183644  ENSG00000286722  ENSG00000258752  ENSG00000165588  ENSG00000118194  ENSG00000240045  ENSG00000165215  ENSG00000168779  ENSG00000120057  ENSG00000198691  ENSG00000184601  ENSG00000167757  ENSG00000130513  ENSG00000126545  ENSG00000120903  ENSG00000158104  ENSG00000077327  ENSG00000188396  ENSG00000153347  ENSG00000180638  ENSG00000152779  ENSG00000233392  ENSG00000111319  ENSG00000111199  ENSG00000174576  ENSG00000152611  ENSG00000135426  ENSG00000160401  ENSG00000287364  ENSG00000286269  ENSG00000111863  ENSG00000012223  ENSG00000198848  ENSG00000173110  ENSG00000205863  ENSG00000183671  ENSG00000147003  ENSG00000099715  ENSG00000272196  ENSG00000180071  ENSG00000070729  ENSG00000229807  ENSG00000155657  ENSG00000170959  ENSG00000116014  ENSG00000140795  with low count reads in seuList.
+2023-08-17 10:28:05.811937 : ***** Gene selection finished!, 0.001 mins elapsed.
+Filter spots and features from SVGs(HVGs) count data...
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+2023-08-17 10:28:32.275796 : ***** Filtering step for count data with variable genes finished!, 0.176 mins elapsed.
+[[1]]
+An object of class Seurat 
+1935 features across 14087 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[2]]
+An object of class Seurat 
+1935 features across 19440 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[3]]
+An object of class Seurat 
+1935 features across 14003 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[4]]
+An object of class Seurat 
+1935 features across 8619 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[5]]
+An object of class Seurat 
+1935 features across 14231 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[6]]
+An object of class Seurat 
+1935 features across 18640 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[7]]
+An object of class Seurat 
+1935 features across 20415 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[8]]
+An object of class Seurat 
+1935 features across 8372 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[9]]
+An object of class Seurat 
+1935 features across 17833 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[10]]
+An object of class Seurat 
+1935 features across 15277 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[11]]
+An object of class Seurat 
+1935 features across 18819 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+[[12]]
+An object of class Seurat 
+1935 features across 19026 samples within 1 assay 
+Active assay: RNA (1935 features, 0 variable features)
+
+Neighbors were identified for 14079 out of 14087 spots.
+Neighbors were identified for 19432 out of 19440 spots.
+Neighbors were identified for 14000 out of 14003 spots.
+Neighbors were identified for 8617 out of 8619 spots.
+Neighbors were identified for 14231 out of 14231 spots.
+Neighbors were identified for 18638 out of 18640 spots.
+Neighbors were identified for 20413 out of 20415 spots.
+Neighbors were identified for 8372 out of 8372 spots.
+Neighbors were identified for 17824 out of 17833 spots.
+Neighbors were identified for 15277 out of 15277 spots.
+Neighbors were identified for 18817 out of 18819 spots.
+Neighbors were identified for 19023 out of 19026 spots.
+-----Intergrative data info.: 12 samples, 1935 genes X 188762 spots------
+-----PRECAST model setting: error_heter=TRUE, Sigma_equal=FALSE, Sigma_diag=TRUE, mix_prop_heter=TRUE
+Start computing intial values... 
+
+fitting ...
+  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
+2023-08-17 11:22:11.288271 : ***** Initialization finished!, 51.556 mins elapsed.
+----Fitting PRECAST model----------------
+
+variable initialize finish! 
+predict Y and V! 
+Finish ICM step! 
+iter = 2, loglik= -35040704.000000, dloglik=0.983683 
+predict Y and V! 
+diff Energy = 8.602272 
+diff Energy = 10.002555 
+diff Energy = 13.610419 
+diff Energy = 26.969163 
+diff Energy = 0.896041 
+diff Energy = 6.869046 
+diff Energy = 88.916208 
+Finish ICM step! 
+iter = 3, loglik= -33832524.000000, dloglik=0.034479 
+predict Y and V! 
+diff Energy = 142.693085 
+diff Energy = 98.394772 
+diff Energy = 73.835694 
+diff Energy = 11.690035 
+diff Energy = 140.322315 
+diff Energy = 132.499046 
+diff Energy = 88.396614 
+diff Energy = 61.812357 
+diff Energy = 168.703559 
+diff Energy = 137.637278 
+diff Energy = 109.526823 
+diff Energy = 185.627418 
+Finish ICM step! 
+iter = 4, loglik= -33357788.000000, dloglik=0.014032 
+predict Y and V! 
+diff Energy = 192.835809 
+diff Energy = 15.398880 
+diff Energy = 16.868776 
+diff Energy = 12.784344 
+diff Energy = 148.397837 
+diff Energy = 55.492809 
+diff Energy = 64.920707 
+diff Energy = 65.628889 
+diff Energy = 60.161264 
+diff Energy = 1.622989 
+diff Energy = 1.980416 
+diff Energy = 161.829633 
+Finish ICM step! 
+iter = 5, loglik= -33105676.000000, dloglik=0.007558 
+predict Y and V! 
+diff Energy = 154.459745 
+diff Energy = 119.434674 
+diff Energy = 16.274159 
+diff Energy = 30.796128 
+diff Energy = 161.753649 
+diff Energy = 108.521348 
+diff Energy = 98.674474 
+diff Energy = 49.421440 
+diff Energy = 142.213587 
+diff Energy = 93.975613 
+diff Energy = 87.345707 
+Finish ICM step! 
+iter = 6, loglik= -32957816.000000, dloglik=0.004466 
+predict Y and V! 
+diff Energy = 169.024378 
+diff Energy = 28.189957 
+diff Energy = 9.376022 
+diff Energy = 27.722577 
+diff Energy = 23.993173 
+diff Energy = 57.804158 
+diff Energy = 42.682719 
+diff Energy = 53.100534 
+diff Energy = 43.838565 
+diff Energy = 85.283321 
+diff Energy = 20.431329 
+diff Energy = 53.959418 
+Finish ICM step! 
+iter = 7, loglik= -32864808.000000, dloglik=0.002822 
+predict Y and V! 
+diff Energy = 89.211761 
+diff Energy = 7.060728 
+diff Energy = 39.993159 
+diff Energy = 52.777353 
+diff Energy = 41.297408 
+diff Energy = 74.679585 
+diff Energy = 44.436282 
+diff Energy = 7.749197 
+diff Energy = 87.383334 
+diff Energy = 25.444422 
+diff Energy = 43.845243 
+Finish ICM step! 
+iter = 8, loglik= -32802806.000000, dloglik=0.001887 
+predict Y and V! 
+diff Energy = 94.862274 
+diff Energy = 94.507947 
+diff Energy = 20.098437 
+diff Energy = 8.018156 
+diff Energy = 9.958306 
+diff Energy = 14.141440 
+diff Energy = 18.744142 
+diff Energy = 0.911344 
+diff Energy = 25.812430 
+diff Energy = 47.550744 
+diff Energy = 15.171145 
+diff Energy = 31.937397 
+Finish ICM step! 
+iter = 9, loglik= -32759256.000000, dloglik=0.001328 
+predict Y and V! 
+diff Energy = 82.604695 
+diff Energy = 0.018982 
+diff Energy = 8.798882 
+diff Energy = 0.113822 
+diff Energy = 26.705509 
+diff Energy = 12.110900 
+diff Energy = 10.833428 
+diff Energy = 6.775899 
+diff Energy = 1.628025 
+diff Energy = 16.763069 
+Finish ICM step! 
+iter = 10, loglik= -32727570.000000, dloglik=0.000967 
+predict Y and V! 
+diff Energy = 40.559757 
+diff Energy = 7.125258 
+diff Energy = 7.999330 
+diff Energy = 20.856315 
+diff Energy = 10.689654 
+diff Energy = 2.177230 
+diff Energy = 4.141736 
+diff Energy = 5.558117 
+diff Energy = 13.819859 
+diff Energy = 18.021868 
+Finish ICM step! 
+iter = 11, loglik= -32704026.000000, dloglik=0.000719 
+predict Y and V! 
+diff Energy = 88.896538 
+diff Energy = 7.001728 
+diff Energy = 9.594557 
+diff Energy = 9.434828 
+diff Energy = 14.897770 
+diff Energy = 34.924896 
+diff Energy = 10.412259 
+diff Energy = 25.525859 
+diff Energy = 10.470272 
+diff Energy = 15.845517 
+Finish ICM step! 
+iter = 12, loglik= -32685202.000000, dloglik=0.000576 
+predict Y and V! 
+diff Energy = 42.203066 
+diff Energy = 0.008878 
+diff Energy = 0.885453 
+diff Energy = 21.562491 
+diff Energy = 45.950808 
+diff Energy = 129.845222 
+diff Energy = 4.986568 
+diff Energy = 8.138600 
+diff Energy = 0.237898 
+diff Energy = 1.889353 
+diff Energy = 4.710196 
+Finish ICM step! 
+iter = 13, loglik= -32670434.000000, dloglik=0.000452 
+predict Y and V! 
+diff Energy = 34.359183 
+diff Energy = 22.906021 
+diff Energy = 24.016967 
+diff Energy = 3.214203 
+diff Energy = 79.894350 
+diff Energy = 1.432098 
+diff Energy = 59.667134 
+diff Energy = 5.378568 
+diff Energy = 0.768125 
+Finish ICM step! 
+iter = 14, loglik= -32658188.000000, dloglik=0.000375 
+predict Y and V! 
+diff Energy = 37.935552 
+diff Energy = 11.302742 
+diff Energy = 1.180582 
+diff Energy = 3.894647 
+diff Energy = 9.849577 
+diff Energy = 17.150324 
+diff Energy = 4.781152 
+diff Energy = 4.277381 
+diff Energy = 5.927039 
+diff Energy = 5.437158 
+Finish ICM step! 
+iter = 15, loglik= -32647740.000000, dloglik=0.000320 
+predict Y and V! 
+diff Energy = 24.449811 
+diff Energy = 3.279742 
+diff Energy = 4.744658 
+diff Energy = 6.213937 
+diff Energy = 9.040289 
+diff Energy = 2.445358 
+diff Energy = 28.050662 
+diff Energy = 8.311245 
+diff Energy = 48.712962 
+diff Energy = 0.353137 
+diff Energy = 11.948091 
+Finish ICM step! 
+iter = 16, loglik= -32639614.000000, dloglik=0.000249 
+predict Y and V! 
+diff Energy = 14.201584 
+diff Energy = 6.704487 
+diff Energy = 8.657019 
+diff Energy = 1.417310 
+diff Energy = 7.883228 
+diff Energy = 15.229229 
+diff Energy = 2.498608 
+diff Energy = 12.335770 
+diff Energy = 6.321681 
+diff Energy = 7.484433 
+diff Energy = 42.819155 
+Finish ICM step! 
+iter = 17, loglik= -32631998.000000, dloglik=0.000233 
+predict Y and V! 
+diff Energy = 31.202458 
+diff Energy = 2.681372 
+diff Energy = 4.689848 
+diff Energy = 8.235081 
+diff Energy = 0.825756 
+diff Energy = 2.180408 
+diff Energy = 22.453937 
+diff Energy = 7.164989 
+Finish ICM step! 
+iter = 18, loglik= -32625860.000000, dloglik=0.000188 
+predict Y and V! 
+diff Energy = 24.979062 
+diff Energy = 5.494245 
+diff Energy = 14.093937 
+diff Energy = 8.235155 
+diff Energy = 20.647054 
+diff Energy = 2.842653 
+diff Energy = 4.001505 
+diff Energy = 6.927656 
+diff Energy = 5.775252 
+diff Energy = 9.951715 
+diff Energy = 7.516924 
+Finish ICM step! 
+iter = 19, loglik= -32620410.000000, dloglik=0.000167 
+predict Y and V! 
+diff Energy = 14.227143 
+diff Energy = 1.436888 
+diff Energy = 0.267178 
+diff Energy = 12.849204 
+diff Energy = 7.342005 
+diff Energy = 32.797891 
+diff Energy = 12.429583 
+diff Energy = 4.901837 
+diff Energy = 0.761589 
+diff Energy = 0.352899 
+diff Energy = 6.618056 
+diff Energy = 3.671659 
+Finish ICM step! 
+iter = 20, loglik= -32615634.000000, dloglik=0.000146 
+predict Y and V! 
+diff Energy = 10.914935 
+diff Energy = 88.268890 
+diff Energy = 3.711979 
+diff Energy = 6.168896 
+diff Energy = 4.540344 
+diff Energy = 12.947468 
+diff Energy = 7.152499 
+diff Energy = 12.915848 
+diff Energy = 9.753610 
+diff Energy = 17.917736 
+diff Energy = 19.459617 
+diff Energy = 0.939106 
+Finish ICM step! 
+iter = 21, loglik= -32611650.000000, dloglik=0.000122 
+predict Y and V! 
+diff Energy = 25.022702 
+diff Energy = 5.281571 
+diff Energy = 2.674642 
+diff Energy = 2.104579 
+diff Energy = 1.488518 
+diff Energy = 2.514357 
+diff Energy = 5.663466 
+diff Energy = 2.968179 
+diff Energy = 0.558504 
+Finish ICM step! 
+iter = 22, loglik= -32607978.000000, dloglik=0.000113 
+predict Y and V! 
+diff Energy = 13.000143 
+diff Energy = 5.624443 
+diff Energy = 6.766910 
+diff Energy = 5.437146 
+diff Energy = 2.782224 
+diff Energy = 12.307651 
+diff Energy = 3.300228 
+diff Energy = 1.175335 
+diff Energy = 0.690187 
+diff Energy = 0.380270 
+diff Energy = 8.614674 
+diff Energy = 0.077297 
+Finish ICM step! 
+iter = 23, loglik= -32604902.000000, dloglik=0.000094 
+predict Y and V! 
+diff Energy = 27.844220 
+diff Energy = 8.603361 
+diff Energy = 4.662916 
+diff Energy = 1.292354 
+diff Energy = 1.526878 
+diff Energy = 8.046375 
+diff Energy = 1.067905 
+diff Energy = 0.553959 
+diff Energy = 25.649328 
+diff Energy = 24.570082 
+diff Energy = 8.007833 
+diff Energy = 2.697117 
+Finish ICM step! 
+iter = 24, loglik= -32602084.000000, dloglik=0.000086 
+predict Y and V! 
+diff Energy = 28.338475 
+diff Energy = 1.529955 
+diff Energy = 1.193637 
+diff Energy = 21.384037 
+diff Energy = 2.791500 
+diff Energy = 5.496796 
+diff Energy = 8.444758 
+diff Energy = 10.899419 
+Finish ICM step! 
+iter = 25, loglik= -32599358.000000, dloglik=0.000084 
+predict Y and V! 
+diff Energy = 17.775706 
+diff Energy = 0.705966 
+diff Energy = 0.357759 
+diff Energy = 1.061955 
+diff Energy = 0.817926 
+diff Energy = 22.228386 
+diff Energy = 2.782087 
+diff Energy = 0.137034 
+diff Energy = 4.798531 
+diff Energy = 5.268905 
+diff Energy = 2.486288 
+Finish ICM step! 
+iter = 26, loglik= -32597208.000000, dloglik=0.000066 
+predict Y and V! 
+diff Energy = 9.609733 
+diff Energy = 1.437266 
+diff Energy = 5.738112 
+diff Energy = 20.314005 
+diff Energy = 5.374672 
+diff Energy = 3.647581 
+diff Energy = 2.179865 
+diff Energy = 1.276027 
+diff Energy = 0.787890 
+Finish ICM step! 
+iter = 27, loglik= -32594798.000000, dloglik=0.000074 
+predict Y and V! 
+diff Energy = 17.632317 
+diff Energy = 8.960475 
+diff Energy = 0.514615 
+diff Energy = 11.880363 
+diff Energy = 0.591313 
+diff Energy = 8.007014 
+diff Energy = 0.739647 
+diff Energy = 0.835045 
+diff Energy = 0.487903 
+diff Energy = 2.245955 
+diff Energy = 4.959426 
+Finish ICM step! 
+iter = 28, loglik= -32592860.000000, dloglik=0.000059 
+predict Y and V! 
+diff Energy = 26.820416 
+diff Energy = 4.260197 
+diff Energy = 0.736989 
+diff Energy = 5.842171 
+diff Energy = 2.948396 
+diff Energy = 6.382060 
+diff Energy = 5.063767 
+diff Energy = 2.644900 
+diff Energy = 1.969404 
+diff Energy = 10.636887 
+diff Energy = 0.332932 
+Finish ICM step! 
+iter = 29, loglik= -32591140.000000, dloglik=0.000053 
+predict Y and V! 
+diff Energy = 21.471538 
+diff Energy = 0.548790 
+diff Energy = 4.624289 
+diff Energy = 6.952568 
+diff Energy = 11.155770 
+diff Energy = 33.649913 
+diff Energy = 3.668649 
+Finish ICM step! 
+iter = 30, loglik= -32589536.000000, dloglik=0.000049 
+2023-08-17 19:41:52.894425 : ***** PRECAST model fitting finished!, 499.693 mins elapsed.
+33138.266 sec elapsed
+**** Job ends ****
+Thu Aug 17 07:44:10 PM EDT 2023
