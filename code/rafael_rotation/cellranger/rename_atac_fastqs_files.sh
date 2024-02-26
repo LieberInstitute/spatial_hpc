@@ -1,6 +1,0 @@
-#!/bin/bash
-
-mkdir ${MYSCRATCH}/2021-11-22_KMay110521_ATAC/
-
-cp /dcs04/lieber/lcolladotor/rawDataTDSC_LIBD001/raw-data/2021-11-22_KMay110521_ATAC/* ${MYSCRATCH}/2021-11-22_KMay110521_ATAC/
-rename _R _L001_R ${MYSCRATCH}/2021-11-22_KMay110521_ATAC/*
