@@ -1,14 +1,59 @@
 **** Job starts ****
-Mon Jan 29 11:57:27 AM EST 2024
+Sat Feb 10 12:42:21 AM EST 2024
 **** JHPCE info ****
 User: rmiller
-Job id: 1777525
+Job id: 1956935
 Job name: samui_test
-Node name: compute-068
+Node name: compute-097
 Loading LIBD SLURM module for samui/1.0.0-next.45
 /jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:261: UserWarning: Valid config keys have changed in V2:
 * 'allow_mutation' has been removed
   warnings.warn(message, UserWarning)
-/var/spool/slurm/d/job1777525/slurm_script: line 45: 2038878 Killed                  python 01-samui_test.py $donor $mode
+[00:57:17] INFO     Transforming                                    logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br6423_ini             
+                    tial/combined_Br6423_initial.tif to COG.                    
+           INFO     'combined_Br6423_initial' Executing queued      logger.py:27
+                    functions                                                   
+           INFO     combined_Br6423_initial Adding coords 'coords'  logger.py:27
+           INFO     Writing uncompressed GeoTIFF                    logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br6423_ini             
+                    tial/combined_Br6423_initial.tif                            
+[00:58:04] INFO     Writing COG                                     logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br6423_ini             
+                    tial/combined_Br6423_initial.tif                            
+[00:59:52] INFO     combined_Br6423_initial Adding chunked feature  logger.py:27
+                    'Genes'                                                     
+[01:37:53] INFO     combined_Br6423_initial Concatenating and       logger.py:27
+                    compressing chunks                                          
+[01:47:46] INFO     Writing compressed chunks for Genes: 53652429   logger.py:27
+                    bytes                                                       
+[01:47:47] INFO     combined_Br6423_initial Adding csv feature      logger.py:27
+                    'Sample Info'                                               
+           INFO     'combined_Br6423_initial' written to            logger.py:27
+                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
+                    patial_hpc/code/10-image_stitching/../../proces             
+                    sed-data/10-image_stitching/combined_Br6423_ini             
+                    tial                                                        
+-----
+PIL                 10.0.0
+anndata             0.9.1
+loopy               NA
+numpy               1.24.4
+pandas              2.0.3
+pyhere              1.0.0
+scanpy              1.9.3
+session_info        1.0.0
+tifffile            2023.7.4
+-----
+Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:40:32) [GCC 12.3.0]
+Linux-5.14.0-284.11.1.el9_2.x86_64-x86_64-with-glibc2.34
+-----
+Session information updated at 2024-02-10 01:47
 **** Job ends ****
-Mon Jan 29 12:10:20 PM EST 2024
+Sat Feb 10 01:47:50 AM EST 2024

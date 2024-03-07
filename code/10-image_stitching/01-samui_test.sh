@@ -11,7 +11,7 @@
 #SBATCH -o /dev/null
 #SBATCH -e /dev/null
 
-donor="Br8667"
+donor="Br8325"
 mode="initial"
 
 if [[ ! -z $SLURMD_NODENAME ]]; then

@@ -18,6 +18,8 @@ xml_map_path = here('raw-data', 'sample_info', 'sample_key.csv')
 
 
 # for this project this should be directly inside 01_spaceranger directory
+#sRanger = "spaceranger_2022-04-12_SPag033122"
+#sRanger = "spaceranger_2023-01-31_round9"
 sRanger = "spaceranger_2022-04-12_SPag033122"
 
 ################################################################################

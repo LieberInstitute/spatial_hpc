@@ -11,6 +11,8 @@ from loopy.sample import Sample
 import tifffile
 from PIL import Image
 import re
+import scanpy as sc
+
 
 Image.MAX_IMAGE_PIXELS = None
 
@@ -19,7 +21,7 @@ Image.MAX_IMAGE_PIXELS = None
 #          estimates
 #       2. the donor to include in the combined image
 this_donor, file_suffix = sys.argv[1:]
-#this_donor = 'Br6423'
+#this_donor = 'Br3942'
 #file_suffix = 'initial'
 assert file_suffix in ('initial', 'adjusted')
 
@@ -67,9 +69,31 @@ json_out_path = Path(
 #   Instead, we'll just run these donors with 'file_suffix' = 'initial',
 #   outputting scalefactors, spot coordinates, and the low-res image without
 #   having to run with 'file_suffix' = 'adjusted'
-unadjusted_donors = ['Br8667']
+unadjusted_donors = ['Br8325']
 
 json_out_path.parent.mkdir(parents = True, exist_ok = True)
+
+################################################################################
+#   Gather gene-expression data into a DataFrame to later as a feature
+################################################################################
+spe_path = here("processed-data", "VSPG_image_stitching", "spg.h5ad")
+#   Read in AnnData and subset to this_donor
+spe = sc.read(spe_path)
+#path_groups = spe.obs['path_groups'].cat.categories
+speP = spe[spe.obs['brnum'] == this_donor, :]
+speP.obs.index = speP.obs.index.str.replace('_'+this_donor, '')
+#   Convert the sparse gene-expression matrix to pandas DataFrame, with the
+#   gene symbols as column names
+gene_df = pd.DataFrame(
+    speP.X.toarray(),
+    index = speP.obs.index,
+    columns = speP.var['gene_name']
+)
+#   Some gene symbols are actually duplicated. Just take the first column in
+#   any duplicated cases
+gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
+
+sample_df = speP.obs[['sample_id', 'domain']].copy()
 
 #   55-micrometer diameter for Visium spot but 65-micrometer spot diameter used
 #   in 'spot_diameter_fullres' calculation for spaceranger JSON. The
@@ -224,6 +248,14 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
                 trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
                 :
             ] += 1
+        
+        # mask = combined_img[
+        #     trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
+        #     trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
+        #     1
+        # ] < 128
+        # combined_img[mask] += img[mask]
+        # weights[mask] += 1
     
     #   Fill in empty pixels with background color
     combined_img[weights[:, :, 0] == 0, :] = BACKGROUND_COLOR
@@ -475,10 +507,15 @@ if (file_suffix == 'adjusted') or (this_donor in unadjusted_donors):
 #   Use the Samui API to create the importable directory for this combined
 #   "sample"
 ################################################################################
+default_gene = 'SNAP25'
+
+assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
 this_sample = Sample(name = out_dir.name, path = out_dir)
-
 tissue_positions = pd.concat(tissue_positions_list)[['x', 'y']].astype(int)
+#tissue_positions_filtered = tissue_positions.loc[gene_df.index]
+#tissue_positions_arranged = tissue_positions.reindex(gene_df.index)
+
 this_sample.add_coords(
     tissue_positions, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M
 )
@@ -499,6 +536,9 @@ sample_df = pd.DataFrame(
     index = tissue_positions.index
 )
 sample_df['sample_id'] = sample_df['sample_id'].astype('category')
+
+this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
+this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
 this_sample.add_csv_feature(
     sample_df, name = "Sample Info", coordName = "coords"
