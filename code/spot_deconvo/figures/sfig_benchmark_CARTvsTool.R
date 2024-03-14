@@ -17,8 +17,8 @@ rownames(CART) <- NULL
 CART$tool = "CART"
 
 
-#grp = "broad"
-grp = "layer"
+grp = "broad"
+#grp = "layer"
 tools <- c("tangram", "cell2location", "RCTD")
 df_list <- list()
 for (tool in tools){
@@ -75,6 +75,8 @@ final_df = final_df[!(final_df$key %in% rm), ]
 
 CART = CART[,c("key", "sample", "oligo","other", "neuron","microglia","astrocyte","tool")]
 df1 = rbind(CART, final_df)
+
+write.csv(df1, file = here("processed-data","VSPG_image_stitching", paste0(grp,"2broad_deconvo.csv")))
 #df1 = melt(df1, id.vars = c("key", "sample", "tool"))
 
 metrics_df = df1 |> group_by(tool, sample) |>
