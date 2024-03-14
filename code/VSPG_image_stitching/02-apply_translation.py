@@ -164,12 +164,26 @@ def merge_image_fullres(sample_info, theta, trans_img, max0, max1):
              
          #   "Place this image" on the combined image, considering translations.
          #   Use separate channels for each image
-         combined_img[
-                         trans_img[array, 0]: trans_img[array, 0] + img.shape[0],
-                         trans_img[array, 1]: trans_img[array, 1] + img.shape[1],
-                         :
-                     ] += img#.reshape((img.shape[0], img.shape[1], 6))
+         #   "Place this image" on the combined image, considering translations.
+         #   Use separate channels for each image
+         # combined_img[
+         #                trans_img[array, 0]: trans_img[array, 0] + img.shape[0],
+         #                trans_img[array, 1]: trans_img[array, 1] + img.shape[1],
+         #                :
+         #            ] += img#.reshape((img.shape[0], img.shape[1], 6))
          #   Count how many times a pixel is added to
+         
+         combined_img[
+             trans_img[array, 0]: trans_img[array, 0] + img.shape[0],
+             trans_img[array, 1]: trans_img[array, 1] + img.shape[1],
+             :
+         ] = np.maximum(combined_img[
+             trans_img[array, 0]: trans_img[array, 0] + img.shape[0],
+             trans_img[array, 1]: trans_img[array, 1] + img.shape[1],
+             :
+         ], img)
+         
+         
          weights[
                  trans_img[array, 0]: trans_img[array, 0] + img.shape[0],
                  trans_img[array, 1]: trans_img[array, 1] + img.shape[1],
