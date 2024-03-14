@@ -82,7 +82,8 @@ tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 #   Use the Samui API to create the importable directory for this combined "sample"
 ################################################################################
 img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Autofluorescence']
-default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'magenta': 'Alexa647', 'cyan': 'Autofluorescence'}
+#default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'magenta': 'Alexa647', 'cyan': 'Autofluorescence'}
+default_channels = {'blue': 'DAPI', 'green': 'Alexa_488'}
 default_gene = 'SNAP25'
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
@@ -100,7 +101,11 @@ this_sample.add_image(
     defaultChannels = default_channels,
     scale = m_per_px
 )
-this_sample.add_csv_feature(domain_df, name = "Spatial domains", coordName = "coords", dataType = "categorical")
+this_sample.add_csv_feature(sample_df, name = "Capture areas", coordName = "coords", dataType = "categorical")
+this_sample.add_csv_feature(domain_df, name = "PRECAST domains", coordName = "coords", dataType = "categorical")
+this_sample.add_csv_feature(deconvo_df, name = "broad deconvolution", coordName = "coords", dataType = "quantitative")
+this_sample.add_csv_feature(mid_deconvo_df, name = "mid deconvolution", coordName = "coords", dataType = "quantitative")
+this_sample.add_csv_feature(fine_deconvo_df, name = "fine deconvolution", coordName = "coords", dataType = "quantitative")
 
 this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
 
