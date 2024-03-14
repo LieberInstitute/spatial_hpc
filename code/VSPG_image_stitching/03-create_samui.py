@@ -84,7 +84,7 @@ tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Autofluorescence']
 #default_channels = {'blue': 'DAPI', 'green': 'Alexa_488', 'yellow': 'Alexa_555', 'red': 'Alexa_594', 'magenta': 'Alexa647', 'cyan': 'Autofluorescence'}
 default_channels = {'blue': 'DAPI', 'green': 'Alexa_488'}
-default_gene = 'SNAP25'
+default_gene = 'SLC17A7'
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
