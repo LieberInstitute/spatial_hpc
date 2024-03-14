@@ -193,7 +193,7 @@ def merge_image_fullres(sample_info, theta, trans_img, max0, max1):
     combined_img[weights[:, :, 0] == 0, :] = BACKGROUND_COLOR
     #   Average the color across all images that overlap a given pixel
     weights[weights == 0] = 1
-    combined_img = (combined_img / weights).astype(np.uint8)
+    # combined_img = (combined_img / weights).astype(np.uint8)
     return combined_img
     
 ################################################################################
