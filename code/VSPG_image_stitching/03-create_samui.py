@@ -50,9 +50,14 @@ gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
 gene_df.index.name = None
 
 domain_df = spgP.obs[['domain']].copy()
-sample_df = sample_df.loc[tissue_positions_filtered.index]
-deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
-tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
+sample_df = spgP.obs[['sample_id']].copy()
+
+################################################################################
+#  deconvo results
+################################################################################
+deconvo_df = pd.read_csv(Path(here("processed-data", "VSPG_image_stitching", "deconvo.csv")),index_col = 0)
+deconvo_df = deconvo_df.set_index('key') 
+
 ################################################################################
 #  remove overlapping spots
 ################################################################################
@@ -75,7 +80,9 @@ common_indices = gene_df.index.intersection(tissue_positions_f.index)
 tissue_positions_filtered = tissue_positions_f.loc[common_indices]
 
 domain_df = domain_df.loc[tissue_positions_filtered.index]
+sample_df = sample_df.loc[tissue_positions_filtered.index]
 gene_df = gene_df.loc[tissue_positions_filtered.index]
+deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
 tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
  
 ################################################################################
