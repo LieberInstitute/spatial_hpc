@@ -51,6 +51,8 @@ gene_df.index.name = None
 
 domain_df = spgP.obs[['domain']].copy()
 sample_df = sample_df.loc[tissue_positions_filtered.index]
+deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
+tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 ################################################################################
 #  remove overlapping spots
 ################################################################################
