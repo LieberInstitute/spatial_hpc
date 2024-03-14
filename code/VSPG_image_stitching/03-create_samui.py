@@ -50,7 +50,7 @@ gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
 gene_df.index.name = None
 
 domain_df = spgP.obs[['domain']].copy()
-
+sample_df = sample_df.loc[tissue_positions_filtered.index]
 ################################################################################
 #  remove overlapping spots
 ################################################################################
