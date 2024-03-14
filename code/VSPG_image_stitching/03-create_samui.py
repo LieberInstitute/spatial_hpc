@@ -49,10 +49,7 @@ gene_df = pd.DataFrame(
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
 gene_df.index.name = None
 
-sample_df = spgP.obs[['sample_id', 'domain']].copy()
-sample_df['domain_codes'] = sample_df['domain'].cat.codes
-sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
-#sample_df['domain_codes'] = sample_df['domain_codes'].astype(int)
+domain_df = spgP.obs[['domain']].copy()
 
 ################################################################################
 #  remove overlapping spots
@@ -70,12 +67,12 @@ kd = KDTree(tissue_positions[["x", "y"]].values)
 overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(100)])
 
 unique_items = set(item.split('-1')[1] for col in overlapping_pairs.columns for item in overlapping_pairs[col])
-tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[1])]
+tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
 
 common_indices = gene_df.index.intersection(tissue_positions_f.index)
 tissue_positions_filtered = tissue_positions_f.loc[common_indices]
 
-sample_df = sample_df.loc[tissue_positions_filtered.index]
+domain_df = domain_df.loc[tissue_positions_filtered.index]
 gene_df = gene_df.loc[tissue_positions_filtered.index]
 tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
  
@@ -88,7 +85,7 @@ default_gene = 'SNAP25'
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
-this_sample = Sample(name = samui_dir.name, path = samui_dir)
+this_sample = Sample(name = samui_dir.name, path = samui_dir, notesMd = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VSPG_image_stitching/feature_notes.md")
 
 this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M)
 
@@ -100,11 +97,13 @@ this_sample.add_image(
     defaultChannels = default_channels,
     scale = m_per_px
 )
+this_sample.add_csv_feature(domain_df, name = "Spatial domains", coordName = "coords", dataType = "categorical")
+
 this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
 
 this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
-this_sample.add_csv_feature(sample_df, name = "Sample Info", coordName = "coords", dataType = "categorical")
+
 
 this_sample.write()
 
