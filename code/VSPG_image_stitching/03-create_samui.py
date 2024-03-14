@@ -85,7 +85,8 @@ default_gene = 'SNAP25'
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
-this_sample = Sample(name = samui_dir.name, path = samui_dir, notesMd = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VSPG_image_stitching/feature_notes.md")
+notes_md_url = Url('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VSPG_image_stitching/feature_notes.md')
+this_sample = Sample(name = samui_dir.name, path = samui_dir, notesMd = notes_md_url)
 
 this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M)
 
