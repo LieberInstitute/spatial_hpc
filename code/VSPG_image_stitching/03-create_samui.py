@@ -64,7 +64,7 @@ m_per_px = 4.971263040387764e-07
  # Build KD tree for nearest neighbor search.
 kd = KDTree(tissue_positions[["x", "y"]].values)
  # Query the KDTree for pairs of points within the threshold distance
-overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(100)])
+overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(150)])
 
 unique_items = set(item.split('-1')[1] for col in overlapping_pairs.columns for item in overlapping_pairs[col])
 tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
