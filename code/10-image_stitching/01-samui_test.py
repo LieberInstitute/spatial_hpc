@@ -12,6 +12,9 @@ import tifffile
 from PIL import Image
 import re
 import scanpy as sc
+from loopy.utils.utils import Url
+from scipy.spatial import KDTree
+
 
 
 Image.MAX_IMAGE_PIXELS = None
@@ -93,7 +96,8 @@ gene_df = pd.DataFrame(
 #   any duplicated cases
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
 
-sample_df = speP.obs[['sample_id', 'domain']].copy()
+sample_df = speP.obs[['sample_id']].copy()
+domain_df = spgP.obs[['domain']].copy()
 
 #   55-micrometer diameter for Visium spot but 65-micrometer spot diameter used
 #   in 'spot_diameter_fullres' calculation for spaceranger JSON. The
@@ -220,10 +224,10 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
     #   Initialize the combined tiff. Determine the boundaries by computing the
     #   maximal coordinates in each dimension of each rotated and translated
     #   image
-    combined_img = np.zeros(
-        (max0 + 1, max1 + 1, 3), dtype = np.float16
+    combined_img = np.full(
+        (max0 + 1, max1 + 1, 3, sample_info.shape[0]), 255, dtype = np.uint8
     )
-    weights = np.zeros((max0 + 1, max1 + 1, 1), dtype = np.float64)
+    #weights = np.zeros((max0 + 1, max1 + 1, 1), dtype = np.float64)
 
     for i in range(sample_info.shape[0]):
         img_pil = Image.open(sample_info['raw_image_path'].iloc[i])
@@ -231,7 +235,7 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
         #   Rotate about the top left corner of the image
         theta_deg = 180 * theta[i] / np.pi # '.rotate' uses degrees, not radians
         img = np.array(
-            img_pil.rotate(theta_deg, expand = True, fillcolor=BACKGROUND_COLOR), dtype = np.float16
+            img_pil.rotate(theta_deg, expand = True, fillcolor=BACKGROUND_COLOR), dtype = np.uint8
         )
 
         #   "Place this image" on the combined image, considering translations.
@@ -239,15 +243,15 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
         combined_img[
                 trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
                 trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
-                :
-            ] += img
+                :, i
+            ] = img
 
         #   Count how many times a pixel is added to
-        weights[
-                trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
-                trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
-                :
-            ] += 1
+        # weights[
+        #         trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
+        #         trans_img[i, 1]: trans_img[i, 1] + img.shape[1],
+        #         :
+        #     ] += 1
         
         # mask = combined_img[
         #     trans_img[i, 0]: trans_img[i, 0] + img.shape[0],
@@ -257,12 +261,15 @@ def merge_image_browser(sample_info, theta, trans_img, max0, max1):
         # combined_img[mask] += img[mask]
         # weights[mask] += 1
     
+    combined_img = np.min(combined_img, axis = 3)
+
     #   Fill in empty pixels with background color
-    combined_img[weights[:, :, 0] == 0, :] = BACKGROUND_COLOR
+    #combined_img[weights[:, :, 0] == 0, :] = BACKGROUND_COLOR
 
     #   Average the color across all images that overlap a given pixel
-    weights[weights == 0] = 1
-    combined_img = (combined_img / weights).astype(np.uint8)
+    #weights[weights == 0] = 1
+    #combined_img = (combined_img / weights).astype(np.uint8)
+    #combined_img = np.minimum(combined_img)
     
     return combined_img
 
@@ -511,14 +518,42 @@ default_gene = 'SNAP25'
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
-this_sample = Sample(name = out_dir.name, path = out_dir)
+notes_md_url = Url('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/notes_HE.md')
+
+this_sample = Sample(name = out_dir.name, path = out_dir, notesMd = notes_md_url)
 tissue_positions = pd.concat(tissue_positions_list)[['x', 'y']].astype(int)
 #tissue_positions_filtered = tissue_positions.loc[gene_df.index]
 #tissue_positions_arranged = tissue_positions.reindex(gene_df.index)
 
+
+################################################################################
+#  deconvo results
+################################################################################
+deconvo_df = pd.read_csv(Path(here("processed-data", "VSPG_image_stitching", "deconvo.csv")),index_col = 0)
+deconvo_df = deconvo_df.set_index('key') 
+
+# Build KD tree for nearest neighbor search.
+kd = KDTree(tissue_positions[["x", "y"]].values)
+ # Query the KDTree for pairs of points within the threshold distance
+overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(150)])
+
+unique_items = set(item.split('-1')[1] for col in overlapping_pairs.columns for item in overlapping_pairs[col])
+tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
+
+common_indices = gene_df.index.intersection(tissue_positions_f.index)
+tissue_positions_filtered = tissue_positions_f.loc[common_indices]
+
+domain_df = domain_df.loc[tissue_positions_filtered.index]
+sample_df = sample_df.loc[tissue_positions_filtered.index]
+gene_df = gene_df.loc[tissue_positions_filtered.index]
+#deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
+tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
+
 this_sample.add_coords(
     tissue_positions, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M
 )
+
+
 
 this_sample.add_image(
     tiff = img_out_browser_path,
@@ -540,9 +575,15 @@ sample_df['sample_id'] = sample_df['sample_id'].astype('category')
 this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
 this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
-this_sample.add_csv_feature(
-    sample_df, name = "Sample Info", coordName = "coords"
-)
+# this_sample.add_csv_feature(
+#     sample_df, name = "Sample Info", coordName = "coords"
+# )
+
+this_sample.add_csv_feature(sample_df, name = "Capture areas", coordName = "coords", dataType = "categorical")
+this_sample.add_csv_feature(domain_df, name = "PRECAST domains", coordName = "coords", dataType = "categorical")
+#this_sample.add_csv_feature(deconvo_df, name = "broad deconvolution", coordName = "coords", dataType = "quantitative")
+#this_sample.add_csv_feature(mid_deconvo_df, name = "mid deconvolution", coordName = "coords", dataType = "quantitative")
+#this_sample.add_csv_feature(fine_deconvo_df, name = "fine deconvolution", coordName = "coords", dataType = "quantitative")
 
 this_sample.write()
 
