@@ -154,7 +154,8 @@ def merge_image_fullres(sample_info, theta, trans_img, max0, max1):
          
          imgRaw = tifffile.imread(sample_info['raw_image_path'].iloc[array])
          img_reshape = np.transpose(imgRaw, (1, 2, 0))
-         
+         if array == 2 and this_donor == "Br3942":
+             img_reshape[:, 14200:, :] = 0
          #img = np.zeros(img_reshape.shape, dtype='uint8')
          for i in range(img_reshape.shape[2]):   
              img_pil = Image.fromarray(img_reshape[:,:,i])
