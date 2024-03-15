@@ -117,12 +117,13 @@ p = ggplot(data = datb, aes(x=array_row, y=array_col, color = GC))+
         axis.text = element_blank(),
         axis.ticks =element_blank(),
         plot.title = element_text(size = 48, colour = "black", hjust = 0.5),
-        legend.text = element_text(size = 12, colour = "black"),
+        legend.text = element_text(size = 20, colour = "black"),
         legend.justification="right",
         legend.box.spacing = unit(-15, "pt"),
         plot.margin = unit(c(0,0,-10,-10), "pt"),
         axis.ticks.length = unit(0, "pt"),
         panel.spacing.x = unit(-25, "pt"),
+        legend.title = element_text(size = 20), 
         strip.text = element_text(size = 52, colour = "black", hjust = 0.5))
 print(p)
 dev.off()

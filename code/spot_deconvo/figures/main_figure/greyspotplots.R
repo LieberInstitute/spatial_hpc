@@ -23,11 +23,12 @@ ggplot(data = datb, aes(x=array_row, y=array_col, color = gene))+
         panel.border = element_blank(),
         axis.text = element_blank(),
         axis.ticks =element_blank(),
-        legend.text = element_text(size = 12, colour = "black"),
+        legend.text = element_text(size = 20, colour = "black"),
         plot.title = element_text(size = 48, colour = "black", hjust = 0.5),
         legend.justification="right",
         legend.box.spacing = unit(-15, "pt"),
         plot.margin = unit(c(0,0,-10,-10), "pt"),
+        legend.title = element_text(size = 20), 
         axis.ticks.length = unit(0, "pt"))
 dev.off()
 
@@ -49,10 +50,11 @@ png(here("plots","spot_deconvo","figures","main_figure", "top25genesGC.png"), wi
         axis.text = element_blank(),
         axis.ticks =element_blank(),
         plot.title = element_text(size = 48, colour = "black", hjust = 0.5),
-        legend.text = element_text(size = 12, colour = "black"),
+        legend.text = element_text(size = 20, colour = "black"),
         legend.justification="right",
         legend.box.spacing = unit(-15, "pt"),
         plot.margin = unit(c(0,0,-10,-10), "pt"),
+        legend.title = element_text(size = 20), 
         axis.ticks.length = unit(0, "pt"))
  dev.off()
  
