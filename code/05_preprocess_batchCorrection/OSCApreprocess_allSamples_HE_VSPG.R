@@ -20,15 +20,18 @@ load(file = here::here("processed-data", "04_QC", "spe_QC_allSamples.Rdata"))
 dim(spe)
 #[1]  31483 191136
 
+###remove discarded spots
 spe<-spe[, colData(spe)$discard_auto_id == FALSE]
 dim(spe)
 #[1]  31483 188762
-##Compute library factors (OSCA)
+
+##Compute library factors
 set.seed(25323)
 spe <- computeLibraryFactors(spe)
 summary(sizeFactors(spe))
 #Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
 #0.02266  0.42134  0.70615  1.00000  1.22312 29.60345
+
 pdf(file = here::here("plots", "05_preprocess_batchCorrection","sizeFactor_histogram.pdf"))
 hist(sizeFactors(spe), breaks = 1000,xlim=c(0,10))
 dev.off()
@@ -51,7 +54,7 @@ save(top.hvgs,
      file = here::here("processed-data", "05_preprocess_batchCorrection", "top.hvgs_captureArea_allSamples.Rdata")
 )
 
-
+####dimred
  message("Running runPCA()")
  set.seed(20220201)
  Sys.time()
@@ -65,6 +68,7 @@ save(top.hvgs,
  colnames(reducedDim(spe, "UMAP")) <- c("UMAP1", "UMAP2")
  Sys.time()
 
+####make fig S10 (batch effect UMAP)
 spe$VSPG<-ifelse(spe$brnum %in% levels(spe$brnum)[11:12],T,F)
 
 pdf(file=here::here('plots','figures','supp_figures','fig_s10','fig_s10.pdf'))
