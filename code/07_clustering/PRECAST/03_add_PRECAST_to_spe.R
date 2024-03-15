@@ -11,7 +11,7 @@ suppressPackageStartupMessages({
     library("here")
 })
 print('Loading spe!')
-load(file="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/05_preprocess_batchCorrection/spe_norm.rda")
+load(file="/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/05_preprocess_batchCorrection/spe_norm_final.rda")
 spe<-spe[,spe$brnum %in% levels(spe$brnum)[1:10]]
 
 

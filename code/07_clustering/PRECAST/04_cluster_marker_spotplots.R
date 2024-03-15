@@ -5,7 +5,10 @@ library(here)
 library(scater)
 library(scran)
 library(ggrastr)
+##load data
 load(file=here::here('processed-data','06_clustering','PRECAST','spe_precast_HE.rda'))
+##get rewritten plotVisium()) script
+source(file=here::here('code','NMF','plotVisium_rewrite.R'))
 
 tab<-data.frame('cluster'=1:18,'annotation2'=rep(NA,18),'annotation'=rep(NA,18))
 tab$annotation[tab$cluster %in% c(4)]<-'GCL'
@@ -38,8 +41,8 @@ tab$annotation2[tab$cluster %in% c(7)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(8)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(9)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(10)]<-'Neuron'
-tab$annotation2[tab$cluster %in% c(11)]<-'Vascular'
-tab$annotation2[tab$cluster %in% c(12)]<-'Vascular'
+tab$annotation2[tab$cluster %in% c(11)]<-'Vasc_CSF'
+tab$annotation2[tab$cluster %in% c(12)]<-'Vasc_CSF'
 tab$annotation2[tab$cluster %in% c(13)]<-'Neuropil'
 tab$annotation2[tab$cluster %in% c(14)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(15)]<-'Neuropil'
@@ -48,9 +51,9 @@ tab$annotation2[tab$cluster %in% c(17)]<-'Neuron'
 tab$annotation2[tab$cluster %in% c(18)]<-'WM'
 
 spe$cluster<-tab$annotation[match(spe$PRECAST_k18,tab$cluster)]
-spe$broad<-factor(tab$annotation2[match(spe$PRECAST_k18,tab$cluster)])
+spe$broad.domain<-factor(tab$annotation2[match(spe$PRECAST_k18,tab$cluster)],levels=c('Neuron','Neuropil','WM','Vasc_CSF'))
 
-spe$cluster<-tab$annotation[match(spe$cluster,tab$annotation)]
+
 spe$cluster<-factor(spe$cluster,levels=c("GCL","CA2.4.1", "CA2.4.2",
                                                        "CA1.1", "CA1.2","SUB", "SUB.RHP",
                                                        "RHP","GABA","SL.SR","ML", "SR.SLM","SLM.WM",
@@ -61,6 +64,10 @@ levels(spe$domain)[2]<-'CA2.4'
 levels(spe$domain)[3]<-'CA2.4'
 levels(spe$domain)[3]<-'CA1'
 levels(spe$domain)[4]<-'CA1'
+
+####save spe with labeled domains
+save(spe,file=here::here('processed-data','06_clustering','PRECAST','spe_precast_HE_domain.rda'))
+
 
 clustering_name <- 'domain'
 
@@ -308,45 +315,4 @@ pdf(
         print(p[[i]][[j]])
     }
 
-dev.off()
-
-
-#####nnSVG plots######
-speb <- spe[, (colData(spe)$brnum == brains[2])]
-speb$sample_id <- droplevels(speb$sample_id)
-speb$sample_id <- as.character(speb$sample_id)
-samples <- unique(speb$sample_id)
-speb$sample_id <- factor(speb$sample_id, levels = samples)
-samples
-speb$brnum <- droplevels(speb$brnum)
-
-pdf(
-    file = here::here("plots", "figures", "supp_figures",
-                      "nnSVG_top_genes.pdf"))
-genes<-c('MBP','GFAP','MT_CO3','FOLR1','UCHL1','KRT17')
-for(i in 1:6){
-p<-rasterize(
-    plotVisium(
-        speb,
-        spots = TRUE,
-        fill = genes[i],
-        highlight = NULL,
-        facets = "sample_id",
-        assay = "logcounts",
-        trans = "identity",
-        x_coord = NULL,
-        y_coord = NULL,
-        y_reverse = TRUE,
-        sample_ids = NULL,
-        image_ids = NULL,
-        #palette = spatial.palette,
-        image=F)+
-        scale_fill_distiller(
-            type = "seq",
-            palette = rev('Greys'),
-            direction=1)+theme(legend.text=element_text(size = 12),
-                               legend.title=element_text(size = 20))
-,dpi=200,layers='Point')
-print(p)
-}
 dev.off()

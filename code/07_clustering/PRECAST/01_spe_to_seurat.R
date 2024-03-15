@@ -6,7 +6,7 @@ library("Seurat")
 library("SeuratData")
 })
 
-load(file = here::here("processed-data", "05_preprocess_batchCorrection", "spe_norm.rda"))
+load(file = here::here("processed-data", "05_preprocess_batchCorrection", "spe_norm_final.rda"))
 spe<-spe[,spe$brnum %in% levels(spe$brnum)[1:10]]
 spe$brnum<-droplevels(spe$brnum)
 
