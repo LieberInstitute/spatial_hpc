@@ -1,3 +1,4 @@
+##########code for making plots for spatial QC supplemental figures (S7-9)#####################
 setwd('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/')
 suppressPackageStartupMessages(library("spatialLIBD"))
 suppressPackageStartupMessages(library("ggspavis"))
@@ -9,7 +10,7 @@ load(here("processed-data", "04_QC", "spe_QC_allSamples.Rdata"), verbose = TRUE)
 spe$discard_auto_br <- spe$low_sum_br | spe$low_detected_br
 spe$discard_auto_id <- spe$low_sum_id | spe$low_detected_id
 
-# ## low sum/detected genes
+### low sum/detected genes (Fig S7)
 pdf(file=here::here('plots','figures','supp_figures','fig_S7','fig_S7.pdf'))
 p1<-plotColData(spe, x = "sample_id", y = "sum", colour_by = "low_sum_id",point_alpha=1,point_size=0.25) +
   scale_y_log10() +
@@ -23,7 +24,9 @@ dev.off()
 # +
 #   geom_hline(yintercept = 1000) ## hline doesn't work w/ facet_wrap?
 
-pdf(here::here('plots','figures','supp_figures','mito_rate.pdf'),h=7,w=7)
+
+###mito rate (fig S8)
+pdf(here::here('plots','figures','supp_figures','figure_S9,'mito_rate.pdf'),h=7,w=7)
 brains <- unique(spe$brnum)
 
 for(i in 1:length(brains)){
@@ -59,7 +62,8 @@ for(i in 1:length(brains)){
 }
 dev.off()
 
-pdf(here::here('plots','figures','supp_figures','discarded_spots.pdf'),h=7,w=7)
+###discarded spots (fig S9)
+pdf(here::here('plots','figures','supp_figures','figure_S8,'discarded_spots.pdf'),h=7,w=7)
 brains <- unique(spe$brnum)
 
 for(i in 1:length(brains)){
