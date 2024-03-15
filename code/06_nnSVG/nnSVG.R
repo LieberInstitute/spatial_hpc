@@ -5,7 +5,7 @@ library(dplyr)
 library(scater)
 library(scran)
 
-load(file=here::here("processed-data","05_preprocess_batchCorrection","spe_norm.rda"))
+load(file=here::here("processed-data","05_preprocess_batchCorrection","spe_norm_final.rda"))
 dim(spe)
 ##remove VSPG objects (batch effect)
 spe<-spe[,spe$brnum %in% levels(spe$brnum)[1:10]]
@@ -142,5 +142,45 @@ topSVGsReplicated <- df_summaryReplicated$gene_name
 
 save(res_ranks,topSVGsReplicated,df_summaryReplicated,df_summary,top1000genes,
      file=here::here('processed-data','nnSVG','nnSVG_outs_HE_only.rda'))
+#####nnSVG plots######
+speb <- spe[, (colData(spe)$brnum == brains[2])]
+speb$sample_id <- droplevels(speb$sample_id)
+speb$sample_id <- as.character(speb$sample_id)
+samples <- unique(speb$sample_id)
+speb$sample_id <- factor(speb$sample_id, levels = samples)
+samples
+speb$brnum <- droplevels(speb$brnum)
+
+pdf(
+    file = here::here("plots", "figures", "supp_figures","figure_S7",
+                      "nnSVG_top_genes.pdf"))
+genes<-c('MBP','GFAP','MT_CO3','FOLR1','UCHL1','KRT17')
+for(i in 1:6){
+p<-rasterize(
+    plotVisium(
+        speb,
+        spots = TRUE,
+        fill = genes[i],
+        highlight = NULL,
+        facets = "sample_id",
+        assay = "logcounts",
+        trans = "identity",
+        x_coord = NULL,
+        y_coord = NULL,
+        y_reverse = TRUE,
+        sample_ids = NULL,
+        image_ids = NULL,
+        #palette = spatial.palette,
+        image=F)+
+        scale_fill_distiller(
+            type = "seq",
+            palette = rev('Greys'),
+            direction=1)+theme(legend.text=element_text(size = 12),
+                               legend.title=element_text(size = 20))
+,dpi=200,layers='Point')
+print(p)
+}
+dev.off()
+
 
 
