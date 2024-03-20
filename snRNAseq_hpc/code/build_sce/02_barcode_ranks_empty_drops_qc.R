@@ -123,9 +123,6 @@ droplet_elbow_plot <- as.data.frame(bcRanks) %>%
 
 ggsave(droplet_elbow_plot, filename = here("snRNAseq_hpc","plots", "build_sce", "droplet_qc_png", paste0("droplet_qc_round2_", sample_run, ".png")))
 
-
-# sgejobs::job_single('get_droplet_scores', create_shell = TRUE, queue= 'bluejay', memory = '50G', command = "Rscript get_droplet_scores.R")
-
 ## Reproducibility information
 print("Reproducibility information:")
 Sys.time()
