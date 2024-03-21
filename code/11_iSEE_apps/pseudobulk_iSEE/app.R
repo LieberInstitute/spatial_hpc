@@ -3,6 +3,7 @@ library("iSEE")
 library("shiny")
 library("paletteer")
 library("scuttle")
+library("SpatialExperiment")
 
 load("spe_pseudo.rda", verbose = TRUE)
 load("spatial_palettes_isee.rda")
@@ -18,16 +19,16 @@ source("initial.R", print.eval = TRUE)
 
 #rse_gene <- registerAppOptions(rse_gene, color.maxlevels = length(Sample_ID)
 iSEE(
-    spe_pseudo,
-    appTitle = "pseudobulk HPC spatial data",
-    initial = initial,
-    colormap = ExperimentColorMap(colData = list(
-        domain = function(n) {
-            cols <- spatial.palette
-        },
-        broad.domain = function(n) {
-            cols <- spatial.palette2
-        }
-
-    ))
+  spe_pseudo,
+  appTitle = "pseudobulk HPC spatial data",
+  initial = initial,
+  colormap = ExperimentColorMap(colData = list(
+    domain = function(n) {
+      cols <- spatial.palette
+    },
+    broad.domain = function(n) {
+      cols <- spatial.palette2
+    }
+    
+  ))
 )
