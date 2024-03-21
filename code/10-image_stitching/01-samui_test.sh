@@ -11,8 +11,10 @@
 #SBATCH -o /dev/null
 #SBATCH -e /dev/null
 
-donor="Br8325"
+#donor="Br2743"
+#enter donor number as bash argument
 mode="initial"
+donor="Br${1}"
 
 if [[ ! -z $SLURMD_NODENAME ]]; then
     job_id=$SLURM_JOB_ID
@@ -37,7 +39,7 @@ echo "Job id: ${job_id}"
 echo "Job name: ${job_name}"
 echo "Node name: ${node_name}"
 
-module load samui/1.0.0-next.45
+module load samui/1.0.0-next.49
 python 01-samui_test.py $donor $mode
 
 echo "**** Job ends ****"

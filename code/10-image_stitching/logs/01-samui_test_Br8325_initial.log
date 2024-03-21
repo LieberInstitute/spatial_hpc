@@ -1,59 +1,68 @@
 **** Job starts ****
-Thu Mar 14 01:20:18 PM EDT 2024
+Thu Mar 21 11:32:16 AM EDT 2024
 **** JHPCE info ****
 User: rmiller
-Job id: 3220589
+Job id: 3260816
 Job name: samui_test
-Node name: compute-062
-Loading LIBD SLURM module for samui/1.0.0-next.45
-/jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:261: UserWarning: Valid config keys have changed in V2:
+Node name: compute-097
+Loading LIBD SLURM module for samui/1.0.0-next.49
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:322: UserWarning: Valid config keys have changed in V2:
 * 'allow_mutation' has been removed
   warnings.warn(message, UserWarning)
-[13:50:30] INFO     Transforming                                    logger.py:27
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/anndata/__init__.py:55: FutureWarning: `anndata.read` is deprecated, use `anndata.read_h5ad` instead. `ad.read` will be removed in mid 2024.
+  warnings.warn(
+[11:48:01] INFO     Transforming                                    logger.py:27
                     /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
                     patial_hpc/code/10-image_stitching/../../proces             
                     sed-data/10-image_stitching/combined_Br8325_ini             
                     tial/combined_Br8325_initial.tif to COG.                    
-[13:50:31] INFO     'combined_Br8325_initial' Executing queued      logger.py:27
+[11:48:02] INFO     'combined_Br8325_initial' Executing queued      logger.py:27
                     functions                                                   
            INFO     combined_Br8325_initial Adding coords 'coords'  logger.py:27
-           INFO     Writing uncompressed GeoTIFF                    logger.py:27
+[11:48:03] INFO     Writing uncompressed GeoTIFF                    logger.py:27
                     /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
                     patial_hpc/code/10-image_stitching/../../proces             
                     sed-data/10-image_stitching/combined_Br8325_ini             
                     tial/combined_Br8325_initial.tif                            
-[13:52:34] INFO     Writing COG                                     logger.py:27
+[11:48:49] INFO     Writing COG                                     logger.py:27
                     /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
                     patial_hpc/code/10-image_stitching/../../proces             
                     sed-data/10-image_stitching/combined_Br8325_ini             
                     tial/combined_Br8325_initial.tif                            
-[13:55:37] INFO     combined_Br8325_initial Adding chunked feature  logger.py:27
+[11:50:45] INFO     combined_Br8325_initial Adding chunked feature  logger.py:27
                     'Genes'                                                     
-[15:14:57] INFO     combined_Br8325_initial Concatenating and       logger.py:27
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui/loopy/feature.py:126: FutureWarning: The behavior of array concatenation with empty entries is deprecated. In a future version, this will no longer exclude empty items when determining the result dtype. To retain the old behavior, exclude the empty entries before the concat operation.
+  joined = template.join(feat, validate="one_to_one")
+[12:41:54] INFO     combined_Br8325_initial Concatenating and       logger.py:27
                     compressing chunks                                          
-[15:24:46] INFO     Writing compressed chunks for Genes: 54391182   logger.py:27
+[12:52:04] INFO     Writing compressed chunks for Genes: 52550373   logger.py:27
                     bytes                                                       
            INFO     combined_Br8325_initial Adding csv feature      logger.py:27
-                    'Sample Info'                                               
-[15:24:47] INFO     'combined_Br8325_initial' written to            logger.py:27
+                    'Capture areas'                                             
+           INFO     combined_Br8325_initial Adding csv feature      logger.py:27
+                    'PRECAST domains'                                           
+[12:52:05] INFO     combined_Br8325_initial Adding csv feature      logger.py:27
+                    'broad deconvolution'                                       
+           INFO     'combined_Br8325_initial' written to            logger.py:27
                     /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
                     patial_hpc/code/10-image_stitching/../../proces             
                     sed-data/10-image_stitching/combined_Br8325_ini             
                     tial                                                        
 -----
-PIL                 10.0.0
-anndata             0.9.1
+PIL                 10.2.0
+anndata             0.10.6
 loopy               NA
-numpy               1.24.4
-pandas              2.0.3
+numpy               1.26.4
+pandas              2.2.1
 pyhere              1.0.0
-scanpy              1.9.3
+scanpy              1.9.8
+scipy               1.12.0
 session_info        1.0.0
-tifffile            2023.7.4
+tifffile            2024.2.12
 -----
-Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:40:32) [GCC 12.3.0]
+Python 3.10.13 | packaged by conda-forge | (main, Dec 23 2023, 15:36:39) [GCC 12.3.0]
 Linux-5.14.0-284.11.1.el9_2.x86_64-x86_64-with-glibc2.34
 -----
-Session information updated at 2024-03-14 15:24
+Session information updated at 2024-03-21 12:52
 **** Job ends ****
-Thu Mar 14 03:24:50 PM EDT 2024
+Thu Mar 21 12:52:07 PM EDT 2024

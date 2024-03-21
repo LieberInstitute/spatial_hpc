@@ -23,9 +23,12 @@ Image.MAX_IMAGE_PIXELS = None
 #       1. whether to produce the combined image of the initial or adjusted
 #          estimates
 #       2. the donor to include in the combined image
-this_donor, file_suffix = sys.argv[1:]
-#this_donor = 'Br3942'
-#file_suffix = 'initial'
+#this_donor, file_suffix = sys.argv[1:]
+#this_donor = sys.argv[1:]
+#this_donor = ''.join(this_donor)
+#this_donor = "Br"+this_donor
+this_donor = 'Br2743'
+file_suffix = 'initial'
 assert file_suffix in ('initial', 'adjusted')
 
 sample_info_path = here(
@@ -72,7 +75,8 @@ json_out_path = Path(
 #   Instead, we'll just run these donors with 'file_suffix' = 'initial',
 #   outputting scalefactors, spot coordinates, and the low-res image without
 #   having to run with 'file_suffix' = 'adjusted'
-unadjusted_donors = ['Br8325']
+# unadjusted_donors = ['Br8325']
+unadjusted_donors = [this_donor]
 
 json_out_path.parent.mkdir(parents = True, exist_ok = True)
 
@@ -95,9 +99,10 @@ gene_df = pd.DataFrame(
 #   Some gene symbols are actually duplicated. Just take the first column in
 #   any duplicated cases
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
+gene_df.index.name = None
 
 sample_df = speP.obs[['sample_id']].copy()
-domain_df = spgP.obs[['domain']].copy()
+domain_df = speP.obs[['domain']].copy()
 
 #   55-micrometer diameter for Visium spot but 65-micrometer spot diameter used
 #   in 'spot_diameter_fullres' calculation for spaceranger JSON. The
@@ -520,7 +525,7 @@ assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
 notes_md_url = Url('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/notes_HE.md')
 
-this_sample = Sample(name = out_dir.name, path = out_dir, notesMd = notes_md_url)
+this_sample = Sample(name = out_dir.name, path = out_dir)
 tissue_positions = pd.concat(tissue_positions_list)[['x', 'y']].astype(int)
 #tissue_positions_filtered = tissue_positions.loc[gene_df.index]
 #tissue_positions_arranged = tissue_positions.reindex(gene_df.index)
@@ -537,8 +542,13 @@ kd = KDTree(tissue_positions[["x", "y"]].values)
  # Query the KDTree for pairs of points within the threshold distance
 overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(150)])
 
-unique_items = set(item.split('-1')[1] for col in overlapping_pairs.columns for item in overlapping_pairs[col])
-tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
+tissue_positions_f = []
+
+if not overlapping_pairs.empty:
+    tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
+
+else:
+    tissue_positions_f = tissue_positions.reindex(gene_df.index)
 
 common_indices = gene_df.index.intersection(tissue_positions_f.index)
 tissue_positions_filtered = tissue_positions_f.loc[common_indices]
@@ -550,7 +560,7 @@ gene_df = gene_df.loc[tissue_positions_filtered.index]
 tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 
 this_sample.add_coords(
-    tissue_positions, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M
+    tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M
 )
 
 
@@ -572,18 +582,21 @@ sample_df = pd.DataFrame(
 )
 sample_df['sample_id'] = sample_df['sample_id'].astype('category')
 
-this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
-this_sample.set_default_feature(group = "Genes", feature = default_gene)
+
 
 # this_sample.add_csv_feature(
 #     sample_df, name = "Sample Info", coordName = "coords"
 # )
 
+this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
+this_sample.set_default_feature(group = "Genes", feature = default_gene)
+
 this_sample.add_csv_feature(sample_df, name = "Capture areas", coordName = "coords", dataType = "categorical")
 this_sample.add_csv_feature(domain_df, name = "PRECAST domains", coordName = "coords", dataType = "categorical")
-#this_sample.add_csv_feature(deconvo_df, name = "broad deconvolution", coordName = "coords", dataType = "quantitative")
+this_sample.add_csv_feature(deconvo_df, name = "broad deconvolution", coordName = "coords", dataType = "quantitative")
 #this_sample.add_csv_feature(mid_deconvo_df, name = "mid deconvolution", coordName = "coords", dataType = "quantitative")
 #this_sample.add_csv_feature(fine_deconvo_df, name = "fine deconvolution", coordName = "coords", dataType = "quantitative")
+
 
 this_sample.write()
 

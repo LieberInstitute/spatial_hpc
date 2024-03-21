@@ -34,7 +34,7 @@ echo "Node name: ${node_name}"
 
 module list
 
-module load samui/1.0.0-next.45
+module load samui/1.0.0-next.49
 python 02-clean_sample_info.py
 
 echo "**** Job ends ****"

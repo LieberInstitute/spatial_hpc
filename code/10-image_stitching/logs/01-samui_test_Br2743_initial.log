@@ -1,59 +1,84 @@
 **** Job starts ****
-Sat Feb 10 03:02:50 AM EST 2024
+Thu Mar 21 04:08:24 PM EDT 2024
 **** JHPCE info ****
 User: rmiller
-Job id: 1957008
+Job id: 3262216
 Job name: samui_test
-Node name: compute-070
-Loading LIBD SLURM module for samui/1.0.0-next.45
-/jhpce/shared/libd/core/samui/1.0.0-next.45/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:261: UserWarning: Valid config keys have changed in V2:
+Node name: compute-099
+Loading LIBD SLURM module for samui/1.0.0-next.49
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:322: UserWarning: Valid config keys have changed in V2:
 * 'allow_mutation' has been removed
   warnings.warn(message, UserWarning)
-[03:11:49] INFO     Transforming                                    logger.py:27
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/anndata/__init__.py:55: FutureWarning: `anndata.read` is deprecated, use `anndata.read_h5ad` instead. `ad.read` will be removed in mid 2024.
+  warnings.warn(
+[16:15:25] INFO     Transforming                                    logger.py:27
                     /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
                     patial_hpc/code/10-image_stitching/../../proces             
                     sed-data/10-image_stitching/combined_Br2743_ini             
                     tial/combined_Br2743_initial.tif to COG.                    
-           INFO     'combined_Br2743_initial' Executing queued      logger.py:27
+[16:15:26] INFO     'combined_Br2743_initial' Executing queued      logger.py:27
                     functions                                                   
            INFO     combined_Br2743_initial Adding coords 'coords'  logger.py:27
-           INFO     Writing uncompressed GeoTIFF                    logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br2743_ini             
-                    tial/combined_Br2743_initial.tif                            
-[03:12:32] INFO     Writing COG                                     logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br2743_ini             
-                    tial/combined_Br2743_initial.tif                            
-[03:13:55] INFO     combined_Br2743_initial Adding chunked feature  logger.py:27
-                    'Genes'                                                     
-[03:53:50] INFO     combined_Br2743_initial Concatenating and       logger.py:27
-                    compressing chunks                                          
-[03:57:09] INFO     Writing compressed chunks for Genes: 22794437   logger.py:27
-                    bytes                                                       
-           INFO     combined_Br2743_initial Adding csv feature      logger.py:27
-                    'Sample Info'                                               
-           INFO     'combined_Br2743_initial' written to            logger.py:27
-                    /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/s             
-                    patial_hpc/code/10-image_stitching/../../proces             
-                    sed-data/10-image_stitching/combined_Br2743_ini             
-                    tial                                                        
------
-PIL                 10.0.0
-anndata             0.9.1
-loopy               NA
-numpy               1.24.4
-pandas              2.0.3
-pyhere              1.0.0
-scanpy              1.9.3
-session_info        1.0.0
-tifffile            2023.7.4
------
-Python 3.10.12 | packaged by conda-forge | (main, Jun 23 2023, 22:40:32) [GCC 12.3.0]
-Linux-5.14.0-284.11.1.el9_2.x86_64-x86_64-with-glibc2.34
------
-Session information updated at 2024-02-10 03:57
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /jhpce/shared/libd/core/samui/1.0.0-next.49/samui/loopy/sample.py:120 in     │
+│ write                                                                        │
+│                                                                              │
+│   117 │   │   │   log(f"'{self.name}' Executing queued functions")           │
+│   118 │   │   │   for f in self.queue_:                                      │
+│   119 │   │   │   │   try:                                                   │
+│ ❱ 120 │   │   │   │   │   f[1]()                                             │
+│   121 │   │   │   │   except Exception as e:                                 │
+│   122 │   │   │   │   │   raise Exception(f"Error executing queued functions │
+│   123 │   │   │   self.queue_ = []                                           │
+│                                                                              │
+│ /jhpce/shared/libd/core/samui/1.0.0-next.49/samui/loopy/sample.py:202 in run │
+│                                                                              │
+│   199 │   │   │   if not {"x", "y"}.issubset(df.columns):                    │
+│   200 │   │   │   │   raise ValueError("x and y must be in columns")         │
+│   201 │   │   │   if (df.x.isnull() | df.y.isnull()).any():                  │
+│ ❱ 202 │   │   │   │   raise ValueError("x and y must not be null")           │
+│   203 │   │   │   if df.index.dtype != "object":                             │
+│   204 │   │   │   │   raise ValueError(                                      │
+│   205 │   │   │   │   │   """Index must be string. This is to prevent subtle │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ValueError: x and y must not be null
+
+The above exception was the direct cause of the following exception:
+
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stit │
+│ ching/01-samui_test.py:601 in <module>                                       │
+│                                                                              │
+│   598 #this_sample.add_csv_feature(fine_deconvo_df, name = "fine deconvoluti │
+│   599                                                                        │
+│   600                                                                        │
+│ ❱ 601 this_sample.write()                                                    │
+│   602                                                                        │
+│   603 session_info.show()                                                    │
+│   604                                                                        │
+│                                                                              │
+│ /jhpce/shared/libd/core/samui/1.0.0-next.49/samui/loopy/sample.py:62 in      │
+│ wrapper                                                                      │
+│                                                                              │
+│    59 │   │   def wrapper(self: Sample, *args: P.args, **kwargs: P.kwargs) - │
+│    60 │   │   │   if self.path is None:                                      │
+│    61 │   │   │   │   raise ValueError("Path not set. Use Sample.set_path()  │
+│ ❱  62 │   │   │   return func(self, *args, **kwargs)                         │
+│    63 │   │                                                                  │
+│    64 │   │   return wrapper                                                 │
+│    65                                                                        │
+│                                                                              │
+│ /jhpce/shared/libd/core/samui/1.0.0-next.49/samui/loopy/sample.py:122 in     │
+│ write                                                                        │
+│                                                                              │
+│   119 │   │   │   │   try:                                                   │
+│   120 │   │   │   │   │   f[1]()                                             │
+│   121 │   │   │   │   except Exception as e:                                 │
+│ ❱ 122 │   │   │   │   │   raise Exception(f"Error executing queued functions │
+│   123 │   │   │   self.queue_ = []                                           │
+│   124 │   │                                                                  │
+│   125 │   │   (self.path / "sample.json").write_text(self.json())            │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Exception: Error executing queued functions: Add coords coords
 **** Job ends ****
-Sat Feb 10 03:57:12 AM EST 2024
+Thu Mar 21 04:15:27 PM EDT 2024
