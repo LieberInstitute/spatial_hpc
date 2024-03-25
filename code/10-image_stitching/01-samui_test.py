@@ -88,7 +88,7 @@ spe_path = here("processed-data", "VSPG_image_stitching", "spg.h5ad")
 spe = sc.read(spe_path)
 #path_groups = spe.obs['path_groups'].cat.categories
 speP = spe[spe.obs['brnum'] == this_donor, :]
-speP.obs.index = speP.obs.index.str.replace('_'+this_donor, '')
+#speP.obs.index = speP.obs.index.str.replace('_'+this_donor, '')
 #   Convert the sparse gene-expression matrix to pandas DataFrame, with the
 #   gene symbols as column names
 gene_df = pd.DataFrame(
@@ -99,7 +99,7 @@ gene_df = pd.DataFrame(
 #   Some gene symbols are actually duplicated. Just take the first column in
 #   any duplicated cases
 gene_df = gene_df.loc[: , ~gene_df.columns.duplicated()].copy()
-gene_df.index.name = None
+#gene_df.index.name = None
 
 sample_df = speP.obs[['sample_id']].copy()
 domain_df = speP.obs[['domain']].copy()
@@ -542,22 +542,27 @@ kd = KDTree(tissue_positions[["x", "y"]].values)
  # Query the KDTree for pairs of points within the threshold distance
 overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.index[y]) for x, y in kd.query_pairs(150)])
 
-tissue_positions_f = []
 
 if not overlapping_pairs.empty:
     tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
+    common_indices = gene_df.index.intersection(tissue_positions_f.index)
+    tissue_positions_filtered = tissue_positions_f.loc[common_indices]
+    tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 
 else:
-    tissue_positions_f = tissue_positions.reindex(gene_df.index)
+    #tissue_positions_f = tissue_positions.reindex(gene_df.index)
+    #common_indices = gene_df.index.intersection(tissue_positions_f.index)
+    tissue_positions_arranged = tissue_positions
+    tissue_positions_filtered = tissue_positions
 
-common_indices = gene_df.index.intersection(tissue_positions_f.index)
-tissue_positions_filtered = tissue_positions_f.loc[common_indices]
+#common_indices = gene_df.index.intersection(tissue_positions_f.index)
+#tissue_positions_filtered = tissue_positions_f.loc[common_indices]
 
 domain_df = domain_df.loc[tissue_positions_filtered.index]
 sample_df = sample_df.loc[tissue_positions_filtered.index]
 gene_df = gene_df.loc[tissue_positions_filtered.index]
 #deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
-tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
+#tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 
 this_sample.add_coords(
     tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M
