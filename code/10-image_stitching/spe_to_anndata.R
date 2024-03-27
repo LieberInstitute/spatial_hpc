@@ -6,7 +6,7 @@ suppressPackageStartupMessages(library("zellkonverter"))
 suppressPackageStartupMessages(library("sessioninfo"))
 suppressPackageStartupMessages(library("here"))
 
-spg_in <- here("processed-data", "06_clustering","PRECAST","spe_norm_with_domain.rda")
+spg_in <- here("processed-data", "NMF", "spe_nmf_final.rda")
 spg_out <- here("processed-data", "10-image_stitching", "spg.h5ad")
 
 write_anndata <- function(sce, out_path) {
