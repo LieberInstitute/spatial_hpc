@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --job-name=ldsc_h2_jobs.txt
+#SBATCH --output=./ldsc_h2_jobs.txt_err_out/jobs_%A_%a.out
+#SBATCH --error=./ldsc_h2_jobs.txt_err_out/jobs_%A_%a.err
+#SBATCH --partition=shared
+#SBATCH --mem-per-cpu=8G --cpus-per-task=1
+#SBATCH --array=1-284%284
+
+
+echo "**** Job starts ****"
+date
+source activate ldsc
+perl job_batch.pl --jfile ldsc_h2_jobs.txt --nrun 20 --n $SLURM_ARRAY_TASK_ID
+echo "**** Job ends ****"
+date

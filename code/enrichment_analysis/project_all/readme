@@ -1,0 +1,45 @@
+# copy all scripts in this directory to your working directory
+
+##############################################
+# step 1: compute cell type specificity score
+##############################################
+
+create folder "score", run "specificity_score.R"
+
+##############################################
+# step 2: generate bed files for gene lists
+##############################################
+
+create folder "bedfiles", run "bed.R"
+
+##############################################
+# step 3: run LDSC
+##############################################
+
+1. jobs for generating annotation files
+perl ldsc_anno_jobs.pl
+
+perl simpleArray.pl -j ldsc_anno_jobs.txt -n 20 -o ldsc_anno_jobs.pbs
+change "module load conda_R/4.0" to "source activate ldsc" in above job submission file
+
+sbatch ldsc_anno_jobs.pbs
+
+2. jobs for generating ldscore files
+perl ldsc_score_jobs.pl
+
+perl simpleArray.pl -j ldsc_score_jobs.txt -n 20 -o ldsc_score_jobs.pbs
+change "module load conda_R/4.0" to "source activate ldsc" in above job submission file
+
+sbatch ldsc_score_jobs.pbs
+
+3. jobs for generating h2 files
+perl ldsc_h2_jobs.pl
+
+perl simpleArray.pl -j ldsc_h2_jobs.txt -n 20 -o ldsc_h2_jobs.pbs
+change "module load conda_R/4.0" to "source activate ldsc" in above job submission file
+
+sbatch ldsc_h2_jobs.pbs
+
+4. results collection
+perl ldsc_results.pl
+Rscript ldsc_results2.R
