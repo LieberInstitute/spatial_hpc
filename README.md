@@ -4,7 +4,7 @@ This is the repository for the spatial (U01) hippocampus (HPC) project. The READ
 
 ## Study design
 
-<img src="https://github.com/LieberInstitute/spatial_hpc/blob/main/plots/figure_1/Copy%20of%20HPC%20figure%201.pdf" width="1000px" align="left" />
+<img src="https://github.com/LieberInstitute/spatial_hpc/blob/main/plots/figure_1/Copy%20of%20HPC%20figure%201.png" width="1000px" align="left" />
 
 Experimental design to generate paired single-nucleus RNA-sequencing (snRNA-seq) and spatially-resolved transcriptomics (SRT) data in the human hippocampus. 
 (A) Postmortem human tissue blocks from the anterior hippocampus were dissected from 10 adult neurotypical brain donors. Tissue blocks were scored and cryosectioned for snRNA-seq assays (red), and placement on Visium slides (Visium H&E, black; Visium Spatial Proteogenomics (SPG), yellow). 
