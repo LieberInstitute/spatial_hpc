@@ -1,8 +1,9 @@
+
 patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold, axis,n)
 {
     ## check inputs to the function
-    if (!(threshold %in% c("cut", "all")))
-        stop("threshold must be either 'cut' or 'all'")
+    if (!(threshold %in% c("cut", "all",'flex')))
+        stop("threshold must be either 'cut' or 'all' or 'flex")
     if (!(axis %in% 1:2))
         stop("axis must be either 1 or 2")
     # Validate the new argument 'n'
@@ -11,7 +12,10 @@ patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold
 
     ## need to scale each row of the matrix of interest so that the maximum is 1
     resultMatrix <- if (axis == 1) featureLoadingsMatrix else stop("Invalid axis for this function.")
-    normedMatrix <- t(apply(resultMatrix, 1, function(row) row / max(row)))
+    library(scales)
+
+    #normedMatrix <- t(apply(resultMatrix, 1, function(row) row / max(row)))
+    normedMatrix <- resultMatrix
 
     ## default pattern marker calculation, each pattern has unit weight
     markerScores <- sapply(1:ncol(normedMatrix), function(patternIndex)
@@ -72,6 +76,25 @@ patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold
         patternsByMarker <- colnames(markerScores)[sapply(min_indices, `[`, 1)]
         markersByPattern <- sapply(colnames(markerScores), USE.NAMES = TRUE, simplify = FALSE,
                                    function(pattern) rownames(markerScores)[which(patternsByMarker == pattern)])
+        ###subset markers by pattern such that only those genes in the top 50% of norm expression vals are considered (filter lowly expressed genes)
+        for(i in 1:length(markersByPattern)){
+            topGenes<-normedMatrix[order(normedMatrix[,i],decreasing=T),]
+            topGenes<-topGenes[c(1:nrow(topGenes)/30),]
+            markersByPattern[[i]]<-markersByPattern[[i]][markersByPattern[[i]] %in% rownames(topGenes)]
+        }
+    }
+
+    else if (threshold == "flex") {
+        # Assign genes to a pattern if they are among the three lowest values for that gene
+        flexPatternsByGene <- apply(markerScores, 1, function(geneScores) {
+            lowestThreePatterns <- order(geneScores)[1:2]
+            return(colnames(markerScores)[lowestThreePatterns])
+        })
+
+        markersByPattern <- lapply(colnames(markerScores), function(pattern) {
+            genesAssignedToPattern <- rownames(markerScores)[which(flexPatternsByGene == pattern, arr.ind = TRUE)]
+            return(unique(genesAssignedToPattern))
+        })
     }
 
     ## add TopRankedGenes
@@ -100,3 +123,20 @@ patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold
         "TopRankedGenes" = topRankedGenes
     ))
 }
+
+
+
+
+cvnmf<-cross_validate_nmf(
+    logcounts(sce),
+    ranks=c(5,10,50,100,125,150,200),
+    n_replicates = 2,
+    tol = 1e-03,
+    maxit = 100,
+    verbose = 3,
+    L1 = 0.1,
+    L2 = 0,
+    threads = 0,
+    test_density = 0.2
+)
+
