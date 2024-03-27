@@ -10,7 +10,7 @@ load(file = here::here("processed-data", "05_preprocess_batchCorrection", "spe_n
 spe<-spe[,spe$brnum %in% levels(spe$brnum)[1:10]]
 spe$brnum<-droplevels(spe$brnum)
 
-source(file = here::here("code", "07_clustering", "PRECAST", "offset_check1.R"))
+source(file = here::here("code", "06_clustering", "PRECAST", "offset_check1.R"))
 x = offset_check(spe)
 
 ### check
