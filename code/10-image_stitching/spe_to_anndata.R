@@ -6,8 +6,8 @@ suppressPackageStartupMessages(library("zellkonverter"))
 suppressPackageStartupMessages(library("sessioninfo"))
 suppressPackageStartupMessages(library("here"))
 
-spg_in <- here("processed-data", "NMF", "spe_nmf_final.rda")
-spg_out <- here("processed-data", "10-image_stitching", "spg.h5ad")
+spe_in <- here("processed-data", "NMF", "spe_nmf_final.rda")
+spe_out <- here("processed-data", "10-image_stitching", "spe.h5ad")
 
 write_anndata <- function(sce, out_path) {
   invisible(
@@ -31,14 +31,13 @@ write_anndata <- function(sce, out_path) {
   )
 }
 
-load(spg_in, verbose = TRUE)
-spg = spe_norm
+load(spe_in, verbose = TRUE)
 #   zellkonverter doesn't know how to convert the 'spatialCoords' slot. We'd
 #   ultimately like the spatialCoords in the .obsm['spatial'] slot of the
 #   resulting AnnData, which corresponds to reducedDims(spe)$spatial in R
-reducedDims(spg)$spatial <- spatialCoords(spg)
-colData(spg)$dateImg = as.character(colData(spg)$dateImg)
+reducedDims(spe)$spatial <- spatialCoords(spe)
+colData(spe)$dateImg = as.character(colData(spe)$dateImg)
 
-write_anndata(spg, spg_out)
+write_anndata(spe, spe_out)
 
 session_info()
