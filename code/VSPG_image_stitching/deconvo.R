@@ -33,4 +33,3 @@ colnames(fine2broad_tangram) <- paste('fine2broad_tangram', colnames(fine2broad_
 
 df = cbind(CART,mid2broad_cell2location[,2:6], mid2broad_RCTD[,2:6], mid2broad_tangram[,2:6], fine2broad_cell2location[,2:6], fine2broad_RCTD[,2:6], fine2broad_tangram[,2:6])
 write.csv(df, file = here("processed-data","VSPG_image_stitching", "deconvo.csv"))
-
