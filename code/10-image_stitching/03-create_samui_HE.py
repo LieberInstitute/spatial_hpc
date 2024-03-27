@@ -22,18 +22,31 @@ import re
 from scipy.spatial import KDTree
 
 #this_donor = "Br8325"
-this_donor = "Br8325"
+#this_donor = "Br8325"
 
 this_donor = sys.argv[1:]
+#this_donor = ''.join(this_donor)
 
 samui_dir = Path(here('processed-data', '10-image_stitching', this_donor))
 samui_dir.mkdir(parents = True, exist_ok = True)
 
+#sample_info_path = here(
+#    'processed-data', '10-image_stitching', 'sample_info_clean.csv'
+#)
+
+#sample_info = pd.read_csv(sample_info_path, index_col = 0)
+#sample_info = sample_info.loc[
+#    (sample_info['Brain'] == this_donor) &
+#    ~sample_info['XML file name'].isna(),# &
+    #sample_info['In analysis'],
+#    :
+#]
 
 ################################################################################
 #   Gather gene-expression data into a DataFrame to later as a feature
 ################################################################################
-spe_path = here("processed-data", "spot_deconvo", "shared_utilities", "spe.h5ad")
+#spe_path = here("processed-data", "spot_deconvo", "shared_utilities", "spe.h5ad")
+spe_path = here("processed-data", "VSPG_image_stitching", "spg.h5ad")
 #   Read in AnnData and subset to this_donor
 spe = sc.read(spe_path)
 speP = spe[spe.obs['brnum'] == this_donor, :]
@@ -58,8 +71,8 @@ domain_df = speP.obs[['domain']].copy()
 ################################################################################
 #  deconvo results
 ################################################################################
-deconvo_df = pd.read_csv(Path(here("processed-data", "VSPG_image_stitching", "deconvo.csv")),index_col = 0)
-deconvo_df = deconvo_df.set_index('key') 
+#deconvo_df = pd.read_csv(Path(here("processed-data", "VSPG_image_stitching", "deconvo.csv")),index_col = 0)
+#deconvo_df = deconvo_df.set_index('key') 
 
 ################################################################################
 #  remove overlapping spots
@@ -72,10 +85,17 @@ SPOT_DIAMETER_M = 55e-6
 #m_per_px = 4.971263040387764e-07
 
 SPOT_DIAMETER_JSON_M = 65e-6
-json_path = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger-all/V11L05-333_B1/outs/spatial/scalefactors_json.json"
+json_path = os.path.join(
+    sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json'
+)
 with open(json_path, 'r') as f:
     spaceranger_json = json.load(f)
 m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
+
+# json_path = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger-all/V11L05-333_B1/outs/spatial/scalefactors_json.json"
+# with open(json_path, 'r') as f:
+#     spaceranger_json = json.load(f)
+# m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
 
  
  # Build KD tree for nearest neighbor search.
@@ -92,14 +112,14 @@ tissue_positions_filtered = tissue_positions_f.loc[common_indices]
 #nmf_df = nmf_df.loc[tissue_positions_filtered.index]
 sample_df = sample_df.loc[tissue_positions_filtered.index]
 gene_df = gene_df.loc[tissue_positions_filtered.index]
-deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
+#deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
 tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
-domain_df = domain_df.loc[tissue_positions_filtered.index]
+#domain_df = domain_df.loc[tissue_positions_filtered.index]
  
 ################################################################################
 #   Use the Samui API to create the importable directory for this combined "sample"
 ################################################################################
-default_gene = 'SLC17A7'
+default_gene = 'SNAP25'
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
@@ -115,7 +135,7 @@ this_sample.add_image(
     scale = m_per_px
 )
 this_sample.add_csv_feature(sample_df, name = "Capture areas", coordName = "coords", dataType = "categorical")
-this_sample.add_csv_feature(domain_df, name = "Domains", coordName = "coords", dataType = "categorical")
+#this_sample.add_csv_feature(domain_df, name = "Domains", coordName = "coords", dataType = "categorical")
 #this_sample.add_csv_feature(nmf_df, name = "NMF patterns", coordName = "coords", dataType = "categorical")
 this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
 
