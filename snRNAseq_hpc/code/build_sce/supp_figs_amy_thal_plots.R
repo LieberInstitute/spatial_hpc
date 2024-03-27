@@ -5,6 +5,14 @@ library(scran)
 library(ggplot2)
 library(here)
 
+##load sce
+load(here::here("snRNAseq_hpc","processed-data", "sce", "sce_final.rda"))
+dim(sce)
+##load palettes
+load(here::here('plots','snRNAseq_palettes.rda'))
+
+
+##neurons only
 sce_neuron<-sce[,sce$broad.cell.class=='Neuron']
 #####thal marker genes
 pdf(file=here::here('plots','figures','supp_figures','figure_S24','tcf7l2.pdf'),height=2,w=4.2)
@@ -49,9 +57,9 @@ ggcells(sce_neuron,
         scale_fill_manual(values=sn.fine.palette)
 dev.off()
 
-pdf(file=here::here('plots','figures','supp_figures','figure_S24','ptger3.pdf'),height=2,w=4.2)
+pdf(file=here::here('plots','figures','supp_figures','figure_S24','dcstamp.pdf'),height=2,w=4.2)
 ggcells(sce_neuron,
-        mapping=aes(x=superfine.cell.class, y=PTGER3,fill=fine.cell.class)) +
+        mapping=aes(x=superfine.cell.class, y=DCSTAMP,fill=fine.cell.class)) +
         geom_boxplot(outlier.size=0.1)+
         theme(axis.text.x = element_text(angle = 90),
                          text=element_text(size = 10,colour='black'),
@@ -63,7 +71,63 @@ ggcells(sce_neuron,
         scale_fill_manual(values=sn.fine.palette)
 dev.off()
 
+pdf(file=here::here('plots','figures','supp_figures','figure_S24','m1ap.pdf'),height=2,w=4.2)
+ggcells(sce_neuron,
+        mapping=aes(x=superfine.cell.class, y=M1AP,fill=fine.cell.class)) +
+        geom_boxplot(outlier.size=0.1)+
+        theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 10,colour='black'),
+                         legend.position = 'none',
+                         panel.grid.major = element_blank(),
+                         panel.grid.minor = element_blank(),
+                         panel.background = element_blank(),
+                         axis.line = element_line(colour = "black"))+
+        scale_fill_manual(values=sn.fine.palette)
+dev.off()
+
+pdf(file=here::here('plots','figures','supp_figures','figure_S24','pappa2.pdf'),height=2,w=4.2)
+ggcells(sce_neuron,
+        mapping=aes(x=superfine.cell.class, y=PAPPA2,fill=fine.cell.class)) +
+        geom_boxplot(outlier.size=0.1)+
+        theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 10,colour='black'),
+                         legend.position = 'none',
+                         panel.grid.major = element_blank(),
+                         panel.grid.minor = element_blank(),
+                         panel.background = element_blank(),
+                         axis.line = element_line(colour = "black"))+
+        scale_fill_manual(values=sn.fine.palette)
+dev.off()
+
+pdf(file=here::here('plots','figures','supp_figures','figure_S24','PENK.pdf'),height=2,w=4.2)
+ggcells(sce_neuron,
+        mapping=aes(x=superfine.cell.class, y=PENK,fill=fine.cell.class)) +
+        geom_boxplot(outlier.size=0.1)+
+        theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 10,colour='black'),
+                         legend.position = 'none',
+                         panel.grid.major = element_blank(),
+                         panel.grid.minor = element_blank(),
+                         panel.background = element_blank(),
+                         axis.line = element_line(colour = "black"))+
+        scale_fill_manual(values=sn.fine.palette)
+dev.off()
+
+
+
+
 ###spotplots
+##load SPE
+###get rewritten plotVisium()) script
+source(file=here::here('code','NMF','plotVisium_rewrite.R'))
+
+##load palettes
+load(file=here::here('plots','spatial_palette_final.rda'))
+
+###load data
+load(file=here::here('processed-data','06_clustering',
+     'PRECAST','spe_precast_HE_domain.rda'))
+
 spatial.palette3<-c("#BEDDBA", "#eae8e4", "#E8BBC6","#A1BAD8")
 names(spatial.palette3)<-levels(speb$broad.domain)
 

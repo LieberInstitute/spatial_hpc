@@ -8,18 +8,21 @@ suppressPackageStartupMessages(library("jaffelab"))
 suppressPackageStartupMessages(library("tidyverse"))
 suppressPackageStartupMessages(library("here"))
 suppressPackageStartupMessages(library("BiocSingular"))
-suppressPackageStartupMessages(library("sessioninfo"))
 
-load(here("snRNAseq_hpc",'processed-data','sce','sce_clustered_round2.rda'), verbose = TRUE)
+###load data
+load(here::here("snRNAseq_hpc",'processed-data','sce','sce_clustered_round2.rda'), verbose = TRUE)
 sce$cluster<-sce$k_5_louvain_initial
 
 
 sce$neuron<-ifelse(sce$k_5_louvain_initial %in% c(1,2,9,10,20,21,26,28,
                                                   31,34,37,38,40,42,43,
                                                   59),T,F)
-sce$discard_round_3<-ifelse(sce$k_5_louvain_initial %in% c(6,8,46,37),F,T)
+sce$discard_round_3<-ifelse(sce$k_5_louvain_initial %in% c(6,8,46,37),T,F)
 
 table(sce$discard)
+# FALSE  TRUE
+# 3926 76668
+
 ###first a UMAP by cluster
 pdf(file=here::here('plots','figures','supp_figures',
                     'clusteringRound2_UMAP_byCluster.pdf'),h=3,w=3)
@@ -30,7 +33,7 @@ dev.off()
 ###now boxplot of SYT1 expression by cluster2
 pdf(file=here::here('plots','figures','supp_figures',
                     'clusteringRound2_boxplot_SYT1_byCluster.pdf'),h=3,w=5)
-ggcells(sce, mapping=aes(x=cluster, y=SYT1,fill=cluster)) +
+ggcells(sce, mapping=aes(x=cluster, y=SYT1,fill=neuron)) +
     geom_boxplot(outlier.size = 0.5)+theme(axis.text.x = element_text(angle = 90),
                          text=element_text(size = 11,colour='black'))+
     theme(legend.position='bottom',
@@ -92,29 +95,32 @@ plotDots(sce,group='cluster_ordered',
 dev.off()
 
 ##discard UMAP
-
-
 pdf(file=here::here('plots','figures','supp_figures',
                     'clusteringRound2_UMAP_byCluster_discardRound3.pdf'),h=3,w=4.5)
 p<-plotUMAP(sce,text_by='cluster',colour_by='discard_round_3',
             point_size=0.01,add_legend=T,text_size=3.75)+
-    labs(color='discard_round_3')+scale_color_manual(values=c('#FF9E4A','#859ECA'))
+    labs(color='discard_round_3')+scale_color_manual(values=c('#859ECA','#FF9E4A'))
 rasterize(p,dpi=500,layers='Point')
 dev.off()
 
-save(sce,file='sce_clustered_round2.rda')
+##save data 
+save(sce,file=here::here("snRNAseq_hpc",'processed-data','sce','sce_clustered_round2.rda'))
 
+##remove sce
 rm(sce)
-load(sce,file='sce_clustered_round3.rda')
 
-##discard clusters, make new embedding and UMAP colored by discard round 3, but numbered by new cluster round
-pdf(file=here::here('plots','figures','supp_figures',
-                    'clusteringRound3_UMAP_byCluster_discardRound3.pdf'),h=3,w=4.5)
-p<-plotUMAP(sce2,colour_by='discard_round_3',text_by='k_5_louvain',
-            point_size=0.01,add_legend=T,text_size=3.75)+
-    labs(color='discard_round_3')+scale_color_manual(values='#859ECA')
-rasterize(p,dpi=500,layers='Point')
-dev.off()
+##load next round sce
+load(here::here("snRNAseq_hpc",'processed-data','sce','sce_clustered_round3.rda'), verbose = TRUE)
+
+
+# ##discard clusters, make new embedding and UMAP colored by discard round 3, but numbered by new cluster round
+#pdf(file=here::here('plots','figures','supp_figures',
+#                     'clusteringRound3_UMAP_byCluster_discardRound3.pdf'),h=3,w=4.5)
+# p<-plotUMAP(sce,colour_by='discard_round_3',text_by='k_5_louvain',
+#             point_size=0.01,add_legend=T,text_size=3.75)+
+#     labs(color='discard_round_3')+scale_color_manual(values='#859ECA')
+# rasterize(p,dpi=500,layers='Point')
+# dev.off()
 
 
 sce$neuron<-ifelse(sce$k_5_louvain %in% c(1,2,6,8,9,19,20,23,24,27,30,34,36,41,42,44,47,48,62),F,T)
@@ -194,10 +200,15 @@ p<-plotUMAP(sce,text_by='k_5_louvain',colour_by='discard_round_4',
 rasterize(p,dpi=500,layers='Point')
 dev.off()
 
-save(sce,file='sce_clustered_round4.rda')
+##save data
+save(sce,file=here::here("snRNAseq_hpc",'processed-data','sce','sce_clustered_round3.rda'))
 
+##remove sce
 rm(sce)
-load(sce,file='sce_final.rda')
+
+##load next round data
+load(file=here::here("snRNAseq_hpc",'processed-data','sce','sce_final.rda'))
+
 
 ##discard clusters, make new embedding and UMAP colored by discard round 3, but numbered by new cluster round
 pdf(file=here::here('plots','figures','supp_figures',

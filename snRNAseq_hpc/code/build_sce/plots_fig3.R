@@ -1,55 +1,19 @@
 ####figure 3 plots
-###Fig 3A--UMAP colored by cluster:
-levels(sce$fine.cell.class)
-# [1] "Amy"           "Astro"         "CA1/ProS"      "CA2-4"         "Cajal"         "Choroid"       "Ependy"
-# [8] "GABA.CGE"      "GABA.LAMP5"    "GABA.MGE"      "GABA.PENK"     "GC"            "HATA"          "L2/3.Prs.Ent"
-# [15] "L2/3.PrS.PaS"  "L5"            "L6/6b"         "Micro/Macro/T" "Oligo"         "OPC"           "Sub.1"
-# [22] "Sub.2"         "Thal"          "Vascular"
-sce$fine.cell.class<-factor(ifelse(sce$fine.type %in% c('L6.1','L6.2','L6b'),'L6/6b',
-                              ifelse(sce$fine.type %in% c('L5.1','L5.2'),'L5/6',
-                              ifelse(sce$fine.type %in% 'Sub.1','Sub.1',
-                              ifelse(sce$fine.type %in% 'Sub.2','Sub.2',
-                              ifelse(sce$fine.type %in% c('CA1','ProS'),'CA1/ProS',
-                              ifelse(sce$cell.type %in% c('Choroid'),'Choroid',
-                              ifelse(sce$cell.type %in% c('Ependy'),'Ependy',
-                              ifelse(sce$fine.type %in% c('L2/3.1','L2/3.5'),'L2/3.PrS.PaS',
-                              ifelse(sce$fine.type %in% c('L2/3.2','L2/3.4','L2/3.6','L2/3.3'),'L2/3.PrS.Ent',
-                              ifelse(sce$fine.type %in% c('HATA'),'HATA',
-                              ifelse(sce$fine.type %in% c('AHi.1','AHi.2','AHi.3','AHi.4'),'Amy',
-                              ifelse(sce$fine.type %in% c('PENK'),'GABA.PENK',
-                              ifelse(sce$fine.type %in% c('LAMP5.CGE','LAMP5.MGE','CXCL14'),'GABA.LAMP5',
-                              ifelse(sce$fine.type %in% c('HTR3A','VIP'),'GABA.CGE',
-                              ifelse(sce$fine.type %in% c('PV.FS','SST','CORT','CRABP1','C1QL1'),'GABA.MGE',
-                              as.character(sce$cell.type)))))))))))))))))
-sce$fine.cell.class<-factor(sce$fine.cell.class,levels=c('GC','CA2-4','CA1/ProS','Sub.1','Sub.2',
-                                               'L6/6b','L5/6','L2/3.PrS.PaS','L2/3.PrS.Ent',
-                                               'HATA','Amy','Thal','Cajal',
-                                               'GABA.PENK','GABA.MGE','GABA.LAMP5','GABA.CGE',
-                                               'Micro/Macro/T','Astro',
-                                               'Oligo','OPC','Ependy','Choroid','Vascular'))
+library("scater")
+library("scran")
+library("SingleCellExperiment")
+library("pheatmap")
+library("here")
+library("ggrastr")
+library("dplyr")
+library("magrittr")
 
-sce$mid.cell.class<-factor(
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[1:13],'ExcN',
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[14:17],'InhN',
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[18],'Micro/Macro/T',
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[19],'Astro',
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[20],'Oligo',
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[21],'OPC',
-    ifelse(sce$fine.cell.class %in% levels(sce$fine.cell.class)[22:23],'CSF',
-    'Vascular'))))))),levels=c('ExcN','InhN','Micro/Macro/T',
-                        'Astro','Oligo','OPC','CSF','Vascular')
+##load data
+load(file=here::here("snRNAseq_hpc",'processed-data','sce','sce_final.rda'))
 
-)
+##load palettes
+load(here::here('plots','snRNAseq_palettes.rda'))
 
-sce$broad.cell.class<-factor(
-  ifelse(sce$mid.cell.class %in% levels(sce$mid.cell.class)[1:2],'Neuron',
-                        ifelse(sce$mid.cell.class %in% levels(sce$mid.cell.class)[3],'Micro',
-                                ifelse(sce$mid.cell.class %in% levels(sce$mid.cell.class)[4],'Astro',
-                                       ifelse(sce$mid.cell.class %in% levels(sce$mid.cell.class)[5],'Oligo',
-                                                           "Other")))),
-  levels=c('Neuron','Micro',
-  'Astro','Oligo','Other')
-)
 ################UMAP###############
 pdf(file=here::here('plots','figures','figure_3','cluster_UMAP_final.pdf'),h=4,w=4)
 plot<-plotUMAP(sce,text_by='fine.cell.class',colour_by='fine.cell.class',
@@ -84,7 +48,7 @@ neuron_order<-c("Br2720", "Br6522", "Br8492", "Br8325", "Br3942",
                 "Br8667", "Br6471", "Br6432", "Br6423", "Br2743")
 
 count_df$brnum <- factor(count_df$brnum, levels = neuron_order)
-# Aggregate data 
+# Aggregate data
 agg_df <- df %>%
   group_by(fine.cell.class) %>%
   summarise(count = n(), .groups = 'drop') %>%
@@ -160,7 +124,7 @@ neuron_order<-c("Br2720", "Br6522", "Br8492", "Br8325", "Br3942",
                 "Br8667", "Br6471", "Br6432", "Br6423", "Br2743")
 
 count_df$brnum <- factor(count_df$brnum, levels = neuron_order)
-# Aggregate data 
+# Aggregate data
 agg_df <- df %>%
   group_by(mid.cell.class) %>%
   summarise(count = n(), .groups = 'drop') %>%
@@ -238,7 +202,7 @@ neuron_order<-c("Br2720", "Br6522", "Br8492", "Br8325", "Br3942",
                 "Br8667", "Br6471", "Br6432", "Br6423", "Br2743")
 
 count_df$brnum <- factor(count_df$brnum, levels = neuron_order)
-# Aggregate data 
+# Aggregate data
 agg_df <- df %>%
   group_by(broad.cell.class) %>%
   summarise(count = n(), .groups = 'drop') %>%
@@ -322,10 +286,10 @@ ggcells(sce,mapping=aes(x=cell.class, y=EBF1,fill=broad.class)) +
           axis.line = element_line(colour = "black"))+scale_fill_manual(values=palette2)
 dev.off()
 
-###main fig1 heatmap
-sce<-sce[,!sce$fine.cell.class %in% c('Amy','Thal')]
+############Heatmap#############
+sce<-sce[,!sce$fine.cell.class %in% c('Amy','Thal','GABA.PENK')]
 sce$fine.cell.class<-droplevels(sce$fine.cell.class)
-sce$fine.type<-droplevels(sce$fine.type)
+sce$superfine.cell.class<-droplevels(sce$superfine.cell.class)
 palette<-sn.fine.palette
 palette<-palette[match(levels(sce$fine.cell.class),names(palette))]
 palette2<-sn.mid.palette
@@ -334,7 +298,7 @@ palette3<-sn.broad.palette
 palette3<-palette3[match(levels(sce$broad.cell.class),names(palette3))]
 
 
-sce$superfine.cell.class<-factor(sce$fine.type,
+sce$superfine.cell.class<-factor(sce$superfine.cell.class,
                       levels=c("GC.1", "GC.2", "GC.3", "GC.4", "GC.5", "MC",
                                "CA3.1", "CA3.2", "CA2", "CA1", "ProS", "Sub.1",
                                "Sub.2",
@@ -344,7 +308,7 @@ sce$superfine.cell.class<-factor(sce$fine.type,
                                "L2/3.6",
                                "HATA", "Cajal", "PENK", "SST", "CORT", "PV.FS",
                                "CRABP1", "C1QL1", "LAMP5.MGE", "LAMP5.CGE",
-                               "CXCL14", "HTR3A", "VIP", 
+                               "CXCL14", "HTR3A", "VIP",
                                "Micro.1", "Micro.2", "Macro/Tcell",
                                "Astro.1", "Astro.2", "Astro.3",
                                "Oligo.1", "Oligo.2",
@@ -366,6 +330,7 @@ anno$superfine=NULL
 anno<-anno[match(levels(sce$superfine.cell.class),rownames(anno)),]
 
 palettes<-list(palette,palette2,palette3)
+names(palettes)<-c('fine','mid','broad')
 
 ###features to plot:
 features<-c('PROX1','TSPAN18','CARTPT','ZNF208','ST18','SLC9A2','COL5A2',

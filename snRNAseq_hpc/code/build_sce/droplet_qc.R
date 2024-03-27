@@ -546,10 +546,3 @@ dim(sce)
 
 
 save(sce,file=here("snRNAseq_hpc","processed-data","sce","sce_post_qc.rda"))
-
-## Reproducibility information
-print("Reproducibility information:")
-Sys.time()
-proc.time()
-options(width = 120)
-session_info()
