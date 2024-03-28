@@ -53,10 +53,12 @@ domain_df = spgP.obs[['domain']].copy()
 sample_df = spgP.obs[['sample_id']].copy()
 
 ################################################################################
-#  deconvo results
+#  deconvo and nmf results
 ################################################################################
 deconvo_df = pd.read_csv(Path(here("processed-data", "VSPG_image_stitching", "deconvo.csv")),index_col = 0)
 deconvo_df = deconvo_df.set_index('key') 
+nmf_df = pd.read_csv(Path(here("processed-data", "VSPG_image_stitching", "nmf.csv")),index_col = 0)
+nmf_df = nmf_df.set_index('key') 
 
 ################################################################################
 #  remove overlapping spots
@@ -83,6 +85,7 @@ domain_df = domain_df.loc[tissue_positions_filtered.index]
 sample_df = sample_df.loc[tissue_positions_filtered.index]
 gene_df = gene_df.loc[tissue_positions_filtered.index]
 deconvo_df = deconvo_df.loc[tissue_positions_filtered.index]
+nmf_df = nmf_df.loc[tissue_positions_filtered.index]
 tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
  
 ################################################################################
@@ -93,10 +96,15 @@ img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Aut
 default_channels = {'blue': 'DAPI', 'green': 'Alexa_488'}
 default_gene = 'SLC17A7'
 
+default_genes = {'PPFIA2','PRKCG','APOC1','SFRP2','CLSTN2','SLC1A3','SHTN1','TPM2'}
+default_nmf = {'nmf 13','nmf 77', 'nmf 79'}
+default_deconvo = {'mid2broad_RCTD_neuron', 'fine2broad_RCTD_neuron'}
+
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
-notes_md_url = Url('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VSPG_image_stitching/feature_notes.md')
-this_sample = Sample(name = samui_dir.name, path = samui_dir, notesMd = notes_md_url)
+#notes_md_url = Url('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VSPG_image_stitching/feature_notes.md')
+#this_sample = Sample(name = samui_dir.name, path = samui_dir, notesMd = notes_md_url)
+this_sample = Sample(name = samui_dir.name, path = samui_dir)
 
 this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_per_px, size = SPOT_DIAMETER_M)
 
@@ -109,17 +117,24 @@ this_sample.add_image(
     scale = m_per_px
 )
 this_sample.add_csv_feature(sample_df, name = "Capture areas", coordName = "coords", dataType = "categorical")
-this_sample.add_csv_feature(domain_df, name = "PRECAST domains", coordName = "coords", dataType = "categorical")
-this_sample.add_csv_feature(deconvo_df, name = "broad deconvolution", coordName = "coords", dataType = "quantitative")
-this_sample.add_csv_feature(mid_deconvo_df, name = "mid deconvolution", coordName = "coords", dataType = "quantitative")
-this_sample.add_csv_feature(fine_deconvo_df, name = "fine deconvolution", coordName = "coords", dataType = "quantitative")
+this_sample.add_csv_feature(domain_df, name = "Domains", coordName = "coords", dataType = "categorical")
+this_sample.add_csv_feature(deconvo_df, name = "Deconvolution", coordName = "coords", dataType = "quantitative")
+this_sample.add_csv_feature(nmf_df, name = "NMF patterns", coordName = "coords", dataType = "quantitative")
 
 this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", dataType = "quantitative")
 
 this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
-
-
 this_sample.write()
+
+with open(here(samui_dir,'sample.json'), 'r') as json_file:
+    data = json.load(json_file)
+
+# Replace the "importantFeatures" value
+data['overlayParams']['importantFeatures'] = [{"group": "Genes", "feature": default_genes}, {"group": "NMF patterns", "feature": default_nmf}, {"group": "Deconvolution", "feature": default_deconvo}]
+
+# Write the modified data back to the JSON file
+with open('your_file.json', 'w') as json_file:
+    json.dump(data, json_file, indent=4)
 
 session_info.show()
