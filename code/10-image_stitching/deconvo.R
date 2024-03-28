@@ -34,6 +34,10 @@ fine2broad_tangram <- fine2broad_tangram[match(mid2broad_cell2location$mid2broad
 colnames(fine2broad_tangram) <- paste('fine2broad_tangram', colnames(fine2broad_tangram), sep = "_")
 
 
-df = cbind(mid2broad_cell2location[,2:6], mid2broad_RCTD[,2:6], mid2broad_tangram[,2:6], fine2broad_cell2location[,2:6], fine2broad_RCTD[,2:6], fine2broad_tangram[,2:6])
+df = cbind(mid2broad_cell2location[,1:6], mid2broad_RCTD[,2:6], mid2broad_tangram[,2:6], fine2broad_cell2location[,2:6], fine2broad_RCTD[,2:6], fine2broad_tangram[,2:6])
+
+which(is.na(df), arr.ind=TRUE)
+
+colnames(df)[1] = "key"
 write.csv(df, file = here("processed-data","10-image_stitching", "deconvo.csv"))
 
