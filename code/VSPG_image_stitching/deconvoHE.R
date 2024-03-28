@@ -10,8 +10,8 @@ spe = readRDS(here("processed-data", "spot_deconvo", "shared_utilities", "spe.rd
 dat = as.data.frame(colData(spe)) %>% select("key", "cluster_collapsed")
 count = as.data.frame(colData(spe)) %>% select("key", "count", "cluster_collapsed")
 
-#grp = "broad"
-grp = "layer"
+grp = "broad"
+#grp = "layer"
 tools <- c("tangram", "cell2location", "RCTD")
 df_list <- list()
 for (tool in tools){
@@ -25,7 +25,7 @@ for (tool in tools){
   temp_df <- do.call(rbind, counts_list)
   rownames(temp_df) <- NULL
   if (tool == "RCTD"){temp_df$key = temp_df$X}
-  temp_df$key = sapply(strsplit(temp_df$key,"_Br"), `[`, 1)
+  #temp_df$key = sapply(strsplit(temp_df$key,"_Br"), `[`, 1)
   if (grp == "broad"){ 
     celltypes = c("Oligo", "Micro_Macro_T", "InhN", "ExcN", "Astro", "Vascular", "OPC", "CSF")
     temp_df$count = rowSums(temp_df[,celltypes])
@@ -53,10 +53,8 @@ for (tool in tools){
     temp_df[, celltypes] <- lapply(temp_df[, celltypes], function(col) col*cnt)
     temp_df$count = cnt}
   if (tool == "tangram") {
-  temp_df$sample <-sapply(strsplit(temp_df$key,"-1_"), `[`, 2)
-  temp_df$sample <-sapply(strsplit(temp_df$sample,"_V"), `[`, 1)
-  temp_df$key <- sub("(_V1.*)","","AAACAAGTATCTCCCA-1_V10B01-085_A1_V10B01-085_A1")
-  temp_df$key = paste0(temp_df$key,"_",temp_df$sample)
+  temp_df$key = gsub("Br2720", "V12F14-051", temp_df$key)
+  temp_df$key = substr(temp_df$key, 1, nchar(temp_df$key) - 14)
   }
   temp_df$sample <-sapply(strsplit(temp_df$key,"-1_"), `[`, 2)
   temp_df[which(temp_df$count == 0),celltypes] = 0
