@@ -45,7 +45,7 @@ echo "Job id: ${job_id}"
 echo "Job name: ${job_name}"
 echo "Node name: ${node_name}"
 
-module load samui/1.0.0-next.49
+module load samui/1.0.0-next.45
 python 03-create_samui_HE.py $donor
 
 echo "**** Job ends ****"

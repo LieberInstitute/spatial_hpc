@@ -85,15 +85,15 @@ tissue_positions = pd.read_csv(tissue_positions_path ,index_col = 0).rename({'px
 tissue_positions.index.name = None
 tissue_positions = tissue_positions[['x', 'y']].astype(int)
 SPOT_DIAMETER_M = 55e-6
-#m_per_px = 4.971263040387764e-07
+m_per_px =3.6060572219145977e-07
 
 SPOT_DIAMETER_JSON_M = 65e-6
-json_path = os.path.join(
-    sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json'
-)
-with open(json_path, 'r') as f:
-    spaceranger_json = json.load(f)
-m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
+#json_path = os.path.join(
+#    sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json'
+#)
+#with open(json_path, 'r') as f:
+#    spaceranger_json = json.load(f)
+#m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
 
 # json_path = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger-all/V11L05-333_B1/outs/spatial/scalefactors_json.json"
 # with open(json_path, 'r') as f:
@@ -164,7 +164,7 @@ with open(here(samui_dir,'sample.json'), 'r') as json_file:
 data['overlayParams']['importantFeatures'] = features_of_interest
 
 # Write the modified data back to the JSON file
-with open('your_file.json', 'w') as json_file:
+with open(here(samui_dir,'sample.json'), 'w') as json_file:
     json.dump(data, json_file, indent=4)
 
 session_info.show()
