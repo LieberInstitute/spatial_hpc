@@ -25,22 +25,22 @@ from scipy.spatial import KDTree
 #this_donor = "Br8325"
 
 this_donor = sys.argv[1:]
-#this_donor = ''.join(this_donor)
+this_donor = ''.join(this_donor)
 
 samui_dir = Path(here('processed-data', '10-image_stitching', this_donor))
 samui_dir.mkdir(parents = True, exist_ok = True)
 
-#sample_info_path = here(
-#    'processed-data', '10-image_stitching', 'sample_info_clean.csv'
-#)
+sample_info_path = Path(here(
+    'processed-data', '10-image_stitching', 'sample_info_clean.csv'
+))
 
-#sample_info = pd.read_csv(sample_info_path, index_col = 0)
-#sample_info = sample_info.loc[
-#    (sample_info['Brain'] == this_donor) &
-#    ~sample_info['XML file name'].isna(),# &
+sample_info = pd.read_csv(sample_info_path, index_col = 0)
+sample_info = sample_info.loc[
+    (sample_info['Brain'] == this_donor) &
+    ~sample_info['XML file name'].isna(),# &
     #sample_info['In analysis'],
-#    :
-#]
+    :
+]
 
 ################################################################################
 #   Gather gene-expression data into a DataFrame to later as a feature
@@ -79,6 +79,8 @@ deconvo_df = deconvo_df.set_index('key')
 #  remove overlapping spots
 ################################################################################
 tissue_positions_path = Path(here("processed-data", "10-image_stitching", "tissue_positions_"+this_donor+".csv"))
+
+#tissue_positions_path = Path(here("processed-data", "10-image_stitching", "imageJ", "combined_Br8325", "tissue_positions_"+this_donor+".csv"))
 tissue_positions = pd.read_csv(tissue_positions_path ,index_col = 0).rename({'pxl_row_in_fullres': 'y', 'pxl_col_in_fullres': 'x'},axis = 1)
 tissue_positions.index.name = None
 tissue_positions = tissue_positions[['x', 'y']].astype(int)
@@ -86,17 +88,17 @@ SPOT_DIAMETER_M = 55e-6
 #m_per_px = 4.971263040387764e-07
 
 SPOT_DIAMETER_JSON_M = 65e-6
-#json_path = os.path.join(
-#    sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json'
-#)
-#with open(json_path, 'r') as f:
-#    spaceranger_json = json.load(f)
-#m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
-
-json_path = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger-all/V11L05-333_B1/outs/spatial/scalefactors_json.json"
+json_path = os.path.join(
+    sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json'
+)
 with open(json_path, 'r') as f:
-     spaceranger_json = json.load(f)
+    spaceranger_json = json.load(f)
 m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
+
+# json_path = "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/processed-data/01_spaceranger/spaceranger-all/V11L05-333_B1/outs/spatial/scalefactors_json.json"
+# with open(json_path, 'r') as f:
+#      spaceranger_json = json.load(f)
+# m_per_px = SPOT_DIAMETER_JSON_M / spaceranger_json['spot_diameter_fullres']
 
  # Build KD tree for nearest neighbor search.
 kd = KDTree(tissue_positions[["x", "y"]].values)
@@ -121,6 +123,9 @@ tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 #   Use the Samui API to create the importable directory for this combined "sample"
 ################################################################################
 default_gene = 'SLC17A7'
+default_genes = {'PPFIA2','PRKCG','APOC1','SFRP2','CLSTN2','SLC1A3','SHTN1','TPM2'}
+default_nmf = {'nmf 13','nmf 77', 'nmf 79'}
+default_deconvo = {'mid2broad_RCTD_neuron', 'fine2broad_RCTD_neuron'}
 
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
@@ -130,6 +135,7 @@ this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_pe
 
 img_fullres = Path(here("processed-data", "10-image_stitching", "combined_"+this_donor+"_initial.tif"))
 
+#img_fullres = Path(here("processed-data", "10-image_stitching", "imageJ", "combined_Br8325", "combined_"+this_donor+".tif"))
 this_sample.add_image(
     tiff = img_fullres,
     channels = 'rgb',
@@ -144,5 +150,15 @@ this_sample.add_chunked_feature(gene_df, name = "Genes", coordName = "coords", d
 this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
 this_sample.write()
+
+with open(here(samui_dir,'sample.json'), 'r') as json_file:
+    data = json.load(json_file)
+
+# Replace the "importantFeatures" value
+data['overlayParams']['importantFeatures'] = [{"group": "Genes", "feature": default_genes}, {"group": "NMF patterns", "feature": default_nmf}, {"group": "Deconvolution", "feature": default_deconvo}]
+
+# Write the modified data back to the JSON file
+with open('your_file.json', 'w') as json_file:
+    json.dump(data, json_file, indent=4)
 
 session_info.show()
