@@ -1,1 +1,58 @@
-{"name":"Br3942","imgParams":{"urls":[{"url":"combined_Br3942_initial.tif","type":"local"}],"channels":["C1","C2","C3"],"defaultChannels":null,"mPerPx":3.617280986714116e-7},"coordParams":[{"url":{"url":"coords.csv","type":"local"},"name":"coords","shape":"circle","mPerPx":3.617280986714116e-7,"size":0.000055}],"featParams":[{"url":{"url":"Capture areas.csv","type":"local"},"type":"plainCSV","name":"Capture areas","dataType":"categorical","coordName":"coords","unit":null},{"url":{"url":"NMF patterns.csv","type":"local"},"type":"plainCSV","name":"NMF patterns","dataType":"categorical","coordName":"coords","unit":null},{"url":{"url":"Genes.bin","type":"local"},"type":"chunkedCSV","name":"Genes","coordName":"coords","headerUrl":{"url":"Genes.json","type":"local"},"dataType":"quantitative","unit":null}],"overlayParams":{"defaults":[{"feature":"SLC17A7","group":"Genes"}],"importantFeatures":null},"notesMd":null,"metadataMd":null}
+{"name":"Br3942","imgParams":{"urls":[{"url":"combined_Br3942_initial.tif","type":"local"}],"channels":"rgb","defaultChannels":null,"mPerPx":3.617280986714116e-7},"coordParams":[{"url":{"url":"coords.csv","type":"local"},"name":"coords","shape":"circle","mPerPx":3.617280986714116e-7,"size":0.000055}],"featParams":[{"url":{"url":"Capture areas.csv","type":"local"},"type":"plainCSV","name":"Capture areas","dataType":"categorical","coordName":"coords","unit":null},{"url":{"url":"Domains.csv","type":"local"},"type":"plainCSV","name":"Domains","dataType":"categorical","coordName":"coords","unit":null},{"url":{"url":"NMF patterns.csv","type":"local"},"type":"plainCSV","name":"NMF patterns","dataType":"quantitative","coordName":"coords","unit":null},{"url":{"url":"Deconvolution.csv","type":"local"},"type":"plainCSV","name":"Deconvolution","dataType":"quantitative","coordName":"coords","unit":null},{"url":{"url":"Genes.bin","type":"local"},"type":"chunkedCSV","name":"Genes","coordName":"coords","headerUrl":{"url":"Genes.json","type":"local"},"dataType":"quantitative","unit":null}],"overlayParams":{"defaults":[{"feature":"SLC17A7","group":"Genes"}],"importantFeatures":[
+            {
+                "group": "Genes",
+                "feature": "SFRP2"
+            },
+            {
+                "group": "Genes",
+                "feature": "CLSTN2"
+            },
+            {
+                "group": "Genes",
+                "feature": "APOC1"
+            },
+            {
+                "group": "Genes",
+                "feature": "PPFIA2"
+            },
+            {
+                "group": "Genes",
+                "feature": "TPM2"
+            },
+            {
+                "group": "Genes",
+                "feature": "SLC1A3"
+            },
+            {
+                "group": "Genes",
+                "feature": "PRKCG"
+            },
+            {
+                "group": "Genes",
+                "feature": "SHTN1"
+            },
+            {
+                "group": "NMF patterns",
+                "feature": "nmf79"
+            },
+            {
+                "group": "NMF patterns",
+                "feature": "nmf13"
+            },
+            {
+                "group": "NMF patterns",
+                "feature": "nmf77"
+            },
+            {
+                "group": "Deconvolution",
+                "feature": "fine2broad_RCTD_neuron"
+            },
+            {
+                "group": "Deconvolution",
+                "feature": "mid2broad_RCTD_neuron"
+            }
+        ]
+    },
+    "notesMd": null,
+    "metadataMd": null
+}
