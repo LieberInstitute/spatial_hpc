@@ -1,0 +1,25 @@
+**** Job starts ****
+Sat Mar 30 03:51:53 PM EDT 2024
+**** JHPCE info ****
+User: mtippani
+Job id: 3622993
+Job name: 03-create_samui_HE
+Node name: compute-070
+Lmod has detected the following error: The following module(s) are unknown:
+"samui/1.0.0-next.49"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "samui/1.0.0-next.49"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/03-create_samui_HE.py", line 4, in <module>
+    from pyhere import here
+ModuleNotFoundError: No module named 'pyhere'
+**** Job ends ****
+Sat Mar 30 03:51:53 PM EDT 2024

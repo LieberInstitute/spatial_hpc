@@ -1,0 +1,25 @@
+**** Job starts ****
+Sat Mar 30 03:51:51 PM EDT 2024
+**** JHPCE info ****
+User: mtippani
+Job id: 3622992
+Job name: 03-create_samui_HE
+Node name: compute-124
+Loading LIBD SLURM module for samui/1.0.0-next.49
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/pydantic/_internal/_config.py:322: UserWarning: Valid config keys have changed in V2:
+* 'allow_mutation' has been removed
+  warnings.warn(message, UserWarning)
+/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/anndata/__init__.py:55: FutureWarning: `anndata.read` is deprecated, use `anndata.read_h5ad` instead. `ad.read` will be removed in mid 2024.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/10-image_stitching/03-create_samui_HE.py", line 92, in <module>
+    sample_info['spaceranger_dir'].iloc[0], 'scalefactors_json.json'
+  File "/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/pandas/core/indexing.py", line 1191, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/pandas/core/indexing.py", line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "/jhpce/shared/libd/core/samui/1.0.0-next.49/samui_env/lib/python3.10/site-packages/pandas/core/indexing.py", line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+**** Job ends ****
+Sat Mar 30 03:52:49 PM EDT 2024
