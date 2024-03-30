@@ -108,6 +108,7 @@ overlapping_pairs = pd.DataFrame([(tissue_positions.index[x], tissue_positions.i
 unique_items = set(item.split('-1')[1] for col in overlapping_pairs.columns for item in overlapping_pairs[col])
 tissue_positions_f = tissue_positions.loc[~tissue_positions.index.isin(overlapping_pairs[0])]
 
+#tissue_positions_f = tissue_positions
 common_indices = gene_df.index.intersection(tissue_positions_f.index)
 tissue_positions_filtered = tissue_positions_f.loc[common_indices]
 
@@ -123,10 +124,6 @@ tissue_positions_arranged = tissue_positions_filtered.reindex(gene_df.index)
 #   Use the Samui API to create the importable directory for this combined "sample"
 ################################################################################
 default_gene = 'SLC17A7'
-default_genes = {'PPFIA2','PRKCG','APOC1','SFRP2','CLSTN2','SLC1A3','SHTN1','TPM2'}
-default_nmf = {'nmf 13','nmf 77', 'nmf 79'}
-default_deconvo = {'mid2broad_RCTD_neuron', 'fine2broad_RCTD_neuron'}
-
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
 this_sample = Sample(name = samui_dir.name, path = samui_dir)
@@ -136,11 +133,7 @@ this_sample.add_coords(tissue_positions_arranged, name = "coords", mPerPx = m_pe
 img_fullres = Path(here("processed-data", "10-image_stitching", "combined_"+this_donor+"_initial.tif"))
 
 #img_fullres = Path(here("processed-data", "10-image_stitching", "imageJ", "combined_Br8325", "combined_"+this_donor+".tif"))
-this_sample.add_image(
-    tiff = img_fullres,
-    channels = 'rgb',
-    scale = m_per_px
-)
+this_sample.add_image(tiff = img_fullres,channels = 'rgb',scale = m_per_px)
 this_sample.add_csv_feature(sample_df, name = "Capture areas", coordName = "coords", dataType = "categorical")
 this_sample.add_csv_feature(domain_df, name = "Domains", coordName = "coords", dataType = "categorical")
 this_sample.add_csv_feature(nmf_df, name = "NMF patterns", coordName = "coords", dataType = "quantitative")
@@ -151,11 +144,24 @@ this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
 this_sample.write()
 
+features_of_interest = [{"feature":"SFRP2","group":"Genes"},
+                        {"feature":"CLSTN2","group":"Genes"},
+                        {"feature":"APOC1","group":"Genes"},
+                        {"feature":"PPFIA2","group":"Genes"},
+                        {"feature":"TPM2","group":"Genes"},
+                        {"feature":"SLC1A3","group":"Genes"},
+                        {"feature":"PRKCG","group":"Genes"},
+                        {"feature":"SHTN1","group":"Genes"},
+                        {"feature":"nmf79","group":"NMF patterns"},
+                        {"feature":"nmf13","group":"NMF patterns"},
+                        {"feature":"nmf77","group":"NMF patterns"},
+                        {"feature":"fine2broad_RCTD_neuron","group":"Deconvolution"},
+                        {"feature":"mid2broad_RCTD_neuron","group":"Deconvolution"}]
 with open(here(samui_dir,'sample.json'), 'r') as json_file:
     data = json.load(json_file)
 
 # Replace the "importantFeatures" value
-data['overlayParams']['importantFeatures'] = [{"group": "Genes", "feature": default_genes}, {"group": "NMF patterns", "feature": default_nmf}, {"group": "Deconvolution", "feature": default_deconvo}]
+data['overlayParams']['importantFeatures'] = features_of_interest
 
 # Write the modified data back to the JSON file
 with open('your_file.json', 'w') as json_file:

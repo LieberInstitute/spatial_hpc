@@ -96,10 +96,6 @@ img_channels = ['DAPI', 'Alexa_488', 'Alexa_555', 'Alexa_594', 'Alexa_647', 'Aut
 default_channels = {'blue': 'DAPI', 'green': 'Alexa_488'}
 default_gene = 'SLC17A7'
 
-default_genes = {'PPFIA2','PRKCG','APOC1','SFRP2','CLSTN2','SLC1A3','SHTN1','TPM2'}
-default_nmf = {'nmf 13','nmf 77', 'nmf 79'}
-default_deconvo = {'mid2broad_RCTD_neuron', 'fine2broad_RCTD_neuron'}
-
 assert default_gene in gene_df.columns, "Default gene not in AnnData"
 
 #notes_md_url = Url('/dcs04/lieber/lcolladotor/spatialHPC_LIBD4035/spatial_hpc/code/VSPG_image_stitching/feature_notes.md')
@@ -127,11 +123,24 @@ this_sample.set_default_feature(group = "Genes", feature = default_gene)
 
 this_sample.write()
 
+features_of_interest = [{"feature":"SFRP2","group":"Genes"},
+                        {"feature":"CLSTN2","group":"Genes"},
+                        {"feature":"APOC1","group":"Genes"},
+                        {"feature":"PPFIA2","group":"Genes"},
+                        {"feature":"TPM2","group":"Genes"},
+                        {"feature":"SLC1A3","group":"Genes"},
+                        {"feature":"PRKCG","group":"Genes"},
+                        {"feature":"SHTN1","group":"Genes"},
+                        {"feature":"nmf79","group":"NMF patterns"},
+                        {"feature":"nmf13","group":"NMF patterns"},
+                        {"feature":"nmf77","group":"NMF patterns"},
+                        {"feature":"fine2broad_RCTD_neuron","group":"Deconvolution"},
+                        {"feature":"mid2broad_RCTD_neuron","group":"Deconvolution"}]
 with open(here(samui_dir,'sample.json'), 'r') as json_file:
     data = json.load(json_file)
 
 # Replace the "importantFeatures" value
-data['overlayParams']['importantFeatures'] = [{"group": "Genes", "feature": default_genes}, {"group": "NMF patterns", "feature": default_nmf}, {"group": "Deconvolution", "feature": default_deconvo}]
+data['overlayParams']['importantFeatures'] = features_of_interest
 
 # Write the modified data back to the JSON file
 with open('your_file.json', 'w') as json_file:
