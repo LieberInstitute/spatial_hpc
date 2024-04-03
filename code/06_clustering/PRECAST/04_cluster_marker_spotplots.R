@@ -339,3 +339,34 @@ plotGroupedHeatmap(spe,group = 'cluster',features=c('GFAP','AQP4','APOE','ID4','
 scale=T,center=T,clustering_distance_cols='canberra',cluster_rows=F)
 dev.off()
 
+###boxplots showing differences in nuclei numbers
+spe<-spe[,spe$cluster %in% c('CA2.4.1','CA2.4.2','CA1.1','CA1.2')]
+spe$cluster<-droplevels(spe$cluster)
+
+pdf(file=here::here('plots','figures','supp_figures','figure_S12','boxplots_nuclei_count.pdf'),h=1.5,w=3.75)
+ggcells(spe,
+        mapping=aes(x=cluster, y=count,fill=cluster)) +
+        geom_boxplot(outliers=FALSE)+
+        theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 10,colour='black'),
+                         legend.position = 'none',
+                         panel.grid.major = element_blank(),
+                         panel.grid.minor = element_blank(),
+                         panel.background = element_blank(),
+                         axis.line = element_line(colour = "black"))+
+	labs(x='PRECAST clusters (k=18)',y='number of nuclei per spot')
+dev.off()
+
+pdf(file=here::here('plots','figures','supp_figures','figure_S12','boxplots_libsize.pdf'),h=2,w=3.75)
+ggcells(spe,
+        mapping=aes(x=cluster, y=sum,fill=cluster)) +
+        geom_boxplot(outliers=FALSE)+
+        theme(axis.text.x = element_text(angle = 90),
+                         text=element_text(size = 10,colour='black'),
+                         legend.position = 'none',
+                         panel.grid.major = element_blank(),
+                         panel.grid.minor = element_blank(),
+                         panel.background = element_blank(),
+                         axis.line = element_line(colour = "black"))+
+	labs(x='PRECAST clusters (k=18)',y='library size')
+dev.off()
