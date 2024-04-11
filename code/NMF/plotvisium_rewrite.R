@@ -194,7 +194,7 @@ plotVisium <- function(spe,
         guide <- ifelse(is.numeric(plt_df[[fill]]), guide_colorbar, guide_legend)
         points <- list(
             guides(fill = guide(
-                title = NULL, order = 1, override.aes = list(col = NA, size = 3))),
+                title = fill, order = 1, override.aes = list(col = NA, size = 3))),
             geom_point(shape = 21, size = 1, stroke = 0.25, alpha = 1))
         if (!is.null(highlight)) {
             plt_df$highlight <- as.factor(plt_df[[highlight]])
