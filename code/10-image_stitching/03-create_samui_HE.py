@@ -50,7 +50,7 @@ spe_path = here("processed-data", "10-image_stitching", "spe.h5ad")
 #   Read in AnnData and subset to this_donor
 spe = sc.read(spe_path)
 speP = spe[spe.obs['brnum'] == this_donor, :]
-
+#speP.obs.index = speP.obs.index.str.replace('Br2720', 'V12F14-051')
 
 #   Convert the sparse gene-expression matrix to pandas DataFrame, with the
 #   gene symbols as column names
