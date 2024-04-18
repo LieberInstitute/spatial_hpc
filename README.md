@@ -29,6 +29,24 @@ the same tissue blocks for measurement with the 10x Genomics 3’ gene
 expression platform . For each donor, we sorted on both and PI+NeuN+
 (n=26 total snRNA-seq libraries).
 
+## Interactive Websites
+
+All of these interactive websites are powered by open source software,
+namely:
+
+- 🔍 [`samui`](https://doi.org/10.1101/2023.01.28.525943)
+- 👀 [`iSEE`](https://doi.org/10.12688%2Ff1000research.14966.1)
+
+We provide the following interactive websites, organized by dataset with
+software labeled by emojis:
+
+- Visium (n = xx)
+  - 👀 TODO
+  - 🔍
+    [TODO](https://samuibrowser.com/from?url=data.libd.org/samuibrowser/&s=Br3942&s=Br8325&s=Br2720&s=Br2743&s=Br3942-VSPG&s=Br6423&s=Br6432&s=Br6471&s=Br6522&s=Br8325-VSPG&s=Br8492&s=Br8667)
+- snRNA-seq (n = xx)
+  - 👀 TODO
+
 ## JHPCE Internal links
 
 - JHPCE location:
