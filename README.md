@@ -34,7 +34,7 @@ expression platform . For each donor, we sorted on both and PI+NeuN+
 All of these interactive websites are powered by open source software,
 namely:
 
-- 🔍 [`samui`](https://doi.org/10.1101/2023.01.28.525943)
+- 🔍 [`samui`](http://dx.doi.org/10.1017/S2633903X2300017X)
 - 👀 [`iSEE`](https://doi.org/10.12688%2Ff1000research.14966.1)
 
 We provide the following interactive websites, organized by dataset with
