@@ -43,8 +43,9 @@ placed onto 4 capture areas (n=8 total capture areas) for measurement
 with the 10x Genomics Visium-SPG platform. (D) Tissue sections (2-4
 100μm cryosections per assay) from all ten donors were collected from
 the same tissue blocks for measurement with the 10x Genomics 3’ gene
-expression platform . For each donor, we sorted on both and PI+NeuN+
-(n=26 total snRNA-seq libraries).
+expression platform. For each donor, we sorted on both and PI+NeuN+
+(n=26 total snRNA-seq libraries). (This figure was created with
+[Biorender](https://biorender.com))
 
 ## Interactive Websites
 
@@ -60,8 +61,9 @@ software labeled by emojis:
 - Visium (n = 44)
   - 👀 <https://libd.shinyapps.io/pseudobulk_HPC/>
     - Provides tools for visualization of pseudobulked Visium data.
-  - 🔍
-    [TODO](https://samuibrowser.com/from?url=data.libd.org/samuibrowser/&s=Br3942&s=Br8325&s=Br2720&s=Br2743&s=Br3942-VSPG&s=Br6423&s=Br6432&s=Br6471&s=Br6522&s=Br8325-VSPG&s=Br8492&s=Br8667)
+  - 🔍 [HPC Samui
+    browser](https://samuibrowser.com/from?url=data.libd.org/samuibrowser/&s=Br3942&s=Br8325&s=Br2720&s=Br2743&s=Br3942-VSPG&s=Br6423&s=Br6432&s=Br6471&s=Br6522&s=Br8325-VSPG&s=Br8492&s=Br8667)
+    - Provides interactive spot-level visualization of Visium data.
 - snRNA-seq (n = 26)
   - 👀 <https://libd.shinyapps.io/HPC_snRNAseq_data/>
     - Provides tools for visualization of snRNA-seq data.
@@ -70,7 +72,8 @@ software labeled by emojis:
 
 All data, including raw FASTQ files and `SpaceRanger` processed data
 outputs, can be accessed via Gene Expression Omnibus (GEO) under
-accession XXXXXXXXXX. <cite other data access methods>
+accession
+[GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624).
 
 ## Contact
 
@@ -94,18 +97,11 @@ work!
   - `spaceranger`: `SpaceRanger` output files.
 - `raw-data`
   - `sample_info`: metadata about samples.
-
-Code for running [`GraphST`](https://doi.org/10.1038/s41467-023-36796-3)
-clustering pipeline can be found here:
-<https://github.com/JianingYao/SpatialHPC_graphST_multipleSample>
-
-<!-- ## Description of HPC data -->
-<!-- This is a description of data files for this project. -->
-<!-- - The `/spatial_hpc/raw-data/FASTQ/` contains FASTQ files for all experiments -->
-<!-- 1. The `MiSeq` and `NovaSeq` folders has softlinks to the fastqs of slides `V10B01−085` and `V10B01−086` -->
-<!-- 2. The `2022-04-12_SPag033122` folder has softlinks to the fastqs of slides `V11A20−297`, `V11L05−333`, `V11L05−335`, `V11L05−336`, `V11U08−081`, `V11U08−084`. -->
-<!-- - The `/spatial_hpc/raw-data/images/` contains tif files captured on CS2 for all slides -->
-<!-- - The `/spatial_hpc/raw-data/sample_info/` contains information of all brains, visium slides and their master excel sheets used in the study -->
+- `snRNAseq_HPC`: code, plots, and data for snRNA-seq analyses.
+- Code for running
+  [`GraphST`](https://doi.org/10.1038/s41467-023-36796-3) clustering
+  pipeline can be found here:
+  <https://github.com/JianingYao/SpatialHPC_graphST_multipleSample>
 
 This GitHub repository is organized along the [*R/Bioconductor-powered
 Team Data Science* group
