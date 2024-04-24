@@ -64,9 +64,9 @@ print(knee_lower_values)
 
 ##make sure e.out is mapped to knee_lower_values correctly
 find_eout_name <- function(log) {
-    # Extract sample name from the line that starts with "Running Sample:"
-    sample_line <- grep("Running Sample:", log, value = TRUE)
-    sample_name <- gsub("Running Sample: ", "", sample_line)
+    # Extract sample name from the line that starts with "Running sample_ID:"
+    sample_line <- grep("Running sample_ID:", log, value = TRUE)
+    sample_name <- gsub("Running sample_ID: ", "", sample_line)
     sample_name <- gsub(" \\(.+\\)$", "", sample_name)  # Remove trailing "(1/20)" or similar
     return(sample_name)
 }
@@ -86,8 +86,8 @@ drop_summary <- stack(map_int(e.out, nrow)) %>%
     rename(total_n = values) %>%
     left_join(stack(map_int(e.out, ~ sum(.x$FDR < FDR_cutoff, na.rm = TRUE))) %>%
                   rename(non_empty = values)) %>%
-    select(Sample = ind, total_n, non_empty) %>%
-    left_join(stack(knee_lower) %>% rename(Sample = ind, lower_cutoff = values))
+    select(sample_ID = ind, total_n, non_empty) %>%
+    left_join(stack(knee_lower) %>% rename(sample_ID = ind, lower_cutoff = values))
 
 write_csv(drop_summary, file = here("snRNAseq_hpc","processed-data", "build_sce", "drop_summary.csv"))
 
@@ -95,8 +95,8 @@ drop_summary %>%
     arrange(non_empty)
 
 summary(drop_summary$non_empty)
-# drop_summary$Sample[which.max(drop_summary$non_empty)]
-# Sample total_n non_empty lower_cutoff
+# drop_summary$sample_ID[which.max(drop_summary$non_empty)]
+# sample_ID total_n non_empty lower_cutoff
 # 1  14c-scp  810758      3221           NA
 # 2  24c-scp  908623      3602           NA
 # 3   2c-scp 1696635      4123           NA
@@ -127,14 +127,14 @@ summary(drop_summary$non_empty)
 # 3221    4732    5068    5453    5825   12385
 # > sum(drop_summary$non_empty)
 # [1] 141780
-# > drop_summary$Sample[which.max(drop_summary$non_empty)]
+# > drop_summary$sample_ID[which.max(drop_summary$non_empty)]
 # [1] 17c-scp
 
 drop_barplot <- drop_summary %>%
     mutate(empty = total_n - non_empty) %>%
     select(-total_n) %>%
-    pivot_longer(!Sample, names_to = "drop_type", values_to = "n_drop") %>%
-    ggplot(aes(x = Sample, y = n_drop, fill = drop_type)) +
+    pivot_longer(!sample_ID, names_to = "drop_type", values_to = "n_drop") %>%
+    ggplot(aes(x = sample_ID, y = n_drop, fill = drop_type)) +
     geom_col() +
     scale_y_continuous(trans = "log10") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -165,19 +165,19 @@ sce <- scuttle::addPerCellQC(
 #### Check for low quality nuc ####
 ## High mito
 # sce$high.mito.sample ## standard name?
-sce$high_mito <- isOutlier(sce$subsets_Mito_percent, nmads = 3, type = "higher", batch = sce$Sample)
+sce$high_mito <- isOutlier(sce$subsets_Mito_percent, nmads = 3, type = "higher", batch = sce$sample_ID)
 #FALSE   TRUE
 #125821  15959
 
 ## low library size
-sce$low_lib <- isOutlier(sce$sum, log = TRUE, type = "lower", batch = sce$Sample)
+sce$low_lib <- isOutlier(sce$sum, log = TRUE, type = "lower", batch = sce$sample_ID)
 table(sce$low_lib)
 # FALSE   TRUE
 #139660   2120
 
 ## low detected features
 # sce$qc.detected
-sce$low_genes <- isOutlier(sce$detected, log = TRUE, type = "lower", batch = sce$Sample)
+sce$low_genes <- isOutlier(sce$detected, log = TRUE, type = "lower", batch = sce$sample_ID)
 table(sce$low_genes)
 # FALSE   TRUE
 #137012   4768
@@ -200,7 +200,7 @@ table(sce$discard_auto)
 
 
 
-qc_t <- addmargins(table(sce$Sample, sce$discard_auto))
+qc_t <- addmargins(table(sce$sample_ID, sce$discard_auto))
 #           FALSE   TRUE    Sum
 #  10c-scp   5313    353   5666
 #  11c-scp   3995   1022   5017
@@ -267,12 +267,12 @@ round(100 * sweep(qc_t, 1, qc_t[, 3], "/"), 1)
 #### QC plots ####
 pdf(here("snRNAseq_hpc","plots", "QC_auto.pdf"), width = 21)
 ## Mito rate
-plotColData(sce, x = "Sample", y = "subsets_Mito_percent", colour_by = "high_mito") +
+plotColData(sce, x = "sample_ID", y = "subsets_Mito_percent", colour_by = "high_mito") +
     ggtitle("Mito Percent") #+
 #   facet_wrap(~ sce$round, scales = "free_x", nrow = 1)
 
 # ## low sum
-plotColData(sce, x = "Sample", y = "sum", colour_by = "low_lib") +
+plotColData(sce, x = "sample_ID", y = "sum", colour_by = "low_lib") +
     scale_y_log10() +
     ggtitle("Total UMIs") #+
 #  facet_wrap(~ sce$round, scales = "free_x", nrow = 1)
@@ -280,7 +280,7 @@ plotColData(sce, x = "Sample", y = "sum", colour_by = "low_lib") +
 #   geom_hline(yintercept = 1000) ## hline doesn't work w/ facet_wrap?
 
 # ## low detected
-plotColData(sce, x = "Sample", y = "detected", colour_by = "low_genes") +
+plotColData(sce, x = "sample_ID", y = "detected", colour_by = "low_genes") +
     scale_y_log10() +
     ggtitle("Detected genes") #+
 # geom_hline(yintercept = 500)+
@@ -308,17 +308,17 @@ good_samples<-colnames(attributes(sce$high_mito)$thresholds[,attributes(sce$high
 
 
 discard_mito <- isOutlier(sce$subsets_Mito_percent,
-                          type="higher", batch=sce$Sample,
-                          subset=sce$Sample %in% good_samples)
+                          type="higher", batch=sce$sample_ID,
+                          subset=sce$sample_ID %in% good_samples)
 
 #for detected and sum, we'll do NeuN and PI sorted separately due to differences in distributions for different sort strategies
 x<-c('11c-scp','13c-scp','15c-scp','18c-scp','19c-scp','21c-scp','23c-scp','2c-scp','33c-scp','39c-scp')
 y<-c('11c-scp','15c-scp','19c-scp','23c-scp','33c-scp','39c-scp')
 
-sce$low_genes <- ifelse(sce$Sample %in% x, sce$low_genes,
+sce$low_genes <- ifelse(sce$sample_ID %in% x, sce$low_genes,
                         ifelse(sce$detected <=1000,T,F))
 
-sce$low_lib <- ifelse(sce$Sample %in% y, sce$low_lib,
+sce$low_lib <- ifelse(sce$sample_ID %in% y, sce$low_lib,
                       ifelse(sce$sum <=1000,T,F))
 
 sce$high_mito<-discard_mito
@@ -336,7 +336,7 @@ table(sce$discard_semiauto)
 
 
 
-qc_t <- addmargins(table(sce$Sample, sce$discard_semiauto))
+qc_t <- addmargins(table(sce$sample_ID, sce$discard_semiauto))
 qc_t
 
 # FALSE   TRUE    Sum
@@ -404,12 +404,12 @@ round(100 * sweep(qc_t, 1, qc_t[, 3], "/"), 1)
 #
 pdf(here("snRNAseq_hpc","plots", "QC_semiauto.pdf"), width = 21)
 ## Mito rate
-plotColData(sce, x = "Sample", y = "subsets_Mito_percent", colour_by = "high_mito") +
+plotColData(sce, x = "sample_ID", y = "subsets_Mito_percent", colour_by = "high_mito") +
     ggtitle("Mito Percent") #+
 #   facet_wrap(~ sce$round, scales = "free_x", nrow = 1)
 
 # ## low sum
-plotColData(sce, x = "Sample", y = "sum", colour_by = "low_lib") +
+plotColData(sce, x = "sample_ID", y = "sum", colour_by = "low_lib") +
     scale_y_log10() +
     ggtitle("Total UMIs") #+
 #  facet_wrap(~ sce$round, scales = "free_x", nrow = 1)
@@ -417,7 +417,7 @@ plotColData(sce, x = "Sample", y = "sum", colour_by = "low_lib") +
 #   geom_hline(yintercept = 1000) ## hline doesn't work w/ facet_wrap?
 
 # ## low detected
-plotColData(sce, x = "Sample", y = "detected", colour_by = "detected") +
+plotColData(sce, x = "sample_ID", y = "detected", colour_by = "detected") +
     scale_y_log10() +
     ggtitle("Detected genes") +
     facet_wrap(~ sce$sort, scales = "free_x", nrow = 1)
@@ -444,7 +444,7 @@ set.seed(328)
 
 colData(sce)$doubletScore <- NA
 
-for (i in splitit(sce$Sample)) {
+for (i in splitit(sce$sample_ID)) {
     sce_temp <- sce[, i]
     ## To speed up, run on sample-level top-HVGs - just take top 1000
     normd <- logNormCounts(sce_temp)
@@ -491,12 +491,12 @@ quantile(sce$doubletScore, probs=seq(0,1,by=0.01),3)
 
 dbl_df <- colData(sce) %>%
     as.data.frame() %>%
-    select(Sample, doubletScore)
+    select(sample_ID, doubletScore)
 
 dbl_box_plot <- dbl_df %>%
-    ggplot(aes(x = reorder(Sample, doubletScore, FUN = median), y = doubletScore)) +
+    ggplot(aes(x = reorder(sample_ID, doubletScore, FUN = median), y = doubletScore)) +
     geom_boxplot() +
-    labs(x = "Sample") +
+    labs(x = "sample_ID") +
     geom_hline(yintercept = 2.75, color = "red", linetype = "dashed") +
     coord_flip()
 
@@ -506,7 +506,7 @@ dbl_density_plot <- dbl_df %>%
     ggplot(aes(x = doubletScore)) +
     geom_density() +
     labs(x = "doublet score") +
-    facet_grid(Sample ~ .) +
+    facet_grid(sample_ID ~ .) +
     theme_bw()
 
 ggsave(dbl_density_plot, filename = here(plot_dir, "doublet_scores_desnity.png"), height = 17)
@@ -516,7 +516,7 @@ save(sce, file = here::here("snRNAseq_hpc","processed-data", "sce", "sce_no_empt
 
 ## Save out sample info for easy access
 sample_info <- pd %>%
-    group_by(Sample, file_id, region, subject, round) %>%
+    group_by(sample_ID, file_id, region, subject, round) %>%
     summarize(
         n = n(),
         n_high_mito = sum(high_mito),
@@ -531,7 +531,7 @@ n_boxplot <- sample_info %>%
     ggplot(aes(x = round, y = n, color = round)) +
     geom_boxplot(outlier.shape = NA) +
     geom_point() +
-    ggrepel::geom_text_repel(aes(label = Sample), color = "black") +
+    ggrepel::geom_text_repel(aes(label = sample_ID), color = "black") +
     my_theme +
     theme(legend.position = "None")
 

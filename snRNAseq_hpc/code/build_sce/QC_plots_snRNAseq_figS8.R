@@ -97,7 +97,7 @@ sce <- logNormCounts(sce)
 
 ##make violin showing SYT1 vs #det genes
 pdf(file=here::here('plots','figures','supp_figures','SYT1_vs_detected_violin_snRNAseq.pdf'),w=4,h=3)
-p1<-plotColData(sce, x = "Sample", y = "detected",
+p1<-plotColData(sce, x = "sample_ID", y = "detected",
                 colour_by = "SYT1",point_alpha=1,point_size=0.001) +
     scale_y_log10() + ylab('detected genes')+xlab('sample')+
     facet_wrap(~sce$sort,scales='free_x')+
@@ -148,14 +148,14 @@ ggcells(sce, mapping=aes(x=cluster, y=detected,fill=neuron)) +
 dev.off()
 ###UMAPS
 ##cluster first
-pdf(file=here::here('plots','figures','supp_figures','UMAP_initialClusters_preDropSample17.pdf'),h=6,w=6)
+pdf(file=here::here('plots','figures','supp_figures','UMAP_initialClusters_preDropsample_ID17.pdf'),h=6,w=6)
 p<-plotUMAP(sce,text_by='cluster',colour_by='cluster',point_size=0.75,text_size=7)+theme(text=element_text(size=16))
 rasterize(p,dpi=500)
 dev.off()
 
 
 ##neurons
-pdf(file=here::here('plots','figures','supp_figures','UMAP_neuronClusters_preDropSample17.pdf'),h=6,w=6)
+pdf(file=here::here('plots','figures','supp_figures','UMAP_neuronClusters_preDropsample_ID17.pdf'),h=6,w=6)
 p<-plotUMAP(sce,text_by='cluster',colour_by='neuron',point_size=0.75,text_size=7)+
     theme(text=element_text(size=16))+
     scale_color_manual(values=c('blue','#006000'))+labs(color='neuron')
@@ -164,7 +164,7 @@ dev.off()
 
 
 ##detected
-pdf(file=here::here('plots','figures','supp_figures','UMAP_detectedGenes_preDropSample17.pdf'),h=6,w=6)
+pdf(file=here::here('plots','figures','supp_figures','UMAP_detectedGenes_preDropsample_ID17.pdf'),h=6,w=6)
 p<-plotUMAP(sce,text_by='cluster',colour_by='detected',point_size=0.75,text_size=7,point_alpha=1)+
     theme(text=element_text(size=16))+scale_color_distiller(
         type = "seq",
@@ -176,7 +176,7 @@ dev.off()
 ###Make violin with discard
 ##make violin showing SYT1 vs #det genes
 pdf(file=here::here('plots','figures','supp_figures','discard_round2_violin_snRNAseq.pdf'),w=4,h=3)
-p1<-plotColData(sce, x = "Sample", y = "detected",
+p1<-plotColData(sce, x = "sample_ID", y = "detected",
                 colour_by = "discard",point_alpha=1,point_size=0.001) +
     scale_y_log10() + ylab('detected genes')+xlab('sample')+
     facet_wrap(~sce$sort,scales='free_x')+

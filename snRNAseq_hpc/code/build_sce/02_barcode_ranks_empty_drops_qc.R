@@ -15,11 +15,11 @@ sample_i <- as.integer(args[[1]])
 #### Load & Subset raw data ####
 load(here("snRNAseq_hpc","processed-data", "sce", "sce_raw.rda"), verbose = TRUE)
 
-samples <- unique(sce$Sample)
+samples <- unique(sce$sample_ID)
 sample_run <- samples[[sample_i]]
-message("Running Sample: ", sample_run, " (", sample_i, "/", length(samples), ")")
+message("Running sample_ID: ", sample_run, " (", sample_i, "/", length(samples), ")")
 
-sce <- sce[, sce$Sample == sample_run]
+sce <- sce[, sce$sample_ID == sample_run]
 message("ncol:", ncol(sce))
 
 #### Run barcodeRanks to find knee ####
@@ -103,7 +103,7 @@ droplet_elbow_plot <- as.data.frame(bcRanks) %>%
  labs(
     x = "Barcode Rank",
     y = "Total UMIs",
-    title = paste("Sample", sample_run),
+    title = paste("sample_ID", sample_run),
     subtitle = n_cell_anno,
     color = paste("FDR <", FDR_cutoff)
   ) +
