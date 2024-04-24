@@ -1,3 +1,7 @@
+### Notes
+## The following code was adapted from `ggspavis` to change alpha of plotted points and change facetWrap() parameters
+# Original function: https://rdrr.io/github/lmweber/ggspavis/man/plotVisium.html
+
 #' plotVisium
 #'
 #' Plots for spatially resolved transcriptomics data from the 10x Genomics

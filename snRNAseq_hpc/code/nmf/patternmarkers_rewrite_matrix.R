@@ -1,4 +1,7 @@
-
+### Notes
+# The following code was adapted from the patternMarkers() function from `CoGAPS` to accept as input a matrix instead of a `CoGAPSObject`
+# Additionally, matrix is not normalized before pattern marker calculation because RcppML already normalizes patterns
+# Original function: https://rdrr.io/bioc/CoGAPS/man/patternMarkers-methods.html
 patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold, axis,n)
 {
     ## check inputs to the function
@@ -76,13 +79,7 @@ patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold
         patternsByMarker <- colnames(markerScores)[sapply(min_indices, `[`, 1)]
         markersByPattern <- sapply(colnames(markerScores), USE.NAMES = TRUE, simplify = FALSE,
                                    function(pattern) rownames(markerScores)[which(patternsByMarker == pattern)])
-        ###subset markers by pattern such that only those genes in the top 50% of norm expression vals are considered (filter lowly expressed genes)
-        for(i in 1:length(markersByPattern)){
-            topGenes<-normedMatrix[order(normedMatrix[,i],decreasing=T),]
-            topGenes<-topGenes[c(1:nrow(topGenes)/30),]
-            markersByPattern[[i]]<-markersByPattern[[i]][markersByPattern[[i]] %in% rownames(topGenes)]
-        }
-    }
+     }
 
     else if (threshold == "flex") {
         # Assign genes to a pattern if they are among the three lowest values for that gene
@@ -123,20 +120,4 @@ patternMarkers <- function(featureLoadingsMatrix, sampleFactorsMatrix, threshold
         "TopRankedGenes" = topRankedGenes
     ))
 }
-
-
-
-
-cvnmf<-cross_validate_nmf(
-    logcounts(sce),
-    ranks=c(5,10,50,100,125,150,200),
-    n_replicates = 2,
-    tol = 1e-03,
-    maxit = 100,
-    verbose = 3,
-    L1 = 0.1,
-    L2 = 0,
-    threads = 0,
-    test_density = 0.2
-)
 

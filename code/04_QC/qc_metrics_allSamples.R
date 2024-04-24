@@ -17,6 +17,9 @@ gtf <-
 gtf <- gtf[gtf$type == "gene"]
 names(gtf) <- gtf$gene_id
 
+##load spe
+load(here("processed-data", "02_build_spe", "spe_basic.Rdata"), verbose = TRUE)
+
 ## Match the genes
 match_genes <- match(rownames(spe), gtf$gene_id)
 stopifnot(all(!is.na(match_genes)))
@@ -28,7 +31,7 @@ mcols(gtf) <- mcols(gtf)[, c("source", "type", "gene_id", "gene_version", "gene_
 rowRanges(spe) <- gtf[match_genes]
 
 #### Compute QC metrics ####
-load(here("processed-data", "02_build_spe", "spe_basic.Rdata"), verbose = TRUE)
+
 dim(spe)
 # [1]  31483 191136
 length(table(spe$sample_id))
@@ -128,7 +131,7 @@ session_info()
 # tz       US/Eastern
 # date     2023-10-09
 # pandoc   3.1.3 @ /jhpce/shared/community/core/conda_R/4.3/bin/pandoc
-# 
+#
 # ─ Packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 # package              * version   date (UTC) lib source
 # abind                  1.4-5     2016-07-21 [2] CRAN (R 4.3.1)
@@ -237,7 +240,7 @@ session_info()
 # withr                  2.5.0     2022-03-03 [2] CRAN (R 4.3.1)
 # XVector                0.40.0    2023-04-25 [2] Bioconductor
 # zlibbioc               1.46.0    2023-04-25 [2] Bioconductor
-# 
+#
 # [1] /users/enelson/R/4.3
 # [2] /jhpce/shared/community/core/conda_R/4.3/R/lib64/R/site-library
 # [3] /jhpce/shared/community/core/conda_R/4.3/R/lib64/R/library
