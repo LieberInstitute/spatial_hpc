@@ -390,8 +390,8 @@ sce$broad.cell.class<-factor(
 
 ###split up the layer 2/3s
 sce$fine.cell.class<-factor(ifelse(sce$superfine.cell.class %in% c('L2/3.1','L2/3.5'),'L2/3.PrS.PaS',
-                            ifelse(sce$fine.type %in% c('L2/3.2','L2/3.4','L2/3.6','L2/3.3'),'L2/3.PrS.Ent',
-                            as.character(sce$fine.cellclass))),
+                            ifelse(sce$superfine.cell.class %in% c('L2/3.2','L2/3.4','L2/3.6','L2/3.3'),'L2/3.PrS.Ent',
+                            as.character(sce$fine.cell.class))),
                             levels=c('GC','CA2-4','CA1/ProS','Sub.1','Sub.2',
                                      'L6/6b','L5/6','L2/3.PrS.PaS','L2/3.PrS.Ent',
                                      'HATA','Amy','Thal','Cajal',
