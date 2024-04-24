@@ -29,7 +29,7 @@ names(palette) <- levels(sce$fine.cell.class)
 
 
 ##cut amy, thal nuclei to avoid obscuring within-HPC marker genes
-sce<-sce[,!fine.cell.class %in% c('Amy','Thal','GABA.PENK')]
+sce<-sce[,!sce$fine.cell.class %in% c('Amy','Thal','GABA.PENK')]
 sce$fine.cell.class<-droplevels(sce$fine.cell.class)
 sce$superfine.cell.class<-droplevels(sce$superfine.cell.class)
 
