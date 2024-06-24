@@ -221,12 +221,6 @@ mod<-registration_model(
     var_registration = "fine.cell.class"
 )
 
-cors<-registration_block_cor(
-    sce_pseudo,
-    mod,
-    var_sample_id = "sample_ID"
-)
-
 reg<-registration_stats_enrichment(
     sce_pseudo,
     block_cor=cors,
@@ -269,12 +263,6 @@ mod<-registration_model(
     sce_pseudo,
     covars = c('round','sex','age_scaled'),
     var_registration = "mid.cell.class"
-)
-
-cors<-registration_block_cor(
-    sce_pseudo,
-    mod,
-    var_sample_id = "sample_ID"
 )
 
 reg<-registration_stats_enrichment(
