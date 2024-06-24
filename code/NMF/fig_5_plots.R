@@ -129,7 +129,10 @@ top1<-go[[1]]$Description[order(go[[1]]$p.adjust)][1:5]
 index1<-which(go[[1]]$Description %in% top1)
 go[[1]]<-subset_enrichResult(go[[1]],index1)
 
-top2<-go[[2]]$Description[order(go[[2]]$p.adjust)][1:5]
+##subsetting manually to exclude redundant terms
+top2<-c('acyl-CoA metabolic process','organic acid catabolic process',
+        'L-aspartate transmembrane transport','amino acid metabolic process',
+        'L-glutamate transmembrane transport')
 index2<-which(go[[2]]$Description %in% top2)
 go[[2]]<-subset_enrichResult(go[[2]],index2)
 

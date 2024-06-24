@@ -277,7 +277,7 @@ dev.off()
 
 ###go dotplot astro
 pdf(file=here::here('plots','figures','supp_figures','supp_figures_nmf','astro_go_dotplot.pdf'),h=12,w=6)
-merged<-list(apm$nmf76,apm$nmf79,apm$nmf81)
+merged<-list(go$nmf76,go$nmf79,go$nmf81)
 names(merged)<-c('nmf76','nmf79','nmf81')
 merged<-merge_result(merged)
 dotplot(merged,showCategory=3)+scale_fill_distiller(
@@ -287,14 +287,14 @@ dotplot(merged,showCategory=3)+scale_fill_distiller(
 dev.off()
 
 ###GO plots
-apm1<-apm[c(2, 3, 4, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45, 46, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 64, 67, 68, 69, 70, 71, 72, 73, 76, 77, 78, 79, 80, 81, 82, 83, 84, 86, 88, 89, 90, 91, 92, 93)]
-apm2<-apm[!names(apm) %in% names(apm1)]
+go1<-go[c(2, 3, 4, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45, 46, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 64, 67, 68, 69, 70, 71, 72, 73, 76, 77, 78, 79, 80, 81, 82, 83, 84, 86, 88, 89, 90, 91, 92, 93)]
+go2<-go[!names(go) %in% names(go1)]
 
-apm1<-merge_result(apm1)
-apm2<-merge_result(apm2)
+go1<-merge_result(go1)
+go2<-merge_result(go2)
 
 pdf(file=here::here('plots','figures','supp_figures','supp_figures_nmf','noncelltype_goplots.pdf'),h=11,w=8.5)
-dotplot(apm2,showCategory=1)+theme(axis.text.y=element_text(size=6),axis.text.x=element_text(size=6,angle=90))
+dotplot(go2,showCategory=1)+theme(axis.text.y=element_text(size=6),axis.text.x=element_text(size=6,angle=90))
 dev.off()
 
 

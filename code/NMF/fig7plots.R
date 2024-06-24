@@ -136,43 +136,20 @@ pdf(file=here::here('plots','figures','figure_7','rgb_nongcs.pdf'),h=3.9,w=3.9)
 plotVisiumRGB(speb,yellow ='nmf91',cyan ='nmf13',pink='nmf20',image=F,highlight='neuron_cell_body',values=c('grey40','black'))
 dev.off()
 
-
-#######go dotplot########
-##subset to patterns of interest
-go<-go[c('nmf91','nmf20','nmf13')]
-
-
-##get top terms
-top1<-c("sterol biosynthetic process","secondary alcohol metabolic process","response to peptide hormone")
-index1<-which(go[[1]]$Description %in% top1)
-go[[1]]<-subset_enrichResult(go[[1]],index1)
-
-top2<-c("modulation of chemical synaptic transmission","regulation of trans-synaptic signaling","regulation of synaptic plasticity")
-index2<-which(go[[2]]$Description %in% top2)
-go[[2]]<-subset_enrichResult(go[[2]],index2)
-
-top3<-c("regulation of trans-synaptic signaling","modulation of chemical synaptic transmission","regulation of small GTPase mediated signal transduction","Ras protein signal transduction","small GTPase mediated signal transduction")
-index3<-which(go[[3]]$Description %in% top3)
-go[[3]]<-subset_enrichResult(go[[3]],index3)
-
-merged<-merge_result(go)
-
-pdf(file=here::here('plots','figures','figure_7','dotplot.pdf'),h=10,w=5.4)
-dotplot(merged,includeAll=T)+scale_fill_distiller(
-    type = "seq",
-    palette = rev('Greys'),
-    direction=-1)
-dev.off()
+IQSEC2
+SHANK3
+KCNN3
 
 ############heatmap###########
-genesplot<-c("SMAD9", "ECE2","CNGB1","FAT4",
-             'GALNT13','C8orf34','ZMAT4','ACVR1C',
-             'SAMD4A','ELOVL5','FOS','JUN',
-             'SORCS3','PTPRO','BDNF','RASGRF1',
-             'PDZD2','CAMKK1',"RTN4RL1",'RASAL1')
+genesplot<-c('PROX1',
+            "SMAD9", "GRP", "ECE2","CNGB1","FAT4",
+            'GALNT13','ZMAT4','ACVR1C','PTCHD1','TGFA',
+            'JUN','FOS','ELOVL5','EGR1','NR4A1','NR4A3','RHEB',
+            'SORCS3','BDNF','ETV5','RASGRF1','VGF','MICAL2','NPTX2',
+             'PDZD2','NCOR2','DLGAP3','CAMKK1','SEMA5B','KCNQ2','SHANK1')
 
-pdf(file=here::here('plots','figures','figure_7','gene_heatmap.pdf'),h=2,w=6)
-pheatmap(t(x@w[genesplot,c(10,14,91,20,13)]),
+pdf(file=here::here('plots','figures','figure_7','gene_heatmap_final.pdf'),h=7,w=5)
+pheatmap(x@w[genesplot,c(10,14,91,20,13)],
          cluster_rows=F,cluster_cols=F,breaks=seq(0,0.002,0.002/100),
          color=colorRampPalette(brewer.pal(n = 7, name ="Greys"))(100))
 dev.off()
