@@ -70,10 +70,13 @@ software labeled by emojis:
 
 ## Data Access
 
-All data, including raw FASTQ files and `SpaceRanger` processed data
-outputs, can be accessed via Gene Expression Omnibus (GEO) under
-accession
-[GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624).
+All data, including raw FASTQ files and `SpaceRanger`/`CellRanger`
+processed data outputs, can be accessed via Gene Expression Omnibus
+(GEO) under accessions
+[GSE264692](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264692)
+(SRT) and
+[GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624)
+(snRNA-seq).
 
 ## Contact
 
