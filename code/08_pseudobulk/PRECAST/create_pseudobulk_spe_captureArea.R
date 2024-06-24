@@ -182,7 +182,7 @@ spe_pseudo$age_scaled<-scales::rescale(spe_pseudo$age,to=c(0,1))
 spe_pseudo$slide<-factor(spe_pseudo$slide)
 mod<-registration_model(
     spe_pseudo,
-    covars = c('sex','slide','brnum'),
+    covars = c('sex','age_scaled','slide'),
     var_registration = "broad.domain"
 )
 
@@ -205,7 +205,7 @@ reg<-registration_stats_enrichment(
 rega<-registration_stats_anova(
     spe_pseudo,
     block_cor=cors,
-    covars = c('sex','age_scaled','dateImg'),
+    covars = c('sex','age_scaled','slide'),
     var_registration = "broad.domain",
     var_sample_id = "sample_id",
     gene_ensembl = 'gene_id',
