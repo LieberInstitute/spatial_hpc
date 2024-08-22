@@ -73,48 +73,61 @@
 #       #  scale_color_identity()
 # }
 
-plotVisiumRGB<-function(spe, vars, ...) {
+plotVisiumRGB<-function(spe, pink = NULL, yellow = NULL, blue = NULL, green = NULL, red = NULL, cyan = NULL, ...) {
     plt_df <- data.frame(colData(spe), spatialCoords(spe))
 
-    if (any(!vars %in% names(plt_df))) {
-        stop("One or more variables not found in the data.")
+    plt_df <- data.frame(colData(spe), spatialCoords(spe))
+
+    # Check for the presence of variables in colData and rownames and rescale them
+    variables <- list(pink = pink, yellow = yellow, blue = blue, green = green, red = red, cyan = cyan)
+    for (var_name in names(variables)) {
+        var <- variables[[var_name]]
+        if (!is.null(var)) {
+            if (var %in% names(plt_df)) {
+                # Variable found in colData
+                plt_df[[var]] <- scales::rescale(plt_df[[var]], to = c(0, 1))
+            } else if (var %in% rownames(spe)) {
+                # Variable found in rownames, add corresponding logcounts row to plt_df
+                logcounts_row <- logcounts(spe)[var, ]
+                plt_df[[var]] <- scales::rescale(logcounts_row, to = c(0, 1))
+            } else {
+                stop(paste("Variable", var, "not found in the data."))
+            }
+        }
     }
 
-    if (length(vars) > 4) {
-        stop("A maximum of 4 variables is allowed.")
+    # Initialize RGB channels
+    plt_df$R <- plt_df$G <- plt_df$B <- rep(0, nrow(plt_df))
+
+    # Assign channels based on selected colors
+    if (!is.null(pink)) {
+        plt_df$R <- plt_df[[pink]]
+        plt_df$B <- plt_df[[pink]]
     }
 
-    for (var in vars) {
-        plt_df[[var]] <- scales::rescale(plt_df[[var]], to = c(0, 1))
+    if (!is.null(yellow)) {
+        plt_df$R <- plt_df$R + (1 - plt_df$R) * plt_df[[yellow]]
+        plt_df$G <- plt_df$G + (1 - plt_df$G) * plt_df[[yellow]]
     }
 
-    num_vars <- length(vars)
-
-    # Initialize channels based on the number of variables:
-    # Magenta (R and B channels)
-    # Yellow (R and G channels)
-    # Green (G channel)
-    # Blue (B channel)
-
-    if (num_vars >= 1) {
-        plt_df$R <- plt_df[[vars[1]]] # Part of Magenta and Yellow
-        plt_df$B <- plt_df[[vars[1]]] # Part of Magenta
+    if (!is.null(blue)) {
+        plt_df$B <- plt_df$B + (1 - plt_df$B) * plt_df[[blue]]
     }
 
-    if (num_vars >= 2) {
-        plt_df$R <- plt_df$R + (1 - plt_df$R) * plt_df[[vars[2]]] # Yellow component
-        plt_df$G <- plt_df[[vars[2]]] # Green
+    if (!is.null(green)) {
+        plt_df$G <- plt_df$G + (1 - plt_df$G) * plt_df[[green]]
     }
 
-    if (num_vars >= 3) {
-        plt_df$G <- plt_df$G + (1 - plt_df$G) * plt_df[[vars[3]]] # Green component
+    if (!is.null(red)) {
+        plt_df$R <- plt_df$R + (1 - plt_df$R) * plt_df[[red]]
     }
 
-    if (num_vars == 4) {
-        plt_df$B <- plt_df$B + (1 - plt_df$B) * plt_df[[vars[4]]] # Blue component
-
+    if (!is.null(cyan)) {
+        plt_df$G <- plt_df$G + (1 - plt_df$G) * plt_df[[cyan]]
+        plt_df$B <- plt_df$B + (1 - plt_df$B) * plt_df[[cyan]]
     }
 
+    # Create RGB color
     spe$RGB <- rgb(plt_df$R, plt_df$G, plt_df$B, maxColorValue = 1)
     plotVisium(spe, fill = "RGB", ...)+scale_fill_identity()
 }
