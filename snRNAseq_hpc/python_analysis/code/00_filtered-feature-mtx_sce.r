@@ -1,6 +1,7 @@
 library(DropletUtils)
 library(SingleCellExperiment)
 library(dplyr)
+library(here)
 
 sampleNum = c(1:2,10:27,32,33,36:39)
 sampleNames = paste0(sampleNum, "c-scp")
@@ -31,7 +32,6 @@ save(sce, file="snRNAseq_hpc/python_analysis/processed-data/sce_filtered-matrix.
 
 # limit to adata QC
 strict = read.csv("snRNAseq_hpc/python_analysis/processed-data/filtered-matrix_obs_postqc-strict.csv") %>%
-  tidyr::separate(br_samp, c("brnum","sample"), sep=" ", remove=FALSE) %>%
   mutate(key=paste(sample, barcode, sep="_"))
 length(intersect(sce$key, strict$key))
 

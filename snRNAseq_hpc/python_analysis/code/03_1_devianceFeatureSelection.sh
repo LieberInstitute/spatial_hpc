@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --mem=80G
+#SBATCH --mem=30G
 #SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=jthom338@jh.edu
-#SBATCH --job-name=check_clust
-#SBATCH --output=./snRNAseq_hpc/python_analysis/code/%x_%j.log
+#SBATCH --job-name=devianceFeatureSelection
+#SBATCH --output=./snRNAseq_hpc/python_analysis/code/logs/%x_%j.log
 
 echo "**** JHPCE info ****"
 echo "User: ${USER}"
@@ -15,4 +15,4 @@ echo "n Tasks: ${SLURM_NTASKS}"
 date
 module load conda_R/devel
 module list
-Rscript ./snRNAseq_hpc/python_analysis/code/02_2_check-bioc-clust_adata-filters.r
+Rscript ./snRNAseq_hpc/python_analysis/code/03_1_devianceFeatureSelection.r
