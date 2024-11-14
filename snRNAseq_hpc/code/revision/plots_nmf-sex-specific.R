@@ -1,0 +1,41 @@
+library(SingleCellExperiment)
+library(dplyr)
+library(ggplot2)
+library(scater)
+
+set.seed(123)
+
+#load sce
+load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_final.rda'))
+
+#load nmfs
+load(file=here::here('snRNAseq_hpc','processed-data','NMF','nmf_final.rda'))
+loads<-x@w
+no_expr <- which(rowSums(loads) == 0)
+loads <- loads[-no_expr, ]
+
+#check for sex
+xist = sapply(colnames(loads), function(x) {
+  tmp = names(sort(loads[,x], decreasing=T)[1:50])
+  "XIST" %in% tmp
+})
+xist[xist] #just 1, nmf37
+
+chrY = sapply(colnames(loads), function(x) {
+  tmp = names(sort(loads[,x], decreasing=T)[1:50])
+  "UTY" %in% tmp
+})
+chrY[chrY] #just 1, nmf28
+
+plotReducedDim(sce, dimred="UMAP", color_by="nmf37", point_size=.1)+
+  scale_color_viridis_c(option="F", direction=-1)+
+  ggtitle("nmf37")+theme_bw()+theme(plot.title=element_text(size=18))
+plotReducedDim(sce, dimred="UMAP", color_by="XIST", point_size=.1, by_exprs_values = "logcounts")+
+  scale_color_viridis_c(option="F", direction=-1)+
+  ggtitle("XIST")+theme_bw()+theme(plot.title=element_text(size=18))
+plotReducedDim(sce, dimred="UMAP", color_by="nmf28", point_size=.1)+
+  scale_color_viridis_c(option="F", direction=-1)+
+  ggtitle("nmf28")+theme_bw()+theme(plot.title=element_text(size=18))
+plotReducedDim(sce, dimred="UMAP", color_by="USP9Y", point_size=.1, by_exprs_values = "logcounts")+
+  scale_color_viridis_c(option="F", direction=-1)+
+  ggtitle("USP9Y")+theme_bw()+theme(plot.title=element_text(size=18))
