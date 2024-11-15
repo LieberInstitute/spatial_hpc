@@ -88,3 +88,40 @@ plist <- lapply(srt.degs, function(x) {
 )
 
 do.call(gridExtra::grid.arrange, c(plist, ncol=1))
+
+#all superfine cell classes heatmap
+sce$superfine.cell.class = factor(sce$superfine.cell.class,
+                                  levels=c("GC.3","GC.1","GC.2","GC.4","GC.5",
+                                           "MC","CA3.1","CA3.2","CA2","CA1","ProS","Sub.1","Sub.2",
+                                           "L6.1","L6.2","L6b","L5.2","L5.1",
+                                           "L2/3.3","L2/3.6","L2/3.4","L2/3.2",
+                                           "L2/3.1","L2/3.5",
+                                           "HATA","AHi.1","AHi.2","AHi.3","AHi.4","Thal",
+                                           "Cajal","CXCL14","HTR3A","VIP",
+                                           "LAMP5.CGE","LAMP5.MGE","CRABP1",
+                                           "C1QL1","PV.FS","SST","CORT","PENK",
+                                           "Astro.1","Astro.2","Astro.3",
+                                           "Oligo.1","Oligo.2","OPC","COP","Micro.1","Micro.2","Macro/Tcell",
+                                           "Ependy","CP.1","CP.2","CP.3","Endo.2","Endo.1","PC/SMC","VLMC"))
+plotGroupedHeatmap(sce, features=c("ACVR2A","PROX1","ACVR1","ACVR1C","BDNF",
+                                   "CARTPT","TRPS1","TSPAN18","KIT",#"NUP93",
+                                   "FIBCD1","COL5A2","CHRM5","CHST8",
+                                   "FN1","COL24A1","CNTN6",
+                                   "NXPH3","EFHD2","TLE4","SATB2",
+                                   "CBLN2","RORB",
+                                   "CBLN4","NTNG1",
+                                   "TESPA1","TSHZ2","VIPR2","SH3RF2",
+                                   "ESR1","PTGER3","NPFFR2","PAPPA2","TCF7L2",
+                                   "TP73","RELN",
+                                   "ADARB2","VIP","LAMP5","C1QL1","NXPH1","LHX6","TAC1","NPY","PENK",
+                                   "DOCK7","TNC",
+                                   "PLP1","BCAS1","LHFPL3","GPR17",
+                                   "P2RY12","APBB1IP",
+                                   "CFAP299","DNAH11","SLC13A4",
+                                   "IGFBP7","MECOM","DLC1","LAMA2"
+                                   ),
+                   group="superfine.cell.class",
+                   scale=T, center=T,
+                   cluster_rows=F, cluster_cols=F, zlim=c(-2,4),
+                   colour=c("#FFF",RColorBrewer::brewer.pal(9,"Greys")),#viridisLite::magma(n=30)[c(rep(1,5),2:30)],
+                   angle_col=90) 
