@@ -162,21 +162,25 @@ ggplot(plot.df2, aes(x=graphst.f, y=cluster_f, fill=log10.n))+
 
 ################## Manual annotation
 
-importCSV.names = grep("csv$", list.files("processed-data/manual_annotation_csv/"), value=T)[1:15]
-importCSV = paste0("processed-data/manual_annotation_csv/",importCSV.names)
-names(importCSV) = importCSV.names
-test = do.call(rbind, lapply(importCSV, read.csv)) %>% tibble::rownames_to_column(var="source")
-setdiff(unique(paste(spe$slide, spe$array, sep="_")), unique(test$sample_id))
+#importCSV.names = grep("csv$", list.files("processed-data/manual_annotation_csv/"), value=T)[1:15]
+#importCSV = paste0("processed-data/manual_annotation_csv/",importCSV.names)
+#names(importCSV) = importCSV.names
+#test = do.call(rbind, lapply(importCSV, read.csv)) %>% tibble::rownames_to_column(var="source")
+#setdiff(unique(paste(spe$slide, spe$array, sep="_")), unique(test$sample_id))
 #ok, even if I recompile the results this slide is still missing
 
 
 load("processed-data/manual_annotation_csv/compiled_annotation_before_match.Rdata")
-colSums(is.na(csv2))
-table(csv2$sample_id)
-setdiff(unique(paste(spe$slide, spe$array, sep="_")), unique(csv2$sample_id))
+#colSums(is.na(csv2))
+#table(csv2$sample_id)
+#setdiff(unique(paste(spe$slide, spe$array, sep="_")), unique(csv2$sample_id))
 #"V12F14-051_C1" "V12F14-051_D1" "V12F14-051_A1" "V12F14-051_B1"
-length(setdiff(csv2$spot_name, spe$key))
-
+#length(setdiff(csv2$spot_name, spe$key))
+test = read.csv("processed-data/manual_annotation_csv/spatialLIBD_ManualAnnotation_2023-04-12_Br2720_all.csv") %>%
+  mutate(sample_id= as.character(factor(sample_id, levels=c("Br2720_A1","Br2720_B1","Br2720_C1","Br2720_D1"),
+                            labels=c("V12F14-051_A1","V12F14-051_B1","V12F14-051_C1","V12F14-051_D1"))),
+         spot_name=paste(spot_name, sample_id, sep="_")) 
+csv2 = rbind(csv2, test)
 
 matching = left_join(as.data.frame(colData(spe)[,c(1:4,15:18,48:51,54)]), csv2[,2:3], by=c("key"="spot_name"))
 colSums(is.na(matching))
