@@ -13,9 +13,17 @@ plotReducedDim(sce, dimred="UMAP", color_by="sort", point_size=.3)+
 plotReducedDim(sce[,sce$sort=="PI+NeuN+"], dimred="UMAP", color_by="sort", point_size=.5)+
   scale_color_manual(values=c("#64a65a"))
 
-#spot plots and manual annotation markers
+################ spot plots and manual annotation markers
 load(here::here('processed-data','06_clustering','PRECAST','spe_precast_HE_domain.rda'))
 table(spe$VSPG)
+
+#spot plot for MBP
+sub = spe[,spe$sample_id %in% c("Br3942_V11L05-333_C1","Br3942_V11L05-333_D1")]
+plotSpots(sub, annotate=rownames(spe)[rowData(spe)$gene_name=="MBP"],
+          sample_id="sample_id", assay="logcounts")+
+  scale_color_gradient(low="grey90", high="black")+
+  theme_void()+theme(strip.text=element_blank())
+
 
 spe$amy<-ifelse(spe$sample_id %in%
                   c('Br6423_V10B01-085_C1','Br6432_V10B01-086_B1') &

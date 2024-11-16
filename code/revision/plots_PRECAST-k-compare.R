@@ -69,28 +69,53 @@ setdiff(unique(paste(spe$slide, spe$array, sep="_")), unique(csv2$sample_id))
 #"V12F14-051_C1" "V12F14-051_D1" "V12F14-051_A1" "V12F14-051_B1"
 length(setdiff(csv2$spot_name, spe$key))
 
+#add donor
+test = read.csv("processed-data/manual_annotation_csv/spatialLIBD_ManualAnnotation_2023-04-12_Br2720_all.csv") %>%
+  mutate(sample_id= as.character(factor(sample_id, levels=c("Br2720_A1","Br2720_B1","Br2720_C1","Br2720_D1"),
+                                        labels=c("V12F14-051_A1","V12F14-051_B1","V12F14-051_C1","V12F14-051_D1"))),
+         spot_name=paste(spot_name, sample_id, sep="_"))
 
-#matching = left_join(as.data.frame(colData(spe)[,c(1:4,60,15,48,58,59,62)]), csv2[,2:3], by=c("key"="spot_name"))
-#precast only (below)
-matching = left_join(as.data.frame(colData(spe)[,c(1:4,15,48,52:56)]), csv2[,2:3], by=c("key"="spot_name"))
-colSums(is.na(matching))
-table(as.character(matching[is.na(matching$ManualAnnotation),"sample_id"]))
+#combine
+csv2 = rbind(csv2, test)
 
-match2 = filter(matching, !is.na(ManualAnnotation)) %>% 
-  mutate(ManualAnnotation.f=factor(ManualAnnotation, levels=c("THAL","CTX","SUB","PCL-CA1","PCL-CA3","CA4","GCL",
-                                                              "SGZ","ML","SL","SR","SLM","SO",
-                                                              "WM","CP")))
+#a handful of un-annotated manual spots so need to subset
+dim(spe) #31483 150917
+spe$spot_id = paste(sapply(strsplit(rownames(colData(spe)), "_"), function(x) x[[1]]), spe$slide, spe$array, sep="_")
+spe.manual = spe[,spe$spot_id %in% csv2$spot_name]
+dim(spe.manual) #31483 150520
+
+rownames(csv2) = csv2$spot_name
+csv2 = csv2[spe.manual$spot_id,]
+identical(spe.manual$spot_id, csv2$spot_name)
+
+spe.manual$ManualAnnotation = csv2$ManualAnnotation
 
 man.pal = c("THAL"="#1e1eff","CTX"="#5ffffb", "SUB"="#add294", "PCL-CA1"="#00dc00", 
              "PCL-CA3"="#00a000", "CA4"="#B0BF1A",
              "GCL"="#005000", "SGZ"="#dfa56e", "ML"="#c1c1c1", "SL"="#444444", "SR"="#828E84", "SLM"="tan4",
              "SO"="#A698AE", "WM"="#ff3ffc", "CP"="#00006a")
 
-ggplot(match2, aes(x="", fill=ManualAnnotation.f))+
+ggplot(as.data.frame(colData(spe.manual)), aes(x="", fill=ManualAnnotation))+
   geom_bar(stat="count", position="fill")+
   scale_fill_manual(values=man.pal)+
   facet_wrap(vars(k18.f), ncol=5)+theme_void()+
-  coord_polar(theta = "y")+labs(title="PRECAST k=18 cluster")
+  coord_polar(theta = "y")+labs(title="PRECAST k=18 cluster")+
+  theme(aspect.ratio=.8, legend.position="none")
+
+#legend for pies
+ggplot(cbind.data.frame("y"=c(rep(1,4), rep(2,3), rep(3,6), rep(4,2)), 
+                        "x"=c(seq(from=1, by=.2, length.out=4),
+                              seq(from=1, by=.2, length.out=3),
+                              seq(from=1, by=.2, length.out=6),
+                              seq(from=1, by=.2, length.out=2)),
+                        "labels"=names(man.pal)),
+       aes(x=x, y=y, color=factor(labels, levels=names(man.pal))))+
+  geom_point(size=3)+scale_color_manual(values=man.pal)+
+  geom_text(aes(label=labels), nudge_x = .03, hjust=0, color="black", size=4)+
+  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.2)))+
+  theme_void()+
+  theme(legend.position="none",
+        plot.margin=unit(c(1,.2,1,.2),"cm"))
 
 
 ################ spot plots
@@ -114,10 +139,44 @@ plotSpots(test, annotate="k16.f", sample_id="sample_id",
           point_size=.5)+
   scale_color_manual(values=k16.pal)+theme_void()+ggtitle("k=16")
 
+#legend
+ggplot(cbind.data.frame("y"=c(1:9, 1:7), "x"=c(rep(1,9), rep(1.25,7)),
+                        "labels"=names(k16.pal)),
+       aes(x=x, y=y, color=factor(labels, levels=names(k16.pal))))+
+  geom_point(size=3)+scale_color_manual(values=k16.pal)+
+  geom_text(aes(label=labels), nudge_x = .06, hjust=0, color="black", size=4)+
+  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.4)))+#theme_bw()+
+  theme_void()+
+  theme(legend.position="none",
+        plot.margin=unit(c(1,.2,1,.2),"cm"))
+
 plotSpots(test, annotate="k17.f", sample_id="sample_id",
           point_size=.5)+
   scale_color_manual(values=k17.k18.pal)+theme_void()+ggtitle("k=17")
 
+#legend
+ggplot(cbind.data.frame("y"=c(1:9, 1:8), "x"=c(rep(1,9), rep(1.25,8)),
+                        "labels"=setdiff(names(k17.k18.pal),"18")),
+       aes(x=x, y=y, color=factor(labels, 
+                                  levels=setdiff(names(k17.k18.pal),"18"))))+
+  geom_point(size=3)+scale_color_manual(values=k17.k18.pal)+
+  geom_text(aes(label=labels), nudge_x = .06, hjust=0, color="black", size=4)+
+  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.4)))+#theme_bw()+
+  theme_void()+
+  theme(legend.position="none",
+        plot.margin=unit(c(1,.2,1,.2),"cm"))
+
 plotSpots(test, annotate="k18.f", sample_id="sample_id",
           point_size=.5)+
   scale_color_manual(values=k17.k18.pal)+theme_void()+ggtitle("k=18")
+
+#legend
+ggplot(cbind.data.frame("y"=c(1:9, 1:9), "x"=c(rep(1,9), rep(1.25,9)),
+                        "labels"=names(k17.k18.pal)),
+       aes(x=x, y=y, color=factor(labels, levels=names(k17.k18.pal))))+
+  geom_point(size=3)+scale_color_manual(values=k17.k18.pal)+
+  geom_text(aes(label=labels), nudge_x = .06, hjust=0, color="black", size=4)+
+  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.4)))+#theme_bw()+
+  theme_void()+
+  theme(legend.position="none",
+        plot.margin=unit(c(1,.2,1,.2),"cm"))
