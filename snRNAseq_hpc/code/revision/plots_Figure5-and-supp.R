@@ -284,12 +284,16 @@ gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 
 
 p1 <- plotReducedDim(sce, dimred="UMAP", color_by="CHST9", point_size=.1)+
-  scale_color_viridis_c(option="F", direction=-1)+labs(color="CHST9")
+  #scale_color_viridis_c(option="F", direction=-1)
+  scale_color_gradient(low="grey90", high="black")+labs(color="CHST9")
 p2 <- plotReducedDim(sce, dimred="UMAP", color_by="SORCS3", point_size=.1)+
-  scale_color_viridis_c(option="F", direction=-1)+labs(color="SORCS3")
+  #scale_color_viridis_c(option="F", direction=-1)
+  scale_color_gradient(low="grey90", high="black")+labs(color="SORCS3")
 p3 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="CHST9", point_size=.1)+
-  scale_color_viridis_c(option="F", direction=-1)+labs(color="CHST9")
+  #scale_color_viridis_c(option="F", direction=-1)
+  scale_color_gradient(low="grey90", high="black")+labs(color="CHST9")
 p4 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="SORCS3", point_size=.1)+
-  scale_color_viridis_c(option="F", direction=-1)+labs(color="SORCS3")
+  #scale_color_viridis_c(option="F", direction=-1)
+  scale_color_gradient(low="grey90", high="black")+labs(color="SORCS3")
 
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)

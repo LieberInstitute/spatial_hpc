@@ -1,5 +1,6 @@
 library(SpatialExperiment)
 library(scater)
+library(ggspavis)
 library(dplyr)
 library(ggplot2)
 set.seed(123)
@@ -72,9 +73,9 @@ intersect(genes, rowData(spe)[nnSVG,"gene_name"])
 setdiff(genes, rowData(spe)[nnSVG,"gene_name"])
 
 
-tmp = spe[,spe$sample_id=="Br6471_V11L05-335_C1"]
+#tmp = spe[,spe$sample_id=="Br6471_V11L05-335_C1"]
 tmp = spe[,spe$sample_id=="Br3942_V11L05-333_D1"]
-library(ggspavis)
+
 p1 <- plotSpots(tmp, annotate=rownames(spe)[rowData(spe)$gene_name=="MOBP"], assay_name="logcounts",
                 pal=c("grey90","black"))+
   theme_void()+ggtitle("MOBP")
