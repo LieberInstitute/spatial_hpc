@@ -7,7 +7,7 @@ library(org.Hs.eg.db)
 set.seed(123)
 
 #load nmfs
-load(file="snRNAseq_hpc/processed-data/NMF/'nmf_final.rda")
+load(file="snRNAseq_hpc/processed-data/NMF/nmf_final.rda")
 loads<-x@w
 no_expr <- which(rowSums(loads) == 0)
 loads <- loads[-no_expr, ]

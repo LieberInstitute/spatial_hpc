@@ -3,6 +3,7 @@ library(dplyr)
 library(ggplot2)
 library(ggspavis)
 library(scater)
+library(gridExtra)
 
 set.seed(123)
 
@@ -13,49 +14,131 @@ load("plots/spatial_palette_final.rda")
 sub1 = spe[,spe$sample_id %in% c("V11L05-333_A1","V11L05-333_C1")] #
 sub1$facet_row = ifelse(sub1$sample_id=="V11L05-333_A1","r1","r2")
 
-plotVisium(sub1, spots=T, annotate="nmf15", highlight="domain",
-           facets="sample_id", image = FALSE)+coord_cartesian()+
+p1 <- plotVisium(sub1, spots=T, annotate="nmf15", highlight="domain",
+           facets="sample_id", image = FALSE, point_size=.8)+coord_cartesian()+
   facet_grid(rows=vars(facet_row), scales="free")+
   scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="grey90",high="black", limits=c(0,max(spe$nmf15)),
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf15)),
                       labels=function(x) format(x, scientific=T, digits=1))+
   theme(legend.text = element_text(size = 8), 
         strip.text=element_blank(), aspect.ratio=1,
-        panel.spacing=unit(5,'points'),plot.margin=unit(c(0,0,0,0), "pt"))
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
 
-plotVisium(sub1, spots=T, annotate="nmf32", highlight="domain",
-           facets="sample_id", image = FALSE)+coord_cartesian()+
+p2 <- plotVisium(sub1, spots=T, annotate="nmf32", highlight="domain",
+           facets="sample_id", image = FALSE, point_size=.8)+coord_cartesian()+
   facet_grid(rows=vars(facet_row), scales="free")+
   scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="grey90",high="black", limits=c(0,max(spe$nmf32)),
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf32)),
                       labels=function(x) format(x, scientific=T, digits=1))+
   theme(legend.text = element_text(size = 8), 
         strip.text=element_blank(), aspect.ratio=1,
-        panel.spacing=unit(5,'points'),plot.margin=unit(c(0,0,0,0), "pt"))
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
 
-plotVisium(sub1, spots=T, annotate="nmf40", highlight="domain",
-           facets="sample_id", image = FALSE)+coord_cartesian()+
+p3 <- plotVisium(sub1, spots=T, annotate="nmf40", highlight="domain",
+           facets="sample_id", image = FALSE, point_size=.8)+coord_cartesian()+
   facet_grid(rows=vars(facet_row), scales="free")+
   scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="grey90",high="black", limits=c(0,max(spe$nmf40)),
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf40)),
                       labels=function(x) format(x, scientific=T, digits=1))+
   theme(legend.text = element_text(size = 8), 
         strip.text=element_blank(), aspect.ratio=1,
-        panel.spacing=unit(5,'points'),plot.margin=unit(c(0,0,0,0), "pt"))
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
 
-plotVisium(sub1, spots=T, annotate="nmf54", highlight="domain",
-           facets="sample_id", image = FALSE)+coord_cartesian()+
+p4 <- plotVisium(sub1, spots=T, annotate="nmf54", highlight="domain",
+           facets="sample_id", image = FALSE, point_size=.8)+coord_cartesian()+
   facet_grid(rows=vars(facet_row), scales="free")+
   scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="grey90",high="black", limits=c(0,max(spe$nmf54)),
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf54)),
                       labels=function(x) format(x, scientific=T, digits=1))+
   theme(legend.text = element_text(size = 8), 
         strip.text=element_blank(), aspect.ratio=1,
-        panel.spacing=unit(5,'points'),plot.margin=unit(c(0,0,0,0), "pt"))
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+p5<-plotVisium(sub1, spots=T, annotate="nmf17", highlight="domain",
+           facets="sample_id", image = FALSE, point_size=.8)+coord_cartesian()+
+  facet_grid(rows=vars(facet_row), scales="free")+
+  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
+  scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf17)),
+                      labels=function(x) format(x, scientific=T, digits=1))+
+  theme(legend.text = element_text(size = 8),
+        strip.text=element_blank(), aspect.ratio=1,
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+pdf(file = "plots/revision/Fig6_Br3942_2-capture-area_domain-nmf.pdf",
+    width=9, height=8)
+grid.arrange(p1,p2,p3,p4,p5, ncol=3)
+dev.off()
+
+#Br3942 smaller
+p1<-plotVisium(sub1, spots=T, annotate="nmf15", highlight="domain",
+               facets="sample_id", image = FALSE, point_size=.5)+coord_cartesian()+
+  facet_grid(rows=vars(facet_row), scales="free")+
+  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
+  scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf15)),
+                      labels=function(x) format(x, scientific=T, digits=1))+
+  theme(legend.text = element_text(size = 6), legend.key.size = unit(10,"pt"),
+        legend.title = element_text(size=8),
+        strip.text=element_blank(), aspect.ratio=1,
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+p2<-plotVisium(sub1, spots=T, annotate="nmf32", highlight="domain",
+               facets="sample_id", image = FALSE, point_size=.5)+coord_cartesian()+
+  facet_grid(rows=vars(facet_row), scales="free")+
+  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
+  scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf32)),
+                      labels=function(x) format(x, scientific=T, digits=1))+
+  theme(legend.text = element_text(size = 6), legend.key.size = unit(10,"pt"),
+        legend.title = element_text(size=8),
+        strip.text=element_blank(), aspect.ratio=1,
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+p3<-plotVisium(sub1, spots=T, annotate="nmf40", highlight="domain",
+               facets="sample_id", image = FALSE, point_size=.5)+coord_cartesian()+
+  facet_grid(rows=vars(facet_row), scales="free")+
+  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
+  scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf40)),
+                      labels=function(x) format(x, scientific=T, digits=1))+
+  theme(legend.text = element_text(size = 6), legend.key.size = unit(10,"pt"),
+        legend.title = element_text(size=8),
+        strip.text=element_blank(), aspect.ratio=1,
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+p4<-plotVisium(sub1, spots=T, annotate="nmf54", highlight="domain",
+               facets="sample_id", image = FALSE, point_size=.5)+coord_cartesian()+
+  facet_grid(rows=vars(facet_row), scales="free")+
+  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
+  scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf54)),
+                      labels=function(x) format(x, scientific=T, digits=1))+
+  theme(legend.text = element_text(size = 6), legend.key.size = unit(10,"pt"),
+        legend.title = element_text(size=8),
+        strip.text=element_blank(), aspect.ratio=1,
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+p5<-plotVisium(sub1, spots=T, annotate="nmf17", highlight="domain",
+               facets="sample_id", image = FALSE, point_size=.5)+coord_cartesian()+
+  facet_grid(rows=vars(facet_row), scales="free")+
+  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
+  scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
+  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf17)),
+                      labels=function(x) format(x, scientific=T, digits=1))+
+  theme(legend.text = element_text(size = 6), legend.key.size = unit(10,"pt"),
+        legend.title = element_text(size=8),
+        strip.text=element_blank(), aspect.ratio=1,
+        panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
+
+pdf(file = "plots/revision/Fig6_Br3942_2-capture-area_domain-nmf_small.pdf",
+    width=6, height=5.35)
+grid.arrange(p1,p2,p3,p4,p5, ncol=3)
+dev.off()
 
 #3-donor single capture area plots for center
 spe$sub1 = spe$nmf40>((max(spe$nmf40)*.95)/5)
