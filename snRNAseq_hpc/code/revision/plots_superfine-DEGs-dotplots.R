@@ -35,7 +35,7 @@ hpc.genes <- c("FBLN5","CARTPT", #"MORC1", #MC
                "TRPS1","NUP93",
                "COL5A2",#"MCTP2",
                "CHST8",
-               "FN1",#Sub1
+               "FN1","TOX",#Sub1
                "CNTN6", "RPRM")
 hpc.plot <- plotDots(hpc, features=hpc.genes, group="superfine.cell.class", assay.type = "logcounts")+
   scale_color_gradient(low="grey90", high="black")+ggtitle("HPC")+
@@ -147,7 +147,7 @@ glia$superfine.cell.class = factor(glia$superfine.cell.class,
                        levels=c("Astro.2","Astro.3","Astro.1","Oligo.1","Oligo.2","OPC","COP",
                                 "Micro.1","Micro.2","Macro/Tcell","Ependy",
                                 "CP.1","CP.2","CP.3","Endo.2","Endo.1","PC/SMC","VLMC"))
-glia.genes= c("TNC","DOCK7","ETNPPL","RORB",
+glia.genes= c("TNC","DOCK7","ETNPPL",#"RORB",
               "PLP1","MOBP","MOG","BCAS1","LHFPL3",
               "GPR17",#COPs = differentiation committed, GPR17 from this paper: https://www.hznu.edu.cn/upload/resources/file/2023/09/18/7791590.pdf
               "P2RY12","APBB1IP",
@@ -179,13 +179,13 @@ c(length(hpc.genes),length(levels(hpc$superfine.cell.class))) #10,8
 
 
 #glia 23x18
-#amy (11,9) + hpc (10,8)
-mat1 = matrix(1, nrow=23, ncol=18)
-mat2 = cbind(rbind(matrix(2, nrow=10, ncol=8), rep(NA, 8)), cbind(rep(NA,11), matrix(3,nrow=11, ncol=9)))
+#amy (11,9) + hpc (11,8)
+mat1 = matrix(1, nrow=22, ncol=18)
+mat2 = cbind(matrix(2, nrow=11, ncol=9), matrix(3,nrow=11, ncol=9))
 
 plot1 = glia.plot
-plot2 = hpc.plot
-plot3 = amy.plot
+plot2 = amy.plot
+plot3 = hpc.plot
 
 left.mat = rbind(mat1, rep(NA, 18), mat2)
 
@@ -196,12 +196,12 @@ c(length(cort.genes),length(levels(cort$superfine.cell.class))) #18,11
 c(length(gaba.small.genes),length(levels(gaba.small$superfine.cell.class))) #16,11
 
 #next to that is cort on top of gaba small (34 tall, both 11 wide)
-mat3 = rbind(matrix(4, nrow=18, ncol=11), rep(NA, 11), matrix(5,nrow=16, ncol=11))
+mat3 = rbind(matrix(4, nrow=18, ncol=11), matrix(5,nrow=16, ncol=11))
 
 plot4 = cort.plot
 plot5 = gaba.small.plot
 
-top.mat = cbind(left.mat, rep(NA, 35), mat3)
+top.mat = cbind(left.mat, rep(NA, 34), mat3)
 
 #gaba big
 c(length(gaba.big.genes),length(levels(gaba.big$superfine.cell.class))) #10,12
