@@ -51,7 +51,7 @@ man.pal = c("THAL"="#1e1eff","CTX"="#5ffffb", "SUB"="#add294", "PCL-CA1"="#00dc0
             "SO"="#A698AE", "WM"="#ff3ffc", "CP"="#00006a")
 
 plotSpots(sub.manual, annotate="ManualAnnotation", pal=man.pal, point_size=1.5)+
-  theme_void()+theme(legend.position="none", aspect.ratio=1)
+  theme_void()+theme(legend.position="none", aspect.ratio=.8)
 
 k17.k18.pal = c("10"="#5ffffb","8"="#99ff99","1"="#61963d", "14"="#add294", "9"="#00dc00",
                 "3"="#85FF33", "7"="#00a000", "17"="#B0BF1A", "4"= "#005000", "2"= "#c1c1c1",
@@ -59,5 +59,5 @@ k17.k18.pal = c("10"="#5ffffb","8"="#99ff99","1"="#61963d", "14"="#add294", "9"=
                 "6"="#ff3ffc", "16"="#7a007a", "18"="#ff80fe", "12"="#00006a", "11"="#1e1eff")
 
 plotSpots(sub.manual, annotate="PRECAST_k18", pal=k17.k18.pal, point_size=1.5)+
-  theme_void()+theme(legend.position="none", aspect.ratio=1)
+  theme_void()+theme(legend.position="none", aspect.ratio=.8)
 
