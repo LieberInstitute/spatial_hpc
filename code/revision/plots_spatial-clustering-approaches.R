@@ -29,30 +29,17 @@ spe$spatial.cluster.f = factor(spe$spatial.cluster, levels=c(16,5,18,3,8,15,4,13
                                7,12,17,6,2
 ))
 
-
 plot.df = as.data.frame(colData(spe)[,c("cluster_f", "spatial.cluster.f")]) %>% 
-  group_by(domain) %>% add_tally(name="total.precast") %>%
-  group_by(domain, spatial.cluster.f, total.precast, .drop=FALSE) %>% tally() %>%
-  mutate(prop.precast=n/total.precast, prop.precast=ifelse(is.na(prop.precast), 0, prop.precast))
-
-ggplot(plot.df, aes(x=spatial.cluster.f, y=domain, fill=prop.precast))+
-  geom_tile()+
-  scale_fill_viridis_c(option="F", limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
-  labs(fill="prop. PRECAST\ndomain nuclei", y="PRECAST domain", x="BayesSpace cluster")+
-  theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
-                        legend.text=element_text(size=10))
-
-plot.df2 = as.data.frame(colData(spe)[,c("cluster_f", "spatial.cluster.f")]) %>% 
   group_by(cluster_f, spatial.cluster.f, .drop=FALSE) %>% 
   tally() %>% mutate(log10.n=log10(n+1))
 
-ggplot(plot.df2, aes(x=spatial.cluster.f, y=cluster_f, fill=log10.n))+
+p1 <- ggplot(plot.df, aes(x=spatial.cluster.f, y=cluster_f, fill=log10.n))+
   geom_tile()+
   scale_fill_gradient2(low="white", mid="skyblue",high="black", midpoint=2)+#median(plot.df2$log10.n))+
   #scale_fill_viridis_c(option="F")#, limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
-  labs(fill="log10(# spots)", y="PRECAST cluster", x="BayesSpace cluster")+
+  labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="BayesSpace cluster")+
   theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
-                        legend.text=element_text(size=10))
+                        legend.text=element_text(size=10), axis.title.y=element_blank())
 
 
 ################## GraphST
@@ -71,78 +58,8 @@ matching = left_join(as.data.frame(colData(spe))[,c("spot_id","brnum","PRECAST_k
 colSums(is.na(matching))
 colnames(matching)
 
-l1 = colnames(full.df)[7:13]
-names(l1) = l1
-lapply(l1, function(x) {
-  tmp = full.df[,c("domain",x)]
-  colnames(tmp) = c("domain","graphst")
-  group_by(tmp, graphst) %>% add_tally(name="total.cluster") %>%
-    group_by(domain, graphst, total.cluster) %>% tally() %>% ungroup() %>%
-    mutate(prop=n/total.cluster) %>% 
-    group_by(domain) %>% slice_max(n=3, prop) %>% filter(domain=="RHP")
-})
-
-#lamb_10 has best matching with rhp but cluster_lamb_0_1_and_1 is what is in the code as used:
+#cluster_lamb_0_1_and_1 is what is in the code as used:
 #https://github.com/LieberInstitute/spatial_hpc/blob/926d84cca64335bd1925600c7855a61c0de3b041/plots/06_clustering/GraphST/add_graphst_to_spe.R
-summ.df = group_by(full.df, cluster_lamb_0_1_and_1) %>% add_tally(name="total.cluster") %>%
-  group_by(domain, cluster_lamb_0_1_and_1, total.cluster) %>% tally() %>% ungroup() %>%
-  mutate(prop=n/total.cluster) %>% 
-  group_by(domain) %>% slice_max(n=3, prop)
-print(n=48, summ.df)
-
-identical(spe$spot_id, full.df$spot_id)
-spe$cluster_lamb_10 = full.df$cluster_lamb_10
-#lamb_10
-spe$graphst.f = factor(spe$cluster_lamb_10, levels= c(14,
-         2,
-         12,
-         3,
-         13,
-         16,#SUB.RHP 49%
-         11,#12,#RHP 54%
-         4,#GABA 43%
-         #NA,#SLSR 6 = 13%
-         6,7,
-         #6,#SR.SLM 53%
-         #NA,#SLM.SGZ
-         10,8,15,
-         9,#vascular
-         1,#choroid
-         5
-         ))
-#lamb_0_1_and_1
-spe$cluster_lamb_0_1_and_1 = full.df$cluster_lamb_0_1_and_1
-spe$graphst.f = factor(spe$cluster_lamb_0_1_and_1, levels= c(11,
-                                                             9,2,
-                                                             7,
-                                                             3,
-                                                             15,
-                                                             14,#SUB.RHP
-                                                             #7,#RHP
-                                                             4,#GABA
-                                                             8,#SL.SR
-                                                             6,#SR.SLM
-                                                             5,#SLM.SGZ
-                                                             13,12,16,
-                                                             1,10
-                                                             
-))
-
-matching$graphst.f = factor(matching$cluster_lamb_0_1_and_1, levels= c(11,
-                                                                 9,2,
-                                                                 7,
-                                                                 3,
-                                                                 15,
-                                                                 14,#SUB.RHP
-                                                                 #7,#RHP
-                                                                 4,#GABA
-                                                                 8,#SL.SR
-                                                                 6,#SR.SLM
-                                                                 5,#SLM.SGZ
-                                                                 13,12,16,
-                                                                 1,10
-))
-
 matching$graphst.f = factor(matching$cluster_lamb_0_1_and_1, levels=c(4,7,14,15,3,9,2,11,
                                                                       8,6,13,5,12,
                                                                       16,10,1
@@ -151,13 +68,13 @@ matching$graphst.f = factor(matching$cluster_lamb_0_1_and_1, levels=c(4,7,14,15,
 plot.df2 = group_by(matching[,c("cluster_f", "graphst.f")], cluster_f, graphst.f, .drop=FALSE) %>% 
   tally() %>% mutate(log10.n=log10(n+1))
 
-ggplot(plot.df2, aes(x=graphst.f, y=cluster_f, fill=log10.n))+
+p2 <- ggplot(plot.df2, aes(x=graphst.f, y=cluster_f, fill=log10.n))+
   geom_tile()+
   scale_fill_gradient2(low="white", mid="skyblue",high="black", midpoint=2)+#median(plot.df2$log10.n))+
   #scale_fill_viridis_c(option="F")#, limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
-  labs(fill="log10(# spots)", y="PRECAST cluster", x="GraphST cluster")+
+  labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="GraphST cluster")+
   theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
-                        legend.text=element_text(size=10))
+                        legend.text=element_text(size=10), axis.title.y=element_blank())
 
 
 ################## Manual annotation
@@ -182,36 +99,28 @@ test = read.csv("processed-data/manual_annotation_csv/spatialLIBD_ManualAnnotati
          spot_name=paste(spot_name, sample_id, sep="_")) 
 csv2 = rbind(csv2, test)
 
-matching = left_join(as.data.frame(colData(spe)[,c(1:4,15:18,48:51,54)]), csv2[,2:3], by=c("key"="spot_name"))
-colSums(is.na(matching))
+matching = left_join(as.data.frame(colData(spe)[,c(1:4,48,58,60)]), csv2[,2:3], by=c("spot_id"="spot_name"))
+colSums(is.na(matching)) #should only be 397
 table(as.character(matching[is.na(matching$ManualAnnotation),"sample_id"]))
 match2 = filter(matching, !is.na(ManualAnnotation)) %>% 
   mutate(ManualAnnotation.f=factor(ManualAnnotation, levels=c("THAL","CTX","SUB","PCL-CA1","PCL-CA3","CA4","GCL",
                                                               "ML","SR","SL","SGZ","SLM","SO",
                                                               "WM","CP")))
 
-
-plot.df = group_by(match2[,c("cluster_f", "ManualAnnotation.f")], cluster_f) %>% 
-  add_tally(name="total.precast") %>%
-  group_by(cluster_f, ManualAnnotation.f, total.precast, .drop=FALSE) %>% tally() %>%
-  mutate(prop.precast=n/total.precast, prop.precast=ifelse(is.na(prop.precast), 0, prop.precast))
-
-
-ggplot(plot.df, aes(x=ManualAnnotation.f, y=cluster_f, fill=prop.precast))+
-  geom_tile()+
-  scale_fill_viridis_c(option="F", limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
-  labs(fill="prop. PRECAST\ndomain nuclei", y="PRECAST domain", x="Manual cluster")+
-  theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
-                        legend.text=element_text(size=10))
-
-plot.df2 = group_by(match2[,c("cluster_f", "ManualAnnotation.f")], cluster_f, ManualAnnotation.f, .drop=FALSE) %>% 
+plot.df3 = group_by(match2[,c("cluster_f", "ManualAnnotation.f")], cluster_f, ManualAnnotation.f, .drop=FALSE) %>% 
   tally() %>% mutate(log10.n=log10(n+1))
 
-ggplot(plot.df2, aes(x=ManualAnnotation.f, y=cluster_f, fill=log10.n))+
+p3 <- ggplot(plot.df3, aes(x=ManualAnnotation.f, y=cluster_f, fill=log10.n))+
   geom_tile()+
   scale_fill_gradient2(low="white", mid="skyblue",high="black", midpoint=2)+#median(plot.df2$log10.n))+
   #scale_fill_viridis_c(option="F")#, limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
-  labs(fill="log10(# spots)", y="PRECAST cluster", x="Manual annotation")+
+  labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="Manual annotation")+
   theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
-                        legend.text=element_text(size=10))#,
+                        legend.text=element_text(size=10),
                         axis.text.x=element_text(angle=90, hjust=1))
+
+laymat = rbind(c(1,2,3),c(1,2,3),c(1,2,3),c(1,2,3),c(1,2,3),c(1,NA,NA))
+pdf(file = "plots/revision/clustering-approached_log10-spots_heatmap.pdf",
+    width=18, height=6)
+gridExtra::grid.arrange(p3,p1,p2, layout_matrix=laymat)
+dev.off()
