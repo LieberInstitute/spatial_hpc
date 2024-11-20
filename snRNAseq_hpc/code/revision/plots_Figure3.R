@@ -70,24 +70,31 @@ srt.degs <- c("KIT",#"COL5A2",#https://pmc.ncbi.nlm.nih.gov/articles/PMC311355/
               #"SLC5A5"
 )
 
+#snRNAseq violin plots
+sce$fine.cell.class = factor(sce$fine.cell.class, levels=levels(sce$fine.cell.class),
+                             labels=c(levels(sce$fine.cell.class)[1:7], "L2/3.1","L2/3.2",
+                                      levels(sce$fine.cell.class)[10:24]))
+
 vln.df = cbind.data.frame("fine.cell.class"=colData(sce)[,c("fine.cell.class")], as.matrix(t(logcounts(sce)[srt.degs,])))
+long.df = tidyr::pivot_longer(vln.df, all_of(srt.degs), names_to="marker.gene", values_to="expr") %>%
+  mutate(marker.gene=factor(marker.gene, levels=srt.degs))
 
 load(file=here::here('plots','snRNAseq_palettes.rda'))
-names(sn.fine.palette) = levels(vln.df$fine.cell.class)
+names(sn.fine.palette) = levels(sce$fine.cell.class)
 
-plist <- lapply(srt.degs, function(x) {
-  tmp = vln.df[,c("fine.cell.class",x)]
-  colnames(tmp) <- c("fine.cell.class","marker")
-  ggplot(tmp, aes(x=fine.cell.class, y=marker, fill=fine.cell.class))+
-    geom_violin(scale="width")+ggtitle(x)+
-    scale_fill_manual(values=sn.fine.palette)+
-    theme_bw()+theme(axis.text.x=element_blank(),#element_text(angle=90, hjust=1), 
-                     axis.title=element_blank(), 
-                     legend.position="none")
-}
-)
+p1 <- ggplot(long.df, aes(x=fine.cell.class, y=expr, fill=fine.cell.class))+
+  geom_violin(scale="width")+scale_fill_manual(values=sn.fine.palette)+
+  facet_wrap(vars(marker.gene), ncol=1, scale="free_y")+
+  theme_bw()+labs(y="Expression (logcounts)", x="")+
+  theme(legend.position="none", text=element_text(size=12), panel.grid=element_blank(),
+        axis.text.x=element_text(angle=90, hjust=1, vjust=.5), axis.title.x=element_blank(),
+        strip.text=element_text(size=12),
+        strip.background=element_rect(fill="white", color="transparent"))
 
-do.call(gridExtra::grid.arrange, c(plist, ncol=1))
+pdf(file = "snRNAseq_hpc/plots/revision/Fig3_sn-srt-degs.pdf",
+    width=5.5, height=7.7)
+p1
+dev.off()
 
 #all superfine cell classes heatmap
 sce$superfine.cell.class = factor(sce$superfine.cell.class,

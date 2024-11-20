@@ -37,20 +37,20 @@ spe$cluster = ifelse(spe$amy==TRUE, "Amygdala",spe$cluster)
 spe$cluster = ifelse(spe$thal==TRUE, "Thalamus",spe$cluster)
 
 #i don't need to include the marker genes cause those are in Fig 2D
-genes = c(#"SHOX2",
-          "TCF7L2",
+genes = c("SHOX2","TCF7L2",
           "GAD2","SST",
-          #"SLC17A6",
-          #"CDH22","OPRM1","CACNG4",
-          "RORB","CUX2",#"SATB2","TLE4",
-          "NTS","FN1",
-          "MPPED1","FIBCD1",
+          "OPRM1","CACNG4",
+          "SATB2","TLE4","TBR1",
+          "FN1",
+          "MPPED1","FIBCD1","COL5A2",
           "TSPAN18","NECTIN3","AMPH",
           #"SFRP2",
           "PROX1","SEMA5A",
           #"SOX2","SLC1A2",
           "MT-ND5","MT-ATP8","GFAP",
-          "MOG","MOBP","PLP1","PRLR","TTR"#,"PDGFRB","TPM2"
+          "MOG","MOBP","PLP1",
+	  "PDGFRB","TPM2",
+	  "PRLR","TTR"
           )
 
 spe$cluster_f = factor(spe$cluster, levels=c("Thalamus","GABA","Amygdala",
