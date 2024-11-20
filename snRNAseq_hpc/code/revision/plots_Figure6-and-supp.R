@@ -28,15 +28,15 @@ do.call(gridExtra::grid.arrange, c(plist, ncol=4))
 sce_subset = sce[,sce$mid.cell.class=="ExcN"]
 sce_subset$superfine.cell.class = droplevels(sce_subset$superfine.cell.class)
 
-ggplot(filter(as.data.frame(colData(sce_subset)), superfine.cell.class=="L6b"),
+tmp = sce_subset[,sce_subset$superfine.cell.class=="L6b"]
+ggplot(as.data.frame(colData(sce_tmp)),
        aes(x=nmf53, y=nmf65, color=nmf65>.00035))+
   geom_point()+theme_bw()+ggtitle("L6b only")
-tmp = sce_subset[,sce_subset$superfine.cell.class=="L6b"]
 tmp$nmf65pos = tmp$nmf65>.00035
 
 
-colData(sce_subset)$is_deep = ifelse(sce_subset$fine.cell.class %in% c("L5/6","L6/6b","Sub.1","Sub.2"), sce_subset$new.classes, "other")
-sce_deep = sce_subset[,sce_subset$is_deep!="other"]
+#sce_subset$is_deep = ifelse(sce_subset$fine.cell.class %in% c("L5/6","L6/6b","Sub.1","Sub.2"), sce_subset$superfine.cell.class, "other")
+sce_deep = sce_subset[,sce_subset$fine.cell.class %in% c("L5/6","L6/6b","Sub.1","Sub.2")]
 sce_deep$new.classes = as.character(sce_deep$superfine.cell.class)
 colData(sce_deep)[colnames(tmp)[tmp$nmf65pos],"new.classes"] = "L6b_nmf65"
 sce_deep$new.classes = factor(sce_deep$new.classes, levels=c("Sub.1","Sub.2","L6.1","L6b_nmf65","L6b","L6.2","L5.1","L5.2"))
@@ -101,9 +101,19 @@ plotDots(sce_deep, features=c("CDH8","GRIK1","PEX5L","ENOX1","TOX",#nmf40
                               "AL391117.1",#nmf65
                               "TENM3","SGCZ","NFIA","MARCH1","LRMDA"#nmf53
                               ), group="new.classes")+
-  scale_color_viridis_c(option="F", direction=-1)+
-  labs(title="Top nmf genes that are DEGs that support L6.1 as deep sub")+
-  theme(axis.text.x=element_text(angle=45, hjust=1), text=element_text(size=16))
+  scale_color_gradient(low="grey90", high="black")+
+  labs(size="prop. nuclei", color="Avg. expr.")+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), text=element_text(size=11))
+
+#tsne for supp
+gene.list <- c("COL24A1","TOX","TSHZ2","ZNF385D","AL391117.1","SGCZ")#,"NFIA")
+plist = lapply(gene.list, function(x)
+  plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3, by.assay.type = "logcounts")+
+    scale_color_gradient(low="grey90", high="black")+labs(color="")+ggtitle(x)+
+    theme(axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
+          plot.title=element_text(hjust=.5, size=11))
+)
+do.call(gridExtra::grid.arrange, c(plist, ncol=2))
 
 
 ##############################
@@ -120,24 +130,24 @@ sce_subset$new.cell.class = factor(sce_subset$plot.cell.class,
                                             "L2/3.2","L2/3.3","L2/3.6","L2/3.4"),
                                    labels=c("GC","CA2-4","HATA","Amy","Thal","Cajal","L2/3.5",
                                             "CA1","ProS",
-                                            "Sub.1","Sub.2","Sub.3","PaS",
-                                            "PAC.L6b","PAC.L6","PAC.CBLN2+","ENT.L5",
-                                            "ENT.sup4","ENT.sup3","ENT.sup2","ENT.sup1")
+                                            "Sub.1","Sub.2","Sub.3","PreS",
+                                            "RHP.L6b","RHP.L6","RHP.CBLN2+","ENT.L5",
+                                            "ENT.sup3","ENT.sup2b","ENT.sup2a","ENT.sup1")
 )
 
 new.class.palette = c("GC"="grey50","CA2-4"="grey50","HATA"="grey50","Amy"="grey50","Thal"="grey50","Cajal"="grey50","L2/3.5"="grey50",
-                       "CA1"="#984ea3","ProS"="#e41a1c","Sub.1"="#ff7f00","Sub.2"="#fdbf6f","Sub.3"="#fc4e2a","PaS"="#f768a1",
-                       "PAC.L6b"="#023858","PAC.L6"="#045a8d","ENT.L5"="#016c59","PAC.CBLN2+"="#a6bddb",
-                       "ENT.sup4"="#006837","ENT.sup3"="#78c679","ENT.sup2"="#00bb00","ENT.sup1"="#add294")
+                       "CA1"="#984ea3","ProS"="#e41a1c","Sub.1"="#ff7f00","Sub.2"="#fdbf6f","Sub.3"="#fc4e2a","PreS"="#f768a1",
+                       "RHP.L6b"="#023858","RHP.L6"="#045a8d","ENT.L5"="#016c59","RHP.CBLN2+"="#a6bddb",
+                       "ENT.sup3"="#006837","ENT.sup2b"="#78c679","ENT.sup2a"="#78c679","ENT.sup1"="#add294")
 #classic cortical markers
 plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
-	       features=c("SATB2","TLE4","CUX2","RORB","BCL11B","CBLN2"), x="new.cell.class", 
+	       features=c("SATB2","TLE4","CUX2","CBLN2","FN1","COL24A1"), x="new.cell.class", 
                color_by = "new.cell.class", point_size=.5)+
   scale_color_manual(values=new.class.palette)+
-  facet_wrap(vars(Feature), ncol=2)+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), 
+  facet_wrap(vars(Feature), ncol=2)+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5, size=12), 
                                           legend.position="none",text=element_text(size=14),
-                                          axis.title.x=element_blank())
-#DEGs from Fig3C
+                                          strip.text=element_text(size=14), axis.title.x=element_blank())
+#DEGs from Fig3C -- NO LONGER USED
 plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
                features=c("FN1","COL24A1","POU3F1","PART1","KCNH5","TESPA1"), x="new.cell.class", 
                color_by = "new.cell.class", point_size=.5)+
@@ -289,6 +299,8 @@ plotDots(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")],
                     "PLEKHG1","RASGEF1B","GUCA1C","SCN7A","SCUBE1",#"SNCAIP",
                     "FSTL5","AC008662.1","AL161629.1","MDFIC","WSCD1"),
          group = "new.cell.class")+
-  scale_color_viridis_c(option="F", direction=-1)+
+  scale_color_gradient(low="white", high="black")+
+  scale_size(limits=c(0,1))+
+  labs(size="Prop. nuclei",color="Avg. expr.")+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
         text=element_text(size=14), axis.title.x=element_blank())
