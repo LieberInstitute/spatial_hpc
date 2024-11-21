@@ -234,39 +234,26 @@ plotReducedDim(sce, dimred="UMAP", color_by="TTR", point_size=.1)+
 
 
 #donor bias in CP origin
+brnum.palette = c("#313695","#33a02c","#fb9a99","#ff7f00","#6a3d9a",
+                  "grey","#ffff99","#8dd3c7","#b2182b","grey40")
+names(brnum.palette) <- c("Br2720","Br2743","Br3942","Br6423","Br6432",
+                          "Br6471","Br6522","Br8325","Br8492","Br88667")
+
+filter(as.data.frame(colData(sce)), mid.cell.class=="CSF") %>% pull(brnum) %>% table()
 ggplot(filter(as.data.frame(colData(sce)), mid.cell.class=="CSF"),
        aes(x="", fill=brnum))+
   geom_bar(stat="count", position="fill", color="black")+
-  scale_fill_manual(values=c("#313695",#2720
-                             "#33a02c",#2743
-                             "#fb9a99",#3492
-                             "#ff7f00",#6423
-                             "#6a3d9a",#6432
-                             "grey",#6471
-                             "#ffff99",#6522
-                             "#8dd3c7",#8325
-                             "#b2182b",#8492
-                             "grey40" #8667
-  ))+labs(fill="Donor", title="snRNAseq")+
+  scale_fill_manual(values=brnum.palette)+labs(fill="Donor", title="snRNAseq")+
   coord_polar(theta="y")+theme_void()+
-  theme(plot.title=element_text(size=18), aspect.ratio=1)
+  theme(plot.title=element_text(size=18), aspect.ratio=.75)
 
+filter(as.data.frame(colData(spe)), domain=="Choroid") %>% pull(brnum) %>% table()
 ggplot(filter(as.data.frame(colData(spe)), domain=="Choroid"),
-       aes(x="", fill= factor(brnum, levels=levels(spe$brnum)[c(10,1:9)])))+
+       aes(x="", fill= brnum))+
   geom_bar(stat="count", position="fill", color="black")+
-  scale_fill_manual(values=c("#313695",#2720
-                             "#33a02c",#2743
-                             "#fb9a99",#3492
-                             "#ff7f00",#6423
-                             "#6a3d9a",#6432
-                             "grey",#6471
-                             "#ffff99",#6522
-                             "#8dd3c7",#8325
-                             "#b2182b",#8492
-                             "grey40" #8667
-  ))+labs(fill="Donor", title="SRT")+
+  scale_fill_manual(values=brnum.palette)+labs(fill="Donor", title="SRT")+
   coord_polar(theta="y")+theme_void()+
-  theme(plot.title=element_text(size=18), aspect.ratio=1)
+  theme(plot.title=element_text(size=18), aspect.ratio=.75)
 
 #nmf weights by donor and CP
 ggplot(mutate(as.data.frame(colData(sce)), is_CSF=mid.cell.class=="CSF"),

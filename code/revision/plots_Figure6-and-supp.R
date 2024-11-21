@@ -186,6 +186,23 @@ colData(spe)[spe$subiculum==F & spe$ca1==F & spe$ca3==F & spe$ENT_sup==T & spe$E
 colData(spe)[spe$subiculum==F & spe$ca1==F & spe$ca3==F & spe$ENT_sup==F & spe$ENT_L5==T,"binary_label"] = "ENT_L5"
 
 #binarized threshold supp
+#table
+n.tbl = as.data.frame(colData(spe)[,c("subiculum","ca1","ca3","ENT_sup","ENT_L5")]) %>%
+  mutate_all(as.numeric) %>%
+  group_by(subiculum, ca1, ca3, ENT_sup, ENT_L5) %>% tally()
+totals.row = c(sum(spe$subiculum),sum(spe$ca1),sum(spe$ca3),sum(spe$ENT_sup),sum(spe$ENT_L5),sum(n.tbl$n))
+names(totals.row) = colnames(n.tbl)
+n.tbl = rbind(n.tbl, totals.row)
+write.csv(n.tbl, "processed-data/revision/binarized-nmf_table.csv", row.names=F)
+
+#bar
+ggplot(as.data.frame(colData(spe)), aes(y=domain, fill=factor(binary_label, levels=names(binary.palette))))+
+  geom_bar(stat="count", position="stack")+theme_bw()+
+  scale_fill_manual(values=binary.palette)+labs(fill="", x="# spots")+
+  theme(text=element_text(size=14))
+
+
+#ignore below: creates violin plots that was more confusing than helpful
 cdata = as.data.frame(colData(spe))
 
 plot.df = bind_rows(mutate(filter(cdata, sub1==T), xax="Sub.1"),
