@@ -2,7 +2,7 @@ library(SingleCellExperiment)
 library(dplyr)
 library(ggplot2)
 library(scater)
-
+library(org.Hs.eg.db)
 set.seed(123)
 
 #load sce
@@ -21,11 +21,19 @@ xist = sapply(colnames(loads), function(x) {
 })
 xist[xist] #just 1, nmf37
 
-chrY = sapply(colnames(loads), function(x) {
+
+chr.loc <- org.Hs.egCHR
+ezid = mapIds(org.Hs.eg.db, keys=rownames(sce), keytype="SYMBOL", column="ENTREZID", multiVals = "first")
+names(ezid) = rownames(sce)
+ezid2 = ezid[!is.na(ezid)]
+test = as.list(chr.loc[ezid2])
+chrY = ezid2[grep('Y',test)]
+
+chrYgenes = sapply(colnames(loads), function(x) {
   tmp = names(sort(loads[,x], decreasing=T)[1:50])
-  "UTY" %in% tmp
+  names(chrY) %in% tmp
 })
-chrY[chrY] #just 1, nmf28
+colSums(chrYgenes) #just 1 pattern has more than 1 in top 50: nmf28
 
 plotReducedDim(sce, dimred="UMAP", color_by="nmf37", point_size=.1)+
   scale_color_viridis_c(option="F", direction=-1)+

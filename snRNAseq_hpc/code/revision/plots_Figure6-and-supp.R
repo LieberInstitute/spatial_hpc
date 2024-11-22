@@ -141,7 +141,7 @@ new.class.palette = c("GC"="grey50","CA2-4"="grey50","HATA"="grey50","Amy"="grey
                       "ENT.sup3"="#006837","ENT.sup2b"="#78c679","ENT.sup2a"="#78c679","ENT.sup1"="#add294")
 #classic cortical markers
 plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
-               features=c("SATB2","TLE4","CUX2","CBLN2","FN1","COL24A1"), x="new.cell.class", 
+               features=c("SATB2","TLE4","CUX2","FN1","COL24A1","TOX"), x="new.cell.class", 
                color_by = "new.cell.class", point_size=.5)+
   scale_color_manual(values=new.class.palette)+
   facet_wrap(vars(Feature), ncol=2)+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5, size=12), 
