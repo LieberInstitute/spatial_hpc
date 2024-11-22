@@ -167,71 +167,80 @@ dot.df2 = left_join(d3[,c("cell.type.mouse","condition","nmf","prop")],
 
 dot.df2$nmf_f = factor(dot.df2$nmf, levels=c("nmf91","nmf20","nmf55","nmf10","nmf14"))
 
-ggplot(dot.df2, aes(x=nmf_f, y=ylab_f, size=prop, color=scaled.avg))+
+p1 <- ggplot(dot.df2, aes(x=nmf_f, y=ylab_f, size=prop, color=scaled.avg))+
   geom_count()+theme_bw()+
   scale_size(range=c(0,3))+scale_color_viridis_c(option="F", direction=-1)+
-  labs(x="",y="")#+
-  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+  labs(x="",y="")+
+  theme(text=element_text(size=14), axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
 
+pdf(file = "snRNAseq_hpc/plots/revision/Fig5_small-dotplot.pdf",
+    width=4, height=6)
+p1
+dev.off()
 
 #################
 ## volcanoes
 #################
 
 nmf91.volcano = read.csv("snRNAseq_hpc/processed-data/revision/nmf91_sham-ecs_results.csv")
-ggplot(nmf91.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf91))+
+p1 <- ggplot(nmf91.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf91))+
   geom_point(size=2)+xlim(-6.6,6.6)+
   geom_point(data=slice_max(nmf91.volcano, n=50, nmf91), size=2)+
   geom_text_repel(data=filter(nmf91.volcano, nmf91>.0015, summary.logFC>1, -log10(FDR)>30),
                   aes(label=gene), color="black", min.segment.length = 0, force = 5,
-                  size=5)+
+                  size=4.5)+
   theme_bw()+scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
-  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12))
+  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12), legend.key.size = unit(10,"pt"), legend.box.spacing=unit(6,"pt"))
 
 nmf20.volcano = read.csv("snRNAseq_hpc/processed-data/revision/nmf20_sham-ecs_results.csv")
-ggplot(nmf20.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf20))+
+p2 <- ggplot(nmf20.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf20))+
   geom_point(size=2)+xlim(-6,6)+
   geom_point(data=slice_max(nmf20.volcano, n=150, nmf20), size=2)+
   geom_text_repel(data=filter(nmf20.volcano, nmf20>.00065, summary.logFC>1, -log10(FDR)>30),
                   #data=filter(nmf20.volcano, gene %in% c("SORCS3","PDE10A","HOMER1")),
                   aes(label=gene), color="black", min.segment.length = 0, force = 5,
-                  size=5)+
+                  size=4.5)+
   theme_bw()+scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
-  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12))
+  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12), legend.key.size = unit(10,"pt"), legend.box.spacing=unit(6,"pt"))
 
 nmf55.volcano = read.csv("snRNAseq_hpc/processed-data/revision/nmf55_sham-ecs_results.csv")
-ggplot(nmf55.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf55))+
+p3 <- ggplot(nmf55.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf55))+
   geom_point(size=2)+xlim(-4.2,4.2)+
   geom_point(data=slice_max(nmf55.volcano, n=150, nmf55), size=2)+
   geom_hline(aes(yintercept=-log10(.05)), lty=2, color="grey30")+
   geom_text_repel(data=filter(nmf55.volcano, nmf55>.0025, summary.logFC>0.5, FDR<.05),
                   aes(label=gene), color="black", min.segment.length = 0, force = 5, 
-                  max.overlaps=Inf, size=5)+
+                  max.overlaps=Inf, size=4.5)+
   theme_bw()+scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
   scale_y_continuous(trans=scales::pseudo_log_trans(base = 10))+
-  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12))
+  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12), legend.key.size = unit(10,"pt"), legend.box.spacing=unit(6,"pt"))
 
 nmf10.volcano = read.csv("snRNAseq_hpc/processed-data/revision/nmf10_sham-ecs_results.csv")
-ggplot(nmf10.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf10))+
+p4 <- ggplot(nmf10.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf10))+
   geom_point(size=2)+xlim(-6,6)+
   geom_point(data=slice_max(nmf10.volcano, n=100, nmf10), size=2)+
   geom_point(data=filter(nmf10.volcano, nmf10>.00065, summary.logFC< -1, -log10(FDR)>30), size=2)+
   geom_text_repel(data=filter(nmf10.volcano, nmf10>.00065, summary.logFC< -1, -log10(FDR)>30),
                   aes(label=gene), color="black", min.segment.length = 0, force = 5,
-                  size=5)+
+                  size=4.5)+
   theme_bw()+scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
-  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12))
+  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12), legend.key.size = unit(10,"pt"), legend.box.spacing=unit(6,"pt"))
 
 nmf14.volcano <- read.csv("snRNAseq_hpc/processed-data/revision/nmf14_sham-ecs_results.csv")
-ggplot(nmf14.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf14))+
+p5 <- ggplot(nmf14.volcano, aes(x=summary.logFC, y=-log10(FDR), color=nmf14))+
   geom_point(size=2)+xlim(-6,6)+
   geom_point(data=slice_max(nmf14.volcano, n=100, nmf14), size=2)+
   geom_point(data=filter(nmf14.volcano, gene %in% c("ACVR1C","BDNF","SGK1")), size=2)+
   geom_text_repel(data=filter(nmf14.volcano, nmf14>.0005, summary.logFC>1, -log10(FDR)>30),
                   aes(label=gene), color="black", min.segment.length = 0, force = 5,
-                  size=5)+
+                  size=4.5)+
   theme_bw()+scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
-  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12))
+  labs(x="log2FC (sham GCs vs ECS GCs)")+theme(text=element_text(size=12), legend.key.size = unit(10,"pt"), legend.box.spacing=unit(6,"pt"))
+
+pdf(file = "snRNAseq_hpc/plots/revision/Fig5_volcanoes.pdf",
+    width=13, height=7)
+grid.arrange(p1, p2, p3, p4, p5, ncol=3)
+dev.off()
 
 ##################################
 ######## GC subgroups plots

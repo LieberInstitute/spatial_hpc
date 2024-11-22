@@ -15,9 +15,9 @@ nmf.list = c("nmf15","nmf32","nmf40","nmf54","nmf84","nmf45","nmf27","nmf51","nm
 
 plist = lapply(nmf.list, function(x) 
   plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3)+
-  scale_color_viridis_c(option="F", direction=-1)+ggtitle(x)+
-  theme(legend.position="none", axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
-        plot.title=element_text(hjust=.5, size=18))
+    scale_color_viridis_c(option="F", direction=-1)+ggtitle(x)+
+    theme(legend.position="none", axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
+          plot.title=element_text(hjust=.5, size=18))
 )
 do.call(gridExtra::grid.arrange, c(plist, ncol=4))
 
@@ -100,7 +100,7 @@ plotDots(sce_deep, features=c("CDH8","GRIK1","PEX5L","ENOX1","TOX",#nmf40
                               "CNTN4","TSHZ2","ZNF385D","SEMA5A","LUZP2",#nmf54
                               "AL391117.1",#nmf65
                               "TENM3","SGCZ","NFIA","MARCH1","LRMDA"#nmf53
-                              ), group="new.classes")+
+), group="new.classes")+
   scale_color_gradient(low="grey90", high="black")+
   labs(size="prop. nuclei", color="Avg. expr.")+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), text=element_text(size=11))
@@ -136,12 +136,12 @@ sce_subset$new.cell.class = factor(sce_subset$plot.cell.class,
 )
 
 new.class.palette = c("GC"="grey50","CA2-4"="grey50","HATA"="grey50","Amy"="grey50","Thal"="grey50","Cajal"="grey50","L2/3.5"="grey50",
-                       "CA1"="#984ea3","ProS"="#e41a1c","Sub.1"="#ff7f00","Sub.2"="#fdbf6f","Sub.3"="#fc4e2a","PreS"="#f768a1",
-                       "RHP.L6b"="#023858","RHP.L6"="#045a8d","ENT.L5"="#016c59","RHP.CBLN2+"="#a6bddb",
-                       "ENT.sup3"="#006837","ENT.sup2b"="#78c679","ENT.sup2a"="#78c679","ENT.sup1"="#add294")
+                      "CA1"="#984ea3","ProS"="#e41a1c","Sub.1"="#ff7f00","Sub.2"="#fdbf6f","Sub.3"="#fc4e2a","PreS"="#f768a1",
+                      "RHP.L6b"="#023858","RHP.L6"="#045a8d","ENT.L5"="#016c59","RHP.CBLN2+"="#a6bddb",
+                      "ENT.sup3"="#006837","ENT.sup2b"="#78c679","ENT.sup2a"="#78c679","ENT.sup1"="#add294")
 #classic cortical markers
 plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
-	       features=c("SATB2","TLE4","CUX2","CBLN2","FN1","COL24A1"), x="new.cell.class", 
+               features=c("SATB2","TLE4","CUX2","CBLN2","FN1","COL24A1"), x="new.cell.class", 
                color_by = "new.cell.class", point_size=.5)+
   scale_color_manual(values=new.class.palette)+
   facet_wrap(vars(Feature), ncol=2)+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5, size=12), 
@@ -153,103 +153,57 @@ plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")],
                color_by = "new.cell.class", point_size=.5)+
   scale_color_manual(values=new.class.palette)+
   facet_wrap(vars(Feature), ncol=2, scales="free_y")+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), 
-                                          legend.position="none",text=element_text(size=14),
-                                          axis.title.x=element_blank())
+                                                           legend.position="none",text=element_text(size=14),
+                                                           axis.title.x=element_blank())
 
 ##############################
 ######### subiculum-focused DE
 ##############################
 
-#subiculum DE
-sce_sub = sce_subset[,sce_subset$superfine.cell.class %in% c("CA1","Sub.1","Sub.2","ProS","L6.1","L2/3.1")]
-sce_sub$superfine.cell.class = droplevels(sce_sub$superfine.cell.class)
-table(rowSums(counts(sce_sub)>0)>100)
-sce_sub = sce_sub[rowSums(counts(sce_sub)>0)>100,]
-sub.results = scran::findMarkers(sce_sub, group=sce_sub$superfine.cell.class, test="binom")
-
-filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.CA1>1) %>% nrow() #897
-filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.ProS>1) %>% nrow() #666
-filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.Sub.2>1) %>% nrow() #670
-filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.L6.1>1) %>% nrow() #1198
-filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.L2.3.1>1) %>% nrow() #1730
-
-sub.1.list <- list("CA1"=rownames(filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.CA1>1)),
-                   "ProS"=rownames(filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.ProS>1)),
-                   "Sub.2"=rownames(filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.Sub.2>1)),
-                   "L6.1"=rownames(filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.L6.1>1)),
-                   "L2/3.1"=rownames(filter(as.data.frame(sub.results[['Sub.1']]), -log10(FDR)>30 & logFC.L2.3.1>1)))
-sub.2.list <- list("CA1"=rownames(filter(as.data.frame(sub.results[['Sub.2']]), -log10(FDR)>30 & logFC.CA1>1)),
-                   "ProS"=rownames(filter(as.data.frame(sub.results[['Sub.2']]), -log10(FDR)>30 & logFC.ProS>1)),
-                   "Sub.1"=rownames(filter(as.data.frame(sub.results[['Sub.2']]), -log10(FDR)>30 & logFC.Sub.1>1)),
-                   "L6.1"=rownames(filter(as.data.frame(sub.results[['Sub.2']]), -log10(FDR)>30 & logFC.L6.1>1)),
-                   "L2/3.1"=rownames(filter(as.data.frame(sub.results[['Sub.2']]), -log10(FDR)>30 & logFC.L2.3.1>1)))
-pros.list <- list("CA1"=rownames(filter(as.data.frame(sub.results[['ProS']]), -log10(FDR)>30 & logFC.CA1>1)),
-                   "Sub.2"=rownames(filter(as.data.frame(sub.results[['ProS']]), -log10(FDR)>30 & logFC.Sub.2>1)),
-                   "Sub.1"=rownames(filter(as.data.frame(sub.results[['ProS']]), -log10(FDR)>30 & logFC.Sub.1>1)),
-                   "L6.1"=rownames(filter(as.data.frame(sub.results[['ProS']]), -log10(FDR)>30 & logFC.L6.1>1)),
-                   "L2/3.1"=rownames(filter(as.data.frame(sub.results[['ProS']]), -log10(FDR)>30 & logFC.L2.3.1>1)))
-#sub.1
-t1 = table(unlist(sub.1.list))
-sub1.unique = names(t1)[t1==length(sub.1.list)]
-length(sub1.unique) #146
-avg.expr = mutate(as.data.frame(sub.results[['Sub.1']][sub1.unique,]), avg.sub1.expr = rowMeans(logcounts(sce_sub)[sub1.unique,sce_sub$superfine.cell.class=="Sub.1"]))
-rownames(filter(avg.expr, avg.sub1.expr>1))
+plot.list = readRDS("snRNAseq_hpc/processed-data/revision/subiculum-DE_sig-genes-list.rda")
+plot.list
+#$Sub.1
 #[1] "AC007368.1" "AL138694.1" "ATP6V1C2"   "COL21A1"    "EBF4"      
-#[6] "FN1"        "NDST4"      "PARD3B"     "PRKCH"      "RAPGEF3"
+#[6] "FN1"        "NDST4"      "PARD3B"     "PRKCH"      "RAPGEF3"   
+
+#$Sub.2
+#[1] "GDNF-AS1" "LHFPL3"   "MAMDC2"   "PCED1B"   "RORB"     "SULF1"    "TRPC3"   
+
+#$ProS
+#character(0)
+
+#$Sub.3
+#[1] "AC007100.1" "AC010967.1" "AC023503.1" "AC046195.2" "AL356295.1"
+#[6] "CD36"       "COL4A1"     "COL4A2"     "DISC1"      "FSTL5"     
+#[11] "GUCA1C"     "LINC01194"  "LINC01239"  "LINC01821"  "NR2F2-AS1" 
+#[16] "PLEKHG1"    "RASGEF1B"   "SCN7A"      "SCUBE1"     "SNCAIP"    
+#[21] "VEGFC"     
+
+#$PreS
+#[1] "AC008662.1" "AL161629.1" "FSTL5"      "MDFIC"      "WSCD1" 
+
+#subiculum DE
+sce_sub = sce_subset[,sce_subset$new.cell.class %in% c("CA1","Sub.1","Sub.2","ProS","Sub.3","PreS")]
+sce_sub$new.cell.class = droplevels(sce_sub$new.cell.class)
+
+
 plotExpression(sce_sub, features = c("COL21A1","NDST4","EBF4","ATP6V1C2","PRKCH","RAPGEF3"), 
                x="new.cell.class", exprs_values = "logcounts", colour_by = "new.cell.class")+
   scale_color_manual(values=new.class.palette)+theme_bw()+
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(), 
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
-#sub.2
-t2 = table(unlist(sub.2.list))
-sub2.unique = names(t2)[t2==length(sub.2.list)]
-length(sub2.unique) #184
-avg.expr = mutate(as.data.frame(sub.results[['Sub.2']][sub2.unique,]), 
-                  avg.sub2.expr = rowMeans(logcounts(sce_sub)[sub2.unique,sce_sub$superfine.cell.class=="Sub.2"]))
-rownames(filter(avg.expr, avg.sub2.expr>1))
-#"GDNF-AS1" "LHFPL3"   "MAMDC2"   "PCED1B"   "RORB"     "SULF1"    "TRPC3" 
+ 
 plotExpression(sce_sub, features = c("GDNF-AS1","LHFPL3","MAMDC2","PCED1B","SULF1","TRPC3"), 
                x="new.cell.class", exprs_values = "logcounts", colour_by = "new.cell.class")+
   scale_color_manual(values=new.class.palette)+theme_bw()+
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(),
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
-#pros
-t3 = table(unlist(pros.list))
-pros.unique = names(t3)[t3==length(pros.list)]
-length(pros.unique) #17
-avg.expr = mutate(as.data.frame(sub.results[['ProS']][pros.unique,]), 
-                  avg.pros.expr = rowMeans(logcounts(sce_sub)[pros.unique,sce_sub$superfine.cell.class=="ProS"]))
-rownames(filter(avg.expr, avg.pros.expr>1)) 
-#none
+
 
 #deep DE
-sce_subd = sce_subset[,sce_subset$superfine.cell.class %in% c("Sub.1","Sub.2","L6.1","L6b","L6.2")]
-sce_subd$superfine.cell.class = droplevels(sce_subd$superfine.cell.class)
-sce_subd = sce_subd[rowSums(counts(sce_subd)>0)>100,]
-subd.results = scran::findMarkers(sce_subd, group=sce_subd$superfine.cell.class, test="binom")
+sce_subd = sce_subset[,sce_subset$new.cell.class %in% c("Sub.1","Sub.2","Sub.3","RHP.L6b","RHP.L6")]
+sce_subd$new.cell.class = droplevels(sce_subd$new.cell.class)
 
-filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.Sub.1>1) %>% nrow() #198
-filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.Sub.2>1) %>% nrow() #119
-filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.L6b>1) %>% nrow() #155
-filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.L6.2>1) %>% nrow() #184
-
-l61.list <- list("L6b"=rownames(filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.L6b>1)),
-                  "Sub.2"=rownames(filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.Sub.2>1)),
-                  "Sub.1"=rownames(filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.Sub.1>1)),
-                  "L6.2"=rownames(filter(as.data.frame(subd.results[['L6.1']]), -log10(FDR)>30 & logFC.L6.2>1)))
-
-t4 = table(unlist(l61.list))
-l61.unique = names(t4)[t4==length(l61.list)]
-length(l61.unique) #68
-avg.expr = mutate(as.data.frame(subd.results[['L6.1']][l61.unique,]), 
-                  avg.l61.expr = rowMeans(logcounts(sce_subd)[l61.unique,sce_subd$superfine.cell.class=="L6.1"]))
-rownames(filter(avg.expr, avg.l61.expr>1)) #
-#[1] "AC007100.1" "AC010967.1" "AC023503.1" "AC046195.2" "AL356295.1"
-#[6] "CD36"       "COL4A1"     "COL4A2"     "DISC1"      "FSTL5"     
-#[11] "GUCA1C"     "LINC01194"  "LINC01239"  "LINC01821"  "NR2F2-AS1" 
-#[16] "PLEKHG1"    "RASGEF1B"   "SCN7A"      "SCUBE1"     "SNCAIP"    
-#[21] "VEGFC" 
 plotExpression(sce_subd, features = c(#"COL4A1","COL4A2","VEGFC",
   "FSTL5","PLEKHG1","RASGEF1B","GUCA1C","SCN7A","SCUBE1","SNCAIP","DISC1"), 
   x="new.cell.class", exprs_values = "logcounts", colour_by = "new.cell.class")+
@@ -258,39 +212,15 @@ plotExpression(sce_subd, features = c(#"COL4A1","COL4A2","VEGFC",
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
 
 #superficial DE
-sce_subs = sce_subset[,sce_subset$superfine.cell.class %in% c("Sub.1","Sub.2","ProS","L2/3.1","L2/3.2","L2/3.4","L2/3.3","L2/3.6")]
-sce_subs$superfine.cell.class = droplevels(sce_subs$superfine.cell.class)
-sce_subs = sce_subs[rowSums(counts(sce_subs)>0)>100,]
-subs.results = scran::findMarkers(sce_subs, group=sce_subs$superfine.cell.class, test="binom")
+sce_subs = sce_subset[,sce_subset$new.cell.class %in% c("Sub.1","Sub.2","ProS","PreS","ENT.sup1","ENT.sup2a","ENT.sup2b","ENT.sup3")]
+sce_subs$new.cell.class = droplevels(sce_subs$new.cell.class)
 
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.Sub.1>1) %>% nrow() #446
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.Sub.2>1) %>% nrow() #419
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.ProS>1) %>% nrow() #463
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.2>1) %>% nrow() #351
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.3>1) %>% nrow() #418
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.4>1) %>% nrow() #321
-filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.6>1) %>% nrow() #362
-
-l23.list <- list("ProS"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.ProS>1)),
-                 "Sub.2"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.Sub.2>1)),
-                 "Sub.1"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.Sub.1>1)),
-                 "L2/3.2"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.2>1)),
-                 "L2/3.3"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.3>1)),
-                 "L2/3.4"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.4>1)),
-                 "L2/3.6"=rownames(filter(as.data.frame(subs.results[['L2/3.1']]), -log10(FDR)>30 & logFC.L2.3.6>1)))
-
-t5 = table(unlist(l23.list))
-l23.unique = names(t5)[t5==length(l23.list)]
-length(l23.unique) #38
-avg.expr = mutate(as.data.frame(subs.results[['L2/3.1']][l23.unique,]), 
-                  avg.l23.expr = rowMeans(logcounts(sce_subs)[l23.unique,sce_subs$superfine.cell.class=="L2/3.1"]))
-rownames(filter(avg.expr, avg.l23.expr>1)) #5
-#[1] "AC008662.1" "AL161629.1" "FSTL5"      "MDFIC"      "WSCD1" 
 plotExpression(sce_subs, features = c("AC008662.1","AL161629.1","FSTL5","MDFIC","WSCD1"),
                x="new.cell.class", exprs_values = "logcounts", colour_by = "new.cell.class")+
   scale_color_manual(values=new.class.palette)+theme_bw()+
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(),
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+
 
 #combine all the new DEGs into a dot plot - main figure
 plotDots(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
