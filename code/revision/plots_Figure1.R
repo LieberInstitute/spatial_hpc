@@ -18,12 +18,15 @@ plotReducedDim(sce[,sce$sort=="PI+NeuN+"], dimred="UMAP", color_by="sort", point
 load(here::here('processed-data','06_clustering','PRECAST','spe_precast_HE_domain.rda'))
 table(spe$VSPG)
 
-#spot plot for MBP
-sub = spe[,spe$sample_id %in% c("Br3942_V11L05-333_C1","Br3942_V11L05-333_D1")]
-plotSpots(sub, annotate=rownames(spe)[rowData(spe)$gene_name=="MBP"],
-          sample_id="sample_id", assay="logcounts")+
+#spot plot for SNAP25
+sub = spe[,spe$brnum=="Br3942"]
+p1 <- plotSpots(sub, annotate=rownames(spe)[rowData(spe)$gene_name=="SNAP25"],
+          sample_id="sample_id", assay="logcounts", point_size=.5)+
   scale_color_gradient(low="grey90", high="black")+
   theme_void()+theme(strip.text=element_blank())
+pdf(file="plots/revision/Fig1_SNAP25.pdf", height=5.5, width=5.5)
+p1
+dev.off()
 
 
 spe$amy<-ifelse(spe$sample_id %in%
