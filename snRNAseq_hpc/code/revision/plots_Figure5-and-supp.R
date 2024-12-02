@@ -167,14 +167,18 @@ dot.df2 = left_join(d3[,c("cell.type.mouse","condition","nmf","prop")],
 
 dot.df2$nmf_f = factor(dot.df2$nmf, levels=c("nmf91","nmf20","nmf55","nmf10","nmf14"))
 
-p1 <- ggplot(dot.df2, aes(x=nmf_f, y=ylab_f, size=prop, color=scaled.avg))+
+dot.df2$ylab_c = as.numeric(dot.df2$ylab_f)
+dot.df2$ylab_c = ifelse(dot.df2$condition=="ECS", dot.df2$ylab_c-.25, dot.df2$ylab_c)
+
+p1 <- ggplot(filter(dot.df2, nmf_f!="nmf55"), aes(x=nmf_f, y=ylab_c, size=prop, color=scaled.avg))+
   geom_count()+theme_bw()+
   scale_size(range=c(0,3))+scale_color_viridis_c(option="F", direction=-1)+
+  scale_y_continuous(breaks=unique(dot.df2$ylab_c), labels=levels(dot.df2$ylab_f), minor_breaks = NULL)+
   labs(x="",y="")+
   theme(text=element_text(size=14), axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
 
 pdf(file = "snRNAseq_hpc/plots/revision/Fig5_small-dotplot.pdf",
-    width=4, height=6)
+    width=4, height=7)
 p1
 dev.off()
 
@@ -252,8 +256,6 @@ plotGroupedHeatmap(sce, features=c("FAT4","CDH10","CHST9","CNTN1","ADAM22","ST6G
                    scale=T, center=T)
 
 sce$gc_labels = ifelse(sce$fine.cell.class=="GC", as.character(sce$superfine.cell.class), "other")
-plotReducedDim(sce, dimred="UMAP", color_by="gc_labels", point_size=.1)+
-  scale_color_manual(values=c(RColorBrewer::brewer.pal(n=5,"Set1"),"grey"))
 
 plotReducedDim(sce, dimred="UMAP", color_by="nmf10", point_size=.1)+
   scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
@@ -276,33 +278,55 @@ umap.emb = reducedDim(sce_gc, "UMAP")
 remove.extra = union(rownames(umap.emb)[umap.emb[,"UMAP1"]<5],rownames(umap.emb)[umap.emb[,"UMAP2"]< -3])
 sce_gc = sce_gc[,!colnames(sce_gc) %in% remove.extra]
 dim(sce_gc) #36601 10506
+
 p1 <- plotReducedDim(sce, dimred="UMAP", color_by="gc_labels", point_size=.1)+
   scale_color_manual(values=c(RColorBrewer::brewer.pal(n=5,"Set1"),"grey"))+
-  theme(legend.position="none", plot.margin=unit(c(5,8,5,5), units="pt"))
+  theme_void()+theme(legend.position="none", axis.line=element_line(color="black", linewidth=.5), 
+                     plot.margin=unit(c(5,5,5,5), units="pt"))
 p2 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="superfine.cell.class", point_size=.3)+
-  scale_color_brewer(palette="Set1")
+  scale_color_brewer(palette="Set1")+
+  theme_void()+theme(legend.key.width=unit(5, units="pt"),
+                     legend.text = element_text(size=8, margin=margin(l=3,unit="pt")), legend.title=element_blank(), 
+                     axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,5,5,5), units="pt"))
+
+pdf(file = "snRNAseq_hpc/plots/revision/Fig5_gc-cluster-umap.pdf",
+    width=4, height=2)
+gridExtra::grid.arrange(p1, p2, ncol=2)
+dev.off()
+
 p3 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="nmf10", point_size=.3)+
-  scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
-  #ggtitle("nmf10")+theme(plot.title=element_text(hjust=.5))
-  labs(color="nmf10")
+  scale_color_viridis_c("nmf10", option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1),
+			breaks=c(0, 1e-4, 2e-4))+
+  theme_void()+theme(legend.key.width=unit(5, units="pt"), legend.title=element_text(size=8),
+                     legend.text = element_text(size=7, margin=margin(l=2,unit="pt")),
+                     axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,0,5,5), units="pt"))
+
 p4 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="nmf14", point_size=.3)+
-  scale_color_viridis_c(option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1))+
-  labs(color="nmf14")
+  scale_color_viridis_c("nmf14", option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1),
+			breaks=c(0, 2e-4, 4e-4))+
+  theme_void()+theme(legend.key.width=unit(5, units="pt"), legend.title=element_text(size=8),
+                     legend.text = element_text(size=7, margin=margin(l=2,unit="pt")),
+                     axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,0,5,5), units="pt"))
 
-gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 
+p5 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="CHST9", point_size=.1)+
+  scale_color_gradient(low="grey90", high="black")+labs(color="CHST9")+
+  theme_void()+theme(legend.key.width=unit(5, units="pt"), legend.title=element_text(size=8),
+                     legend.text = element_text(size=8, margin=margin(l=3,unit="pt")),
+                     axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,5,5,5), units="pt"))
 
-p1 <- plotReducedDim(sce, dimred="UMAP", color_by="CHST9", point_size=.1)+
-  #scale_color_viridis_c(option="F", direction=-1)
-  scale_color_gradient(low="grey90", high="black")+labs(color="CHST9")
-p2 <- plotReducedDim(sce, dimred="UMAP", color_by="SORCS3", point_size=.1)+
-  #scale_color_viridis_c(option="F", direction=-1)
-  scale_color_gradient(low="grey90", high="black")+labs(color="SORCS3")
-p3 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="CHST9", point_size=.1)+
-  #scale_color_viridis_c(option="F", direction=-1)
-  scale_color_gradient(low="grey90", high="black")+labs(color="CHST9")
-p4 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="SORCS3", point_size=.1)+
-  #scale_color_viridis_c(option="F", direction=-1)
-  scale_color_gradient(low="grey90", high="black")+labs(color="SORCS3")
+pdf(file = "snRNAseq_hpc/plots/revision/Fig5_nmf10-chst9-umap.pdf",
+    width=4, height=2)
+gridExtra::grid.arrange(p3, p5, ncol=2)
+dev.off()
 
-gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+p6 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="SORCS3", point_size=.1)+
+  scale_color_gradient(low="grey90", high="black")+labs(color="SORCS3")+
+  theme_void()+theme(legend.key.width=unit(5, units="pt"), legend.title=element_text(size=8),
+                     legend.text = element_text(size=8, margin=margin(l=3,unit="pt")),
+                     axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,5,5,5), units="pt"))
+
+pdf(file = "snRNAseq_hpc/plots/revision/Fig5_nmf14-sorcs3-umap.pdf",
+    width=4, height=2)
+gridExtra::grid.arrange(p4, p6, ncol=2)
+dev.off()

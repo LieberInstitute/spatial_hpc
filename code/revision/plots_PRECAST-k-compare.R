@@ -13,6 +13,17 @@ identical(rownames(lowk),colnames(spe))
 colData(spe)$PRECAST_k16 = lowk$PRECAST_k16
 colData(spe)$PRECAST_k17 = lowk$PRECAST_k17
 
+
+#alt SLM.SGZ assignment if used k=16
+filter(as.data.frame(colData(spe)), domain=="SLM.SGZ") %>% group_by(PRECAST_k18) %>% tally()
+#7820 spots total
+filter(as.data.frame(colData(spe)), domain=="SLM.SGZ") %>% group_by(PRECAST_k16) %>% tally()
+#4825 spots in cluster 5 (SR.SLM)
+filter(as.data.frame(colData(spe)), domain=="SLM.SGZ") %>% group_by(PRECAST_k16) %>% tally() %>%
+  mutate(perc=n/7820)
+table(spe$PRECAST_k16)
+#cluster 5: 37003 spots total
+
 ################## heatmap
 genes = c(#"SHOX2",
   #"TCF7L2",
