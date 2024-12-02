@@ -155,3 +155,23 @@ ggplot(mutate(as.data.frame(colData(spe)), is_nrn=broad.domain=="Neuron",
   theme_bw()+
   scale_fill_manual(values=c("grey50","red"))+
   labs(y="logcounts expr.", x="", title="HOMER1 (SRT)")
+
+#additional plots for pde10a
+vln.df = cbind.data.frame("domain"=colData(spe)[,c("domain")], "pde10a"=logcounts(spe)["PDE10A",])
+load(file=here::here('plots','spatial_palette_final.rda'))
+
+ggplot(vln.df, aes(x=domain, y=pde10a, fill=domain))+
+  geom_violin(scale="width")+scale_fill_manual(values=spatial.palette)+
+  theme_bw()+labs(y="Expression (logcounts)", x="", title="PDE10A")+
+  theme(legend.position="none", axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+
+plotReducedDim(sce, dimred="UMAP", color_by="PDE10A", point_size=.1)+
+  scale_color_gradient("PDE10A", low="grey90", high="black")
+
+ggplot(mutate(as.data.frame(colData(sce)), is_nrn=broad.cell.class=="Neuron",
+              srg=logcounts(sce)["PDE10A",]),
+       aes(x=brnum, y=srg, fill=is_nrn))+
+  geom_boxplot(outlier.size=.1)+
+  theme_bw()+
+  scale_fill_manual(values=c("grey50","red"))+
+  labs(y="logcounts expr.", x="", title="PDE10A (snRNA-seq)")
