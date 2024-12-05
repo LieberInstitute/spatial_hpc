@@ -9,7 +9,7 @@ load(here::here('processed-data','06_clustering','PRECAST','spe_precast_HE_domai
 
 ############### CA markers
 
-plotGroupedHeatmap(spe, features=c("MPPED1","FIBCD1","CLMP","TSPAN18","NECTIN3","AMPH"), 
+plotGroupedHeatmap(spe, features=c("MPPED1","FIBCD1","CLMP","RGS14","TSPAN18","NECTIN3","AMPH","CARTPT"), 
                    group="cluster", swap_rownames = "gene_name",
                    scale=T, center=T, cluster_rows=F, fontsize=14, angle_col=90)
 
