@@ -141,7 +141,7 @@ vis_grid_gene(
  plt_df[['PROX1']] <- assay(spe, 'counts')['PROX1', ]
  plt_df[['PROX1']] <- scales::rescale(plt_df[['PROX1']], to = c(0, 1))
  
- # SFRP2, TNC, RELN, NPY
+ # SFRP2, TNC, RELN, NPY, SEMA5A
  var = 'RELN'
  plt_df[[var]] <- assay(spe, 'logcounts')[var, ]
  plt_df[[var]] <- scales::rescale(plt_df[[var]], to = c(0, 1))
