@@ -78,6 +78,7 @@ processed data outputs, can be accessed via Gene Expression Omnibus
 [GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624)
 (snRNA-seq).
 
+The spatially-resolved transcriptomics (SRT) and single-nucleus RNA-sequencing (snRNA-seq) data can also be accessed through the bioconductor package at [humanHippocampus2024](https://bioconductor.org/packages/devel/data/experiment/html/humanHippocampus2024.html)
 ## Contact
 
 We value public questions, as they allow other users to learn from the
