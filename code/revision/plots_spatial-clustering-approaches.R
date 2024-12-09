@@ -25,8 +25,8 @@ spe$cluster_f = factor(spe$cluster, levels=c("Thalamus","GABA","Amygdala",
                                              "WM.1","WM.2","WM.3","Vascular","Choroid"))
 
 spe$spatial.cluster.f = factor(spe$spatial.cluster, levels=c(16,5,18,3,8,15,4,13,
-                               14,9,11,10,1,
-                               7,12,17,6,2
+                                                             14,9,11,10,1,
+                                                             7,12,17,6,2
 ))
 
 plot.df = as.data.frame(colData(spe)[,c("cluster_f", "spatial.cluster.f")]) %>% 
@@ -41,6 +41,15 @@ p1 <- ggplot(plot.df, aes(x=spatial.cluster.f, y=cluster_f, fill=log10.n))+
   theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
                         legend.text=element_text(size=10), axis.title.y=element_blank())
 
+p1.1 <- ggplot(plot.df, aes(x=spatial.cluster.f, y=cluster_f, fill=log10.n))+
+  geom_tile()+
+  scale_fill_gradient2(low="white", mid="skyblue",high="black", midpoint=2)+#median(plot.df2$log10.n))+
+  #scale_fill_viridis_c(option="F")#, limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
+  labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="BayesSpace cluster")+
+  theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
+                        legend.text=element_text(size=10), axis.title.y=element_blank(),
+                        axis.title.x=element_blank(), axis.text.x=element_blank())
+
 
 ################## GraphST
 
@@ -53,8 +62,8 @@ colSums(is.na(graphst))
 spe$spot_id = paste(sapply(strsplit(rownames(colData(spe)), "_"), function(x) x[[1]]), spe$slide, spe$array, sep="_")
 
 matching = left_join(as.data.frame(colData(spe))[,c("spot_id","brnum","PRECAST_k18","cluster_f")] %>%
-                      mutate(brnum=as.character(brnum)),
-          graphst, by=c("spot_id", "brnum"="donor_id"))
+                       mutate(brnum=as.character(brnum)),
+                     graphst, by=c("spot_id", "brnum"="donor_id"))
 colSums(is.na(matching))
 colnames(matching)
 
@@ -76,6 +85,15 @@ p2 <- ggplot(plot.df2, aes(x=graphst.f, y=cluster_f, fill=log10.n))+
   theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
                         legend.text=element_text(size=10), axis.title.y=element_blank())
 
+p2.1 <- ggplot(plot.df2, aes(x=graphst.f, y=cluster_f, fill=log10.n))+
+  geom_tile()+
+  scale_fill_gradient2(low="white", mid="skyblue",high="black", midpoint=2)+#median(plot.df2$log10.n))+
+  #scale_fill_viridis_c(option="F")#, limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
+  labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="GraphST cluster")+
+  theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
+                        legend.text=element_text(size=10), axis.title.y=element_blank(),
+                        axis.title.x=element_blank(), axis.text.x=element_blank())
+
 
 ################## Manual annotation
 
@@ -95,7 +113,7 @@ load("processed-data/manual_annotation_csv/compiled_annotation_before_match.Rdat
 #length(setdiff(csv2$spot_name, spe$key))
 test = read.csv("processed-data/manual_annotation_csv/spatialLIBD_ManualAnnotation_2023-04-12_Br2720_all.csv") %>%
   mutate(sample_id= as.character(factor(sample_id, levels=c("Br2720_A1","Br2720_B1","Br2720_C1","Br2720_D1"),
-                            labels=c("V12F14-051_A1","V12F14-051_B1","V12F14-051_C1","V12F14-051_D1"))),
+                                        labels=c("V12F14-051_A1","V12F14-051_B1","V12F14-051_C1","V12F14-051_D1"))),
          spot_name=paste(spot_name, sample_id, sep="_")) 
 csv2 = rbind(csv2, test)
 
@@ -117,10 +135,23 @@ p3 <- ggplot(plot.df3, aes(x=ManualAnnotation.f, y=cluster_f, fill=log10.n))+
   labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="Manual annotation")+
   theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
                         legend.text=element_text(size=10),
-                        axis.text.x=element_text(angle=90, hjust=1))
+                        axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+p3.1 <- ggplot(plot.df3, aes(x=ManualAnnotation.f, y=cluster_f, fill=log10.n))+
+  geom_tile()+
+  scale_fill_gradient2(low="white", mid="skyblue",high="black", midpoint=2)+#median(plot.df2$log10.n))+
+  #scale_fill_viridis_c(option="F")#, limits=c(0,1), breaks=c(0,.25,.5,.75,1))+
+  labs(fill="log10(spots)", y="Annotated PRECAST cluster", x="Manual annotation")+
+  theme_minimal()+theme(text=element_text(size=16), legend.title=element_text(size=12),
+                        legend.text=element_text(size=10), #axis.title.y=element_blank(),
+                        axis.title.x=element_blank(), axis.text.x=element_blank())
 
-laymat = rbind(c(1,2,3),c(1,2,3),c(1,2,3),c(1,2,3),c(1,2,3),c(1,NA,NA))
-pdf(file = "plots/revision/clustering-approached_log10-spots_heatmap.pdf",
+#laymat = rbind(c(1,2,3),c(1,2,3),c(1,2,3),c(1,2,3),c(1,2,3),c(1,NA,NA))
+pdf(file = "plots/revision/clustering-approaches_log10-spots_heatmap.pdf",
     width=18, height=6)
-gridExtra::grid.arrange(p3,p1,p2, layout_matrix=laymat)
+gridExtra::grid.arrange(p3,p1,p2, ncol=3)
+dev.off()
+
+pdf(file = "plots/revision/clustering-approaches_log10-spots_heatmap_no-x-labels.pdf",
+    width=18, height=5.5)
+gridExtra::grid.arrange(p3.1,p1.1,p2.1, ncol=3)
 dev.off()
