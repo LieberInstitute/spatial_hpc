@@ -27,7 +27,7 @@ Thank you for your interest in our work!
 
 ## Study design
 
-<img src="https://research.libd.org/spatial_hpc/img/Copy%20of%20HPC%20figure%201.png" width="1000px" align="left" />
+<img src="https://research.libd.org/spatial_hpc/img/Copy%20of%20HPC%20figure%201.png" width="900px" align="left" />
 
 Experimental design to generate paired single-nucleus RNA-sequencing
 (snRNA-seq) and spatially-resolved transcriptomics (SRT) data in the
