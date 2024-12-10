@@ -29,12 +29,22 @@ Thank you for your interest in our work!
 
 <img src="https://research.libd.org/spatial_hpc/img/Copy%20of%20HPC%20figure%201.png" width="1000px" align="left" />
 
- Experimental design to generate paired single-nucleus RNA-sequencing (snRNA-seq) and spatially-resolved transcriptomics (SRT) data in the human hippocampus. 
-(A) Postmortem human tissue blocks containing the anterior hippocampus were dissected from 10 adult neurotypical brain donors. 
-(B) Tissue blocks were scored and cryosectioned for snRNA-seq assays (gold), and placement on Visium slides (Visium-H&E, blue). 
-(C) Top: Tissue sections (2-4 100μm cryosections per donor) from all ten donors were collected from the same tissue blocks for measurement with the 10x Genomics Chromium 3’ gene expression platform. For each donor, two samples were generated, one sorted based on propidium iodide (PI, purple) and the second sorted based on PI+ and NeuN+ (green). Replicate samples were collected from three donors for a total of n=26 total snRNA-seq libraries. Bottom: 10μm tissue sections from all ten donors were placed onto 2-5 capture areas to include the extent of the HPC (n=36 total capture areas), for measurement with the 10x Genomics Visium-H&E platform. Orientation was verified based on expression of known marker genes. 
-(D) Canonical marker genes were identified as spatially variable genes using nnSVG (29).
-(E) SRT data was clustered using PRECAST (30) with k=18 and clusters were annotated (columns) based on expression of known marker genes (rows). Cluster groupings indicated at the top of the heatmap define which clusters contributed to the broad domains of Neuron, Neuropil, white matter (WM), and vascular/ cerebrospinal fluid cell-enriched (Vasc/CSF). RHP: retrohippocampus, SUB: subiculum, CA2.4: cornu ammonis (CA) regions 2 through 4 (CA2, CA3, CA4), GCL: dentate gyrus granule cell layer, ML: dentate gyrus molecular layer, SL: stratum lucidum, SR: stratum radiatum, SLM: stratum lacunosum-moleculare, SGZ: dentate gyrus subgranular zone.. (This figure was created with
+Experimental design to generate paired single-nucleus RNA-sequencing
+(snRNA-seq) and spatially-resolved transcriptomics (SRT) data in the
+human hippocampus. (A) Postmortem human tissue blocks from the anterior
+hippocampus were dissected from 10 adult neurotypical brain donors.
+Tissue blocks were scored and cryosectioned for snRNA-seq assays (red),
+and placement on Visium slides (Visium H&E, black; Visium Spatial
+Proteogenomics (SPG), yellow). (B) 10μm tissue sections from all ten
+donors were placed onto 2-5 capture areas to include the extent of the
+HPC(n=36 total capture areas), for measurement with the 10x Genomics
+Visium H&E platform. (C) 10μm tissue sections from two donors were
+placed onto 4 capture areas (n=8 total capture areas) for measurement
+with the 10x Genomics Visium-SPG platform. (D) Tissue sections (2-4
+100μm cryosections per assay) from all ten donors were collected from
+the same tissue blocks for measurement with the 10x Genomics 3’ gene
+expression platform. For each donor, we sorted on both and PI+NeuN+
+(n=26 total snRNA-seq libraries). (This figure was created with
 [Biorender](https://biorender.com))
 
 ## Interactive Websites
@@ -68,7 +78,6 @@ processed data outputs, can be accessed via Gene Expression Omnibus
 [GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624)
 (snRNA-seq).
 
-The spatially-resolved transcriptomics (SRT) and single-nucleus RNA-sequencing (snRNA-seq) data can also be accessed through the bioconductor package at [humanHippocampus2024](https://bioconductor.org/packages/devel/data/experiment/html/humanHippocampus2024.html)
 ## Contact
 
 We value public questions, as they allow other users to learn from the
