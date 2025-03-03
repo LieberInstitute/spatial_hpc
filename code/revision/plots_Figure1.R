@@ -8,11 +8,12 @@ set.seed(123)
 #umap for schematic
 load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_final.rda'))
 unique(sce$brnum)
-plotReducedDim(sce, dimred="UMAP", color_by="sort", point_size=.3)+
-  scale_color_manual(values=c("#875faa","#64a65a"))
+p1 <- plotReducedDim(sce, dimred="UMAP", color_by="sort", point_size=.1)+
+  scale_color_manual(values=c("#875faa","#64a65a"))+
+  theme(axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
+        legend.position="none")
 
-plotReducedDim(sce[,sce$sort=="PI+NeuN+"], dimred="UMAP", color_by="sort", point_size=.5)+
-  scale_color_manual(values=c("#64a65a"))
+ggsave("plots/revision/Figure1_sorting-umap.png", p1, bg="white", height=4, width=4, units="in")
 
 ################ spot plots and manual annotation markers
 load(here::here('processed-data','06_clustering','PRECAST','spe_precast_HE_domain.rda'))
@@ -24,7 +25,7 @@ p1 <- plotSpots(sub, annotate=rownames(spe)[rowData(spe)$gene_name=="SNAP25"],
           sample_id="sample_id", assay="logcounts", point_size=.5)+
   scale_color_gradient(low="grey90", high="black")+
   theme_void()+theme(strip.text=element_blank())
-pdf(file="plots/revision/Fig1_SNAP25.pdf", height=5.5, width=5.5)
+pdf(file="plots/revision/Figure1_SNAP25.pdf", height=5.5, width=5.5)
 p1
 dev.off()
 
@@ -63,17 +64,13 @@ spe$cluster_f = factor(spe$cluster, levels=c("Thalamus","GABA","Amygdala",
                                              "ML","SL.SR","SR.SLM","SLM.SGZ",
                                              "WM.1","WM.2","WM.3","Vascular","Choroid"))
 
-plotGroupedHeatmap(spe, features=genes, group="cluster_f", swap_rownames="gene_name",
+hm = plotGroupedHeatmap(spe, features=genes, group="cluster_f", swap_rownames="gene_name",
                    center=T, scale=T, zlim=c(-2,4),
                    cluster_rows=F, cluster_cols=F,
                    #colour=viridisLite::magma(n=10))
                    colour=viridisLite::magma(n=30)[c(rep(1,5),2:30)],
-                   angle_col=90)
-
-load(file = here::here("processed-data","nnSVG","nnSVG_gene_lists.rda"))
-
-intersect(genes, rowData(spe)[nnSVG,"gene_name"])
-setdiff(genes, rowData(spe)[nnSVG,"gene_name"])
+                   angle_col=90, silent=T)
+ggsave("plots/revision/Figure1_heatmap.pdf", hm, bg="white", height=8, width=7, unit="in")
 
 
 #tmp = spe[,spe$sample_id=="Br6471_V11L05-335_C1"]
