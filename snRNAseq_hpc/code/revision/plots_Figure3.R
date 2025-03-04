@@ -91,7 +91,7 @@ p1 <- ggplot(long.df, aes(x=fine.cell.class, y=expr, fill=fine.cell.class))+
         strip.text=element_text(size=12),
         strip.background=element_rect(fill="white", color="transparent"))
 
-pdf(file = "snRNAseq_hpc/plots/revision/Fig3_sn-srt-degs.pdf",
+pdf(file = "snRNAseq_hpc/plots/revision/Figure3_sn-srt-degs.pdf",
     width=5.5, height=7.7)
 p1
 dev.off()
@@ -110,7 +110,7 @@ sce$superfine.cell.class = factor(sce$superfine.cell.class,
                                            "Astro.1","Astro.2","Astro.3",
                                            "Oligo.1","Oligo.2","OPC","COP","Micro.1","Micro.2","Macro/Tcell",
                                            "Ependy","CP.1","CP.2","CP.3","Endo.2","Endo.1","PC/SMC","VLMC"))
-plotGroupedHeatmap(sce, features=c("ACVR2A","PROX1","ACVR1","ACVR1C","BDNF",
+hm = plotGroupedHeatmap(sce, features=c("ACVR2A","PROX1","ACVR1","ACVR1C","BDNF",
                                    "CARTPT","TRPS1","TSPAN18","KIT",#"NUP93",
                                    "FIBCD1","COL5A2","CHRM5","CHST8",
                                    "FN1","COL24A1","CNTN6",
@@ -131,4 +131,5 @@ plotGroupedHeatmap(sce, features=c("ACVR2A","PROX1","ACVR1","ACVR1C","BDNF",
                    scale=T, center=T,
                    cluster_rows=F, cluster_cols=F, zlim=c(-2,4),
                    colour=c("#FFF",RColorBrewer::brewer.pal(9,"Greys")),#viridisLite::magma(n=30)[c(rep(1,5),2:30)],
-                   angle_col=90) 
+                   angle_col=90, silent=T) 
+ggsave("snRNAseq_hpc/plots/revision/Figure3_heatmap.pdf", hm, bg="white", width=16, height=10, units="in")

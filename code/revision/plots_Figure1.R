@@ -78,15 +78,22 @@ tmp = spe[,spe$sample_id=="Br3942_V11L05-333_D1"]
 
 p1 <- plotSpots(tmp, annotate=rownames(spe)[rowData(spe)$gene_name=="MOBP"], assay_name="logcounts",
                 pal=c("grey90","black"))+
-  theme_void()+ggtitle("MOBP")
+  theme_void()+ggtitle("MOBP")+theme(plot.title.position="panel", legend.key.size = unit(12,"pt"),
+                                     legend.box.spacing = unit(0,"pt"))
 p2 <- plotSpots(tmp, annotate=rownames(spe)[rowData(spe)$gene_name=="GFAP"], assay_name="logcounts",
                 pal=c("grey90","black"))+
-  theme_void()+ggtitle("GFAP")
+  theme_void()+ggtitle("GFAP")+theme(plot.title.position="panel", legend.key.size = unit(12,"pt"),
+                                     legend.box.spacing = unit(0,"pt"))
 p3 <- plotSpots(tmp, annotate=rownames(spe)[rowData(spe)$gene_name=="AMPH"], assay_name="logcounts",
                 pal=c("grey90","black"))+
-  theme_void()+ggtitle("AMPH")
+  theme_void()+ggtitle("AMPH")+theme(plot.title.position="panel", legend.key.size = unit(12,"pt"),
+                                     legend.box.spacing = unit(0,"pt"))
 p4 <- plotSpots(tmp, annotate=rownames(spe)[rowData(spe)$gene_name=="SEMA5A"], assay_name="logcounts",
                 pal=c("grey90","black"))+
-  theme_void()+ggtitle("SEMA5A")+scale_color_gradient(low="grey90", high="black", breaks=c(0,1,2))
+  theme_void()+ggtitle("SEMA5A")+scale_color_gradient(low="grey90", high="black", breaks=c(0,1,2))+
+  theme(plot.title.position="panel", legend.key.size = unit(12,"pt"),
+        legend.box.spacing = unit(0,"pt"))
 
-gridExtra::grid.arrange(p2, p1, p3, p4, ncol=2)
+#gridExtra::grid.arrange(p2, p1, p3, p4, ncol=2)
+ggsave("plots/revision/Figure1_SVG-spot-plots.pdf",gridExtra::grid.arrange(p2, p1, p3, p4, ncol=2),
+       bg="white", height=6, width=6, unit="in")

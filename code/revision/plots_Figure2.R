@@ -16,10 +16,11 @@ genes2 = c("PPFIA2",
            "MIF","APOC1","FABP7","MT1G","MAN1A2","NTRK2","SFRP2",
            "ABCA2","PHLDB1","MTURN","ACTA2","MFAP2",
            "DNAH11")
-plotGroupedHeatmap(spe, features=genes2, group="domain", swap_rownames="gene_name",
+p1 <- plotGroupedHeatmap(spe, features=genes2, group="domain", swap_rownames="gene_name",
                    center=T, scale=T, zlim=c(-3,4), 
                    assay.type = "logcounts",
                    cluster_rows=F, cluster_cols=F,
                    #colour=viridisLite::magma(n=10))
                    colour=viridisLite::magma(n=30)[c(rep(1,5),2:30)],
-                   angle_col=90)
+                   angle_col=90, silent=T)
+ggsave("plots/revision/Figure2_heatmap.pdf", p1, bg="white", width=5, height=5, units="in")
