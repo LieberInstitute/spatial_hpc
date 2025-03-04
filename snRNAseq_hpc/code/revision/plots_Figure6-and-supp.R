@@ -17,9 +17,11 @@ plist = lapply(nmf.list, function(x)
   plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3)+
     scale_color_viridis_c(option="F", direction=-1)+ggtitle(x)+
     theme(legend.position="none", axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
-          plot.title=element_text(hjust=.5, size=18))
+          plot.title=element_text(hjust=.5, size=14))
 )
-do.call(gridExtra::grid.arrange, c(plist, ncol=4))
+
+ggsave("snRNAseq_hpc/plots/revision/Figure6_nmf-umap.png",do.call(gridExtra::grid.arrange, c(plist, ncol=4)),
+       bg="white", height=6, width=7, units="in")
 
 ##############################
 ######### L6.1 as part of subiculum
@@ -139,22 +141,26 @@ new.class.palette = c("GC"="grey50","CA2-4"="grey50","HATA"="grey50","Amy"="grey
                       "CA1"="#984ea3","ProS"="#e41a1c","Sub.1"="#ff7f00","Sub.2"="#fdbf6f","Sub.3"="#fc4e2a","PreS"="#f768a1",
                       "RHP.L6b"="#023858","RHP.L6"="#045a8d","ENT.L5"="#016c59","RHP.CBLN2+"="#a6bddb",
                       "ENT.sup3"="#006837","ENT.sup2b"="#78c679","ENT.sup2a"="#78c679","ENT.sup1"="#add294")
-#classic cortical markers
-plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
-               features=c("SATB2","TLE4","CUX2","FN1","COL24A1","TOX"), x="new.cell.class", 
-               color_by = "new.cell.class", point_size=.5)+
-  scale_color_manual(values=new.class.palette)+
-  facet_wrap(vars(Feature), ncol=2)+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5, size=12), 
-                                          legend.position="none",text=element_text(size=14),
-                                          strip.text=element_text(size=14), axis.title.x=element_blank())
-#DEGs from Fig3C -- NO LONGER USED
-plotExpression(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
-               features=c("FN1","COL24A1","POU3F1","PART1","KCNH5","TESPA1"), x="new.cell.class", 
-               color_by = "new.cell.class", point_size=.5)+
-  scale_color_manual(values=new.class.palette)+
-  facet_wrap(vars(Feature), ncol=2, scales="free_y")+theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), 
-                                                           legend.position="none",text=element_text(size=14),
-                                                           axis.title.x=element_blank())
+
+#classic cortical markers and new sub markers
+ctx.markers = c("SATB2","TLE4","CUX2","FN1","COL24A1","TOX")
+
+vln.df = cbind.data.frame("new.cell.class"=colData(sce_subset)[,c("new.cell.class")], as.matrix(t(logcounts(sce_subset)[ctx.markers,])))
+long.df = filter(vln.df, !new.cell.class %in% c("Thal", "Cajal")) %>% 
+  tidyr::pivot_longer(all_of(ctx.markers), names_to="marker.gene", values_to="expr") %>%
+  mutate(marker.gene=factor(marker.gene, levels=ctx.markers))
+
+
+vln <- ggplot(long.df, aes(x=new.cell.class, y=expr, fill=new.cell.class))+
+  geom_violin(scale="width")+scale_fill_manual(values=new.class.palette)+
+  facet_wrap(vars(marker.gene), ncol=2)+
+  theme_minimal()+labs(y="Expression (logcounts)", x="")+
+  theme(legend.position="none", text=element_text(size=12), panel.grid.minor=element_blank(),
+        axis.text.x=element_text(angle=90, hjust=1, vjust=.5), axis.title.x=element_blank(),
+        strip.text=element_text(size=12),
+        strip.background=element_rect(fill="white", color="transparent"))
+
+ggsave("snRNAseq_hpc/plots/revision/Figure6_violin.pdf", vln, bg="white", height=8, width=7, units="in")
 
 ##############################
 ######### subiculum-focused DE
@@ -223,7 +229,7 @@ plotExpression(sce_subs, features = c("AC008662.1","AL161629.1","FSTL5","MDFIC",
 
 
 #combine all the new DEGs into a dot plot - main figure
-plotDots(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
+dplot <- plotDots(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")], 
          features=c("COL21A1","NDST4","EBF4","ATP6V1C2","PRKCH","RAPGEF3",
                     "GDNF-AS1","LHFPL3","MAMDC2","PCED1B","TRPC3",#"RORB",
                     "PLEKHG1","RASGEF1B","GUCA1C","SCN7A","SCUBE1",#"SNCAIP",
@@ -233,4 +239,7 @@ plotDots(sce_subset[,!sce_subset$new.cell.class %in% c("Thal","Cajal")],
   scale_size(limits=c(0,1))+
   labs(size="Prop. nuclei",color="Avg. expr.")+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+	axis.text.y=element_text(size=12), axis.title.y=element_blank(),
         text=element_text(size=14), axis.title.x=element_blank())
+
+ggsave("snRNAseq_hpc/plots/revision/Figure6_dotplot.pdf", dplot, bg="white", height=8, width=7, units="in")

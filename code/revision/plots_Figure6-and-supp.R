@@ -150,23 +150,35 @@ spe$broad.domain2 = factor(ifelse(spe$subiculum==TRUE, "Subiculum", as.character
 broad.palette2= c("Subiculum"= "#00a000", "Neuron"="#add294", "Neuropil"="#dfa56e", "WM"="#ff80fe", "Vasc_CSF"="#00006a")
 
 sub2 = mirrorObject(spe[,spe$sample_id=="V11U08-081_D1"], axis="v")
-sub.special = cbind(spe[,spe$sample_id %in% c("V10B01-085_B1","V10B01-086_A1")], sub2)
-sub.special$facet_row = as.character(factor(sub.special$brnum, levels=c("Br6423","Br2743","Br6432"), labels=c("r1","r2","r3")))
+#sub.special = cbind(spe[,spe$sample_id %in% c("V10B01-085_B1","V10B01-086_A1")], sub2)
+#sub.special$facet_row = as.character(factor(sub.special$brnum, levels=c("Br6423","Br2743","Br6432"), labels=c("r1","r2","r3")))
 
-plotVisium(sub.special, spots=T, annotate="nmf27", highlight="broad.domain2",
-           facets="sample_id", image = FALSE, point_size=.5)+#coord_cartesian()+
-  facet_grid(rows=vars(facet_row))+#, scales="free")+
-  scale_y_continuous(expand=c(0,0))+scale_x_continuous(expand=c(0,0))+
-  scale_color_manual(values=broad.palette2, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="white",high="black", limits=c(0,max(spe$nmf27)),
-                      labels=function(x) format(x, scientific=T, digits=1))+
-  ggtitle("nmf27")+
-  theme(legend.text = element_text(size = 8), legend.position="none",
-        plot.title=element_text(margin=unit(c(0,0,0,0), "pt")),
-        strip.text=element_blank(), #aspect.ratio=1,
-        panel.spacing=unit(5,'points'),plot.margin=unit(c(0,0,0,0), "pt"))
+sup.list = c("nmf84","nmf45","nmf27","nmf51")
+plist = lapply(sup.list, function(x) {
+  plotVisium(sub2, spots=T, annotate=x, highlight="broad.domain2", image = FALSE, point_size=.5)+
+    scale_color_manual(values=broad.palette2, guide="none")+guides(color=NULL)+
+    scale_fill_gradient(low="white",high="black", 
+                        labels=function(y) format(y, scientific=T, digits=1))+
+    theme(strip.text=element_blank(), legend.text = element_text(size = 6, margin=margin(0,2,0,2,"pt")),
+          legend.box.spacing = unit(0,"pt"), legend.key.size=unit(8,"pt"), legend.title=element_text(size=9))
+})
+ggsave("plots/revision/Figure6_ENT-spot-plots.pdf", do.call(gridExtra::grid.arrange, c(plist, ncol=2)),
+       bg="white", height=4, width=4, unit="in")
+
+dp.list = c("nmf68","nmf22","nmf53","nmf65")
+plist2 = lapply(dp.list, function(x) {
+  plotVisium(sub2, spots=T, annotate=x, highlight="broad.domain2", image = FALSE, point_size=.5)+
+    scale_color_manual(values=broad.palette2, guide="none")+guides(color=NULL)+
+    scale_fill_gradient(low="white",high="black", 
+                        labels=function(y) format(y, scientific=T, digits=1))+
+    theme(strip.text=element_blank(), legend.text = element_text(size = 6, margin=margin(0,2,0,2,"pt")),
+          legend.box.spacing = unit(0,"pt"), legend.key.size=unit(8,"pt"), legend.title=element_text(size=9))
+})
+ggsave("plots/revision/Figure6_RHP-spot-plots.pdf", do.call(gridExtra::grid.arrange, c(plist2, ncol=2)),
+       bg="white", height=4, width=4, unit="in")
 
 
+####### supp plots
 #binarizing domains
 spe$ca1 = spe$nmf15>((max(spe$nmf15)*.95)/5)
 spe$ca3.2 = spe$nmf63>((max(spe$nmf63)*.95)/5)
