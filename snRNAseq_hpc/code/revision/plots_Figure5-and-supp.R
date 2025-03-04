@@ -289,10 +289,9 @@ p2 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="superfine.cell.class", poi
                      legend.text = element_text(size=8, margin=margin(l=3,unit="pt")), legend.title=element_blank(), 
                      axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,5,5,5), units="pt"))
 
-pdf(file = "snRNAseq_hpc/plots/revision/Fig5_gc-cluster-umap.pdf",
-    width=4, height=2)
-gridExtra::grid.arrange(p1, p2, ncol=2)
-dev.off()
+ggsave("snRNAseq_hpc/plots/revision/Figure5_gc-cluster-umap.png", gridExtra::grid.arrange(p1, p2, ncol=2), 
+       bg="white", width=4, height=2, units="in")
+
 
 p3 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="nmf10", point_size=.3)+
   scale_color_viridis_c("nmf10", option="F", direction=-1, labels=function(x) format(x, scientific=T, digits=1),
@@ -315,18 +314,14 @@ p5 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="CHST9", point_size=.1)+
                      legend.text = element_text(size=8, margin=margin(l=3,unit="pt")),
                      axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,5,5,5), units="pt"))
 
-pdf(file = "snRNAseq_hpc/plots/revision/Fig5_nmf10-chst9-umap.pdf",
-    width=4, height=2)
-gridExtra::grid.arrange(p3, p5, ncol=2)
-dev.off()
-
 p6 <- plotReducedDim(sce_gc, dimred="UMAP", color_by="SORCS3", point_size=.1)+
   scale_color_gradient(low="grey90", high="black")+labs(color="SORCS3")+
   theme_void()+theme(legend.key.width=unit(5, units="pt"), legend.title=element_text(size=8),
                      legend.text = element_text(size=8, margin=margin(l=3,unit="pt")),
                      axis.line=element_line(color="black", linewidth=.5), plot.margin=unit(c(5,5,5,5), units="pt"))
 
-pdf(file = "snRNAseq_hpc/plots/revision/Fig5_nmf14-sorcs3-umap.pdf",
-    width=4, height=2)
-gridExtra::grid.arrange(p4, p6, ncol=2)
-dev.off()
+ggsave("snRNAseq_hpc/plots/revision/Figure5_nmf10-chst9-umap.png", gridExtra::grid.arrange(p3, p5, ncol=2), 
+       bg="white", width=4, height=2, units="in")
+
+ggsave("snRNAseq_hpc/plots/revision/Figure5_nmf14-sorcs3-umap.png", gridExtra::grid.arrange(p4, p6, ncol=2), 
+       bg="white", width=4, height=2, units="in")
