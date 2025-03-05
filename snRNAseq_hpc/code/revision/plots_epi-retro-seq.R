@@ -105,9 +105,12 @@ dot.df2$Target_f = factor(dot.df2$Target, levels=c("HPF","ENT","MOB",
                                                    "MOp","PFC"
                                                    ))
 
-ggplot(dot.df2, aes(x=nmf_f, y=Target_f, size=n, color=scaled.avg))+
+p1 <- ggplot(dot.df2, aes(x=nmf_f, y=Target_f, size=n, color=scaled.avg))+
   geom_count()+theme_bw()+labs(y="Target region", x="CA & periallocortex NMF patterns", size="# nuclei",
                                title="mouse epi-retroSeq")+
   scale_size(range=c(0,6))+scale_color_viridis_c(option="F", direction=-1)+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
         text=element_text(size=16))
+
+ggsave("snRNAseq_hpc/plots/revision/Figure6_epi-retro-seq_dotplot.pdf", p1, 
+       bg="white",width=6, height=4, units="in")

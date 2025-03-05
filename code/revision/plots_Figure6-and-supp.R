@@ -135,6 +135,9 @@ p5<-plotVisium(sub1, spots=T, annotate="nmf17", highlight="domain",
         strip.text=element_blank(), aspect.ratio=1,
         panel.spacing=unit(5,'points'),plot.margin=unit(c(3,5,3,0), "pt"))
 
+ggsave( "plots/revision/Fig6_Br3942_2-capture-area_domain-nmf_small.png", grid.arrange(p1,p2,p3,p4,p5, ncol=3),
+   bg="white", width=6, height=5.35, units="in")
+
 pdf(file = "plots/revision/Fig6_Br3942_2-capture-area_domain-nmf_small.pdf",
     width=6, height=5.35)
 grid.arrange(p1,p2,p3,p4,p5, ncol=3)
@@ -164,6 +167,8 @@ plist = lapply(sup.list, function(x) {
 })
 ggsave("plots/revision/Figure6_ENT-spot-plots.pdf", do.call(gridExtra::grid.arrange, c(plist, ncol=2)),
        bg="white", height=4, width=4, unit="in")
+ggsave("plots/revision/Figure6_ENT-spot-plots.png", do.call(gridExtra::grid.arrange, c(plist, ncol=2)),
+       bg="white", height=4, width=4, unit="in")
 
 dp.list = c("nmf68","nmf22","nmf53","nmf65")
 plist2 = lapply(dp.list, function(x) {
@@ -174,6 +179,8 @@ plist2 = lapply(dp.list, function(x) {
     theme(strip.text=element_blank(), legend.text = element_text(size = 6, margin=margin(0,2,0,2,"pt")),
           legend.box.spacing = unit(0,"pt"), legend.key.size=unit(8,"pt"), legend.title=element_text(size=9))
 })
+ggsave("plots/revision/Figure6_RHP-spot-plots.png", do.call(gridExtra::grid.arrange, c(plist2, ncol=2)),
+       bg="white", height=4, width=4, unit="in")
 ggsave("plots/revision/Figure6_RHP-spot-plots.pdf", do.call(gridExtra::grid.arrange, c(plist2, ncol=2)),
        bg="white", height=4, width=4, unit="in")
 
