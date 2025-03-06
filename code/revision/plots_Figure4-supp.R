@@ -104,6 +104,17 @@ p4 <- ggcells(spe.manual, aes(x=ManualAnnotation, y=nmf81, fill=ManualAnnotation
         axis.text.y=element_text(size=8),
         legend.position="none", axis.title.x=element_blank())
 
+#check against oligo 77
+p3.1 <- ggcells(spe.manual, aes(x=ManualAnnotation, y=nmf77, fill=ManualAnnotation))+
+  geom_boxplot(outlier.size=.1)+theme_bw()+
+  scale_fill_manual(values=man.pal)+
+  scale_y_continuous(labels=function(x) format(x, scientific=T, digits=1))+
+  labs(title="Oligodendrocytes (nmf77)", subtitle="Manual annotation", y="spot weights")+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+        axis.text.y=element_text(size=8),
+        legend.position="none", axis.title.x=element_blank())
+
+
 
 ##### snRNAseq
 load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_final.rda'))
@@ -150,7 +161,7 @@ p5.1 <- ggcells(sce, aes(x=fine.cell.class, y=nmf77, fill=fine.cell.class))+
 
 pdf(file = "plots/revision/Figure4_astro-oligo-boxplots.pdf",
     width=8.5, height=9)
-gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, ncol=2)
+gridExtra::grid.arrange(p1.1, p2, p3.1, p4, p5.1, p6, ncol=2)
 dev.off()
 
 

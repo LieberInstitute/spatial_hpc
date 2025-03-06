@@ -35,8 +35,8 @@ dim(cdata) #150917
 
 cor(cdata$nmf81, cdata$Astro, use = "complete.obs") 
 # 0.8609265
-cor(cdata$nmf44, cdata$Oligo, use = "complete.obs") 
-# 0.6141176
+cor(cdata$nmf77, cdata$Oligo, use = "complete.obs") 
+# 0.9399128
 
 #add to spe colData
 rownames(cdata) = cdata$key
@@ -62,12 +62,12 @@ t1 <- plotVisium(sub, image=F, spots=T, annotate="Oligo", highlight="domain",
   theme_void()+theme(strip.text=element_blank())
 ggsave("plots/revision/Figure4_oligo.png", t1, bg="white", height=5.5, width=5.5, units="in")
 
-t2 <- plotVisium(sub, image=F, spots=T, annotate="nmf44", highlight="domain",
+t2 <- plotVisium(sub, image=F, spots=T, annotate="nmf77", highlight="domain",
                  facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_nmf44.png", t2, bg="white", height=5.5, width=5.5, units="in")
+ggsave("plots/revision/Figure4_nmf77.png", t2, bg="white", height=5.5, width=5.5, units="in")
 
 ##inset for oligo
 sub_oligo = sub[,sub$array_row<42 & sub$sample_id=="V11L05-333_B1"]
@@ -90,19 +90,19 @@ t1.2 <- plotVisium(sub_oligo, image=F, spots=T, annotate="Oligo", highlight="dom
   theme_void()+theme(strip.text=element_blank())
 ggsave("plots/revision/Figure4_inset_oligo.png", t1.2, bg="white", height=2.5, width=2.5, units="in")
 
-t2.1 <- plotVisium(sub_oligo, image=F, spots=T, annotate="nmf44", highlight="domain",
+t2.1 <- plotVisium(sub_oligo, image=F, spots=T, annotate="nmf77", highlight="domain",
                    facets="sample_id", point_size=2)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf44), max(sub$nmf44)))+
+  scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf77), max(sub$nmf77)))+
   theme_void()+theme(strip.text=element_blank(), legend.position="none")
-ggsave("plots/revision/Figure4_inset-no-legend_nmf44.png", t2.1, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset-no-legend_nmf77.png", t2.1, bg="white", height=2.5, width=2.5, units="in")
 
-t2.2 <- plotVisium(sub_oligo, image=F, spots=T, annotate="nmf44", highlight="domain",
+t2.2 <- plotVisium(sub_oligo, image=F, spots=T, annotate="nmf77", highlight="domain",
                    facets="sample_id", point_size=1.5)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
-  scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf44), max(sub$nmf44)))+
+  scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf77), max(sub$nmf77)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_nmf44.png", t2.2, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset_nmf77.png", t2.2, bg="white", height=2.5, width=2.5, units="in")
 
 ##### astrocytes
 

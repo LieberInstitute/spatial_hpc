@@ -26,22 +26,37 @@ names(x.h) = reactome.h
 ################# GSEA
 
 #### oligodendrocyte
-non0.nmf44 = rownames(loads)[loads[,"nmf44"]>0]
-non0.44.id = mapIds(org.Hs.eg.db, keys=non0.nmf44, keytype="SYMBOL", column="ENTREZID", multiVals = "first")
-names(non0.44.id) = non0.nmf44
-non0.44.id = non0.44.id[!is.na(non0.44.id)]
-pathways.44 <- reactomePathways(non0.44.id)
-pathways.44 <- x.h[names(pathways.44)]
+#non0.nmf44 = rownames(loads)[loads[,"nmf44"]>0]
+#non0.44.id = mapIds(org.Hs.eg.db, keys=non0.nmf44, keytype="SYMBOL", column="ENTREZID", multiVals = "first")
+#names(non0.44.id) = non0.nmf44
+#non0.44.id = non0.44.id[!is.na(non0.44.id)]
+#pathways.44 <- reactomePathways(non0.44.id)
+#pathways.44 <- x.h[names(pathways.44)]
 
-nmf44.stats = loads[names(non0.44.id),"nmf44"]
-names(nmf44.stats) = non0.44.id
+#nmf44.stats = loads[names(non0.44.id),"nmf44"]
+#names(nmf44.stats) = non0.44.id
+##in order to get reproducible results, must call set.seed every time before you run the function
+#### the function has an internal set seed that makes this necessary
+#set.seed(123)
+#olig.results.44 = fgseaMultilevel(pathways.44, stats=nmf44.stats, scoreType="pos", minSize=15, maxSize=500)
+#olig.results.44$leadingEdge2 = sapply(olig.results.44$leadingEdge, paste, collapse="/")
+#write.csv(olig.results.44[,c(1:7,9)], "snRNAseq_hpc/processed-data/revision/nmf44_reactome_results_3-sig.csv")
+
+non0.nmf77 = rownames(loads)[loads[,"nmf77"]>0]
+non0.77.id = mapIds(org.Hs.eg.db, keys=non0.nmf77, keytype="SYMBOL", column="ENTREZID", multiVals = "first")
+names(non0.77.id) = non0.nmf77
+non0.77.id = non0.77.id[!is.na(non0.77.id)]
+pathways.77 <- reactomePathways(non0.77.id)
+pathways.77 <- x.h[names(pathways.77)]
+
+nmf77.stats = loads[names(non0.77.id),"nmf77"]
+names(nmf77.stats) = non0.77.id
 #in order to get reproducible results, must call set.seed every time before you run the function
 ### the function has an internal set seed that makes this necessary
 set.seed(123)
-olig.results.44 = fgseaMultilevel(pathways.44, stats=nmf44.stats, scoreType="pos", minSize=15, maxSize=500)
-olig.results.44$leadingEdge2 = sapply(olig.results.44$leadingEdge, paste, collapse="/")
-write.csv(olig.results.44[,c(1:7,9)], "snRNAseq_hpc/processed-data/revision/nmf44_reactome_results_3-sig.csv")
-
+olig.results.77 = fgseaMultilevel(pathways.77, stats=nmf77.stats, scoreType="pos", minSize=15, maxSize=500)
+olig.results.77$leadingEdge2 = sapply(olig.results.77$leadingEdge, paste, collapse="/")
+write.csv(olig.results.77[,c(1:7,9)], "snRNAseq_hpc/processed-data/revision/nmf77_reactome_results.csv")
 
 
 #### astrocyte

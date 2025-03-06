@@ -64,16 +64,18 @@ gseaPlot <- function(nmf, nmf_terms) {
 
 
 
-nmf44.terms = c("L1CAM interactions","Nervous system development","Axon guidance")
-p1 <- gseaPlot("nmf44", nmf44.terms)
+#nmf44.terms = c("L1CAM interactions","Nervous system development","Axon guidance")
+#p1 <- gseaPlot("nmf44", nmf44.terms)
+nmf77.terms = c("Axon guidance","Signaling by ROBO receptors","Developmental Biology")
+p1 <- gseaPlot("nmf77", nmf77.terms)
 
 nmf81.terms = c("Signaling by Receptor Tyrosine Kinases","Extracellular matrix organization","RHO GTPase cycle")
 p2 <- gseaPlot("nmf81", nmf81.terms)
 
-nmf13.terms = c("Transmission across Chemical Synapses","Neurotransmitter receptors and postsynaptic signal transmission","Protein-protein interactions at synapses")
+nmf13.terms = c("Transmission across Chemical Synapses","Activation of NMDA receptors and postsynaptic events","Protein-protein interactions at synapses")
 p3 <- gseaPlot("nmf13", nmf13.terms)
 
-nmf7.terms = c("Transmission across Chemical Synapses","Neurotransmitter receptors and postsynaptic signal transmission","RHO GTPase Effectors")
+nmf7.terms = c("Transmission across Chemical Synapses","GABA synthesis, release, reuptake and degradation","RHO GTPase Effectors")
 p4 <- gseaPlot("nmf7", nmf7.terms)
 
 ggsave("snRNAseq_hpc/plots/revision/Figure4_custom-gsea-plots.pdf", gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1),
