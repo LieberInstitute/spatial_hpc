@@ -59,15 +59,15 @@ t1 <- plotVisium(sub, image=F, spots=T, annotate="Oligo", highlight="domain",
            facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
-  theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_oligo.png", t1, bg="white", height=5.5, width=5.5, units="in")
+  theme_void()+theme(strip.text=element_blank(), legend.position="none")
+ggsave("plots/revision/Figure4_oligo.png", t1, bg="white", height=5, width=5, units="in")
 
 t2 <- plotVisium(sub, image=F, spots=T, annotate="nmf77", highlight="domain",
                  facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
-  theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_nmf77.png", t2, bg="white", height=5.5, width=5.5, units="in")
+  theme_void()+theme(strip.text=element_blank(), legend.position="none")
+ggsave("plots/revision/Figure4_nmf77.png", t2, bg="white", height=5, width=5, units="in")
 
 ##inset for oligo
 sub_oligo = sub[,sub$array_row<42 & sub$sample_id=="V11L05-333_B1"]
@@ -88,7 +88,7 @@ t1.2 <- plotVisium(sub_oligo, image=F, spots=T, annotate="Oligo", highlight="dom
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$Oligo), max(sub$Oligo)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_oligo.png", t1.2, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset_oligo.pdf", t1.2, bg="white", height=2.5, width=2.5, units="in")
 
 t2.1 <- plotVisium(sub_oligo, image=F, spots=T, annotate="nmf77", highlight="domain",
                    facets="sample_id", point_size=2)+
@@ -102,7 +102,7 @@ t2.2 <- plotVisium(sub_oligo, image=F, spots=T, annotate="nmf77", highlight="dom
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf77), max(sub$nmf77)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_nmf77.png", t2.2, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset_nmf77.pdf", t2.2, bg="white", height=2.5, width=2.5, units="in")
 
 ##### astrocytes
 
@@ -110,15 +110,15 @@ t3 <- plotVisium(sub, image=F, spots=T, annotate="Astro", highlight="domain",
                  facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
-  theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_astro.png", t3, bg="white", height=5.5, width=5.5, units="in")
+  theme_void()+theme(strip.text=element_blank(), legend.position="none")
+ggsave("plots/revision/Figure4_astro.png", t3, bg="white", height=5, width=5, units="in")
 
 t4 <- plotVisium(sub, image=F, spots=T, annotate="nmf81", highlight="domain",
                  facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
-  theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_nmf81.png", t4, bg="white", height=5.5, width=5.5, units="in")
+  theme_void()+theme(strip.text=element_blank(), legend.position="none")
+ggsave("plots/revision/Figure4_nmf81.png", t4, bg="white", height=5, width=5, units="in")
 
 ##inset for astro
 sub_astro = sub[,sub$array_row>35 & sub$sample_id=="V11L05-333_B1"]
@@ -139,7 +139,7 @@ t3.2 <- plotVisium(sub_astro, image=F, spots=T, annotate="Astro", highlight="dom
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$Astro), max(sub$Astro)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_astro.png", t3.2, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset_astro.pdf", t3.2, bg="white", height=2.5, width=2.5, units="in")
 
 t4.1 <- plotVisium(sub_astro, image=F, spots=T, annotate="nmf81", highlight="domain",
                    facets="sample_id", point_size=2)+
@@ -153,7 +153,7 @@ t4.2 <- plotVisium(sub_astro, image=F, spots=T, annotate="nmf81", highlight="dom
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf81), max(sub$nmf81)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_nmf81.png", t4.2, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset_nmf81.pdf", t4.2, bg="white", height=2.5, width=2.5, units="in")
 
 
 ##### neuronal
@@ -162,15 +162,15 @@ t5 <- plotVisium(sub, image=F, spots=T, annotate="nmf13", highlight="domain",
                  facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
-  theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_nmf13.png", t5, bg="white", height=5.5, width=5.5, units="in")
+  theme_void()+theme(strip.text=element_blank(), legend.position="none")
+ggsave("plots/revision/Figure4_nmf13.png", t5, bg="white", height=5, width=5, units="in")
 
 t6 <- plotVisium(sub, image=F, spots=T, annotate="nmf7", highlight="domain",
                  facets="sample_id", point_size=.8)+
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black")+
-  theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_nmf7.png", t6, bg="white", height=5.5, width=5.5, units="in")
+  theme_void()+theme(strip.text=element_blank(), legend.position="none")
+ggsave("plots/revision/Figure4_nmf7.png", t6, bg="white", height=5, width=5, units="in")
 
 
 ##inset for neuronal
@@ -192,7 +192,7 @@ t5.2 <- plotVisium(sub_nrn, image=F, spots=T, annotate="nmf13", highlight="domai
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf13), max(sub$nmf13)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_nmf13.png", t5.2, bg="white", height=2.5, width=2.5, units="in")
+ggsave("plots/revision/Figure4_inset_nmf13.pdf", t5.2, bg="white", height=2.5, width=2.5, units="in")
 
 t6.1 <- plotVisium(sub_nrn, image=F, spots=T, annotate="nmf7", highlight="domain",
                    facets="sample_id", point_size=2)+
@@ -206,6 +206,4 @@ t6.2 <- plotVisium(sub_nrn, image=F, spots=T, annotate="nmf7", highlight="domain
   scale_color_manual(values=spatial.palette, guide="none")+guides(color=NULL)+
   scale_fill_gradient(low="grey90", high="black", limits=c(min(sub$nmf7), max(sub$nmf7)))+
   theme_void()+theme(strip.text=element_blank())
-ggsave("plots/revision/Figure4_inset_nmf7.png", t6.2, bg="white", height=2.5, width=2.5, units="in")
-
-
+ggsave("plots/revision/Figure4_inset_nmf7.pdf", t6.2, bg="white", height=2.5, width=2.5, units="in")
