@@ -66,7 +66,7 @@ srt.degs <- c("KIT",#"COL5A2",#https://pmc.ncbi.nlm.nih.gov/articles/PMC311355/
               "TESPA1",#RHP
               #"APOC1",
               #"BCAS1",#WM
-              "DNAH11"#Vasc/CP
+#              "DNAH11"#Vasc/CP
               #"SLC5A5"
 )
 
@@ -86,12 +86,12 @@ p1 <- ggplot(long.df, aes(x=fine.cell.class, y=expr, fill=fine.cell.class))+
   geom_violin(scale="width")+scale_fill_manual(values=sn.fine.palette)+
   facet_wrap(vars(marker.gene), ncol=1, scale="free_y")+
   theme_bw()+labs(y="Expression (logcounts)", x="")+
-  theme(legend.position="none", text=element_text(size=12), panel.grid=element_blank(),
+  theme(legend.position="none", text=element_text(size=12, color="black"), panel.grid=element_blank(),
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5), axis.title.x=element_blank(),
         strip.text=element_text(size=12),
         strip.background=element_rect(fill="white", color="transparent"))
 
-pdf(file = "snRNAseq_hpc/plots/revision/Figure3_sn-srt-degs.pdf",
+pdf(file = "snRNAseq_hpc/plots/revision/Figure3_sn-srt-degs_no-DNAH11.pdf",
     width=5.5, height=7.7)
 p1
 dev.off()
