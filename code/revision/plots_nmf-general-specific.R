@@ -20,6 +20,15 @@ plot(ecdf(log10(non0.spots)), xlim=c(0,5), xlab="# non-zero weighted spots per N
      col=sort(plot.spots, decreasing=T), 
      main="NMF with <1050 spots removed")
 
+pdf(file="plots/revision/ED_nmf-transfer_sn-srt_non0-ecdf.pdf")
+par(mfrow=c(2,1))
+plot(ecdf(log10(non0.nuc)), xlim=c(0,5), xlab="# non-zero weighted nuclei per NMF",
+     main="snRNAseq NMF (source)")
+plot(ecdf(log10(non0.spots)), xlim=c(0,5), xlab="# non-zero weighted spots per NMF",
+     col=sort(plot.spots, decreasing=T), 
+     main="NMF with <1050 spots removed")
+dev.off()
+
 remove.nmf = names(non0.spots[non0.spots<1050])
 remove.nmf[c(2,3,6)] <- c("nmf2","nmf3","nmf16")
 remove.nmf = c(remove.nmf, "nmf37", "nmf28")
@@ -91,10 +100,12 @@ nmf.ordered.remove = nmf.ordered.remove[c(1,10,2:9,11:34)] #move sex to front fo
 
 dot.df$nmf_f = factor(dot.df$nmf, levels=c(nmf.ordered.remove, nmf.ordered.keep))
 
-ggplot(dot.df, aes(x=nmf_f, y=superfine.cell.class, size=prop, color=scaled.avg))+
+p1 <- ggplot(dot.df, aes(x=nmf_f, y=superfine.cell.class, size=prop, color=scaled.avg))+
   geom_count()+theme_bw()+
   scale_size(range=c(0,3))+scale_color_viridis_c(option="F", direction=-1)+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+ggsave(file="plots/revision/ED_nmf_snRNAseq_dotplot.pdf",
+       p1, height=8, width=16)
 
 #possible addition of correlation with library size, etc.
 libsize.cor = sapply(nmf.ordered, function(x) cor(sce$sum,colData(sce)[,x]))
@@ -150,10 +161,12 @@ dot.df2 = left_join(d3[,c("domain","nmf","prop")],
 
 dot.df2$nmf_f = factor(dot.df2$nmf, levels=nmf.ordered.keep)
 
-ggplot(dot.df2, aes(x=nmf_f, y=domain, size=prop, color=scaled.avg))+
+p2 <- ggplot(dot.df2, aes(x=nmf_f, y=domain, size=prop, color=scaled.avg))+
   geom_count()+theme_bw()+
   scale_size(range=c(0,3))+scale_color_viridis_c(option="F", direction=-1)+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+ggsave(file="plots/revision/ED_nmf_SRT_dotplot.pdf",
+       p2, height=5, width=10)
 
 #### add corr of lib size
 libsize.cor2 = sapply(nmf.ordered.keep, function(x) cor(spe$sum_umi,colData(spe)[,x]))

@@ -36,6 +36,14 @@ plot(ecdf(log10(non0.nuc)), xlim=c(0,5), xlab="# non-zero weighted spots per NMF
      col=c(rep("red",13), rep("black",100-13)), 
      main="NMF with <1000 spots removed")
 
+
+pdf(file="snRNAseq_hpc/plots/revision/ED_nmf-transfer_mouse-ECS_non0-ecdf.pdf")
+par(mfrow=c(1,1))
+plot(ecdf(log10(non0.nuc)), xlim=c(0,5), xlab="# non-zero weighted spots per NMF",
+     col=c(rep("red",13), rep("black",100-13)), 
+     main="NMF with <1000 spots removed")
+dev.off()
+
 remove.nmf[1] <- c("nmf2")
 remove.nmf = c(remove.nmf, "nmf37", "nmf28")
 
@@ -92,10 +100,12 @@ dot.df = left_join(d1[,c("cell.type.mouse","nmf","prop")],
 
 dot.df$nmf_f = factor(dot.df$nmf, levels=nmf.ordered.keep)
 
-ggplot(dot.df, aes(x=nmf_f, y=cell.type.mouse, size=prop, color=scaled.avg))+
+p1 <- ggplot(dot.df, aes(x=nmf_f, y=cell.type.mouse, size=prop, color=scaled.avg))+
   geom_count()+theme_bw()+
   scale_size(range=c(0,3))+scale_color_viridis_c(option="F", direction=-1)+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+ggsave(file="snRNAseq_hpc/plots/revision/ED_nmf_mouse-ECS_dotplot.pdf",
+       p1, height=4, width=12)
 
 #################
 ## dotplot look at only ones that are well mapped to spots as well
@@ -131,11 +141,12 @@ dot.df2 = left_join(d3[,c("cell.type.mouse","condition","nmf","prop")],
 
 dot.df2$nmf_f = factor(dot.df2$nmf, levels=nmf.ordered.keep)
 
-ggplot(dot.df2, aes(x=nmf_f, y=ylab_f, size=prop, color=scaled.avg))+
+p2 <- ggplot(dot.df2, aes(x=nmf_f, y=ylab_f, size=prop, color=scaled.avg))+
   geom_count()+theme_bw()+
   scale_size(range=c(0,3))+scale_color_viridis_c(option="F", direction=-1)+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
-
+ggsave(file="snRNAseq_hpc/plots/revision/ED_nmf_mouse-ECS-SRT_dotplot.pdf",
+       p2, height=6, width=12)
 
 #################
 ## small dotplot of only patterns we highlight 

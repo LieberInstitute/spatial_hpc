@@ -8,15 +8,16 @@ library(pheatmap)
 #library(spatialLIBD)
 set.seed(123)
 
-reg <- read.csv("processed-data/revision/spe_enrichment_stats_cluster-k18-plus-amy-thal.csv", row.names=1)
-spe_stats = reg[,grep("t_stat",colnames(reg))]
-colnames(spe_stats)<-gsub(pattern='t_stat_',
-                          replacement='',
-                          colnames(spe_stats))
-spe_stats = reg[,grep("logFC_",colnames(reg))]
-colnames(spe_stats)<-gsub(pattern='logFC_',
-                          replacement='',
-                          colnames(spe_stats))
+## originally did new enrichment stats to show correlation with amygdala
+#reg <- read.csv("processed-data/revision/spe_enrichment_stats_cluster-k18-plus-amy-thal.csv", row.names=1)
+#spe_stats = reg[,grep("t_stat",colnames(reg))]
+#colnames(spe_stats)<-gsub(pattern='t_stat_',
+#                          replacement='',
+#                          colnames(spe_stats))
+#spe_stats = reg[,grep("logFC_",colnames(reg))]
+#colnames(spe_stats)<-gsub(pattern='logFC_',
+#                          replacement='',
+#                          colnames(spe_stats))
 
 #decided to go with the final spatial domain results instead
 load("processed-data/08_pseudobulk/PRECAST/visiumHE_DE_stats_domain.rda")
@@ -68,6 +69,9 @@ cor.mtx = cor(spe_stats,sn_stats)
 pal = c("#440154FF","#440154FF","#440154FF","#440154FF","#482878FF","#3E4A89FF","#31688EFF",
 	"#26828EFF","#1F9E89FF","#35B779FF","#6DCD59FF","#B4DE2CFF","#FDE725FF")
 
+pal2 = c("#000000", "#16001C", "#2D0038", "#440154","#482878FF","#3E4A89FF","#31688EFF",
+        "#26828EFF","#1F9E89FF","#35B779FF","#6DCD59FF","#B4DE2CFF","#FDE725FF")
+
 c_ordered = c("Astro.2","Astro.3","Astro.1","Oligo.1","Oligo.2","OPC","COP",
   "Micro.1","Micro.2","Macro.Tcell","Ependy",
   "CP.1","CP.2","CP.3","Endo.2","Endo.1","PC.SMC","VLMC",
@@ -89,7 +93,9 @@ r_ordered = c("SLM.SGZ","SR.SLM","WM.1","WM.2","WM.3","Choroid","Vascular",
               "SUB","SUB.RHP","RHP"#,"Amygdala"
               )
 
-pheatmap(cor.mtx[r_ordered,c_ordered],
+hmp = pheatmap(cor.mtx[r_ordered,c_ordered],
                    #clustering_method = "ward.D", 
                    cluster_cols=F,cluster_rows=F,
-                   color=pal, angle_col=90)
+                   color=pal2, angle_col=90)
+ggsave(file = "snRNAseq_hpc/plots/revision/corr-heatmap_srt-sn-enrichment.pdf", hmp[[4]],
+    width=10, height=5, units="in")
