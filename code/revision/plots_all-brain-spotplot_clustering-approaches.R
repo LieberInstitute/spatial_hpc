@@ -80,8 +80,9 @@ laymat=rbind(c(1,1,2,2,3,3),c(1,1,2,2,3,3),
              c(7,NA,8,10,10,11),c(7,NA,8,10,10,11),
              c(9,9,9,10,10,11))
 
-pdf(file = "plots/revision/all-brain_spotplot_domain.pdf",
-    width=9, height=12)
+pdf(file = "plots/revision/all-brain_spotplot_domain_A4.pdf",
+    #width=9, height=12)
+    width=8.3, height=11.7) #A4 dimensions
 grid.arrange(p[[1]],p[[2]],p[[3]],p[[4]],p[[5]],p[[6]],p[[7]],p[[8]],p[[9]],p[[10]],lplot, 
              layout_matrix=laymat)
 dev.off()
