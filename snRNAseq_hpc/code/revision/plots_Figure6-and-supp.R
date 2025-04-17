@@ -31,9 +31,11 @@ sce_subset = sce[,sce$mid.cell.class=="ExcN"]
 sce_subset$superfine.cell.class = droplevels(sce_subset$superfine.cell.class)
 
 tmp = sce_subset[,sce_subset$superfine.cell.class=="L6b"]
-ggplot(as.data.frame(colData(sce_tmp)),
+p0 <- ggplot(as.data.frame(colData(sce_tmp)),
        aes(x=nmf53, y=nmf65, color=nmf65>.00035))+
-  geom_point()+theme_bw()+ggtitle("L6b only")
+  geom_point()+theme_bw()+ggtitle("L6b only")+
+  scale_color_manual(values=c("black","red3"))
+ggsave(file="snRNAseq_hpc/plots/revision/ED_L6b-nmf65_scatter.pdf", p0, height=6, width=6)
 tmp$nmf65pos = tmp$nmf65>.00035
 
 
@@ -97,25 +99,75 @@ filter(deep.df, gene %in% top50.53) %>% group_by(gene) %>% add_tally() %>%
   arrange(n)
 #"SGCZ","MARCH1","LRMDA","NFIA","TENM3"
 
+try.65 = setdiff(top50.65, c(top50.40, top50.54, top50.53))
+#[1] "MGAT4C"     "CTNND2"     "SLC35F3"    "CDH13"      "KHDRBS3"   
+#[6] "RIMS2"      "NAV3"       "AL391117.1" "GALNT17"    "NEGR1"     
+#[11] "MMP16"      "PID1"       "UTRN"       "TMEM108"    "ADGRL3" 
+filter(deep.df, gene %in% try.65) %>% group_by(gene) %>% add_tally() %>%
+  mutate(sig.classes= paste(superfine.cell.class, collapse=" ")) %>%
+  filter()
+
+plotDots(sce_deep, features=try.65, group="new.classes")+
+  scale_color_gradient(low="grey90", high="black")+
+  labs(size="prop. nuclei", color="Avg. expr.")+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), text=element_text(size=11))
+#add UTRN
+
+
 #dotplot for supp
-plotDots(sce_deep, features=c("CDH8","GRIK1","PEX5L","ENOX1","TOX",#nmf40
+p1 <- plotDots(sce_deep, features=c("CDH8","GRIK1","PEX5L","ENOX1","TOX",#nmf40
                               "CNTN4","TSHZ2","ZNF385D","SEMA5A","LUZP2",#nmf54
-                              "AL391117.1",#nmf65
+                              "AL391117.1","UTRN",#nmf65
                               "TENM3","SGCZ","NFIA","MARCH1","LRMDA"#nmf53
 ), group="new.classes")+
   scale_color_gradient(low="grey90", high="black")+
   labs(size="prop. nuclei", color="Avg. expr.")+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), text=element_text(size=11))
 
+ggsave(file="snRNAseq_hpc/plots/revision/ED_L6b-nmf65_dotplot.pdf", p1,
+       height=8, width=6, units="in")
+
+#additional tsne for supp with clusters labeled
+deep.palette = c("Sub.1"="#ff7f00","Sub.2"="#fdbf6f","L6.1"="#fc4e2a",
+                      "L6b"="#023858","L6.2"="#045a8d","L5.1"="#016c59","L5.2"="#a6bddb","other"="grey")
+sce_pyr$deep_clus = ifelse(sce_pyr$superfine.cell.class %in% c("Sub.1","Sub.2","L6.1","L6.2","L6b","L5.1","L5.2"), 
+                           as.character(sce_pyr$superfine.cell.class), "other")
+
+p2 <- plotReducedDim(sce_pyr, dimred="TSNE", color_by="deep_clus", point_size=.3)+# by.assay.type = "logcounts")+
+    scale_color_manual(values=deep.palette)+
+    theme(axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank())
+
+ggsave(file="snRNAseq_hpc/plots/revision/ED_deep-sub_clusters_tsne.pdf",
+       ggrastr::rasterize(p2,layer='point',dpi=350),
+       height=8, width=6, units="in")
+
 #tsne for supp
-gene.list <- c("COL24A1","TOX","TSHZ2","ZNF385D","AL391117.1","SGCZ")#,"NFIA")
-plist = lapply(gene.list, function(x)
-  plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3, by.assay.type = "logcounts")+
+gene.list <- c("COL24A1","TOX","TSHZ2","ZNF385D","UTRN","SGCZ")#,"NFIA")
+plist = lapply(gene.list, function(x) {
+  tmp <- plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3, by.assay.type = "logcounts")+
     scale_color_gradient(low="grey90", high="black")+labs(color="")+ggtitle(x)+
     theme(axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
           plot.title=element_text(hjust=.5, size=11))
-)
+  ggrastr::rasterize(tmp,layer='point',dpi=350)
+})
 do.call(gridExtra::grid.arrange, c(plist, ncol=2))
+ggsave(file="snRNAseq_hpc/plots/revision/ED_deep-sub_markers_tsne.pdf",
+       do.call(gridExtra::grid.arrange, c(plist, ncol=2)),
+       height=8, width=6, units="in")
+
+#another tsne for supp
+nmf.list <- c("nmf40","nmf54","nmf68","nmf22","nmf53","nmf65")
+plist2 = lapply(nmf.list, function(x) {
+  tmp <- plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3)+
+    scale_color_viridis_c(option="F", direction=-1)+labs(color="")+ggtitle(x)+
+    theme(axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
+          plot.title=element_text(hjust=.5, size=11))
+  ggrastr::rasterize(tmp,layer='point',dpi=350)
+}
+)
+ggsave(file="snRNAseq_hpc/plots/revision/ED_deep-sub_nmfs_tsne.pdf",
+       do.call(gridExtra::grid.arrange, c(plist2, ncol=2)),
+       height=8, width=6, units="in")
 
 
 ##############################
@@ -199,11 +251,48 @@ plotExpression(sce_sub, features = c("COL21A1","NDST4","EBF4","ATP6V1C2","PRKCH"
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(), 
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
  
+m1 = c("COL21A1","NDST4","EBF4","ATP6V1C2","PRKCH","RAPGEF3")
+vln.df = cbind.data.frame("new.cell.class"=colData(sce_sub)[,c("new.cell.class")], as.matrix(t(logcounts(sce_sub)[m1,])))
+long.df = tidyr::pivot_longer(vln.df, all_of(m1), names_to="marker.gene", values_to="expr") %>%
+  mutate(marker.gene=factor(marker.gene, levels=m1))
+
+
+vln <- ggplot(long.df, aes(x=new.cell.class, y=expr, fill=new.cell.class))+
+  geom_violin(scale="width")+scale_fill_manual(values=new.class.palette)+
+  facet_wrap(vars(marker.gene), ncol=2)+
+  theme_minimal()+labs(y="Expression (logcounts)", x="")+
+  theme(legend.position="none", text=element_text(size=12), panel.grid.minor=element_blank(),
+        panel.border = element_rect(fill="transparent", color="black", linewidth=.5),
+        axis.text.x=element_text(angle=90, hjust=1, vjust=.3), axis.title.x=element_blank(),
+        strip.text=element_text(size=12),
+        strip.background=element_rect(fill="white", color="transparent"))
+
+ggsave("snRNAseq_hpc/plots/revision/ED_Sub.1-markers_violin.pdf", vln, bg="white", height=8, width=7, units="in")
+
+
 plotExpression(sce_sub, features = c("GDNF-AS1","LHFPL3","MAMDC2","PCED1B","SULF1","TRPC3"), 
                x="new.cell.class", exprs_values = "logcounts", colour_by = "new.cell.class")+
   scale_color_manual(values=new.class.palette)+theme_bw()+
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(),
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+
+m1 = c("GDNF-AS1","LHFPL3","MAMDC2","PCED1B","SULF1","TRPC3")
+vln.df = cbind.data.frame("new.cell.class"=colData(sce_sub)[,c("new.cell.class")], as.matrix(t(logcounts(sce_sub)[m1,])))
+long.df = tidyr::pivot_longer(vln.df, all_of(m1), names_to="marker.gene", values_to="expr") %>%
+  mutate(marker.gene=factor(marker.gene, levels=m1))
+
+
+vln <- ggplot(long.df, aes(x=new.cell.class, y=expr, fill=new.cell.class))+
+  geom_violin(scale="width")+scale_fill_manual(values=new.class.palette)+
+  facet_wrap(vars(marker.gene), ncol=2)+
+  theme_minimal()+labs(y="Expression (logcounts)", x="")+
+  theme(legend.position="none", text=element_text(size=12), panel.grid.minor=element_blank(),
+        panel.border = element_rect(fill="transparent", color="black", linewidth=.5),
+        axis.text.x=element_text(angle=90, hjust=1, vjust=.3), axis.title.x=element_blank(),
+        strip.text=element_text(size=12),
+        strip.background=element_rect(fill="white", color="transparent"))
+
+ggsave("snRNAseq_hpc/plots/revision/ED_Sub.2-markers_violin.pdf", vln, bg="white", height=8, width=7, units="in")
 
 
 #deep DE
@@ -217,6 +306,26 @@ plotExpression(sce_subd, features = c(#"COL4A1","COL4A2","VEGFC",
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(),
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
 
+m1 = c("FSTL5","PLEKHG1","RASGEF1B","GUCA1C","SCN7A","SCUBE1","SNCAIP","DISC1")
+vln.df = cbind.data.frame("new.cell.class"=colData(sce_subd)[,c("new.cell.class")], as.matrix(t(logcounts(sce_subd)[m1,])))
+long.df = tidyr::pivot_longer(vln.df, all_of(m1), names_to="marker.gene", values_to="expr") %>%
+  mutate(marker.gene=factor(marker.gene, levels=m1))
+
+
+vln <- ggplot(long.df, aes(x=new.cell.class, y=expr, fill=new.cell.class))+
+  geom_violin(scale="width")+scale_fill_manual(values=new.class.palette)+
+  facet_wrap(vars(marker.gene), ncol=2)+
+  theme_minimal()+labs(y="Expression (logcounts)", x="")+
+  theme(legend.position="none", text=element_text(size=12), panel.grid.minor=element_blank(),
+        panel.border = element_rect(fill="transparent", color="black", linewidth=.5),
+        axis.text.x=element_text(angle=90, hjust=1, vjust=.3), axis.title.x=element_blank(),
+        strip.text=element_text(size=12),
+        strip.background=element_rect(fill="white", color="transparent"))
+
+ggsave("snRNAseq_hpc/plots/revision/ED_Sub.3-markers_violin.pdf", vln, bg="white", height=8, width=7, units="in")
+
+
+
 #superficial DE
 sce_subs = sce_subset[,sce_subset$new.cell.class %in% c("Sub.1","Sub.2","ProS","PreS","ENT.sup1","ENT.sup2a","ENT.sup2b","ENT.sup3")]
 sce_subs$new.cell.class = droplevels(sce_subs$new.cell.class)
@@ -226,6 +335,25 @@ plotExpression(sce_subs, features = c("AC008662.1","AL161629.1","FSTL5","MDFIC",
   scale_color_manual(values=new.class.palette)+theme_bw()+
   theme(text=element_text(size=16), legend.position="none", axis.title.x=element_blank(),
         axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+
+m1 = c("AC008662.1","AL161629.1","FSTL5","MDFIC","WSCD1")
+vln.df = cbind.data.frame("new.cell.class"=colData(sce_subs)[,c("new.cell.class")], as.matrix(t(logcounts(sce_subs)[m1,])))
+long.df = tidyr::pivot_longer(vln.df, all_of(m1), names_to="marker.gene", values_to="expr") %>%
+  mutate(marker.gene=factor(marker.gene, levels=m1))
+
+
+vln <- ggplot(long.df, aes(x=new.cell.class, y=expr, fill=new.cell.class))+
+  geom_violin(scale="width")+scale_fill_manual(values=new.class.palette)+
+  facet_wrap(vars(marker.gene), ncol=2)+
+  theme_minimal()+labs(y="Expression (logcounts)", x="")+
+  theme(legend.position="none", text=element_text(size=12), panel.grid.minor=element_blank(),
+        panel.border = element_rect(fill="transparent", color="black", linewidth=.5),
+        axis.text.x=element_text(angle=90, hjust=1, vjust=.3), axis.title.x=element_blank(),
+        strip.text=element_text(size=12),
+        strip.background=element_rect(fill="white", color="transparent"))
+
+ggsave("snRNAseq_hpc/plots/revision/ED_PreS-markers_violin.pdf", vln, bg="white", height=8, width=7, units="in")
+
 
 
 #combine all the new DEGs into a dot plot - main figure

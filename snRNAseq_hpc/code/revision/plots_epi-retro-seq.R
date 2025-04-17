@@ -15,7 +15,7 @@ colnames(colData(mch))
 
 
 colSums(as.matrix(colData(mch)[,paste0("nmf",1:100)]))
-colSums(!is.na(colData(mch2)[,paste0("nmf",1:100)]))
+#colSums(!is.na(colData(mch2)[,paste0("nmf",1:100)]))
 
 mch = mch[,mch$Source!="DGa" & mch$Source!="DGp"]
 
@@ -31,15 +31,23 @@ nmf.use = c("nmf52","nmf11","nmf63","nmf61",#mc, ca3, ca2
 non0.nuc = colSums(as.matrix(colData(mch)[,paste0("nmf",1:100)])>0)
 
 plot1 = ifelse(na.exclude(names(non0.nuc) %in% nmf.use), "red", "black")
-plot(ecdf(non0.spots), xlab="# non-zero weighted spots per NMF", cex=1,
-     col=plot1,#sort(plot.spots, decreasing=T), 
+plot(ecdf(non0.nuc), xlab="# non-zero weighted spots per NMF", cex=1,
+     col=plot1, 
      main="Red: CA, sub, RHP patterns")
 
-non0.use = non0.spots[nmf.use]
+non0.use = non0.nuc[nmf.use]
 plot.spots = ifelse(na.exclude(non0.use<45), "red", "black")
 plot(ecdf(non0.use), xlab="# non-zero weighted spots per NMF",
      col=sort(plot.spots, decreasing=T), 
      main="NMF with <45 spots removed")
+
+pdf(file="snRNAseq_hpc/plots/revision/ED_nmf-transfer_mouse-epi-retro-seq_non0-ecdf.pdf",
+    height=4, width=6)
+par(mfrow=c(1,1))
+plot(ecdf(non0.use), xlab="# non-zero weighted spots per NMF",
+     col=sort(plot.nuc, decreasing=T), 
+     main="NMF with <45 spots removed")
+dev.off()
 
 non0.keep = names(non0.use)[non0.use>45]
 
@@ -69,7 +77,7 @@ dot.df = left_join(d1[,c("Source","nmf","prop","n")],
   mutate(nmf_f=factor(nmf, levels=nmf.ordered),
          Source_f=factor(Source, levels=c("DGp","DGa","CAp","CAa","ENT")))
 
-ggplot(dot.df, aes(x=nmf_f, y=Source_f, size=n, color=scaled.avg))+
+p0 <- ggplot(dot.df, aes(x=nmf_f, y=Source_f, size=n, color=scaled.avg))+
   geom_count()+theme_bw()+
   labs(y="Collection source", x="CA & periallocortex NMF patterns", size="n nuclei",
        title="mouse epi-retroSeq")+
@@ -77,6 +85,8 @@ ggplot(dot.df, aes(x=nmf_f, y=Source_f, size=n, color=scaled.avg))+
   theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
         text=element_text(size=16))
 
+ggsave("snRNAseq_hpc/plots/revision/Figure6_epi-retro-seq_collection-source_dotplot.pdf", p0, 
+       bg="white",width=6, height=4, units="in")
 
 #target region dotplot
 d3 = cbind.data.frame(as.data.frame(colData(mch))[,c("Source","Target")],
