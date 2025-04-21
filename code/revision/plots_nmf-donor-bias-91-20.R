@@ -28,7 +28,7 @@ table(filter(as.data.frame(colData(spe)), nmf20>0)$broad.domain)
 1919/(1919+147+26+17)
 
 #pie
-ggplot(filter(as.data.frame(colData(sce)), nmf91>0),
+p1 <- ggplot(filter(as.data.frame(colData(sce)), nmf91>0),
        aes(x="", fill=brnum))+
   geom_bar(stat="count", position="fill", color="black")+
   scale_fill_manual(values=c("#313695",#2720
@@ -41,11 +41,11 @@ ggplot(filter(as.data.frame(colData(sce)), nmf91>0),
                              "#8dd3c7",#8325
                              "#b2182b",#8492
                              "grey40" #8667
-  ))+labs(fill="Donor", title="snRNAseq")+
+  ))+labs(fill="Donor", title="snRNAseq: nmf91")+
   coord_polar(theta="y")+theme_void()+
   theme(plot.title=element_text(size=18), aspect.ratio=1)
 
-ggplot(filter(as.data.frame(colData(spe)), nmf91>0),
+p2 <- ggplot(filter(as.data.frame(colData(spe)), nmf91>0),
        aes(x="", fill= factor(brnum, levels=levels(spe$brnum)[c(10,1:9)])))+
   geom_bar(stat="count", position="fill", color="black")+
   scale_fill_manual(values=c("#313695",#2720
@@ -58,11 +58,11 @@ ggplot(filter(as.data.frame(colData(spe)), nmf91>0),
                              "#8dd3c7",#8325
                              "#b2182b",#8492
                              "grey40" #8667
-  ))+labs(fill="Donor", title="SRT")+
+  ))+labs(fill="Donor", title="SRT: nmf91")+
   coord_polar(theta="y")+theme_void()+
   theme(plot.title=element_text(size=18), aspect.ratio=1)
 
-ggplot(filter(as.data.frame(colData(sce)), nmf20>0),
+p3 <- ggplot(filter(as.data.frame(colData(sce)), nmf20>0),
        aes(x="", fill=brnum))+
   geom_bar(stat="count", position="fill", color="black")+
   scale_fill_manual(values=c("#313695",#2720
@@ -75,11 +75,11 @@ ggplot(filter(as.data.frame(colData(sce)), nmf20>0),
                              "#8dd3c7",#8325
                              "#b2182b",#8492
                              "grey40" #8667
-  ))+labs(fill="Donor", title="snRNAseq")+
+  ))+labs(fill="Donor", title="snRNAseq: nmf20")+
   coord_polar(theta="y")+theme_void()+
   theme(plot.title=element_text(size=18), aspect.ratio=1)
 
-ggplot(filter(as.data.frame(colData(spe)), nmf20>0),
+p4 <- ggplot(filter(as.data.frame(colData(spe)), nmf20>0),
        aes(x="", fill= factor(brnum, levels=levels(spe$brnum)[c(10,1:9)])))+
   geom_bar(stat="count", position="fill", color="black")+
   scale_fill_manual(values=c("#313695",#2720
@@ -92,14 +92,18 @@ ggplot(filter(as.data.frame(colData(spe)), nmf20>0),
                              "#8dd3c7",#8325
                              "#b2182b",#8492
                              "grey40" #8667
-  ))+labs(fill="Donor", title="SRT")+
+  ))+labs(fill="Donor", title="SRT: nmf20")+
   coord_polar(theta="y")+theme_void()+
   theme(plot.title=element_text(size=18), aspect.ratio=1)
+
+ggsave(file="plots/revision/ED_nmf91-nmf20_pie-charts.pdf", 
+       gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2),
+       height=8, width=8, units="in")
 
 #weight ~ avg expr scatter
 nmf91.df = tibble::rownames_to_column(cbind.data.frame(nmf91=loads[,"nmf91"], avg.expr=avg.sce), var="gene") %>%
   mutate(is_ieg=gene %in% c("NR4A3","JUND","JUN","FOS","NR4A1","NR4A2","EGR1","JUNB","FOSL2"))
-ggplot(nmf91.df, aes(x=avg.expr, y=nmf91, color=is_ieg))+
+p5 <- ggplot(nmf91.df, aes(x=avg.expr, y=nmf91, color=is_ieg))+
   geom_point()+
   geom_point(data=filter(nmf91.df, is_ieg==TRUE))+
   geom_text_repel(data=filter(nmf91.df, is_ieg==TRUE), aes(label=gene),
@@ -109,10 +113,10 @@ ggplot(nmf91.df, aes(x=avg.expr, y=nmf91, color=is_ieg))+
   labs(x="logcount expr. (all nuclei)", y="gene weight", title="nmf91")+
   theme(plot.title=element_text(size=16))
 
-
+nmf20.sort = sort(loads[,"nmf20"], decreasing=T)
 nmf20.df = tibble::rownames_to_column(cbind.data.frame(nmf20=loads[,"nmf20"], avg.expr=avg.sce), var="gene") %>%
   mutate(is_ieg=gene %in% names(nmf20.sort)[1:3])
-ggplot(nmf20.df, aes(x=avg.expr, y=nmf20, color=is_ieg))+
+p6 <- ggplot(nmf20.df, aes(x=avg.expr, y=nmf20, color=is_ieg))+
   geom_point()+
   geom_point(data=filter(nmf20.df, is_ieg==TRUE))+
   geom_text_repel(data=filter(nmf20.df, is_ieg==TRUE), aes(label=gene),
@@ -121,6 +125,55 @@ ggplot(nmf20.df, aes(x=avg.expr, y=nmf20, color=is_ieg))+
   theme_bw()+scale_color_manual(values=c("grey","red"))+
   labs(x="logcount expr. (all nuclei)", y="gene weight", title="nmf20")+
   theme(plot.title=element_text(size=16))
+
+ggsave(file="plots/revision/ED_nmf91-nmf20_gene-weight-scatter.pdf", 
+       gridExtra::grid.arrange(ggrastr::rasterize(p5,layer='point',dpi=350), ggrastr::rasterize(p6,layer='point',dpi=350),
+                               ncol=2),
+       height=5, width=10, units="in")
+
+#settled on dotplots instead of boxplots
+sce$brnum_nrn = ifelse(sce$broad.cell.class=="Neuron", paste(sce$brnum, "nrn", sep="_"),
+                       paste(sce$brnum, "other", sep="_"))
+sce$brnum_nrn = factor(sce$brnum_nrn, levels=rev(paste0(rep(levels(sce$brnum), each=2), rep(c("_nrn","_other"), length.out=20))))
+
+dplot1 <- plotDots(sce, features=names(nmf20.sort)[3:1], group = "brnum_nrn")+
+  scale_color_gradient(low="white", high="black", limits=c(0,3.1))+
+  scale_size(limits=c(0,1))+coord_flip()+
+  labs(size="Prop. nuclei",color="Avg. expr.")+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+        axis.text.y=element_text(size=12), axis.title.y=element_blank(),
+        text=element_text(size=10), axis.title.x=element_blank())
+
+dplot2 <- plotDots(sce, features=c("JUN","FOS","NR4A1"), group = "brnum_nrn")+
+  scale_color_gradient(low="white", high="black", limits=c(0,1.3))+
+  scale_size(limits=c(0,1))+coord_flip()+
+  labs(size="Prop. nuclei",color="Avg. expr.")+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+        axis.text.y=element_text(size=12), axis.title.y=element_blank(),
+        text=element_text(size=10), axis.title.x=element_blank())
+
+spe$brnum_nrn = ifelse(spe$broad.domain=="Neuron", paste(spe$brnum, "nrn", sep="_"),
+                         paste(spe$brnum, "other", sep="_"))
+spe$brnum_nrn = factor(spe$brnum_nrn, levels=rev(paste0(rep(levels(sce$brnum), each=2), rep(c("_nrn","_other"), length.out=20))))
+dplot3 <- plotDots(spe, features=names(nmf20.sort)[3:1], group = "brnum_nrn")+
+  scale_color_gradient(low="white", high="black", limits=c(0,.3))+
+  scale_size(limits=c(0,1))+coord_flip()+
+  labs(size="Prop. spots",color="Avg. expr.")+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+        axis.text.y=element_text(size=12), axis.title.y=element_blank(),
+        text=element_text(size=10), axis.title.x=element_blank())
+dplot4 <- plotDots(spe, features=c("JUN","FOS","NR4A1"), group = "brnum_nrn")+
+    scale_color_gradient(low="white", high="black", limits=c(0,1))+
+    scale_size(limits=c(0,1))+coord_flip()+
+    labs(size="Prop. spots",color="Avg. expr.")+
+    theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+          axis.text.y=element_text(size=12), axis.title.y=element_blank(),
+          text=element_text(size=10), axis.title.x=element_blank())
+
+ggsave(file="plots/revision/ED_nmf91-nmf20_top-gene-dotplot.pdf",
+       gridExtra::grid.arrange(dplot1, dplot3, dplot2, dplot4, ncol=4),
+       height=6, width=12, units="in"
+)
 
 #boxplots
 ggplot(mutate(as.data.frame(colData(sce)), is_nrn=broad.cell.class=="Neuron",

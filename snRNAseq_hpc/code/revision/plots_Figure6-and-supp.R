@@ -142,7 +142,7 @@ ggsave(file="snRNAseq_hpc/plots/revision/ED_deep-sub_clusters_tsne.pdf",
        height=8, width=6, units="in")
 
 #tsne for supp
-gene.list <- c("COL24A1","TOX","TSHZ2","ZNF385D","UTRN","SGCZ")#,"NFIA")
+gene.list <- c("GRIK1","TOX","ZNF385D","UTRN","LRMDA","NFIA")
 plist = lapply(gene.list, function(x) {
   tmp <- plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3, by.assay.type = "logcounts")+
     scale_color_gradient(low="grey90", high="black")+labs(color="")+ggtitle(x)+
