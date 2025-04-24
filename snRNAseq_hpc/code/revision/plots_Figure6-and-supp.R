@@ -11,7 +11,7 @@ load(file=here::here('snRNAseq_hpc','processed-data','sce','sce_final.rda'))
 sce_pyr = sce[,sce$fine.cell.class %in% c("CA1/ProS","L2/3.PrS.PaS","L2/3.PrS.Ent","L5/6","L6/6b","Sub.1","Sub.2")]
 reducedDim(sce_pyr, "TSNE") = calculateTSNE(sce_pyr, dimred="MNN", n_dimred=50)
 
-nmf.list = c("nmf15","nmf32","nmf40","nmf54","nmf84","nmf45","nmf27","nmf51","nmf68","nmf22","nmf53","nmf65")
+nmf.list = c("nmf15","nmf40","nmf54","nmf84","nmf45","nmf27","nmf51","nmf68","nmf22","nmf53","nmf65","nmf17")
 
 plist = lapply(nmf.list, function(x) 
   plotReducedDim(sce_pyr, dimred="TSNE", color_by=x, point_size=.3)+
@@ -20,7 +20,7 @@ plist = lapply(nmf.list, function(x)
           plot.title=element_text(hjust=.5, size=14))
 )
 
-ggsave("snRNAseq_hpc/plots/revision/Figure6_nmf-umap.png",do.call(gridExtra::grid.arrange, c(plist, ncol=4)),
+ggsave("snRNAseq_hpc/plots/revision/Figure6_nmf-tsne.png",do.call(gridExtra::grid.arrange, c(plist, ncol=4)),
        bg="white", height=6, width=7, units="in")
 
 ##############################

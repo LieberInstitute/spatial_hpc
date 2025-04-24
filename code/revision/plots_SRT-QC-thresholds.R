@@ -32,28 +32,35 @@ ggplot(df, aes(x=sorted, y=low_genes))+
 
 ### plot spot values
 
-ggplot(as.data.frame(colData(spe_he)), aes(x=brnum, y=sum, color=low_sum_id))+
+p1 <- ggplot(as.data.frame(colData(spe_he)), aes(x=brnum, y=sum, color=low_sum_id))+
   geom_boxplot(outlier.size=.5)+scale_color_manual(values=c("black","red3"))+
   scale_y_log10()+
-  labs(x="donor", y="# UMI", color="outlier",
-       title="QC summary: library size", subtitle="3MAD per capture area")+
-  theme_bw()+theme(text=element_text(size=16))
+  labs(x="donor", y="# UMI", color="spot\nremoved",
+       title="QC summary: library size")+
+  theme_bw()+theme(text=element_text(size=12), legend.title=element_text(size=10), legend.text=element_text(size=8),
+                   legend.box.spacing= unit(2, "pt"), legend.margin=margin(0,0,0,2, "pt"))
 
-ggplot(as.data.frame(colData(spe_he)), aes(x=brnum, y=detected, color=low_detected_id))+
+p2 <- ggplot(as.data.frame(colData(spe_he)), aes(x=brnum, y=detected, color=low_detected_id))+
   geom_boxplot(outlier.size=.5)+scale_color_manual(values=c("black","red3"))+
   scale_y_log10()+
   labs(x="donor", y="# genes", color="outlier",
-       title="QC summary: detected genes", subtitle="3MAD per capture area")+
-  theme_bw()+theme(text=element_text(size=16))
+       title="QC summary: detected genes", color="spot\nremoved")+
+  theme_bw()+theme(text=element_text(size=12), legend.title=element_text(size=10), legend.text=element_text(size=8),
+                   legend.box.spacing= unit(2, "pt"), legend.margin=margin(0,0,0,2, "pt"))
 
 ### spots kept
 
-ggplot(as.data.frame(colData(spe_he)) %>% 
+p3 <- ggplot(as.data.frame(colData(spe_he)) %>% 
          mutate(check2=factor(discard_auto_id, levels=c(TRUE, FALSE), labels=c("removed","kept"))), 
        aes(x=brnum, group=as.factor(sample_id)))+
   geom_bar(stat="count", position=position_dodge2(width=.9, preserve="single"), 
            fill="grey", color="grey20", )+
   scale_y_log10()+
-  facet_grid(cols=vars(check2))+
-  labs(x="donor", y="# spots", title="QC summary: spots kept", subtitle="3MAD per capture area")+
-  theme_bw()+theme(text=element_text(size=16))
+  facet_grid(rows=vars(check2))+
+  labs(x="donor", y="# spots", title="QC summary: spots kept")+
+  theme_bw()+theme(text=element_text(size=12))
+
+pdf(file="plots/revision/supp_Vis-HE-qc.pdf", width=7, height=9)
+gridExtra::grid.arrange(p1, p2, p3, ncol=1)
+dev.off()
+

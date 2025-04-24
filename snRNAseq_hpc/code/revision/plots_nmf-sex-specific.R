@@ -35,15 +35,26 @@ chrYgenes = sapply(colnames(loads), function(x) {
 })
 colSums(chrYgenes) #just 1 pattern has more than 1 in top 50: nmf28
 
-plotReducedDim(sce, dimred="UMAP", color_by="nmf37", point_size=.1)+
+p1 <- plotReducedDim(sce, dimred="UMAP", color_by="nmf37", point_size=.1)+
   scale_color_viridis_c(option="F", direction=-1)+
-  ggtitle("nmf37")+theme_bw()+theme(plot.title=element_text(size=18))
-plotReducedDim(sce, dimred="UMAP", color_by="XIST", point_size=.1, by_exprs_values = "logcounts")+
+  labs(title="nmf37", color="nuclei\nweight")+theme_bw()+
+  theme(legend.box.spacing = unit(0,"pt"), legend.box.margin = margin(0,0,0,0,"pt"),
+        axis.title=element_blank(), legend.key.size=unit(10,"pt"), legend.text=element_text(size=8, margin=margin(0,0,0,3,"pt")))
+p2 <- plotReducedDim(sce, dimred="UMAP", color_by="XIST", point_size=.1, by_exprs_values = "logcounts")+
+  scale_color_gradient(low="grey90", high="black")+
+  labs(title="XIST", color="log2\nCPM")+theme_bw()+
+  theme(legend.box.spacing = unit(0,"pt"), legend.box.margin = margin(0,0,0,0,"pt"),
+        axis.title=element_blank(), legend.key.size=unit(10,"pt"))
+p3 <- plotReducedDim(sce, dimred="UMAP", color_by="nmf28", point_size=.1)+
   scale_color_viridis_c(option="F", direction=-1)+
-  ggtitle("XIST")+theme_bw()+theme(plot.title=element_text(size=18))
-plotReducedDim(sce, dimred="UMAP", color_by="nmf28", point_size=.1)+
-  scale_color_viridis_c(option="F", direction=-1)+
-  ggtitle("nmf28")+theme_bw()+theme(plot.title=element_text(size=18))
-plotReducedDim(sce, dimred="UMAP", color_by="USP9Y", point_size=.1, by_exprs_values = "logcounts")+
-  scale_color_viridis_c(option="F", direction=-1)+
-  ggtitle("USP9Y")+theme_bw()+theme(plot.title=element_text(size=18))
+  labs(title="nmf28", color="nuclei\nweight")+theme_bw()+
+  theme(legend.box.spacing = unit(0,"pt"), legend.box.margin = margin(0,0,0,0,"pt"),
+        axis.title=element_blank(), legend.key.size=unit(10,"pt"), legend.text=element_text(size=8, margin=margin(0,0,0,3,"pt")))
+p4 <- plotReducedDim(sce, dimred="UMAP", color_by="USP9Y", point_size=.1, by_exprs_values = "logcounts")+
+  scale_color_gradient(low="grey90", high="black")+
+  labs(title="USP9Y", color="log2\nCPM")+theme_bw()+
+  theme(legend.box.spacing = unit(0,"pt"), legend.box.margin = margin(0,0,0,0,"pt"),
+        axis.title=element_blank(), legend.key.size=unit(10,"pt"))
+
+ggsave(file="snRNAseq_hpc/plots/revision/supp_nmf-sex-specific.png", bg="white",
+       gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2), height=9, width=8)

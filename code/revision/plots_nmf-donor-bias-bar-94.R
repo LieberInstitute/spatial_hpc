@@ -284,6 +284,118 @@ ggplot(mutate(as.data.frame(colData(spe)), is_CSF=domain=="Choroid"),
   scale_fill_manual(values=c("grey50","red"))+
   labs(y="spot weights", x="", title="nmf48 (SRT)")
 
+
+#nmf weights and TTR expr dotplot
+sce$brnum_csf = ifelse(sce$mid.cell.class=="CSF", paste(sce$brnum, "CP", sep="_"),
+                       paste(sce$brnum, "other", sep="_"))
+sce$brnum_csf = factor(sce$brnum_csf, #levels=rev(paste0(rep(levels(sce$brnum), each=2), rep(c("_CP","_other"), length.out=20)))
+                       levels=c(paste0(levels(sce$brnum), "_CP"), paste0(levels(sce$brnum), "_other"))
+)
+
+seed1 = cbind(as.matrix(colData(sce)[,c("nmf48","nmf94")]), "TTR"=logcounts(sce)["TTR",])
+seed1 = seed1>0
+d1 = cbind.data.frame(brnum_csf=as.data.frame(colData(sce))[,"brnum_csf"],
+                      seed1) %>% 
+  group_by(brnum_csf) %>% add_tally(name="total") %>%
+  group_by(brnum_csf, total) %>%
+  summarise_at(c("nmf48","nmf94","TTR"), sum) %>%
+  tidyr::pivot_longer(c("nmf48","nmf94","TTR"), values_to="n", names_to="nmf") %>%
+  mutate(prop=n/total)
+
+seed2 = as.matrix(colData(sce)[,c("nmf48","nmf94")])
+seed2 = apply(seed2, 2, scale)
+seed2 = cbind(seed2, "TTR"=logcounts(sce)["TTR",])
+d2 = cbind.data.frame(brnum_csf=as.data.frame(colData(sce))[,"brnum_csf"],
+                      seed2) %>% 
+  group_by(brnum_csf) %>%
+  summarise_at(c("nmf48","nmf94","TTR"), mean) %>% 
+  tidyr::pivot_longer(c("nmf48","nmf94","TTR"), values_to="scaled.avg", names_to="nmf")
+
+dot.df = left_join(d1[,c("brnum_csf","nmf","n")], 
+                   d2[,c("brnum_csf","nmf","scaled.avg")]) %>%
+  mutate(brnum_csf=factor(brnum_csf, levels=levels(sce$brnum_csf)),
+         y_labs=factor(nmf, levels=c("TTR","nmf94","nmf48")))
+
+nmf.plot <- ggplot(dot.df, aes(x=brnum_csf, y=y_labs, color=scaled.avg, size=n))+
+  geom_count()+theme_bw()+
+  scale_size(range=c(0,6))+#, limits=c(0,1), breaks=c(0,.5,1))+
+  labs(title="snRNA-seq")+
+  scale_color_viridis_c(option="F", direction=-1, limits=c(min(filter(dot.df, nmf!="TTR")$scaled.avg),
+                                                           max(filter(dot.df, nmf!="TTR")$scaled.avg)))+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), legend.key.size=unit(12,"pt"))
+
+expr.plot <- ggplot(dot.df, aes(x=brnum_csf, y=y_labs, color=scaled.avg, size=n))+
+  geom_count()+theme_bw()+
+  scale_size(range=c(0,6))+#, limits=c(0,1), breaks=c(0,.5,1))+
+  labs(title="snRNA-seq")+
+  scale_color_gradient(low="grey90", high="black", limits=c(min(filter(dot.df, nmf=="TTR")$scaled.avg),
+                                                           max(filter(dot.df, nmf=="TTR")$scaled.avg)))+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), legend.key.size=unit(12,"pt"),
+        axis.text.y=element_text(face="italic"))
+
+pdf(file="plots/revision/supp_nmf94-donor-bias_dotplot-nmf-TTR.pdf", height=6, width=8)
+gridExtra::grid.arrange(nmf.plot, expr.plot, ncol=1)
+dev.off()
+
+
+
+
+spe$brnum_csf = ifelse(spe$domain=="Choroid", paste(spe$brnum, "CP", sep="_"),
+                       paste(spe$brnum, "other", sep="_"))
+table(spe$brnum_csf)
+spe$brnum_csf = factor(spe$brnum_csf, #levels=rev(paste0(rep(levels(sce$brnum), each=2), rep(c("_CP","_other"), length.out=20)))
+                       levels=levels(sce$brnum_csf))
+
+seed3 = cbind(as.matrix(colData(spe)[,c("nmf48","nmf94")]), "TTR"=logcounts(spe)["TTR",])
+seed3 = seed3>0
+d3 = cbind.data.frame(brnum_csf=as.data.frame(colData(spe))[,"brnum_csf"],
+                      seed3) %>% 
+  group_by(brnum_csf) %>% add_tally(name="total") %>%
+  group_by(brnum_csf, total) %>%
+  summarise_at(c("nmf48","nmf94","TTR"), sum) %>%
+  tidyr::pivot_longer(c("nmf48","nmf94","TTR"), values_to="n", names_to="nmf") %>%
+  mutate(prop=n/total)
+
+d3 = bind_rows(d3, filter(d3, brnum_csf=="Br2720_CP") %>% mutate(n=0, prop=0, brnum_csf="Br6432_CP"))
+
+seed4 = as.matrix(colData(spe)[,c("nmf48","nmf94")])
+seed4 = apply(seed4, 2, scale)
+seed4 = cbind(seed4, "TTR"=logcounts(spe)["TTR",])
+d4 = cbind.data.frame(brnum_csf=as.data.frame(colData(spe))[,"brnum_csf"],
+                      seed4) %>% 
+  group_by(brnum_csf) %>%
+  summarise_at(c("nmf48","nmf94","TTR"), mean) %>% 
+  tidyr::pivot_longer(c("nmf48","nmf94","TTR"), values_to="scaled.avg", names_to="nmf")
+
+d4 = bind_rows(d4, filter(d4, brnum_csf=="Br2720_CP") %>% mutate(scaled.avg=0, brnum_csf="Br6432_CP"))
+
+
+dot.df2 = left_join(d3[,c("brnum_csf","nmf","n","prop")], 
+                   d4[,c("brnum_csf","nmf","scaled.avg")]) %>%
+  mutate(brnum_csf=factor(brnum_csf, levels=levels(spe$brnum_csf)),
+         y_labs=factor(nmf, levels=c("TTR","nmf94","nmf48")))
+
+nmf.plot2 <- ggplot(dot.df2, aes(x=brnum_csf, y=y_labs, color=scaled.avg, size=prop))+
+  geom_count()+theme_bw()+#geom_text(aes(label=n), color="white")+
+  scale_size(range=c(0,6), limits=c(0,1), breaks=c(0,.5,1))+
+  labs(title="SRT")+
+  scale_color_viridis_c(option="F", direction=-1, limits=c(min(filter(dot.df2, nmf!="TTR")$scaled.avg),
+                                                           max(filter(dot.df2, nmf!="TTR")$scaled.avg)))+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), legend.key.size=unit(12,"pt"))
+
+expr.plot2 <- ggplot(dot.df2, aes(x=brnum_csf, y=y_labs, color=scaled.avg, size=prop))+
+  geom_count()+theme_bw()+#geom_text(aes(label=n), color="white")+
+  scale_size(range=c(0,6), limits=c(0,1), breaks=c(0,.5,1))+
+  labs(title="SRT")+
+  scale_color_gradient(low="grey90", high="black", limits=c(min(filter(dot.df2, nmf=="TTR")$scaled.avg),
+                                                            max(filter(dot.df2, nmf=="TTR")$scaled.avg)))+
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), legend.key.size=unit(12,"pt"),
+        axis.text.y=element_text(face="italic"))
+
+pdf(file="plots/revision/supp_nmf94-donor-bias_SRT-dotplot-nmf-TTR.pdf", height=6, width=8)
+gridExtra::grid.arrange(nmf.plot2, expr.plot2, ncol=1)
+dev.off()
+
 #spot plots
 sub=spe[,spe$brnum=="Br3942"]
 sub$is_choroid = sub$domain=="Choroid"

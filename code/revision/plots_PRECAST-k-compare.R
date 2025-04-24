@@ -63,13 +63,23 @@ spe$k18.f = factor(spe$PRECAST_k18, levels=c(10,8,1,
 
 
 
-plotGroupedHeatmap(spe, features=genes, group="k16.f", swap_rownames="gene_name",
+hm1 = plotGroupedHeatmap(spe, features=genes, group="k16.f", swap_rownames="gene_name",
                    center=T, scale=T, zlim=c(-2,4),
                    cluster_rows=F, cluster_cols=F, border_col="white",
                    color=RColorBrewer::brewer.pal(9,"Greys"),
-                   angle_col="0")
-
-
+                   angle_col="0", fontsize=10, fontsize_row=12, silent=T)
+hm2 = plotGroupedHeatmap(spe, features=genes, group="k17.f", swap_rownames="gene_name",
+                         center=T, scale=T, zlim=c(-2,4),
+                         cluster_rows=F, cluster_cols=F, border_col="white",
+                         color=RColorBrewer::brewer.pal(9,"Greys"),
+                         angle_col="0", fontsize=10, fontsize_row=12, silent=T)
+hm3 = plotGroupedHeatmap(spe, features=genes, group="k18.f", swap_rownames="gene_name",
+                         center=T, scale=T, zlim=c(-2,4),
+                         cluster_rows=F, cluster_cols=F, border_col="white",
+                         color=RColorBrewer::brewer.pal(9,"Greys"),
+                         angle_col="0", fontsize=10, fontsize_row=12, silent=T)
+ggsave(file="plots/revision/supp_PRECAST-compare-k_heatmap.pdf", gridExtra::grid.arrange(hm1[[4]], hm2[[4]], hm3[[4]], ncol=3),
+       height=4, width=12, units="in")
 
 ################ make pies
 #for pies need manual annotation
@@ -106,32 +116,52 @@ man.pal = c("THAL"="#1e1eff","CTX"="#5ffffb", "SUB"="#add294", "PCL-CA1"="#00dc0
              "GCL"="#005000", "SGZ"="#dfa56e", "ML"="#c1c1c1", "SL"="#444444", "SR"="#828E84", "SLM"="tan4",
              "SO"="#A698AE", "WM"="#ff3ffc", "CP"="#00006a")
 
-ggplot(as.data.frame(colData(spe.manual)), aes(x="", fill=ManualAnnotation))+
-  geom_bar(stat="count", position="fill")+
+p1 <- ggplot(as.data.frame(colData(spe.manual)), aes(x="", fill=ManualAnnotation))+
+  geom_bar(stat="count", position="fill", color="white", linewidth=.3)+
+  scale_fill_manual(values=man.pal)+
+  facet_wrap(vars(k16.f), ncol=5)+theme_void()+
+  coord_polar(theta = "y")+labs(title="PRECAST k=16 clusters")+
+  theme(aspect.ratio=1, legend.position="none", strip.text=element_text(size=12))
+p2 <- ggplot(as.data.frame(colData(spe.manual)), aes(x="", fill=ManualAnnotation))+
+  geom_bar(stat="count", position="fill", color="white", linewidth=.3)+
+  scale_fill_manual(values=man.pal)+
+  facet_wrap(vars(k17.f), ncol=5)+theme_void()+
+  coord_polar(theta = "y")+labs(title="PRECAST k=17 clusters")+
+  theme(aspect.ratio=1, legend.position="none", strip.text=element_text(size=12))
+p3 <- ggplot(as.data.frame(colData(spe.manual)), aes(x="", fill=ManualAnnotation))+
+  geom_bar(stat="count", position="fill", color="white", linewidth=.3)+
   scale_fill_manual(values=man.pal)+
   facet_wrap(vars(k18.f), ncol=5)+theme_void()+
   coord_polar(theta = "y")+labs(title="PRECAST k=18 cluster")+
-  theme(aspect.ratio=.8, legend.position="none")
+  theme(aspect.ratio=1, legend.position="none", strip.text=element_text(size=12))
+
+pdf(file="plots/revision/supp_PRECAST-compare-k_pie.pdf", height=4, width=12)
+gridExtra::grid.arrange(p1+theme(panel.spacing = unit(6, "pt"), plot.margin=unit(c(6,12,6,12),"pt")), 
+                        p2+theme(panel.spacing = unit(6, "pt"), plot.margin=unit(c(6,12,6,12),"pt")), 
+                        p3+theme(panel.spacing = unit(6, "pt"), plot.margin=unit(c(6,12,6,12),"pt")), ncol=3)
+dev.off()
 
 #legend for pies
-ggplot(cbind.data.frame("y"=c(rep(1,4), rep(2,3), rep(3,6), rep(4,2)), 
+pl <- ggplot(cbind.data.frame("y"=c(rep(1,4), rep(2,3), rep(3,6), rep(4,2)), 
                         "x"=c(seq(from=1, by=.2, length.out=4),
-                              seq(from=1, by=.2, length.out=3),
-                              seq(from=1, by=.2, length.out=6),
+                              #seq(from=1, by=.2, length.out=3),
+                              c(1.4,1.0,1.2),#swap PCL-CA3 to end
+			      seq(from=1, by=.2, length.out=6),
                               seq(from=1, by=.2, length.out=2)),
                         "labels"=names(man.pal)),
        aes(x=x, y=y, color=factor(labels, levels=names(man.pal))))+
-  geom_point(size=3)+scale_color_manual(values=man.pal)+
-  geom_text(aes(label=labels), nudge_x = .03, hjust=0, color="black", size=4)+
+  geom_point(size=2)+scale_color_manual(values=man.pal)+
+  geom_text(aes(label=labels), nudge_x = .03, hjust=0, color="black", size=3)+
   scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.2)))+
   theme_void()+
   theme(legend.position="none",
-        plot.margin=unit(c(1,.2,1,.2),"cm"))
+        plot.margin=unit(c(.2,.2,.2,.2),"cm"))
 
+ggsave("plots/revision/supp_PRECAST-compare-k_pie-legend.pdf", pl, height=1, width=3)
 
 ################ spot plots
 
-test = spe[,spe$sample_id %in% c("Br3942_V11L05-333_C1","Br3942_V11L05-333_D1")]
+test = spe[,spe$sample_id == "Br3942_V11L05-333_D1"]
 load(file=here::here('plots','spatial_palette_final.rda'))
 
 k16.pal = c("10"="#5ffffb","8"="#99ff99","1"="#61963d", "14"="#add294", "9"="#00dc00",
@@ -144,50 +174,33 @@ k17.k18.pal = c("10"="#5ffffb","8"="#99ff99","1"="#61963d", "14"="#add294", "9"=
             "13"="#444444", "5"="#777777", "15"="#dfa56e", 
             "6"="#ff3ffc", "16"="#7a007a", "18"="#ff80fe", "12"="#00006a", "11"="#1e1eff")
 
-#test$is15_k17 = test$PRECAST_k17==15
-#test$is15_k18 = test$PRECAST_k18==15
-plotSpots(test, annotate="k16.f", sample_id="sample_id",
+p1 <- plotSpots(test, annotate="k16.f", sample_id="sample_id",
           point_size=.5)+
-  scale_color_manual(values=k16.pal)+theme_void()+ggtitle("k=16")
+  scale_color_manual(values=k16.pal)+
+  guides(colour = guide_legend(ncol = 2))+
+  theme_void()+labs(color="k=16")+
+  theme(strip.text=element_blank(), legend.key.size = unit(12, "pt"),
+        legend.title=element_text(size=12), legend.text=element_text(size=10),
+        legend.box.spacing= unit(0, "pt"), legend.margin=margin(0,2,0,0, "pt"))
 
-#legend
-ggplot(cbind.data.frame("y"=c(1:9, 1:7), "x"=c(rep(1,9), rep(1.25,7)),
-                        "labels"=names(k16.pal)),
-       aes(x=x, y=y, color=factor(labels, levels=names(k16.pal))))+
-  geom_point(size=3)+scale_color_manual(values=k16.pal)+
-  geom_text(aes(label=labels), nudge_x = .06, hjust=0, color="black", size=4)+
-  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.4)))+#theme_bw()+
-  theme_void()+
-  theme(legend.position="none",
-        plot.margin=unit(c(1,.2,1,.2),"cm"))
+p2 <- plotSpots(test, annotate="k17.f", sample_id="sample_id",
+                point_size=.5)+
+  scale_color_manual(values=k17.k18.pal)+
+  guides(colour = guide_legend(ncol = 2))+
+  theme_void()+labs(color="k=17")+
+  theme(strip.text=element_blank(), legend.key.size = unit(12, "pt"),
+        legend.title=element_text(size=12), legend.text=element_text(size=10),
+        legend.box.spacing= unit(0, "pt"), legend.margin=margin(0,2,0,0, "pt"))
 
-plotSpots(test, annotate="k17.f", sample_id="sample_id",
-          point_size=.5)+
-  scale_color_manual(values=k17.k18.pal)+theme_void()+ggtitle("k=17")
+p3 <- plotSpots(test, annotate="k18.f", sample_id="sample_id",
+                point_size=.5)+
+  scale_color_manual(values=k17.k18.pal)+
+  guides(colour = guide_legend(ncol = 2))+
+  theme_void()+labs(color="k=18")+
+  theme(strip.text=element_blank(), legend.key.size = unit(12, "pt"),
+        legend.title=element_text(size=12), legend.text=element_text(size=10),
+        legend.box.spacing= unit(0, "pt"), legend.margin=margin(0,2,0,0, "pt"))
 
-#legend
-ggplot(cbind.data.frame("y"=c(1:9, 1:8), "x"=c(rep(1,9), rep(1.25,8)),
-                        "labels"=setdiff(names(k17.k18.pal),"18")),
-       aes(x=x, y=y, color=factor(labels, 
-                                  levels=setdiff(names(k17.k18.pal),"18"))))+
-  geom_point(size=3)+scale_color_manual(values=k17.k18.pal)+
-  geom_text(aes(label=labels), nudge_x = .06, hjust=0, color="black", size=4)+
-  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.4)))+#theme_bw()+
-  theme_void()+
-  theme(legend.position="none",
-        plot.margin=unit(c(1,.2,1,.2),"cm"))
-
-plotSpots(test, annotate="k18.f", sample_id="sample_id",
-          point_size=.5)+
-  scale_color_manual(values=k17.k18.pal)+theme_void()+ggtitle("k=18")
-
-#legend
-ggplot(cbind.data.frame("y"=c(1:9, 1:9), "x"=c(rep(1,9), rep(1.25,9)),
-                        "labels"=names(k17.k18.pal)),
-       aes(x=x, y=y, color=factor(labels, levels=names(k17.k18.pal))))+
-  geom_point(size=3)+scale_color_manual(values=k17.k18.pal)+
-  geom_text(aes(label=labels), nudge_x = .06, hjust=0, color="black", size=4)+
-  scale_y_reverse()+scale_x_continuous(expand=expansion(add=c(.1,.4)))+#theme_bw()+
-  theme_void()+
-  theme(legend.position="none",
-        plot.margin=unit(c(1,.2,1,.2),"cm"))
+pdf(file="plots/revision/supp_PRECAST-compare-k_spot-plots.pdf", height=4, width=12)
+gridExtra::grid.arrange(p1, p2, p3, ncol=3)
+dev.off()
