@@ -54,23 +54,25 @@ gen.non0 = cbind(as.data.frame(gen.non0.mtx), as.data.frame(colData(sce)[rowname
 test = group_by(gen.non0, brnum, round, sort) %>% summarise_at(gen.nmf, sum) %>%
   tidyr::pivot_longer(all_of(gen.nmf), names_to="nmf", values_to="n.non0.spots")
 test$nmf_f = factor(test$nmf, levels=nmf.ordered.keep)
-test$xlabel = paste(test$brnum, test$round, test$sort)
+test$xlabel = paste(test$brnum, test$sort)
 
-ggplot(group_by(test, nmf_f, xlabel) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
-       aes(y=n.non0.spots, x=nmf_f, fill=xlabel))+
-  geom_bar(stat="identity", position="fill", color="grey50")+theme_bw()+
-  scale_fill_manual(values=c("#a6cee3","#74add1","#4575b4","#313695",
-                             "#b2df8a","#33a02c",
-                             "#fb9a99","#e31a1c",#3492
-                             "#fee08b","#fdbf6f","#ff7f00","#f46d43",#6423
-                             "#c2a5cf","#6a3d9a",#6432
-                             "grey","grey50",#6471
-                             "#ffff99","goldenrod","#b35806","#7f3b08",#6522
-                             "#8dd3c7","aquamarine",#8325
-                             "#f4a582","#b2182b",#8492
-                             "grey40","black"))+#8667
-  labs(y="% nuclei with non-0 loading", title="General NMF patterns",fill="Sample")+
-  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+sn.brnum.palette = c("#4575b4","#313695", "#b2df8a","#33a02c",
+                     "#fb9a99","#e31a1c", "#ff7f00","#f46d43",
+                     "#c2a5cf","#6a3d9a", "grey","grey50",
+                     "#ffff99","goldenrod", "#8dd3c7","aquamarine",
+                     "#f4a582","#b2182b", "grey40","black")
+names(sn.brnum.palette) = paste(rep(c("Br2720","Br2743","Br3942","Br6423","Br6432",
+                                        "Br6471","Br6522","Br8325","Br8492","Br8667"), each=2),
+                                  rep(c("PI","PI+NeuN+"), length.out=20))
+
+g1 <- ggplot(group_by(test, nmf_f, xlabel) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
+       aes(x=n.non0.spots, y=nmf_f, fill=xlabel))+
+  geom_bar(stat="identity", position="fill", color="grey50", linewidth=.5, width=1)+
+  scale_x_continuous(expand=c(0,0))+
+  scale_fill_manual(values=sn.brnum.palette)+guides(fill = guide_legend(ncol = 2))+
+  labs(x="% nuclei with non-0 loading", title="General NMF patterns: snRNA-seq",fill="Sample")+
+  theme_minimal()+theme(legend.position="bottom", legend.byrow = T, axis.ticks.x = element_line(color="black"),
+                        axis.title.y=element_blank(), axis.text.x=element_text(hjust=1), text=element_text(size=10))
 
 #specific patterns only
 spec.nmf = setdiff(nmf.ordered.keep, gen.nmf)
@@ -81,22 +83,16 @@ spec.non0 = cbind(as.data.frame(spec.non0.mtx),
 test2 = group_by(spec.non0, brnum, round, sort) %>% summarise_at(spec.nmf, sum) %>%
   tidyr::pivot_longer(all_of(spec.nmf), names_to="nmf", values_to="n.non0.spots")
 test2$nmf_f = factor(test2$nmf, levels=nmf.ordered.keep)
-test2$xlabel = paste(test2$brnum, test2$round, test2$sort)
+test2$xlabel = paste(test2$brnum, test2$sort)
 
-ggplot(group_by(test2, nmf_f, xlabel) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
-       aes(y=n.non0.spots, x=nmf_f, fill=xlabel))+
-  geom_bar(stat="identity", position="fill", color="grey50")+theme_bw()+
-  scale_fill_manual(values=c("#a6cee3","#74add1","#4575b4","#313695",#2720
-                             "#b2df8a","#33a02c",#2743
-                             "#fb9a99","#e31a1c",#3492
-                             "#fdbf6f","#ff7f00","#fee08b","#f46d43",#6423
-                             "#c2a5cf","#6a3d9a",#6432
-                             "grey","grey50",#6471
-                             "#ffff99","goldenrod","#b35806","#7f3b08",#6522
-                             "#8dd3c7","aquamarine",#8325
-                             "#f4a582","#b2182b",#8492
-                             "grey40","black"))+#8667
-  labs(y="% nuclei with non-0 loading", title="Specific NMF patterns",fill="Sample")
+s1 <- ggplot(group_by(test2, nmf_f, xlabel) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
+       aes(x=n.non0.spots, y=nmf_f, fill=xlabel))+
+  geom_bar(stat="identity", position="fill", color="grey50", linewidth=.5, width=1)+
+  scale_x_continuous(expand=c(0,0))+
+  scale_fill_manual(values=sn.brnum.palette)+
+  labs(x="% nuclei with non-0 loading", title="Specific NMF patterns: snRNA-seq")+
+  theme_minimal()+theme(legend.position="none", axis.title.y=element_blank(), axis.text.x=element_text(hjust=1),
+                        axis.ticks.x = element_line(color="black"), text=element_text(size=10))
 
 #################
 ## ok now do same as above but with SRT
@@ -107,26 +103,26 @@ gen.non0.mtx = as.matrix(colData(spe)[,gen.nmf])
 gen.non0.mtx = gen.non0.mtx>0
 gen.non0 = cbind(as.data.frame(gen.non0.mtx), 
                  as.data.frame(colData(spe)[rownames(gen.non0.mtx),c("brnum","sample_id")]))
-test = group_by(gen.non0, brnum, sample_id) %>% summarise_at(gen.nmf, sum) %>%
+test3 = group_by(gen.non0, brnum, sample_id) %>% summarise_at(gen.nmf, sum) %>%
   tidyr::pivot_longer(all_of(gen.nmf), names_to="nmf", values_to="n.non0.spots")
-test$nmf_f = factor(test$nmf, levels=nmf.ordered.keep)
-test$brnum_f = factor(test$brnum, levels=levels(spe$brnum)[c(10,1:9)])
+test3$nmf_f = factor(test3$nmf, levels=nmf.ordered.keep)
+test3$brnum_f = factor(test3$brnum, levels=levels(spe$brnum)[c(10,1:9)])
 
-ggplot(group_by(test, nmf_f, brnum_f) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
+brnum.palette = c("#313695","#33a02c","#fb9a99","#ff7f00","#6a3d9a",
+                  "grey","#ffff99","#8dd3c7","#b2182b","grey40")
+names(brnum.palette) <- c("Br2720","Br2743","Br3942","Br6423","Br6432",
+                          "Br6471","Br6522","Br8325","Br8492","Br8667")
+
+g2 <- ggplot(group_by(test3, nmf_f, brnum_f) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
        aes(x=n.non0.spots, y=nmf_f, fill=brnum_f))+
-  geom_bar(stat="identity", position="fill", color="grey50")+theme_bw()+
-  scale_fill_manual(values=c("#313695",#2720
-                             "#33a02c",#2743
-                             "#fb9a99",#3492
-                             "#ff7f00",#6423
-                             "#6a3d9a",#6432
-                             "grey",#6471
-                             "#ffff99",#6522
-                             "#8dd3c7",#8325
-                             "#b2182b",#8492
-                             "grey40","black"#8667
-                             ))+
-  labs(x="% spots with non-0 loading", title="General NMF patterns",fill="Donor")
+  geom_bar(stat="identity", position="fill", color="grey50", linewidth=.5, width=1)+
+  scale_x_continuous(expand=c(0,0))+
+  scale_fill_manual(values=brnum.palette)+
+  guides(fill = guide_legend(ncol = 1))+
+  labs(x="% spots with non-0 loading", title="General NMF patterns: SRT",fill="Donor")+
+  theme_minimal()+theme(legend.position="bottom", legend.byrow = T,
+                        axis.title.y=element_blank(), axis.text.x=element_text(hjust=1),
+                        axis.ticks.x = element_line(color="black"), text=element_text(size=10))
 
 #specific patterns
 spec.nmf = setdiff(nmf.ordered.keep, gen.nmf)
@@ -134,26 +130,23 @@ spec.non0.mtx = as.matrix(colData(spe)[,spec.nmf])
 spec.non0.mtx = spec.non0.mtx>0
 spec.non0 = cbind(as.data.frame(spec.non0.mtx), 
                   as.data.frame(colData(spe)[rownames(spec.non0.mtx),c("brnum","sample_id")]))
-test2 = group_by(spec.non0, brnum) %>% summarise_at(spec.nmf, sum) %>%
+test4 = group_by(spec.non0, brnum) %>% summarise_at(spec.nmf, sum) %>%
   tidyr::pivot_longer(all_of(spec.nmf), names_to="nmf", values_to="n.non0.spots")
-test2$nmf_f = factor(test2$nmf, levels=nmf.ordered.keep)
-test2$brnum_f = factor(test2$brnum, levels=levels(spe$brnum)[c(10,1:9)])
+test4$nmf_f = factor(test4$nmf, levels=nmf.ordered.keep)
+test4$brnum_f = factor(test4$brnum, levels=levels(spe$brnum)[c(10,1:9)])
 
-ggplot(group_by(test2, nmf_f, brnum_f) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
+s2 <- ggplot(group_by(test4, nmf_f, brnum_f) %>% summarise(n.non0.spots=sum(n.non0.spots)), 
        aes(x=n.non0.spots, y=nmf_f, fill=brnum_f))+
-  geom_bar(stat="identity", position="fill", color="grey50")+theme_bw()+
-  scale_fill_manual(values=c("#313695",#2720
-                             "#33a02c",#2743
-                             "#fb9a99",#3492
-                             "#ff7f00",#6423
-                             "#6a3d9a",#6432
-                             "grey",#6471
-                             "#ffff99",#6522
-                             "#8dd3c7",#8325
-                             "#b2182b",#8492
-                             "grey40","black"#8667
-  ))+
-  labs(x="% spots with non-0 loading", title="Specific NMF patterns",fill="Donor")
+  geom_bar(stat="identity", position="fill", color="grey50", linewidth=.5, width=1)+
+  scale_x_continuous(expand=c(0,0))+
+  scale_fill_manual(values=brnum.palette)+
+  labs(x="% spots with non-0 loading", title="Specific NMF patterns: SRT")+
+  theme_minimal()+theme(legend.position="none", axis.title.y=element_blank(), axis.text.x=element_text(hjust=1),
+                        axis.ticks.x = element_line(color="black"), text=element_text(size=10))
+
+pdf(file="plots/revision/supp_nmf-donor-proportion.pdf", height=12, width=8)
+gridExtra::grid.arrange(g1, s1, g2, s2, ncol=2)
+dev.off()  
 
 #################
 ## look at nmf94 that became cell type specific
@@ -237,7 +230,7 @@ plotReducedDim(sce, dimred="UMAP", color_by="TTR", point_size=.1)+
 brnum.palette = c("#313695","#33a02c","#fb9a99","#ff7f00","#6a3d9a",
                   "grey","#ffff99","#8dd3c7","#b2182b","grey40")
 names(brnum.palette) <- c("Br2720","Br2743","Br3942","Br6423","Br6432",
-                          "Br6471","Br6522","Br8325","Br8492","Br88667")
+                          "Br6471","Br6522","Br8325","Br8492","Br8667")
 
 filter(as.data.frame(colData(sce)), mid.cell.class=="CSF") %>% pull(brnum) %>% table()
 ggplot(filter(as.data.frame(colData(sce)), mid.cell.class=="CSF"),
