@@ -78,6 +78,13 @@ processed data outputs, can be accessed via Gene Expression Omnibus
 [GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624)
 (snRNA-seq).
 
+## Cite our Work
+
+Thompson, J.R., Nelson, E.D., Tippani, M. et al. An integrated
+single-nucleus and spatial transcriptomics atlas reveals the molecular
+landscape of the human hippocampus. Nat Neurosci 28, 1990–2004 (2025).
+<https://doi.org/10.1038/s41593-025-02022-0>
+
 ## Contact
 
 We value public questions, as they allow other users to learn from the
