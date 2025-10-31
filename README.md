@@ -76,8 +76,11 @@ processed data outputs, can be accessed via Gene Expression Omnibus
 [GSE264692](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264692)
 (SRT) and
 [GSE264624](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264624)
-(snRNA-seq).
+(snRNA-seq). Metadata files can be found at [humanHippocampus2024_SRT_sample-info](processed-data/revision/humanHippocampus2024_SRT_sample-info.csv) and 
+[humanHippocampus2024_snRNAseq_sample-info](processed-data/revision/humanHippocampus2024_snRNAseq_sample-info.csv) respectively
 
+
+ 
 ## Cite our Work
 
 Thompson, J.R., Nelson, E.D., Tippani, M. et al. An integrated
