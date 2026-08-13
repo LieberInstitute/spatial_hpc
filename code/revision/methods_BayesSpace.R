@@ -60,6 +60,12 @@ load("processed-data/06_clustering/BayesSpace/revision/spe_bayes.Rdata")
 cat("\n",format(Sys.time()),"spatialPreprocess\n")
 spe$row <- spe$array_row
 spe$col <- spe$array_col
+
+## -- 2026-08-13 update --
+## Note that the spatial coordinates were not offset and should have been.
+## See http://edward130603.github.io/BayesSpace/articles/joint_clustering.html#clustering-1
+## for more details.
+
 spe <- spatialPreprocess(spe, platform="Visium", skip.PCA=TRUE, log.normalize=FALSE)
 cat(format(Sys.time()),"spatialCluster\n")
 spe <- spatialCluster(spe, q=18, use.dimred="MNN", d=20, #start with using 20 MNN dims
