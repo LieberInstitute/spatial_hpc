@@ -15,6 +15,11 @@ spe$col <- spe$array_col
 cat("\n",format(Sys.time()),"spatialPreprocess\n")
 spe <- spatialPreprocess(spe, platform="Visium", skip.PCA=TRUE, log.normalize=FALSE)
 
+## -- 2026-08-13 update --
+## Note that the spatial coordinates were not offset and should have been.
+## See http://edward130603.github.io/BayesSpace/articles/joint_clustering.html#clustering-1
+## for more details.
+
 cat(format(Sys.time()),"spatialCluster\n")
 spe <- spatialCluster(spe, q=18, use.dimred="MNN", d=20, #start with using 20 MNN dims
                init.method="kmeans", #initial clustering method options = mclust or kmeans
